@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Data Peribadi | PASPA GO</title>
+
+  <link
+    rel="stylesheet"
+    href="../css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/profile.css"
+  >
+</head>
+
+<body class="profile-body">
+
+  <main class="profile-shell">
+
+    <!-- HEADER STANDARD -->
+<header class="app-header">
+
+    <!-- Back -->
+    <button
+        id="backButton"
+        class="app-back-button"
+        type="button"
+        title="Kembali"
+    >
+        ←
+    </button>
+
+    <!-- Home -->
+    <button
+        id="homeButton"
+        class="app-home-button"
+        type="button"
+        title="Dashboard"
+    >
+        🏠
+    </button>
+
+    <img
+        src="../images/logo paspa go.png"
+        class="app-page-logo"
+    >
+
+    <h1 class="app-page-title">
+        Data Peribadi
+    </h1>
+
+</header>
+
+
+    <!-- KOTAK 1: RINGKASAN AHLI -->
+    <section class="profile-summary-card">
+
+      <div class="profile-photo-editor">
+
+  <button
+    type="button"
+    id="selectPhotoButton"
+    class="profile-photo-button"
+    aria-label="Tukar gambar ahli"
+  >
+
+    <img
+      id="profilePhoto"
+      src="../images/default-avatar.png"
+      alt="Gambar Ahli"
+      class="profile-photo"
+    >
+
+    <span class="profile-photo-overlay">
+      📷 Tukar Gambar
+    </span>
+
+  </button>
+
+  <input
+    type="file"
+    id="profilePhotoInput"
+    accept="image/jpeg,image/png"
+    hidden
+  >
+
+  <p class="profile-photo-help">
+    JPG atau PNG, maksimum 3 MB
+  </p>
+
+  <button
+    type="button"
+    id="uploadPhotoButton"
+    class="upload-photo-button hidden"
+  >
+    Muat Naik Gambar
+  </button>
+
+</div>
+
+      <h2 id="profileName">
+        Memuatkan...
+      </h2>
+
+      <p id="profilePaspaId">
+        ID PASPA: -
+      </p>
+
+    </section>
+
+
+    <!-- KOTAK 2: MAKLUMAT PERIBADI -->
+    <section class="profile-section-card">
+
+      <div class="section-card-header">
+        <h3>Maklumat Peribadi</h3>
+      </div>
+
+      <div class="profile-info-row">
+        <span>No. Kad Pengenalan</span>
+        <strong id="profileIc">-</strong>
+      </div>
+
+      <div class="profile-info-row">
+        <span>Jantina</span>
+        <strong id="profileGender">-</strong>
+      </div>
+
+      <div class="profile-info-row">
+        <span>Email</span>
+        <strong id="profileEmail">-</strong>
+      </div>
+
+      <div class="profile-info-row">
+        <span>No. Badan</span>
+        <strong id="profileBodyNumber">-</strong>
+      </div>
+
+      <div class="profile-info-row">
+        <span>Tarikh Lantikan PASPA</span>
+        <strong id="profileAppointmentDate">-</strong>
+      </div>
+
+      <div class="profile-info-row">
+        <span>Jawatan PASPA</span>
+        <strong id="profilePaspaPosition">-</strong>
+      </div>
+
+    </section>
+
+
+    <!-- KOTAK 3: MAKLUMAT PERKHIDMATAN -->
+    <section
+  class="profile-section-card editable-section"
+  data-section="service"
+>
+
+  <div class="section-card-header">
+
+    <h3>
+      Maklumat Perkhidmatan
+    </h3>
+
+    <button
+      type="button"
+      class="section-edit-button"
+      data-edit-section="service"
+    >
+      Edit
+    </button>
+
+  </div>
+
+
+  <div class="editable-row">
+
+    <label for="serviceRank">
+      Pangkat
+    </label>
+
+    <select
+      id="serviceRank"
+      disabled
+    ></select>
+
+  </div>
+
+
+  <div class="editable-row">
+
+    <label for="serviceAppointment">
+      Taraf Lantikan
+    </label>
+
+    <select
+      id="serviceAppointment"
+      disabled
+    ></select>
+
+  </div>
+
+
+  <div class="editable-row">
+
+    <label for="serviceGrade">
+      Gred Jawatan
+    </label>
+
+    <select
+      id="serviceGrade"
+      disabled
+    ></select>
+
+  </div>
+
+
+  <div class="editable-row">
+
+    <label for="servicePaspaAppointmentDate">
+      Tarikh Lantikan PASPA
+    </label>
+
+    <input
+      id="servicePaspaAppointmentDate"
+      type="date"
+      disabled
+    >
+
+  </div>
+
+
+  <div class="editable-row">
+
+    <label for="serviceBranch">
+      Cawangan Berkhidmat
+    </label>
+
+    <input
+      id="serviceBranch"
+      type="text"
+      disabled
+    >
+
+  </div>
+
+
+  <div class="editable-row">
+
+    <label for="serviceState">
+      Negeri Berkhidmat
+    </label>
+
+    <select
+      id="serviceState"
+      disabled
+    ></select>
+
+  </div>
+
+
+  <button
+    type="button"
+    class="section-save-button hidden"
+    data-save-section="service"
+  >
+    Simpan Perubahan
+  </button>
+
+</section>
+
+
+    <!-- KOTAK 4: MAKLUMAT PERHUBUNGAN / KELURGA -->
+    <section
+      class="profile-section-card editable-section"
+      data-section="contact"
+    >
+
+      <div class="section-card-header">
+
+        <h3>Maklumat Perhubungan / Keluarga</h3>
+
+        <button
+          type="button"
+          class="section-edit-button"
+          data-edit-section="contact"
+        >
+          Edit
+        </button>
+
+      </div>
+
+ <div class="editable-row">
+
+  <label for="contactPhone">
+    No. Telefon
+  </label>
+
+  <input
+    id="contactPhone"
+    type="tel"
+    inputmode="tel"
+    disabled
+  >
+
+</div>
+
+
+<div class="editable-row">
+
+  <label for="contactEmergencyPhone">
+    No. Tel Waris
+  </label>
+
+  <input
+    id="contactEmergencyPhone"
+    type="tel"
+    inputmode="tel"
+    disabled
+  >
+
+</div>
+
+
+
+      <div class="editable-row">
+        <label for="contactAddress">
+          Alamat Kediaman
+        </label>
+
+        <textarea
+          id="contactAddress"
+          rows="3"
+          disabled
+        ></textarea>
+      </div>
+
+      <div class="editable-row">
+        <label for="contactPostcode">
+          Poskod
+        </label>
+
+        <input
+          id="contactPostcode"
+          type="text"
+          inputmode="numeric"
+          maxlength="5"
+          disabled
+        >
+      </div>
+
+      <div class="editable-row">
+        <label for="contactDistrict">
+          Daerah
+        </label>
+
+        <input
+          id="contactDistrict"
+          type="text"
+          disabled
+        >
+      </div>
+
+      <div class="editable-row">
+        <label for="contactState">
+          Negeri
+        </label>
+<select
+  id="contactState"
+  disabled
+></select>
+
+      </div>
+
+
+  <div class="editable-row">
+
+  <label for="contactMaritalStatus">
+    Taraf Perkahwinan
+  </label>
+
+  <select
+    id="contactMaritalStatus"
+    disabled
+  ></select>
+
+</div>
+
+
+      <button
+        type="button"
+        class="section-save-button hidden"
+        data-save-section="contact"
+      >
+        Simpan Perubahan
+      </button>
+
+    </section>
+
+
+    <!-- KOTAK 5: MAKLUMAT KECERGASAN -->
+    <section
+  class="profile-section-card editable-section"
+  data-section="fitness"
+>
+
+  <div class="section-card-header">
+
+    <h3>
+      Maklumat Kecergasan
+    </h3>
+
+    <button
+      type="button"
+      class="section-edit-button"
+      data-edit-section="fitness"
+    >
+      Edit
+    </button>
+
+  </div>
+
+
+  <div class="editable-row">
+
+    <label for="fitnessBloodType">
+      Jenis Darah
+    </label>
+
+    <select
+      id="fitnessBloodType"
+      disabled
+    ></select>
+
+  </div>
+
+
+  <div class="editable-row">
+
+    <label for="fitnessHeight">
+      Tinggi (cm)
+    </label>
+
+    <input
+      id="fitnessHeight"
+      type="number"
+      min="100"
+      max="250"
+      step="0.1"
+      inputmode="decimal"
+      disabled
+    >
+
+  </div>
+
+
+  <div class="editable-row">
+
+    <label for="fitnessWeight">
+      Berat (kg)
+    </label>
+
+    <input
+      id="fitnessWeight"
+      type="number"
+      min="20"
+      max="300"
+      step="0.1"
+      inputmode="decimal"
+      disabled
+    >
+
+  </div>
+
+
+  <div class="editable-row">
+
+    <label for="fitnessBmi">
+      BMI
+    </label>
+
+    <input
+      id="fitnessBmi"
+      type="text"
+      readonly
+      disabled
+    >
+
+  </div>
+
+
+  <p
+    id="fitnessBmiCategory"
+    class="bmi-category hidden"
+  ></p>
+
+
+  <button
+    type="button"
+    class="section-save-button hidden"
+    data-save-section="fitness"
+  >
+    Simpan Perubahan
+  </button>
+
+</section>
+
+
+    <!-- KOTAK 6: MAKLUMAT PAKAIAN DAN AKSESORI -->
+    <section
+      class="profile-section-card editable-section"
+      data-section="clothing"
+    >
+
+      <div class="section-card-header">
+
+        <h3>Maklumat Pakaian dan Aksesori</h3>
+
+        <button
+          type="button"
+          class="section-edit-button"
+          data-edit-section="clothing"
+        >
+          Edit
+        </button>
+
+      </div>
+
+      <div class="editable-row">
+        <label for="clothingTshirt">
+          Saiz T-Shirt
+        </label>
+
+<select
+  id="clothingTshirt"
+  disabled
+></select>
+
+      </div>
+
+      <div class="editable-row">
+        <label for="clothingSportPants">
+          Saiz Seluar Sukan
+        </label>
+
+<select
+  id="clothingSportPants"
+  disabled
+></select>
+
+      </div>
+
+      <div class="editable-row">
+        <label for="clothingUniform">
+          Saiz Uniform
+        </label>
+
+<select
+  id="clothingUniform"
+  disabled
+></select>
+
+      </div>
+
+      <div class="editable-row">
+        <label for="clothingBeret">
+          Saiz Beret
+        </label>
+
+<select
+  id="clothingBeret"
+  disabled
+></select>
+
+      </div>
+
+      <div class="editable-row">
+        <label for="clothingJacket">
+          Saiz Jaket
+        </label>
+
+<select
+  id="clothingJacket"
+  disabled
+></select>
+
+      </div>
+
+      <div class="editable-row">
+        <label for="clothingSportShoes">
+          Saiz Kasut Sukan
+        </label>
+
+<select
+  id="clothingSportShoes"
+  disabled
+></select>
+
+      </div>
+
+      <div class="editable-row">
+        <label for="clothingBoot">
+          Saiz Kasut Boot
+        </label>
+
+<select
+  id="clothingBoot"
+  disabled
+></select>
+
+      </div>
+
+      <div class="editable-row">
+        <label for="clothingBelt">
+          Saiz Tali Pinggang
+        </label>
+
+<select
+  id="clothingBelt"
+  disabled
+></select>
+
+      </div>
+
+      <button
+        type="button"
+        class="section-save-button hidden"
+        data-save-section="clothing"
+      >
+        Simpan Perubahan
+      </button>
+
+    </section>
+
+
+    <!-- MESEJ SISTEM -->
+    <div
+      id="profileMessage"
+      class="message hidden"
+      role="alert"
+    ></div>
+
+  </main>
+
+
+<script src="../js/config.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/dropdown.js"></script>
+<script src="../js/profile.js"></script>
+
+</body>
+</html>

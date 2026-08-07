@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Dashboard | PASPA GO
+  </title>
+
+  <!-- CSS UTAMA -->
+  <link
+    rel="stylesheet"
+    href="../css/style.css"
+  >
+
+  <!-- CSS DASHBOARD -->
+  <link
+    rel="stylesheet"
+    href="../css/dashboard.css"
+  >
+
+</head>
+
+
+<body class="dashboard-body">
+
+  <main class="dashboard-shell">
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="dashboard-header">
+
+      <!-- LOGO PASPA GO -->
+      <img
+        src="../images/logo paspa go.png"
+        alt="Logo PASPA GO"
+        class="dashboard-logo"
+      >
+
+
+      <!-- LOGOUT -->
+      <button
+        type="button"
+        id="logoutButton"
+        class="logout-button"
+        title="Log Keluar"
+        aria-label="Log Keluar"
+      >
+        ⏻
+      </button>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         KAD AHLI
+    ====================================================== -->
+
+    <section class="member-card">
+
+
+      <div class="photo-wrapper">
+
+        <img
+          id="memberPhoto"
+          src="../images/default-avatar.png"
+          alt="Gambar Ahli PASPA"
+          class="member-photo"
+        >
+
+      </div>
+
+
+      <div class="member-details">
+
+        <p class="welcome-text">
+          Selamat datang
+        </p>
+
+
+        <h1 id="memberName">
+          Memuatkan...
+        </h1>
+
+
+        <div class="detail-row">
+
+          <span>
+            ID PASPA
+          </span>
+
+          <strong id="memberId">
+            -
+          </strong>
+
+        </div>
+
+
+        <div class="detail-row">
+
+          <span>
+            No. Kad Pengenalan
+          </span>
+
+          <strong id="memberIc">
+            -
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         MENU DASHBOARD
+    ====================================================== -->
+
+    <section class="dashboard-menu">
+
+
+      <!-- DATA PERIBADI -->
+
+      <button
+        type="button"
+        class="menu-card"
+        onclick="window.location.href='profile.html'"
+      >
+
+        <span class="menu-icon">
+          👤
+        </span>
+
+        <span>
+          Data Peribadi
+        </span>
+
+      </button>
+
+
+
+      <!-- SEJARAH KURSUS -->
+
+      <button
+        type="button"
+        class="menu-card"
+        id="courseHistoryButton"
+      >
+
+        <span class="menu-icon">
+          📚
+        </span>
+
+        <span>
+          Program
+        </span>
+
+      </button>
+
+
+
+      <!-- OPERASI -->
+
+      <button
+        type="button"
+        class="menu-card"
+        id="operationButton"
+      >
+
+        <span class="menu-icon">
+          🎖️
+        </span>
+
+        <span>
+          Operasi
+        </span>
+
+      </button>
+
+
+
+      <!-- INVENTORI -->
+
+      <button
+        type="button"
+        class="menu-card"
+        id="inventoryButton"
+      >
+
+        <span class="menu-icon">
+          🎒
+        </span>
+
+        <span>
+          Inventori
+        </span>
+
+      </button>
+
+
+
+      <!-- DIARI PASPA -->
+
+      <button
+        type="button"
+        class="menu-card"
+        id="diaryButton"
+      >
+
+        <span class="menu-icon">
+          📝
+        </span>
+
+        <span>
+          Diari PASPA
+        </span>
+
+      </button>
+
+
+
+      <!-- HEBAHAN -->
+
+      <button
+        type="button"
+        class="menu-card"
+        id="announcementButton"
+      >
+
+        <span class="menu-icon">
+          📢
+        </span>
+
+        <span>
+          Hebahan
+        </span>
+
+      </button>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         LOGO PASPA DI BAHAGIAN BAWAH
+    ====================================================== -->
+
+    <div class="dashboard-footer">
+
+      <button
+        type="button"
+        id="footerPaspaButton"
+        class="paspa-footer-button"
+        title="PASPA"
+        aria-label="PASPA"
+      >
+
+        <img
+          src="../images/logo.png"
+          alt="Logo PASPA"
+        >
+
+      </button>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         MESEJ SISTEM
+    ====================================================== -->
+
+    <div
+      id="dashboardMessage"
+      class="message hidden"
+      role="alert"
+    ></div>
+
+
+  </main>
+
+
+
+  <!-- =====================================================
+       JAVASCRIPT
+  ====================================================== -->
+
+  <script src="../js/config.js"></script>
+
+  <script src="../js/api.js"></script>
+
+  <script src="../js/dashboard.js"></script>
+
+
+</body>
+
+</html>

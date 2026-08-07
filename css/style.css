@@ -1,0 +1,253 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background:
+    linear-gradient(
+      rgba(5, 25, 60, 0.72),
+      rgba(5, 25, 60, 0.82)
+    ),
+    url("../images/background.jpg")
+    center / cover no-repeat fixed;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 30px 26px;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 20px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.25);
+}
+
+.logo {
+  display: block;
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  margin: 0 auto 12px;
+}
+
+h1 {
+  text-align: center;
+  color: #103a78;
+  font-size: 30px;
+}
+
+.subtitle {
+  margin: 8px 0 25px;
+  text-align: center;
+  color: #566374;
+  font-size: 14px;
+}
+
+h2 {
+  margin-bottom: 18px;
+  color: #173b69;
+  font-size: 21px;
+}
+
+.form-info {
+  margin-bottom: 18px;
+  color: #566374;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+label {
+  display: block;
+  margin: 14px 0 7px;
+  color: #24364b;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  height: 50px;
+  padding: 0 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  background: #ffffff;
+  font-size: 15px;
+  outline: none;
+}
+
+input:focus {
+  border-color: #1557a6;
+  box-shadow: 0 0 0 3px rgba(21, 87, 166, 0.12);
+}
+
+input[readonly] {
+  background: #eef2f7;
+  color: #566374;
+}
+
+button {
+  width: 100%;
+  min-height: 50px;
+  margin-top: 20px;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #103a78;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0c2d5f;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.secondary-button {
+  margin-top: 10px;
+  background: #e7edf5;
+  color: #173b69;
+}
+
+.secondary-button:hover {
+  background: #d7e0ec;
+}
+
+.message {
+  margin-top: 18px;
+  padding: 13px;
+  border-radius: 9px;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.message.success {
+  border: 1px solid #8fd5a5;
+  background: #e9f8ee;
+  color: #176b32;
+}
+
+.message.error {
+  border: 1px solid #efaaaa;
+  background: #fff0f0;
+  color: #a51e1e;
+}
+
+.message.info {
+  border: 1px solid #9fc2eb;
+  background: #edf5ff;
+  color: #174f8f;
+}
+
+.hidden {
+  display: none;
+}
+
+/* =====================================================
+   HEADER STANDARD PASPA GO
+   Digunakan pada semua halaman
+===================================================== */
+
+.app-header {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  padding: 16px 60px 14px;
+  margin-bottom: 20px;
+
+  text-align: center;
+}
+
+.app-page-logo {
+  display: block;
+  width: min(250px, 65vw);
+  height: auto;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+.app-page-title {
+  margin: 10px 0 0;
+  color: #ffffff;
+  font-size: clamp(23px, 4vw, 30px);
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.app-back-button {
+  position: absolute;
+  top: 50%;
+  left: 4px;
+  transform: translateY(-50%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 42px;
+  height: 42px;
+  min-height: 42px;
+  margin: 0;
+  padding: 0;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.96);
+  color: #103a78;
+
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 1;
+
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.18);
+}
+
+.app-back-button:hover {
+  background: #ffffff;
+  color: #072c60;
+}
+
+@media (max-width: 550px) {
+  .app-header {
+    padding-right: 48px;
+    padding-left: 48px;
+  }
+
+  .app-page-logo {
+    width: min(220px, 64vw);
+  }
+
+  .app-page-title {
+    font-size: 24px;
+  }
+
+  .app-back-button {
+    width: 38px;
+    height: 38px;
+    min-height: 38px;
+    font-size: 21px;
+  }
+}

@@ -1,0 +1,827 @@
+/* =====================================================
+   PAGE DATA PERIBADI
+===================================================== */
+
+.profile-body {
+  min-height: 100vh;
+
+  background:
+    linear-gradient(
+      rgba(5, 25, 60, 0.78),
+      rgba(5, 25, 60, 0.92)
+    ),
+    url("../images/background.jpg")
+    center / cover no-repeat fixed;
+}
+
+
+.profile-shell {
+  width: 100%;
+  max-width: 760px;
+  min-height: 100vh;
+
+  margin: 0 auto;
+  padding: 18px 18px 40px;
+}
+
+
+/* =====================================================
+   KOTAK RINGKASAN AHLI
+===================================================== */
+
+.profile-summary-card {
+  margin-bottom: 18px;
+  padding: 20px;
+
+  border-radius: 20px;
+
+  background:
+    rgba(255, 255, 255, 0.97);
+
+  text-align: center;
+
+  box-shadow:
+    0 14px 35px rgba(0, 0, 0, 0.22);
+}
+
+
+.profile-photo {
+  width: 130px;
+  height: 165px;
+
+  object-fit: cover;
+
+  border: 4px solid #ffffff;
+  border-radius: 13px;
+
+  background: #e7edf5;
+
+  box-shadow:
+    0 8px 22px rgba(16, 58, 120, 0.28);
+}
+
+
+.profile-summary-card h2 {
+  margin-top: 16px;
+
+  color: #103a78;
+
+  font-size: 22px;
+  line-height: 1.35;
+}
+
+
+.profile-summary-card p {
+  margin-top: 8px;
+
+  color: #657184;
+
+  font-size: 14px;
+}
+
+
+/* =====================================================
+   KOTAK SEKSYEN PROFIL
+===================================================== */
+
+.profile-section-card {
+  margin-bottom: 18px;
+  padding: 22px;
+
+  border-radius: 18px;
+
+  background:
+    rgba(255, 255, 255, 0.97);
+
+  box-shadow:
+    0 14px 35px rgba(0, 0, 0, 0.22);
+}
+
+
+.section-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  margin-bottom: 1px;
+  padding-bottom: 5px;
+
+  border-bottom:
+    2px solid #e5eaf1;
+}
+
+
+.section-card-header h3 {
+  margin: 0;
+
+  color: #103a78;
+
+  font-size: 19px;
+}
+
+
+/* =====================================================
+   BARIS MAKLUMAT TIDAK BOLEH EDIT
+===================================================== */
+
+.profile-info-row {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+
+  padding: 10px 0 14px;
+
+  border-bottom: none;
+}
+
+
+.profile-info-row:last-child {
+  border-bottom: none;
+}
+
+
+.profile-info-row span {
+  margin: 0;
+
+  color: #687587;
+
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+
+.profile-info-row strong {
+  margin: 0;
+
+  color: #103a78;
+
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.25;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* =====================================================
+   BARIS MAKLUMAT BOLEH EDIT
+===================================================== */
+
+.editable-row {
+  display: grid;
+
+  grid-template-columns:
+    200px minmax(0, 1fr);
+
+  align-items: center;
+
+  gap: 1px;
+
+  padding: 1px 0;
+
+
+}
+
+
+.editable-row label {
+  margin: 0;
+
+  color: #687587;
+
+  font-weight: normal;
+}
+
+
+.editable-row input,
+.editable-row textarea,
+.editable-row select {
+ 
+  width: 100%;
+  min-height: 44px;
+
+  padding: 8px 10px;
+
+  border:
+    1px solid #c9d3df;
+
+  border-radius: 9px;
+
+  background: #ffffff;
+  color: #20364f;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  outline: none;
+}
+
+/* Dropdown PASPA GO */
+
+.editable-row select {
+  appearance: auto;
+  cursor: pointer;
+}
+
+.editable-row select:disabled {
+  cursor: default;
+}
+
+.editable-section.is-editing select {
+  background: #ffffff;
+}
+
+
+.editable-row textarea {
+  min-height: 82px;
+  resize: vertical;
+}
+
+
+.editable-row input:focus,
+.editable-row textarea:focus,
+.editable-row select:focus {
+  border-color: #1557a6;
+
+  box-shadow:
+    0 0 0 3px rgba(21, 87, 166, 0.12);
+}
+
+
+/* Paparan biasa sebelum klik Edit */
+.editable-row input:disabled,
+.editable-row textarea:disabled,
+.editable-row select:disabled {
+  border-color: transparent;
+
+  background: transparent;
+
+  color: #20364f;
+
+  font-weight: 600;
+
+  opacity: 1;
+
+  cursor: default;
+}
+
+
+
+/* Seksyen sedang diedit */
+.editable-section.is-editing {
+  outline:
+    2px solid rgba(16, 58, 120, 0.22);
+}
+
+
+.editable-section.is-editing input,
+.editable-section.is-editing textarea,
+.editable-section.is-editing select {
+  background: #ffffff;
+}
+
+
+
+
+
+/* =====================================================
+   BUTANG SIMPAN
+===================================================== */
+
+.section-save-button {
+  width: 100%;
+  min-height: 47px;
+
+  margin-top: 17px;
+  padding: 8px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #103a78;
+  color: #ffffff;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+.section-save-button:hover {
+  background: #0b2e62;
+}
+
+
+.section-save-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+
+/* =====================================================
+   MESEJ SISTEM
+===================================================== */
+
+.message {
+  margin-bottom: 18px;
+  padding: 8px;
+
+  border-radius: 10px;
+
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+
+.message.success {
+  border: 1px solid #8fd5a5;
+
+  background: #e9f8ee;
+  color: #176b32;
+}
+
+
+.message.error {
+  border: 1px solid #efaaaa;
+
+  background: #fff0f0;
+  color: #a51e1e;
+}
+
+
+.message.info {
+  border: 1px solid #9fc2eb;
+
+  background: #edf5ff;
+  color: #174f8f;
+}
+
+
+.hidden {
+  display: none !important;
+}
+
+
+/* =====================================================
+   PAPARAN TELEFON
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .profile-shell {
+    padding:
+      14px 14px 35px;
+  }
+
+
+  .profile-summary-card,
+  .profile-section-card {
+    padding: 18px;
+  }
+
+
+  .profile-photo {
+    width: 120px;
+    height: 155px;
+  }
+
+
+  .profile-summary-card h2 {
+    font-size: 20px;
+  }
+
+
+  /* Maklumat Peribadi - kekalkan label atas, value bawah */
+.profile-info-row {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+
+  padding: 10px 0 14px;
+}
+
+
+/* Maklumat yang boleh edit */
+.editable-row{
+
+grid-template-columns:1fr;
+
+gap:3px;
+
+padding:10px 0 14px;
+
+}
+
+
+  .editable-row input:disabled,
+  .editable-row textarea:disabled,
+  .editable-row select:disabled {
+    padding-left: 0;
+  }
+
+
+  .section-card-header h3 {
+    font-size: 17px;
+  }
+
+
+  .section-edit-button {
+    padding: 7px 12px;
+  }
+}
+
+/* =====================================================
+   EDIT GAMBAR AHLI
+===================================================== */
+
+.profile-photo-editor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-photo-button {
+  position: relative;
+  overflow: hidden;
+
+  width: 130px;
+  height: 165px;
+
+  margin: 0;
+  padding: 0;
+
+  border: none;
+  border-radius: 13px;
+
+  background: transparent;
+  cursor: pointer;
+}
+
+.profile-photo-button .profile-photo {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  margin: 0;
+}
+
+.profile-photo-overlay {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  padding: 10px 5px;
+
+  background:
+    rgba(6, 35, 76, 0.82);
+
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  opacity: 0;
+
+  transition:
+    opacity 0.2s ease;
+}
+
+.profile-photo-button:hover
+.profile-photo-overlay,
+.profile-photo-button:focus
+.profile-photo-overlay {
+  opacity: 1;
+}
+
+.profile-photo-help {
+  margin: 8px 0 0;
+
+  color: #718096;
+
+  font-size: 11px;
+}
+
+.upload-photo-button {
+  width: auto;
+  min-height: 40px;
+
+  margin: 10px 0 0;
+  padding: 9px 18px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: #103a78;
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.upload-photo-button:hover {
+  background: #0b2e62;
+}
+
+.upload-photo-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .profile-photo-button {
+    width: 120px;
+    height: 155px;
+  }
+
+  .profile-photo-overlay {
+    opacity: 1;
+    padding: 7px 4px;
+    font-size: 10px;
+  }
+}
+
+/* ==========================
+   HOME BUTTON
+========================== */
+
+.app-home-button{
+
+    position:absolute;
+
+    right:15px;
+    top:18px;
+
+    width:42px;
+    height:42px;
+
+    border:none;
+    border-radius:12px;
+
+    background:white;
+
+    color:#103a78;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+    box-shadow:
+        0 4px 10px rgba(0,0,0,.18);
+
+}
+
+.app-home-button:hover{
+
+    transform:translateY(-2px);
+
+    background:#103a78;
+
+    color:white;
+
+}
+/* =====================================================
+PAPARAN BIASA (BELUM KLIK EDIT)
+===================================================== */
+
+.editable-section:not(.is-editing) .editable-row{
+    display:flex;
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    gap:3px;
+
+    padding:10px 0 14px;
+}
+
+.editable-section:not(.is-editing) .editable-row label{
+    margin:0;
+
+    color:#687587;
+
+    font-size:14px;
+
+    font-weight:400;
+}
+
+.editable-section:not(.is-editing) .editable-row input:disabled,
+.editable-section:not(.is-editing) .editable-row textarea:disabled,
+.editable-section:not(.is-editing) .editable-row select:disabled{
+
+    width:100%;
+
+    min-height:auto;
+
+    padding:0;
+
+    border:none;
+
+    background:transparent;
+
+    color:#103a78;
+
+    font-size:16px;
+
+    font-weight:700;
+}
+
+/* =====================================================
+   MAKLUMAT PERHUBUNGAN - VIEW MODE
+===================================================== */
+
+.editable-section[data-section="contact"]:not(.is-editing)
+.editable-row {
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  gap: 3px;
+
+  padding: 10px 0 14px;
+}
+
+
+/* Input biasa */
+.editable-section[data-section="contact"]:not(.is-editing)
+.editable-row input:disabled {
+  width: 100%;
+
+  min-height: auto;
+  height: auto;
+
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  color: #103a78;
+
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+
+/* Dropdown */
+.editable-section[data-section="contact"]:not(.is-editing)
+.editable-row select:disabled {
+  width: 100%;
+
+  min-height: auto;
+  height: auto;
+
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  color: #103a78;
+
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+
+/* Alamat Kediaman */
+.editable-section[data-section="contact"]:not(.is-editing)
+.editable-row textarea:disabled {
+  width: 100%;
+
+  min-height: 0;
+  height: auto;
+
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  color: #103a78;
+
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.35;
+
+  resize: none;
+  overflow: hidden;
+}
+
+/* =====================================================
+MAKLUMAT KECERGASAN - VIEW MODE
+===================================================== */
+
+.editable-section[data-section="fitness"]:not(.is-editing)
+.editable-row {
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  gap: 3px;
+
+  padding: 8px 0 10px;
+}
+
+
+/* Input biasa */
+.editable-section[data-section="fitness"]:not(.is-editing)
+.editable-row input:disabled {
+  width: 100%;
+
+  min-height: auto;
+  height: auto;
+
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  color: #103a78;
+
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+
+/* Dropdown Jenis Darah */
+.editable-section[data-section="fitness"]:not(.is-editing)
+.editable-row select:disabled {
+  width: 100%;
+
+  min-height: auto;
+  height: auto;
+
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  color: #103a78;
+
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+
+/* Kategori BMI */
+.editable-section[data-section="fitness"]:not(.is-editing)
+.bmi-category {
+  margin: 4px 0 0;
+
+  padding: 0;
+
+  background: transparent;
+
+  color: #20364f;
+
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+/* =====================================================
+   BUTANG EDIT
+===================================================== */
+
+.section-edit-button {
+  width: auto;
+  min-height: 36px;
+
+  margin: 0;
+  padding: 7px 15px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: #e7eef8;
+  color: #103a78;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+.section-edit-button:hover {
+  background: #d5e2f3;
+}

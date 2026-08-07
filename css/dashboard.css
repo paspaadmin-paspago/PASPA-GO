@@ -1,0 +1,418 @@
+.dashboard-body {
+  min-height: 100vh;
+  background:
+    linear-gradient(
+      rgba(5, 25, 60, 0.76),
+      rgba(5, 25, 60, 0.88)
+    ),
+    url("../images/background.jpg")
+    center / cover no-repeat fixed;
+}
+
+.dashboard-shell {
+  width: 100%;
+  max-width: 900px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.dashboard-header {
+
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-bottom: 22px;
+
+}
+
+.dashboard-logo {
+  width: 250px;
+  max-height: auto;
+
+  object-fit: contain;
+}
+
+.logout-button {
+
+  position: absolute;
+
+  top: 0;
+  right: 0;
+
+  width: 42px;
+  height: 42px;
+  min-height: 42px;
+
+  margin: 0;
+  padding: 0;
+
+  border: none;
+  border-radius: 12px;
+
+  background: rgba(255,255,255,.96);
+
+  color: #103a78;
+
+  font-size: 22px;
+
+  cursor: pointer;
+
+  box-shadow:
+      0 5px 15px rgba(0,0,0,.18);
+
+}
+
+.member-card {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 25px;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 20px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.25);
+}
+
+.photo-wrapper {
+  flex-shrink: 0;
+}
+
+.member-photo {
+  width: 140px;
+  height: 175px;
+  object-fit: cover;
+  border: 4px solid #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 22px rgba(16, 58, 120, 0.25);
+  background: #e7edf5;
+}
+
+.member-details {
+  flex: 1;
+}
+
+.welcome-text {
+  margin-bottom: 5px;
+  color: #6a7685;
+  font-size: 14px;
+}
+
+.member-details h1 {
+  margin-bottom: 18px;
+  text-align: left;
+  color: #103a78;
+  font-size: 27px;
+}
+
+.detail-row {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid #e5eaf0;
+  color: #34445a;
+}
+
+.detail-row strong {
+  color: #132f53;
+}
+
+.dashboard-menu {
+  display: grid;
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+   margin-bottom: 60px; /* jarak kedudukan logo bulat dengan menu */
+}
+
+.menu-card {
+  min-height: 115px;
+  margin: 0;
+  padding: 18px 12px;
+  background: rgba(255, 255, 255, 0.96);
+  color: #103a78;
+  border-radius: 16px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.16);
+}
+
+.menu-card:hover {
+  background: #ffffff;
+  transform: translateY(-2px);
+}
+
+.menu-icon {
+  display: block;
+  margin-bottom: 9px;
+  font-size: 30px;
+}
+
+/* =====================================================
+   DASHBOARD - PAPARAN MOBILE
+===================================================== */
+
+@media (max-width: 650px) {
+
+  .dashboard-shell {
+    padding: 12px;
+  }
+
+
+  /* ===================================================
+     HEADER
+  =================================================== */
+
+  .dashboard-header {
+    margin-bottom: 12px;
+  }
+
+
+  /* Logo kekal */
+  .dashboard-logo {
+    width: 250px;
+    height: auto;
+  }
+
+
+  .logout-button {
+    min-height: 36px;
+
+    padding: 7px 12px;
+
+    border-radius: 9px;
+
+    font-size: 13px;
+  }
+
+
+  /* ===================================================
+     KAD AHLI
+  =================================================== */
+
+  .member-card {
+    flex-direction: column;
+
+    gap: 8px;
+
+    padding: 14px 12px;
+
+    border-radius: 16px;
+
+    text-align: center;
+  }
+
+
+  .photo-wrapper {
+    margin: 0;
+  }
+
+
+  /* Gambar lebih kecil */
+  .member-photo {
+    width: 95px;
+    height: 120px;
+
+    border-width: 3px;
+    border-radius: 10px;
+  }
+
+
+  .member-details {
+    width: 100%;
+  }
+
+
+  .welcome-text {
+    margin: 2px 0 3px;
+
+    font-size: 12px;
+  }
+
+
+  /* Nama ahli */
+  .member-details h1 {
+    margin: 0 0 7px;
+
+    text-align: center;
+
+    font-size: 18px;
+    line-height: 1.15;
+  }
+
+
+  /* ID PASPA dan IC */
+  .detail-row {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    padding: 4px 0;
+
+    border-bottom:
+      1px solid #e5eaf0;
+
+    font-size: 13px;
+    line-height: 1.2;
+  }
+
+
+  .detail-row strong {
+    font-size: 13px;
+  }
+
+
+  /* ===================================================
+     MENU DASHBOARD
+  =================================================== */
+
+  .dashboard-menu {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 9px;
+
+    margin-top: 10px;
+  }
+
+
+  .menu-card {
+    min-height: 88px;
+
+    padding: 10px 7px;
+
+    border-radius: 13px;
+
+    font-size: 13px;
+    line-height: 1.15;
+  }
+
+
+  .menu-icon {
+    margin-bottom: 5px;
+
+    font-size: 25px;
+  }
+
+}
+
+   /* TAMBAH DI SINI */
+    .logout-button{
+
+        position:absolute;
+
+        top:0;
+        right:0;
+
+        width:38px;
+        height:38px;
+        min-height:38px;
+
+        padding:0;
+
+        font-size:20px;
+
+    }
+
+}
+
+/* =====================================================
+   LOGO PASPA BAWAH
+===================================================== */
+
+.dashboard-footer{
+
+    width:100%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    /* Jarak dari menu */
+    margin-top:150px;
+
+    /* Jarak dari bawah page */
+    margin-bottom:1px;
+
+    text-align:center;
+
+}
+
+
+.paspa-footer-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 72px;
+  height: 72px;
+  min-height: 72px;
+
+  margin: 0 auto;
+  padding: 5px;
+
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+
+  background:
+    rgba(255, 255, 255, 0.10);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+
+  box-shadow:
+    0 6px 18px
+    rgba(0, 0, 0, 0.25);
+}
+
+
+.paspa-footer-button:hover {
+  transform: scale(1.08);
+
+  border-color: #ffffff;
+
+  background:
+    rgba(255, 255, 255, 0.18);
+}
+
+
+.paspa-footer-button img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  border-radius: 50%;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 650px) {
+
+  .dashboard-footer {
+    margin-top: 20px;
+    margin-bottom: 8px;
+  }
+
+  .paspa-footer-button {
+    width: 58px;
+    height: 58px;
+    min-height: 58px;
+
+    padding: 4px;
+  }
+
+}
