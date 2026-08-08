@@ -392,3 +392,22 @@ button:disabled {
 
   object-fit: contain;
 }
+
+/* =====================================================
+   LOGIN PAGE - MOBILE FIX
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .auth-card .logo {
+    width: 110px !important;
+    height: 110px !important;
+
+    max-width: 110px !important;
+
+    object-fit: contain;
+
+    margin: 0 auto 10px;
+  }
+
+}
