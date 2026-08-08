@@ -416,3 +416,261 @@
   }
 
 }
+
+/* =====================================================
+   MOBILE - LOGOUT BUTTON
+===================================================== */
+
+@media (max-width: 650px) {
+
+  .dashboard-header {
+    position: relative;
+  }
+
+  .logout-button {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+    min-height: 42px;
+
+    margin: 0;
+    padding: 0;
+
+    border: none;
+    border-radius: 11px;
+
+    background: #ffffff;
+    color: #103a78 !important;
+
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1;
+
+    z-index: 10;
+  }
+
+}
+
+
+
+
+/* =====================================================
+   FIXED BOTTOM NAVIGATION
+===================================================== */
+
+.bottom-nav {
+  position: fixed;
+
+  left: 50%;
+  bottom: 14px;
+
+  transform: translateX(-50%);
+
+  width: min(94%, 520px);
+
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr 80px 1fr 1fr;
+
+  align-items: center;
+
+  padding: 9px 10px;
+
+  border-radius: 18px;
+
+  background:
+    rgba(255, 255, 255, 0.96);
+
+  box-shadow:
+    0 8px 28px
+    rgba(0, 0, 0, 0.25);
+
+  z-index: 9999;
+}
+
+
+/* =====================================================
+   BUTTON KIRI / KANAN
+===================================================== */
+
+.bottom-nav-item {
+  width: 100%;
+
+  min-height: 48px;
+
+  margin: 0;
+  padding: 5px 3px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 2px;
+
+  border: none;
+
+  background: transparent;
+
+  color: #103a78;
+
+  cursor: pointer;
+}
+
+
+.bottom-nav-icon {
+  font-size: 20px;
+
+  line-height: 1;
+}
+
+
+.bottom-nav-text {
+  font-size: 11px;
+
+  font-weight: 700;
+
+  line-height: 1.1;
+}
+
+
+/* =====================================================
+   LOGO TENGAH
+===================================================== */
+
+.bottom-nav-logo {
+  position: relative;
+
+  width: 70px;
+  height: 70px;
+
+  min-height: 70px;
+
+  margin: -35px auto 0;
+
+  padding: 4px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border:
+    4px solid #ffffff;
+
+  border-radius: 50%;
+
+  background: #103a78;
+
+  box-shadow:
+    0 5px 15px
+    rgba(0, 0, 0, 0.25);
+
+  cursor: pointer;
+}
+
+
+.bottom-nav-logo img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  border-radius: 50%;
+}
+
+
+/* =====================================================
+   HOVER
+===================================================== */
+
+.bottom-nav-item:hover {
+  background:
+    rgba(16, 58, 120, 0.08);
+
+  border-radius: 10px;
+}
+
+
+.bottom-nav-logo:hover {
+  transform: scale(1.05);
+}
+
+
+/* =====================================================
+   BAGI RUANG BAWAH PAGE
+   SUPAYA CONTENT TAK DITUTUP NAV
+===================================================== */
+
+.dashboard-shell {
+  padding-bottom: 120px;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 650px) {
+
+  .bottom-nav {
+    bottom: 10px;
+
+    width: calc(100% - 20px);
+
+    grid-template-columns:
+      1fr 1fr 68px 1fr 1fr;
+
+    padding:
+      8px 6px;
+
+    border-radius: 16px;
+  }
+
+
+  .bottom-nav-item {
+    min-height: 44px;
+
+    padding: 4px 2px;
+  }
+
+
+  .bottom-nav-icon {
+    font-size: 18px;
+  }
+
+
+  .bottom-nav-text {
+    font-size: 10px;
+  }
+
+
+  .bottom-nav-logo {
+    width: 62px;
+    height: 62px;
+
+    min-height: 62px;
+
+    margin-top: -31px;
+
+    border-width: 3px;
+  }
+
+
+  .dashboard-shell {
+    padding-bottom: 110px;
+  }
+
+}

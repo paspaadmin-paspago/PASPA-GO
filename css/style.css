@@ -18,10 +18,14 @@ body {
 
 .app-shell {
   min-height: 100vh;
+
   display: flex;
+  flex-direction: column;
+
   justify-content: center;
   align-items: center;
-  padding: 24px;
+
+  padding: 15px;
 }
 
 .auth-card {
@@ -155,6 +159,74 @@ button:disabled {
   color: #174f8f;
 }
 
+/* =====================================================
+   GOOGLE LOGIN
+===================================================== */
+
+.google-login-section {
+  width: 100%;
+
+  margin: 18px 0 8px;
+
+  text-align: center;
+}
+
+
+.google-login-text {
+  margin: 0 0 12px;
+
+  color: #566374;
+
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+
+#googleSignInButton {
+  width: 100%;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* =====================================================
+   PEMISAH GOOGLE / LOGIN LAMA
+===================================================== */
+
+.login-divider {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin: 20px 0;
+
+  color: #7b8795;
+
+  font-size: 13px;
+}
+
+
+.login-divider::before,
+.login-divider::after {
+  content: "";
+
+  flex: 1;
+
+  height: 1px;
+
+  background: #d9e0e8;
+}
+
+
+.login-divider span {
+  white-space: nowrap;
+}
+
 .hidden {
   display: none;
 }
@@ -250,4 +322,73 @@ button:disabled {
     min-height: 38px;
     font-size: 21px;
   }
+}
+
+/* =====================================================
+   LOGIN LAMA (DISEMBUNYIKAN)
+===================================================== */
+
+.legacy-login-hidden {
+  display: none;
+}
+
+#googleSignInButton {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* =====================================================
+   LOGO PASPA GO - LOGIN
+===================================================== */
+
+.login-paspago-logo {
+  display: block;
+  width: 19px;
+  max-width: 40%;
+  height: auto;
+
+  margin: 14px auto 8px;
+
+  object-fit: contain;
+}
+
+@media (max-width: 600px) {
+
+  .login-paspago-logo {
+    width: 165px;
+    max-width: 65%;
+
+    margin: 7px auto 8px;
+  }
+
+}
+
+/* =====================================================
+   LOGIN PAGE WRAPPER
+===================================================== */
+
+.login-page-wrapper {
+  width: 100%;
+  max-width: 420px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+/* =====================================================
+   LOGO PASPA GO BAWAH LOGIN CARD
+===================================================== */
+
+.login-paspago-logo-bottom {
+  display: block;
+
+  width: 130px;
+  height: auto;
+
+  margin: -11px auto 0;
+
+  object-fit: contain;
 }

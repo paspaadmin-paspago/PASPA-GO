@@ -259,24 +259,7 @@
          LOGO PASPA DI BAHAGIAN BAWAH
     ====================================================== -->
 
-    <div class="dashboard-footer">
 
-      <button
-        type="button"
-        id="footerPaspaButton"
-        class="paspa-footer-button"
-        title="PASPA"
-        aria-label="PASPA"
-      >
-
-        <img
-          src="../images/logo.png"
-          alt="Logo PASPA"
-        >
-
-      </button>
-
-    </div>
 
 
 
@@ -305,6 +288,66 @@
 
   <script src="../js/dashboard.js"></script>
 
+<!-- =====================================================
+     FIXED BOTTOM NAVIGATION
+===================================================== -->
+
+<nav class="bottom-nav">
+
+  <button
+    type="button"
+    class="bottom-nav-item"
+    onclick="window.location.href='profile.html'"
+  >
+    <span class="bottom-nav-icon">👤</span>
+    <span class="bottom-nav-text">Profil</span>
+  </button>
+
+
+  <button
+    type="button"
+    class="bottom-nav-item"
+    onclick="window.location.href='onScene.html'"
+  >
+    <span class="bottom-nav-icon">🚨</span>
+    <span class="bottom-nav-text">On Scene</span>
+  </button>
+
+
+  <!-- LOGO TENGAH -->
+  <button
+    type="button"
+    class="bottom-nav-logo"
+    id="bottomPaspaLogo"
+    title="PASPA"
+  >
+    <img
+      src="../images/logo.png"
+      alt="PASPA"
+    >
+  </button>
+
+
+  <button
+    type="button"
+    class="bottom-nav-item"
+    onclick="window.location.href='message.html'"
+  >
+    <span class="bottom-nav-icon">✉️</span>
+    <span class="bottom-nav-text">Mesej</span>
+  </button>
+
+
+  <button
+    type="button"
+    class="bottom-nav-item"
+    onclick="window.location.href='settings.html'"
+  >
+    <span class="bottom-nav-icon">⚙️</span>
+    <span class="bottom-nav-text">Tetapan</span>
+  </button>
+
+</nav>
 
 </body>
 

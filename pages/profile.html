@@ -28,34 +28,35 @@
     <!-- HEADER STANDARD -->
 <header class="app-header">
 
-    <!-- Back -->
+  <div class="profile-top-actions">
+
     <button
-        id="backButton"
-        class="app-back-button"
-        type="button"
-        title="Kembali"
-    >
-        ←
+      type="button"
+      class="profile-nav-button"
+      onclick="history.back()"
+      title="Kembali">
+      ←
     </button>
 
-    <!-- Home -->
     <button
-        id="homeButton"
-        class="app-home-button"
-        type="button"
-        title="Dashboard"
-    >
-        🏠
+      type="button"
+      class="profile-nav-button"
+      onclick="window.location.href='dashboard.html'"
+      title="Home">
+      🏠
     </button>
 
-    <img
-        src="../images/logo paspa go.png"
-        class="app-page-logo"
-    >
+  </div>
 
-    <h1 class="app-page-title">
-        Data Peribadi
-    </h1>
+  <img
+    src="../images/logo paspa go.png"
+    alt="PASPA GO"
+    class="app-page-logo"
+  >
+
+  <h1 class="app-page-title">
+    Data Peribadi
+  </h1>
 
 </header>
 

@@ -825,3 +825,88 @@ MAKLUMAT KECERGASAN - VIEW MODE
 .section-edit-button:hover {
   background: #d5e2f3;
 }
+
+/* =====================================================
+   PROFILE MOBILE TOP NAVIGATION
+===================================================== */
+
+.profile-top-actions {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 12px;
+}
+
+.profile-nav-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 40px;
+  height: 40px;
+  min-height: 40px;
+
+  margin: 0;
+  padding: 0;
+
+  border: 1px solid rgba(255,255,255,0.75);
+  border-radius: 11px;
+
+  background: rgba(255,255,255,0.96);
+  color: #103a78;
+
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1;
+
+  cursor: pointer;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+}
+
+.profile-nav-button:hover {
+  background: #ffffff;
+  color: #072c60;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+  .app-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 4px 4px 14px;
+  }
+
+  .profile-top-actions {
+    margin-bottom: 8;
+  }
+
+  .profile-nav-button {
+    width: 30px;
+    height: 2px;
+    min-height: 35px;
+
+    border-radius: 10px;
+
+    font-size: 15px;
+  }
+
+  .app-page-logo {
+    width: min(150px, 50vw);
+    margin: -40px auto 0;
+  }
+
+  .app-page-title {
+    margin: -20px 0 0;
+    text-align: center;
+  }
+
+}

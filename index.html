@@ -1,23 +1,67 @@
 <!DOCTYPE html>
 <html lang="ms">
+
 <head>
+
   <meta charset="UTF-8">
 
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
   >
+<link rel="manifest" href="./manifest.json">
+
+<meta name="theme-color" content="#0b2550">
+
+<link
+  rel="icon"
+  
+  type="image/png"
+  href="./images/logo.png"
+>
+
+<link
+  rel="apple-touch-icon"
+  href="./images/icon-192.png"
+>
 
   <title>PASPA GO</title>
 
-  <link rel="stylesheet" href="css/style.css">
+
+  <!-- =====================================================
+       CSS UTAMA
+  ====================================================== -->
+
+  <link
+    rel="stylesheet"
+    href="css/style.css"
+  >
+
+
+  <!-- =====================================================
+       GOOGLE IDENTITY SERVICES
+  ====================================================== -->
+
+  <script
+    src="https://accounts.google.com/gsi/client"
+    async
+    defer
+  ></script>
+
 </head>
+
 
 <body>
 
   <main class="app-shell">
 
+
     <section class="auth-card">
+
+
+      <!-- =====================================================
+           LOGO PASPA GO
+      ====================================================== -->
 
       <img
         src="images/logo.png"
@@ -25,97 +69,155 @@
         class="logo"
       >
 
-      <h1>PASPA GO</h1>
+
+
+
 
       <p class="subtitle">
         Malaysia Civil Defence Special Team
       </p>
 
-      <!-- BORANG LOGIN -->
-      <form id="loginForm">
 
-        <h2>Log Masuk</h2>
 
-        <label for="loginEmail">
-          Email Google / Email Jabatan
-        </label>
+      <!-- =====================================================
+           GOOGLE LOGIN
+      ====================================================== -->
 
-        <input
-          type="email"
-          id="loginEmail"
-          placeholder="contoh@gmail.com / contoh@civildefence.gov.my"
-          autocomplete="email"
-          required
+      <div class="google-login-section">
+
+        <p class="google-login-text">
+          Log masuk menggunakan email jabatan atau Akaun Google anda
+        </p>
+
+        <div id="googleSignInButton"></div>
+
+      </div>
+
+
+
+      <!-- =====================================================
+           LOGIN LAMA
+           DISEMBUNYIKAN SEMENTARA
+      ====================================================== -->
+
+      <div class="legacy-login-hidden">
+
+        <form
+          id="loginForm"
+          novalidate
         >
 
-        <button
-          type="submit"
-          id="loginButton"
-        >
-          Log Masuk
-        </button>
-
-      </form>
+          <h2>
+            Log Masuk
+          </h2>
 
 
-      <!-- BORANG PENDAFTARAN PERTAMA -->
+          <label for="loginEmail">
+            Email Google / Email Jabatan
+          </label>
+
+
+          <input
+            id="loginEmail"
+            name="loginEmail"
+            type="email"
+            autocomplete="email"
+            required
+          >
+
+
+          <button
+            id="loginButton"
+            type="submit"
+          >
+            Log Masuk
+          </button>
+
+        </form>
+
+      </div>
+
+
+
+      <!-- =====================================================
+           PENGAKTIFAN AKAUN
+           JANGAN LETAK DALAM legacy-login-hidden
+      ====================================================== -->
+
       <form
         id="registrationForm"
         class="hidden"
+        novalidate
       >
 
-        <h2>Pengaktifan Akaun</h2>
+        <h2>
+          Pengesahan Ahli PASPA
+        </h2>
+
 
         <p class="form-info">
-          Akaun ini belum didaftarkan. Masukkan ID PASPA
-          dan nombor kad pengenalan untuk pengesahan.
+          Akaun Google berjaya disahkan.
+          Sila sahkan keahlian PASPA anda.
         </p>
 
+
         <label for="registrationEmail">
-          Email Google
+          Akaun Google
         </label>
 
+
         <input
-          type="email"
           id="registrationEmail"
+          name="registrationEmail"
+          type="email"
           readonly
         >
+
 
         <label for="idPaspa">
           ID PASPA
         </label>
 
+
         <input
-          type="text"
           id="idPaspa"
-          placeholder="Contoh: 456"
+          name="idPaspa"
+          type="text"
           inputmode="numeric"
+          autocomplete="off"
+          placeholder="Contoh: 456"
           required
         >
+
 
         <label for="noKP">
           No. Kad Pengenalan
         </label>
 
+
         <input
-          type="text"
           id="noKP"
-          placeholder="Contoh: 880912092133"
+          name="noKP"
+          type="text"
           inputmode="numeric"
-          maxlength="12"
+          autocomplete="off"
+          maxlength="14"
+          placeholder="Contoh: 880912092133"
           required
         >
 
-        <button
-          type="submit"
-          id="registrationButton"
-        >
-          Aktifkan Akaun
-        </button>
 
         <button
-          type="button"
+          id="registrationButton"
+          type="submit"
+        >
+          Sahkan & Aktifkan Akaun
+        </button>
+
+
+        <button
           id="backToLoginButton"
+          type="button"
           class="secondary-button"
         >
           Kembali
@@ -124,20 +226,46 @@
       </form>
 
 
-      <!-- MESEJ SISTEM -->
+
+      <!-- =====================================================
+           MESEJ SISTEM
+      ====================================================== -->
+
       <div
         id="systemMessage"
         class="message hidden"
         role="alert"
+        aria-live="polite"
       ></div>
+
 
     </section>
 
+ <img
+      src="images/logo paspa go.png"
+      alt="PASPA GO"
+      class="login-paspago-logo-bottom"
+      
+    >
+
+
   </main>
 
+
+  <!-- =====================================================
+       JAVASCRIPT
+       SUSUNAN INI PENTING
+  ====================================================== -->
+
   <script src="js/config.js"></script>
+
   <script src="js/api.js"></script>
+
   <script src="js/login.js"></script>
 
+
+
 </body>
+
 </html>
+
