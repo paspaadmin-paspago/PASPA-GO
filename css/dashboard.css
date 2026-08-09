@@ -867,7 +867,7 @@
 
   /* KOTAK BACKGROUND */
   background: rgba(255, 255, 255, 0.15) !important;
-  border: 1.5px solid #ffffff !important;
+  border: 1px solid #ffffff !important;
   border-radius: 10px !important;
 
   /* SIMBOL */
@@ -906,11 +906,11 @@
     /* Kotak putih */
     background: #ffffff !important;
     border: none !important;
-    border-radius: 10px !important;
+    border-radius: 6px !important;
 
     /* Simbol logout biru */
-    color: #103a78 !important;
-    font-size: 25px !important;
+    color: #01050a !important;
+    font-size: 15px !important;
     font-weight: bold !important;
     line-height: 1 !important;
 
