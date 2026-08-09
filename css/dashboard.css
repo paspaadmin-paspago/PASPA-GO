@@ -1,3 +1,4 @@
+
 .dashboard-body {
   min-height: 100vh;
   background:
@@ -174,7 +175,6 @@
     padding: 14px;
   }
 
-
   /* ===================================================
      HEADER
   =================================================== */
@@ -183,13 +183,11 @@
     margin-bottom: 12px;
   }
 
-
   /* Logo kekal */
   .dashboard-logo {
     width: 230px;
     height: auto;
   }
-
 
   .logout-button {
     min-height: 36px;
@@ -200,7 +198,6 @@
 
     font-size: 13px;
   }
-
 
   /* ===================================================
      KAD AHLI
@@ -218,11 +215,9 @@
     text-align: center;
   }
 
-
   .photo-wrapper {
     margin: 0;
   }
-
 
   /* Gambar lebih kecil */
   .member-photo {
@@ -233,18 +228,15 @@
     border-radius: 10px;
   }
 
-
   .member-details {
     width: 100%;
   }
-
 
   .welcome-text {
     margin: 2px 0 3px;
 
     font-size: 12px;
   }
-
 
   /* Nama ahli */
   .member-details h1 {
@@ -255,7 +247,6 @@
     font-size: 18px;
     line-height: 1.15;
   }
-
 
   /* ID PASPA dan IC */
   .detail-row {
@@ -275,11 +266,9 @@
     line-height: 1.2;
   }
 
-
   .detail-row strong {
     font-size: 13px;
   }
-
 
   /* ===================================================
      MENU DASHBOARD
@@ -294,7 +283,6 @@
     margin-top: 10px;
   }
 
-
   .menu-card {
     min-height: 70px;
 
@@ -305,7 +293,6 @@
     font-size: 12px;
     line-height: 1.1;
   }
-
 
   .menu-icon {
     margin-bottom: 5px;
@@ -359,7 +346,6 @@
 
 }
 
-
 .paspa-footer-button {
   display: flex;
   justify-content: center;
@@ -389,7 +375,6 @@
     rgba(0, 0, 0, 0.25);
 }
 
-
 .paspa-footer-button:hover {
   transform: scale(1.08);
 
@@ -398,7 +383,6 @@
   background:
     rgba(255, 255, 255, 0.18);
 }
-
 
 .paspa-footer-button img {
   display: block;
@@ -410,7 +394,6 @@
 
   border-radius: 50%;
 }
-
 
 /* MOBILE */
 
@@ -474,7 +457,6 @@
 
 
 
-
 /* =====================================================
    FIXED BOTTOM NAVIGATION
 ===================================================== */
@@ -510,7 +492,6 @@
   z-index: 9999;
 }
 
-
 /* =====================================================
    BUTTON KIRI / KANAN
 ===================================================== */
@@ -541,13 +522,11 @@
   cursor: pointer;
 }
 
-
 .bottom-nav-icon {
   font-size: 20px;
 
   line-height: 1;
 }
-
 
 .bottom-nav-text {
   font-size: 11px;
@@ -556,7 +535,6 @@
 
   line-height: 1.1;
 }
-
 
 /* =====================================================
    LOGO TENGAH
@@ -593,7 +571,6 @@
   cursor: pointer;
 }
 
-
 .bottom-nav-logo img {
   display: block;
 
@@ -604,7 +581,6 @@
 
   border-radius: 50%;
 }
-
 
 /* =====================================================
    HOVER
@@ -617,11 +593,9 @@
   border-radius: 10px;
 }
 
-
 .bottom-nav-logo:hover {
   transform: scale(1.05);
 }
-
 
 /* =====================================================
    BAGI RUANG BAWAH PAGE
@@ -631,7 +605,6 @@
 .dashboard-shell {
   padding-bottom: 120px;
 }
-
 
 /* =====================================================
    MOBILE
@@ -653,23 +626,19 @@
     border-radius: 16px;
   }
 
-
   .bottom-nav-item {
     min-height: 44px;
 
     padding: 4px 2px;
   }
 
-
   .bottom-nav-icon {
     font-size: 18px;
   }
 
-
   .bottom-nav-text {
     font-size: 10px;
   }
-
 
   .bottom-nav-logo {
     width: 62px;
@@ -681,7 +650,6 @@
 
     border-width: 3px;
   }
-
 
   .dashboard-shell {
     padding-bottom: 110px;
@@ -719,7 +687,6 @@
   center / cover no-repeat;
 }
 
-
 /* Logo kekal di tengah */
 .dashboard-logo {
   position: relative;
@@ -730,7 +697,6 @@
 
   z-index: 101;
 }
-
 
 /* Logout kekal kanan atas */
 .logout-button {
@@ -756,7 +722,6 @@
     padding-bottom: 4px;
   }
 
-
   /* Kotak ahli lebih pendek */
   .member-card {
     gap: 5px;
@@ -768,7 +733,6 @@
     border-radius: 16px;
   }
 
-
   /* Gambar dikecilkan sedikit */
   .member-photo {
     width: 82px;
@@ -779,12 +743,10 @@
     border-radius: 9px;
   }
 
-
   .photo-wrapper {
     margin: 0;
     padding: 0;
   }
-
 
   /* Selamat datang */
   .welcome-text {
@@ -794,7 +756,6 @@
     line-height: 1.1;
   }
 
-
   /* Nama ahli */
   .member-details h1 {
     margin: 0 0 4px;
@@ -802,7 +763,6 @@
     font-size: 16px;
     line-height: 1.12;
   }
-
 
   /* ID PASPA + IC */
   .detail-row {
@@ -814,11 +774,9 @@
     line-height: 1.1;
   }
 
-
   .detail-row strong {
     font-size: 12px;
   }
-
 
   /* Menu dirapatkan dengan kad ahli */
   .dashboard-menu {
@@ -841,84 +799,4 @@
   overflow: hidden;
 }
 
-/* =====================================================
-   FIX LOGOUT BUTTON - DESKTOP & MOBILE
-===================================================== */
 
-.dashboard-header {
-  position: relative;
-}
-
-#logoutButton.logout-button {
-  position: absolute !important;
-  top: 12px !important;
-  right: 12px !important;
-
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-
-  width: 40px !important;
-  height: 40px !important;
-  min-height: 40px !important;
-
-  margin: 0 !important;
-  padding: 0 !important;
-
-  /* KOTAK BACKGROUND */
-  background: rgba(255, 255, 255, 0.15) !important;
-  border: 1px solid #ffffff !important;
-  border-radius: 10px !important;
-
-  /* SIMBOL */
-  color: #ffffff !important;
-  font-size: 27px !important;
-  font-weight: bold !important;
-  line-height: 1 !important;
-
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.20) !important;
-
-  opacity: 1 !important;
-  visibility: visible !important;
-  z-index: 9999 !important;
-
-  cursor: pointer;
-}
-
-@media (max-width: 650px) {
-
-  #logoutButton.logout-button {
-    position: absolute !important;
-    top: 10px !important;
-    right: 10px !important;
-
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-
-    width: 38px !important;
-    height: 38px !important;
-    min-height: 38px !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    /* Kotak putih */
-    background: #ffffff !important;
-    border: none !important;
-    border-radius: 6px !important;
-
-    /* Simbol logout biru */
-    color: #01050a !important;
-    font-size: 15px !important;
-    font-weight: bold !important;
-    line-height: 1 !important;
-
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.20) !important;
-
-    opacity: 1 !important;
-    visibility: visible !important;
-    z-index: 9999 !important;
-  }
-
-}
