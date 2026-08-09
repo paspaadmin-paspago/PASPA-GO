@@ -1773,4 +1773,37 @@ if (fitnessWeight) {
     updateBmiPreview
   );
 }
+
+/* =====================================================
+   PROFILE COLLAPSIBLE SECTION
+===================================================== */
+
+document
+  .querySelectorAll(".collapsible-header")
+  .forEach(function (header) {
+
+    header.addEventListener("click", function (event) {
+
+      // Jangan buka/tutup jika pengguna tekan button
+      if (event.target.closest("button")) {
+        return;
+      }
+
+      const targetId =
+        header.dataset.collapseTarget;
+
+      const content =
+        document.getElementById(targetId);
+
+      if (!content) {
+        return;
+      }
+
+      content.classList.toggle("is-open");
+
+      header.classList.toggle("is-open");
+
+    });
+
+  });
 loadProfile();

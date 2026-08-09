@@ -826,87 +826,148 @@ MAKLUMAT KECERGASAN - VIEW MODE
   background: #d5e2f3;
 }
 
+
 /* =====================================================
-   PROFILE MOBILE TOP NAVIGATION
+   STANDARD PASPA GO - FIXED TOP NAVIGATION
 ===================================================== */
 
-.profile-top-actions {
+.paspa-top-nav {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+
   width: 100%;
+  height: 58px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  margin-bottom: 12px;
+  padding: 8px 18px;
+
+  background: rgba(16, 58, 120, 0.96);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.16);
 }
 
-.profile-nav-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
+/* BUTANG BACK & HOME */
+
+.paspa-nav-button {
   width: 40px;
   height: 40px;
   min-height: 40px;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   margin: 0;
   padding: 0;
 
-  border: 1px solid rgba(255,255,255,0.75);
-  border-radius: 11px;
+  border: none;
+  border-radius: 0;
 
-  background: rgba(255,255,255,0.96);
-  color: #103a78;
+  background: transparent;
+  box-shadow: none;
+  color: #ffffff;
 
-  font-size: 21px;
+  font-size: 20px;
   font-weight: 700;
   line-height: 1;
 
   cursor: pointer;
 
-  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
-}
-
-.profile-nav-button:hover {
-  background: #ffffff;
-  color: #072c60;
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.18);
 }
 
 
-/* MOBILE */
+.paspa-nav-button:hover {
+  background: transparent;
+  opacity: 0.75;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
 
 @media (max-width: 600px) {
 
-  .app-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    padding: 4px 4px 14px;
+  .paspa-top-nav {
+    height: 52px;
+    padding: 6px 12px;
   }
 
-  .profile-top-actions {
-    margin-bottom: 8;
+  .paspa-nav-button {
+    width: 36px;
+    height: 36px;
+    min-height: 36px;
+
+    border-radius: 9px;
+
+    font-size: 18px;
   }
 
-  .profile-nav-button {
-    width: 30px;
-    height: 2px;
-    min-height: 35px;
+}
 
-    border-radius: 10px;
+/* =====================================================
+   PROFILE COLLAPSIBLE SECTION
+===================================================== */
 
-    font-size: 15px;
-  }
+.collapsible-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-  .app-page-logo {
-    width: min(150px, 50vw);
-    margin: -40px auto 0;
-  }
+  cursor: pointer;
+  user-select: none;
+}
 
-  .app-page-title {
-    margin: -20px 0 0;
-    text-align: center;
-  }
+.collapse-icon {
+  margin-left: auto;
 
+  color: #103a78;
+  font-size: 16px;
+  font-weight: 700;
+
+  transition: transform 0.25s ease;
+}
+
+
+/* Kandungan disorok secara default */
+.collapsible-content {
+  display: none;
+}
+
+
+/* Bila dibuka */
+.collapsible-content.is-open {
+  display: block;
+}
+
+
+/* Pusing anak panah bila dibuka */
+.collapsible-header.is-open .collapse-icon {
+  transform: rotate(180deg);
+}
+
+/* =====================================================
+   FIX BACKGROUND COLLAPSIBLE CARD
+===================================================== */
+
+.profile-section-card {
+  background: rgba(255, 255, 255, 0.97) !important;
+}
+
+/* Tajuk ketika kandungan ditutup */
+.profile-section-card .collapsible-header {
+  background: transparent;
+}
+
+/* Kandungan apabila dibuka */
+.profile-section-card .collapsible-content {
+  background: transparent;
 }

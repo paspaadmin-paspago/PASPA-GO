@@ -23,30 +23,42 @@
 
 <body class="profile-body">
 
+  
+<!-- =====================================================
+     STANDARD PASPA GO TOP NAVIGATION
+===================================================== -->
+
+<nav class="paspa-top-nav">
+
+  <button
+    type="button"
+    class="paspa-nav-button paspa-back-button"
+    onclick="history.back()"
+    aria-label="Kembali"
+    title="Kembali"
+  >
+    ←
+  </button>
+
+  <button
+    type="button"
+    class="paspa-nav-button paspa-home-button"
+    onclick="window.location.href='dashboard.html'"
+    aria-label="Home"
+    title="Home"
+  >
+    🏠
+  </button>
+
+</nav>
+
+
   <main class="profile-shell">
 
     <!-- HEADER STANDARD -->
 <header class="app-header">
 
-  <div class="profile-top-actions">
-
-    <button
-      type="button"
-      class="profile-nav-button"
-      onclick="history.back()"
-      title="Kembali">
-      ←
-    </button>
-
-    <button
-      type="button"
-      class="profile-nav-button"
-      onclick="window.location.href='dashboard.html'"
-      title="Home">
-      🏠
-    </button>
-
-  </div>
+  
 
   <img
     src="../images/logo paspa go.png"
@@ -118,45 +130,63 @@
     </section>
 
 
-    <!-- KOTAK 2: MAKLUMAT PERIBADI -->
-    <section class="profile-section-card">
+   <!-- KOTAK 2: MAKLUMAT PERIBADI -->
+<section class="profile-section-card">
 
-      <div class="section-card-header">
-        <h3>Maklumat Peribadi</h3>
-      </div>
+  <div
+    class="section-card-header collapsible-header"
+    data-collapse-target="personalContent"
+  >
 
-      <div class="profile-info-row">
-        <span>No. Kad Pengenalan</span>
-        <strong id="profileIc">-</strong>
-      </div>
+    <h3>
+      Maklumat Peribadi
+    </h3>
 
-      <div class="profile-info-row">
-        <span>Jantina</span>
-        <strong id="profileGender">-</strong>
-      </div>
+    <span class="collapse-icon">
+      ▼
+    </span>
 
-      <div class="profile-info-row">
-        <span>Email</span>
-        <strong id="profileEmail">-</strong>
-      </div>
+  </div>
 
-      <div class="profile-info-row">
-        <span>No. Badan</span>
-        <strong id="profileBodyNumber">-</strong>
-      </div>
 
-      <div class="profile-info-row">
-        <span>Tarikh Lantikan PASPA</span>
-        <strong id="profileAppointmentDate">-</strong>
-      </div>
+  <div
+    id="personalContent"
+    class="collapsible-content"
+  >
 
-      <div class="profile-info-row">
-        <span>Jawatan PASPA</span>
-        <strong id="profilePaspaPosition">-</strong>
-      </div>
+    <div class="profile-info-row">
+      <span>No. Kad Pengenalan</span>
+      <strong id="profileIc">-</strong>
+    </div>
 
-    </section>
+    <div class="profile-info-row">
+      <span>Jantina</span>
+      <strong id="profileGender">-</strong>
+    </div>
 
+    <div class="profile-info-row">
+      <span>Email</span>
+      <strong id="profileEmail">-</strong>
+    </div>
+
+    <div class="profile-info-row">
+      <span>No. Badan</span>
+      <strong id="profileBodyNumber">-</strong>
+    </div>
+
+    <div class="profile-info-row">
+      <span>Tarikh Lantikan PASPA</span>
+      <strong id="profileAppointmentDate">-</strong>
+    </div>
+
+    <div class="profile-info-row">
+      <span>Jawatan PASPA</span>
+      <strong id="profilePaspaPosition">-</strong>
+    </div>
+
+  </div>
+
+</section>
 
     <!-- KOTAK 3: MAKLUMAT PERKHIDMATAN -->
     <section
@@ -164,7 +194,11 @@
   data-section="service"
 >
 
-  <div class="section-card-header">
+  <!-- HEADER DROPDOWN -->
+  <div
+    class="section-card-header collapsible-header"
+    data-collapse-target="serviceContent"
+  >
 
     <h3>
       Maklumat Perkhidmatan
@@ -178,233 +212,273 @@
       Edit
     </button>
 
-  </div>
-
-
-  <div class="editable-row">
-
-    <label for="serviceRank">
-      Pangkat
-    </label>
-
-    <select
-      id="serviceRank"
-      disabled
-    ></select>
+    <span class="collapse-icon">
+      ▼
+    </span>
 
   </div>
 
 
-  <div class="editable-row">
-
-    <label for="serviceAppointment">
-      Taraf Lantikan
-    </label>
-
-    <select
-      id="serviceAppointment"
-      disabled
-    ></select>
-
-  </div>
-
-
-  <div class="editable-row">
-
-    <label for="serviceGrade">
-      Gred Jawatan
-    </label>
-
-    <select
-      id="serviceGrade"
-      disabled
-    ></select>
-
-  </div>
-
-
-  <div class="editable-row">
-
-    <label for="servicePaspaAppointmentDate">
-      Tarikh Lantikan PASPA
-    </label>
-
-    <input
-      id="servicePaspaAppointmentDate"
-      type="date"
-      disabled
-    >
-
-  </div>
-
-
-  <div class="editable-row">
-
-    <label for="serviceBranch">
-      Cawangan Berkhidmat
-    </label>
-
-    <input
-      id="serviceBranch"
-      type="text"
-      disabled
-    >
-
-  </div>
-
-
-  <div class="editable-row">
-
-    <label for="serviceState">
-      Negeri Berkhidmat
-    </label>
-
-    <select
-      id="serviceState"
-      disabled
-    ></select>
-
-  </div>
-
-
-  <button
-    type="button"
-    class="section-save-button hidden"
-    data-save-section="service"
+  <!-- KANDUNGAN DROPDOWN -->
+  <div
+    id="serviceContent"
+    class="collapsible-content"
   >
-    Simpan Perubahan
-  </button>
+
+    <div class="editable-row">
+
+      <label for="serviceRank">
+        Pangkat
+      </label>
+
+      <select
+        id="serviceRank"
+        disabled
+      ></select>
+
+    </div>
+
+
+    <div class="editable-row">
+
+      <label for="serviceAppointment">
+        Taraf Lantikan
+      </label>
+
+      <select
+        id="serviceAppointment"
+        disabled
+      ></select>
+
+    </div>
+
+
+    <div class="editable-row">
+
+      <label for="serviceGrade">
+        Gred Jawatan
+      </label>
+
+      <select
+        id="serviceGrade"
+        disabled
+      ></select>
+
+    </div>
+
+
+    <div class="editable-row">
+
+      <label for="servicePaspaAppointmentDate">
+        Tarikh Lantikan PASPA
+      </label>
+
+      <input
+        id="servicePaspaAppointmentDate"
+        type="date"
+        disabled
+      >
+
+    </div>
+
+
+    <div class="editable-row">
+
+      <label for="serviceBranch">
+        Cawangan Berkhidmat
+      </label>
+
+      <input
+        id="serviceBranch"
+        type="text"
+        disabled
+      >
+
+    </div>
+
+
+    <div class="editable-row">
+
+      <label for="serviceState">
+        Negeri Berkhidmat
+      </label>
+
+      <select
+        id="serviceState"
+        disabled
+      ></select>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="section-save-button hidden"
+      data-save-section="service"
+    >
+      Simpan Perubahan
+    </button>
+
+  </div>
 
 </section>
 
 
     <!-- KOTAK 4: MAKLUMAT PERHUBUNGAN / KELURGA -->
-    <section
-      class="profile-section-card editable-section"
-      data-section="contact"
+   <section
+  class="profile-section-card editable-section"
+  data-section="contact"
+>
+
+  <!-- HEADER DROPDOWN -->
+  <div
+    class="section-card-header collapsible-header"
+    data-collapse-target="contactContent"
+  >
+
+    <h3>
+      Maklumat Perhubungan / Keluarga
+    </h3>
+
+    <button
+      type="button"
+      class="section-edit-button"
+      data-edit-section="contact"
     >
+      Edit
+    </button>
 
-      <div class="section-card-header">
+    <span class="collapse-icon">
+      ▼
+    </span>
 
-        <h3>Maklumat Perhubungan / Keluarga</h3>
+  </div>
 
-        <button
-          type="button"
-          class="section-edit-button"
-          data-edit-section="contact"
-        >
-          Edit
-        </button>
 
-      </div>
-
- <div class="editable-row">
-
-  <label for="contactPhone">
-    No. Telefon
-  </label>
-
-  <input
-    id="contactPhone"
-    type="tel"
-    inputmode="tel"
-    disabled
+  <!-- KANDUNGAN DROPDOWN -->
+  <div
+    id="contactContent"
+    class="collapsible-content"
   >
 
-</div>
+    <div class="editable-row">
 
+      <label for="contactPhone">
+        No. Telefon
+      </label>
 
-<div class="editable-row">
-
-  <label for="contactEmergencyPhone">
-    No. Tel Waris
-  </label>
-
-  <input
-    id="contactEmergencyPhone"
-    type="tel"
-    inputmode="tel"
-    disabled
-  >
-
-</div>
-
-
-
-      <div class="editable-row">
-        <label for="contactAddress">
-          Alamat Kediaman
-        </label>
-
-        <textarea
-          id="contactAddress"
-          rows="3"
-          disabled
-        ></textarea>
-      </div>
-
-      <div class="editable-row">
-        <label for="contactPostcode">
-          Poskod
-        </label>
-
-        <input
-          id="contactPostcode"
-          type="text"
-          inputmode="numeric"
-          maxlength="5"
-          disabled
-        >
-      </div>
-
-      <div class="editable-row">
-        <label for="contactDistrict">
-          Daerah
-        </label>
-
-        <input
-          id="contactDistrict"
-          type="text"
-          disabled
-        >
-      </div>
-
-      <div class="editable-row">
-        <label for="contactState">
-          Negeri
-        </label>
-<select
-  id="contactState"
-  disabled
-></select>
-
-      </div>
-
-
-  <div class="editable-row">
-
-  <label for="contactMaritalStatus">
-    Taraf Perkahwinan
-  </label>
-
-  <select
-    id="contactMaritalStatus"
-    disabled
-  ></select>
-
-</div>
-
-
-      <button
-        type="button"
-        class="section-save-button hidden"
-        data-save-section="contact"
+      <input
+        id="contactPhone"
+        type="tel"
+        inputmode="tel"
+        disabled
       >
-        Simpan Perubahan
-      </button>
 
-    </section>
+    </div>
 
+
+    <div class="editable-row">
+
+      <label for="contactEmergencyPhone">
+        No. Tel Waris
+      </label>
+
+      <input
+        id="contactEmergencyPhone"
+        type="tel"
+        inputmode="tel"
+        disabled
+      >
+
+    </div>
+
+
+    <div class="editable-row">
+
+      <label for="contactAddress">
+        Alamat Kediaman
+      </label>
+
+      <textarea
+        id="contactAddress"
+        rows="3"
+        disabled
+      ></textarea>
+
+    </div>
+
+
+    <div class="editable-row">
+
+      <label for="contactPostcode">
+        Poskod
+      </label>
+
+      <input
+        id="contactPostcode"
+        type="text"
+        inputmode="numeric"
+        maxlength="5"
+        disabled
+      >
+
+    </div>
+
+
+    <div class="editable-row">
+
+      <label for="contactDistrict">
+        Daerah
+      </label>
+
+      <input
+        id="contactDistrict"
+        type="text"
+        disabled
+      >
+
+    </div>
+
+
+    <div class="editable-row">
+
+      <label for="contactState">
+        Negeri
+      </label>
+
+      <select
+        id="contactState"
+        disabled
+      ></select>
+
+    </div>
+
+
+    <div class="editable-row">
+
+      <label for="contactMaritalStatus">
+        Taraf Perkahwinan
+      </label>
+
+      <select
+        id="contactMaritalStatus"
+        disabled
+      ></select>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="section-save-button hidden"
+      data-save-section="contact"
+    >
+      Simpan Perubahan
+    </button>
+
+  </div>
+
+</section>
 
     <!-- KOTAK 5: MAKLUMAT KECERGASAN -->
     <section
@@ -412,7 +486,11 @@
   data-section="fitness"
 >
 
-  <div class="section-card-header">
+  <!-- HEADER DROPDOWN -->
+  <div
+    class="section-card-header collapsible-header"
+    data-collapse-target="fitnessContent"
+  >
 
     <h3>
       Maklumat Kecergasan
@@ -426,221 +504,266 @@
       Edit
     </button>
 
-  </div>
-
-
-  <div class="editable-row">
-
-    <label for="fitnessBloodType">
-      Jenis Darah
-    </label>
-
-    <select
-      id="fitnessBloodType"
-      disabled
-    ></select>
+    <span class="collapse-icon">
+      ▼
+    </span>
 
   </div>
 
 
-  <div class="editable-row">
-
-    <label for="fitnessHeight">
-      Tinggi (cm)
-    </label>
-
-    <input
-      id="fitnessHeight"
-      type="number"
-      min="100"
-      max="250"
-      step="0.1"
-      inputmode="decimal"
-      disabled
-    >
-
-  </div>
-
-
-  <div class="editable-row">
-
-    <label for="fitnessWeight">
-      Berat (kg)
-    </label>
-
-    <input
-      id="fitnessWeight"
-      type="number"
-      min="20"
-      max="300"
-      step="0.1"
-      inputmode="decimal"
-      disabled
-    >
-
-  </div>
-
-
-  <div class="editable-row">
-
-    <label for="fitnessBmi">
-      BMI
-    </label>
-
-    <input
-      id="fitnessBmi"
-      type="text"
-      readonly
-      disabled
-    >
-
-  </div>
-
-
-  <p
-    id="fitnessBmiCategory"
-    class="bmi-category hidden"
-  ></p>
-
-
-  <button
-    type="button"
-    class="section-save-button hidden"
-    data-save-section="fitness"
+  <!-- KANDUNGAN DROPDOWN -->
+  <div
+    id="fitnessContent"
+    class="collapsible-content"
   >
-    Simpan Perubahan
-  </button>
+
+    <div class="editable-row">
+
+      <label for="fitnessBloodType">
+        Jenis Darah
+      </label>
+
+      <select
+        id="fitnessBloodType"
+        disabled
+      ></select>
+
+    </div>
+
+
+    <div class="editable-row">
+
+      <label for="fitnessHeight">
+        Tinggi (cm)
+      </label>
+
+      <input
+        id="fitnessHeight"
+        type="number"
+        min="100"
+        max="250"
+        step="0.1"
+        inputmode="decimal"
+        disabled
+      >
+
+    </div>
+
+
+    <div class="editable-row">
+
+      <label for="fitnessWeight">
+        Berat (kg)
+      </label>
+
+      <input
+        id="fitnessWeight"
+        type="number"
+        min="20"
+        max="300"
+        step="0.1"
+        inputmode="decimal"
+        disabled
+      >
+
+    </div>
+
+
+    <div class="editable-row">
+
+      <label for="fitnessBmi">
+        BMI
+      </label>
+
+      <input
+        id="fitnessBmi"
+        type="text"
+        readonly
+        disabled
+      >
+
+    </div>
+
+
+    <p
+      id="fitnessBmiCategory"
+      class="bmi-category hidden"
+    ></p>
+
+
+    <button
+      type="button"
+      class="section-save-button hidden"
+      data-save-section="fitness"
+    >
+      Simpan Perubahan
+    </button>
+
+  </div>
 
 </section>
 
 
     <!-- KOTAK 6: MAKLUMAT PAKAIAN DAN AKSESORI -->
     <section
-      class="profile-section-card editable-section"
-      data-section="clothing"
+  class="profile-section-card editable-section"
+  data-section="clothing"
+>
+
+  <!-- HEADER DROPDOWN -->
+  <div
+    class="section-card-header collapsible-header"
+    data-collapse-target="clothingContent"
+  >
+
+    <h3>
+      Maklumat Pakaian dan Aksesori
+    </h3>
+
+    <button
+      type="button"
+      class="section-edit-button"
+      data-edit-section="clothing"
     >
+      Edit
+    </button>
 
-      <div class="section-card-header">
+    <span class="collapse-icon">
+      ▼
+    </span>
 
-        <h3>Maklumat Pakaian dan Aksesori</h3>
-
-        <button
-          type="button"
-          class="section-edit-button"
-          data-edit-section="clothing"
-        >
-          Edit
-        </button>
-
-      </div>
-
-      <div class="editable-row">
-        <label for="clothingTshirt">
-          Saiz T-Shirt
-        </label>
-
-<select
-  id="clothingTshirt"
-  disabled
-></select>
-
-      </div>
-
-      <div class="editable-row">
-        <label for="clothingSportPants">
-          Saiz Seluar Sukan
-        </label>
-
-<select
-  id="clothingSportPants"
-  disabled
-></select>
-
-      </div>
-
-      <div class="editable-row">
-        <label for="clothingUniform">
-          Saiz Uniform
-        </label>
-
-<select
-  id="clothingUniform"
-  disabled
-></select>
-
-      </div>
-
-      <div class="editable-row">
-        <label for="clothingBeret">
-          Saiz Beret
-        </label>
-
-<select
-  id="clothingBeret"
-  disabled
-></select>
-
-      </div>
-
-      <div class="editable-row">
-        <label for="clothingJacket">
-          Saiz Jaket
-        </label>
-
-<select
-  id="clothingJacket"
-  disabled
-></select>
-
-      </div>
-
-      <div class="editable-row">
-        <label for="clothingSportShoes">
-          Saiz Kasut Sukan
-        </label>
-
-<select
-  id="clothingSportShoes"
-  disabled
-></select>
-
-      </div>
-
-      <div class="editable-row">
-        <label for="clothingBoot">
-          Saiz Kasut Boot
-        </label>
-
-<select
-  id="clothingBoot"
-  disabled
-></select>
-
-      </div>
-
-      <div class="editable-row">
-        <label for="clothingBelt">
-          Saiz Tali Pinggang
-        </label>
-
-<select
-  id="clothingBelt"
-  disabled
-></select>
-
-      </div>
-
-      <button
-        type="button"
-        class="section-save-button hidden"
-        data-save-section="clothing"
-      >
-        Simpan Perubahan
-      </button>
-
-    </section>
+  </div>
 
 
+  <!-- KANDUNGAN DROPDOWN -->
+  <div
+    id="clothingContent"
+    class="collapsible-content"
+  >
+
+    <div class="editable-row">
+
+      <label for="clothingTshirt">
+        Saiz T-Shirt
+      </label>
+
+      <select
+        id="clothingTshirt"
+        disabled
+      ></select>
+
+    </div>
+
+
+    <div class="editable-row">
+
+      <label for="clothingSportPants">
+        Saiz Seluar Sukan
+      </label>
+
+      <select
+        id="clothingSportPants"
+        disabled
+      ></select>
+
+    </div>
+
+
+    <div class="editable-row">
+
+      <label for="clothingUniform">
+        Saiz Uniform
+      </label>
+
+      <select
+        id="clothingUniform"
+        disabled
+      ></select>
+
+    </div>
+
+
+    <div class="editable-row">
+
+      <label for="clothingBeret">
+        Saiz Beret
+      </label>
+
+      <select
+        id="clothingBeret"
+        disabled
+      ></select>
+
+    </div>
+
+
+    <div class="editable-row">
+
+      <label for="clothingJacket">
+        Saiz Jaket
+      </label>
+
+      <select
+        id="clothingJacket"
+        disabled
+      ></select>
+
+    </div>
+
+
+    <div class="editable-row">
+
+      <label for="clothingSportShoes">
+        Saiz Kasut Sukan
+      </label>
+
+      <select
+        id="clothingSportShoes"
+        disabled
+      ></select>
+
+    </div>
+
+
+    <div class="editable-row">
+
+      <label for="clothingBoot">
+        Saiz Kasut Boot
+      </label>
+
+      <select
+        id="clothingBoot"
+        disabled
+      ></select>
+
+    </div>
+
+
+    <div class="editable-row">
+
+      <label for="clothingBelt">
+        Saiz Tali Pinggang
+      </label>
+
+      <select
+        id="clothingBelt"
+        disabled
+      ></select>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="section-save-button hidden"
+      data-save-section="clothing"
+    >
+      Simpan Perubahan
+    </button>
+
+  </div>
+
+</section>
     <!-- MESEJ SISTEM -->
     <div
       id="profileMessage"
