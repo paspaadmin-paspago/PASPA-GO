@@ -164,7 +164,7 @@
   font-family: "Arial Black", Arial, sans-serif;
   position: absolute;
 
-  top: 61%;
+  top: 62%;
   left: 50%;
 
   transform:
@@ -198,7 +198,7 @@
 .idcard-name {
   position: absolute;
 
-  top: 71%;
+  top: 72%;
   left: 12%;
 
   width: 76%;
@@ -233,7 +233,7 @@
 .idcard-ic {
   position: absolute;
 
-  top: 80%;
+  top: 79%;
   left: 11%;
 
   width: 76%;
@@ -249,7 +249,7 @@
       21px
     );
 
-  font-weight: 700;
+  font-weight: 500;
 
   letter-spacing: 2px;
 
@@ -264,7 +264,7 @@
 .idcard-blood {
   position: absolute;
 
-  top: 86%;
+  top: 88%;
   right: 14%;
 
   color: #ffffff;
@@ -424,4 +424,43 @@
     font-size: 10px;
   }
 
+}
+/* =====================================================
+   NOTA KAKI KAD DIGITAL PASPA
+===================================================== */
+
+.digital-card-disclaimer {
+  width: 98%;
+  max-width: 520px;
+
+  margin: 16px auto 24px;
+  padding: 0 12px;
+
+  color: rgba(255, 255, 255, 0.78);
+
+  font-size: 8px;
+  font-weight: 400;
+  line-height: 1.45;
+
+  text-align: center;
+
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
+@media (max-width: 600px) {
+  .digital-card-disclaimer {
+    width: 98%;
+    max-width: none;
+
+    margin: 14px auto 22px;
+
+    padding: 0 10px;
+
+    font-size: 7px;
+    line-height: 1.5;
+
+    text-align: center;
+  }
 }
