@@ -865,21 +865,21 @@
   margin: 0 !important;
   padding: 0 !important;
 
-  border: none !important;
-  border-radius: 0 !important;
+  /* KOTAK BACKGROUND */
+  background: rgba(255, 255, 255, 0.15) !important;
+  border: 1.5px solid #ffffff !important;
+  border-radius: 10px !important;
 
-  background: transparent !important;
-  box-shadow: none !important;
-
+  /* SIMBOL */
   color: #ffffff !important;
-
-  font-size: 30px !important;
+  font-size: 27px !important;
   font-weight: bold !important;
   line-height: 1 !important;
 
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.20) !important;
+
   opacity: 1 !important;
   visibility: visible !important;
-
   z-index: 9999 !important;
 
   cursor: pointer;
@@ -889,24 +889,35 @@
 
   #logoutButton.logout-button {
     position: absolute !important;
-
     top: 10px !important;
     right: 10px !important;
 
     display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 
     width: 38px !important;
     height: 38px !important;
     min-height: 38px !important;
 
-    color: #ffffff !important;
-    background: transparent !important;
+    margin: 0 !important;
+    padding: 0 !important;
 
-    font-size: 28px !important;
+    /* Kotak putih */
+    background: #ffffff !important;
+    border: none !important;
+    border-radius: 10px !important;
+
+    /* Simbol logout biru */
+    color: #103a78 !important;
+    font-size: 25px !important;
+    font-weight: bold !important;
+    line-height: 1 !important;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.20) !important;
 
     opacity: 1 !important;
     visibility: visible !important;
-
     z-index: 9999 !important;
   }
 
