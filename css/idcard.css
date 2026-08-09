@@ -464,3 +464,32 @@
     text-align: center;
   }
 }
+
+.digital-card-note {
+  width: 100%;
+
+  margin: 18px auto 0;
+  padding: 0 14px 20px;
+
+  color: rgba(255, 255, 255, 0.78) !important;
+
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+
+  text-align: center !important;
+}
+
+@media (max-width: 600px) {
+
+  .digital-card-note {
+    margin: 14px auto 0;
+    padding: 0 20px 18px;
+
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+
+    text-align: center !important;
+  }
+
+}
