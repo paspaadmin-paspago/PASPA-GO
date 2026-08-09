@@ -411,3 +411,94 @@ button:disabled {
   }
 
 }
+/* =====================================================
+   STANDARD PASPA GO TOP NAVIGATION
+   DIGUNAKAN PADA SEMUA PAGE
+===================================================== */
+
+.paspa-top-nav {
+  position: sticky;
+  top: 0;
+
+  z-index: 9999;
+
+  width: 100%;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 6px 14px;
+
+  background: #103a78;
+
+  border-bottom:
+    1px solid rgba(255,255,255,0.15);
+
+  box-shadow:
+    0 3px 10px rgba(0,0,0,0.18);
+}
+
+
+/* BACK + HOME */
+
+.paspa-nav-button {
+  width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  border: none !important;
+  border-radius: 0 !important;
+
+  background: transparent !important;
+  box-shadow: none !important;
+
+  color: #ffffff !important;
+
+  font-size: 21px !important;
+  font-weight: 700;
+
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+
+.paspa-nav-button:hover,
+.paspa-nav-button:focus {
+  background: transparent !important;
+
+  color: #ffffff !important;
+
+  opacity: 0.8;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+  .paspa-top-nav {
+    height: 48px;
+
+    padding: 5px 12px;
+  }
+
+
+  .paspa-nav-button {
+    width: 34px !important;
+    height: 34px !important;
+    min-height: 34px !important;
+
+    font-size: 19px !important;
+  }
+
+}

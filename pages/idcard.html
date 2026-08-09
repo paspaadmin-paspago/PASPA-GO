@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    ID Kad Digital | PASPA GO
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="../css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/idcard.css"
+  >
+
+</head>
+
+
+<body class="idcard-body">
+
+
+  <!-- =====================================================
+       STANDARD TOP NAV
+  ====================================================== -->
+
+  <nav class="paspa-top-nav">
+
+    <button
+      type="button"
+      class="paspa-nav-button"
+      onclick="history.back()"
+      title="Kembali"
+    >
+      ←
+    </button>
+
+
+    <button
+      type="button"
+      class="paspa-nav-button"
+      onclick="window.location.href='dashboard.html'"
+      title="Home"
+    >
+      🏠
+    </button>
+
+  </nav>
+
+
+
+  <main class="idcard-shell">
+
+
+    <h1 class="idcard-page-title">
+      ID Kad Digital PASPA
+    </h1>
+
+
+    <!-- =====================================================
+         CARD
+    ====================================================== -->
+
+    <div
+      id="cardStage"
+      class="card-stage"
+    >
+
+      <div
+        id="digitalCard"
+        class="digital-card"
+      >
+
+
+        <!-- =========================
+             FRONT
+        ========================== -->
+
+        <div class="card-face card-front">
+
+          <img
+            src="../images/IDCARD-FRONT.png"
+            alt="ID Kad PASPA"
+            class="card-background"
+          >
+
+
+          <!-- GAMBAR AHLI -->
+
+          <img
+            id="idCardPhoto"
+            src="../images/default-avatar.png"
+            alt="Gambar Ahli"
+            class="idcard-photo"
+          >
+
+
+          <!-- ID PASPA -->
+
+          <div
+            id="idCardPaspaId"
+            class="idcard-id"
+          >
+            -
+          </div>
+
+
+          <!-- NAMA -->
+
+          <div
+            id="idCardName"
+            class="idcard-name"
+          >
+            Memuatkan...
+          </div>
+
+
+          <!-- IC -->
+
+          <div
+            id="idCardIc"
+            class="idcard-ic"
+          >
+            -
+          </div>
+
+
+          <!-- BLOOD TYPE -->
+
+          <div
+            id="idCardBlood"
+            class="idcard-blood"
+          >
+            Blood Type: -
+          </div>
+
+        </div>
+
+
+
+        <!-- =========================
+             BACK
+        ========================== -->
+
+        <div class="card-face card-back">
+
+          <img
+            src="../images/IDCARD-BACK.png"
+            alt="Belakang ID Kad PASPA"
+            class="card-background"
+          >
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         CONTROL BUTTON
+    ====================================================== -->
+
+    <div class="idcard-controls">
+
+
+      <!-- FLIP -->
+
+      <button
+        type="button"
+        id="flipCardButton"
+        class="idcard-control-button"
+        title="Balik Kad"
+      >
+        ↻
+
+        <span>
+          Flip
+        </span>
+      </button>
+
+
+
+      <!-- FULL SCREEN -->
+
+      <button
+        type="button"
+        id="fullscreenButton"
+        class="idcard-control-button"
+        title="Paparan Penuh"
+      >
+        ⛶
+
+        <span>
+          Full Screen
+        </span>
+      </button>
+
+
+
+      <!-- DOWNLOAD -->
+
+      <button
+        type="button"
+        id="downloadCardButton"
+        class="idcard-control-button"
+        title="Muat Turun"
+      >
+        ⬇
+
+        <span>
+          Download
+        </span>
+      </button>
+
+
+    </div>
+
+
+
+    <div
+      id="idCardMessage"
+      class="message hidden"
+    ></div>
+
+
+  </main>
+
+
+
+  <!-- Untuk hasilkan PNG -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+  ></script>
+
+
+  <script src="../js/config.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/idcard.js"></script>
+
+
+</body>
+
+</html>
