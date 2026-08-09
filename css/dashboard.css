@@ -34,14 +34,20 @@
   max-height: auto;
 
   object-fit: contain;
+  margin: 0 auto;
+
+  transform: translateY(25px);
 }
 
 .logout-button {
-
   position: absolute;
 
-  top: 0;
-  right: 0;
+  top: 10px;
+  right: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   width: 42px;
   height: 42px;
@@ -51,19 +57,27 @@
   padding: 0;
 
   border: none;
-  border-radius: 12px;
+  border-radius: 0;
 
-  background: rgba(255,255,255,.96);
+  background: transparent !important;
+  box-shadow: none !important;
 
-  color: #103a78;
+  color: #f7f4f4 !important;
 
-  font-size: 22px;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1;
 
   cursor: pointer;
 
-  box-shadow:
-      0 5px 15px rgba(0,0,0,.18);
+  z-index: 50;
+}
 
+.logout-button:hover {
+  background: transparent !important;
+  color: #ffffff;
+
+  transform: scale(1.08);
 }
 
 .member-card {
@@ -157,7 +171,7 @@
 @media (max-width: 650px) {
 
   .dashboard-shell {
-    padding: 12px;
+    padding: 14px;
   }
 
 
@@ -172,7 +186,7 @@
 
   /* Logo kekal */
   .dashboard-logo {
-    width: 250px;
+    width: 230px;
     height: auto;
   }
 
@@ -282,14 +296,14 @@
 
 
   .menu-card {
-    min-height: 88px;
+    min-height: 70px;
 
-    padding: 10px 7px;
+    padding:6px 7px;
 
-    border-radius: 13px;
+    border-radius: 12px;
 
-    font-size: 13px;
-    line-height: 1.15;
+    font-size: 12px;
+    line-height: 1.1;
   }
 
 
@@ -447,7 +461,7 @@
     border-radius: 11px;
 
     background: #ffffff;
-    color: #103a78 !important;
+    color: #f2f4f8 !important;
 
     font-size: 24px;
     font-weight: 700;
@@ -673,4 +687,156 @@
     padding-bottom: 110px;
   }
 
+}
+
+/* =====================================================
+   HEADER PASPA GO - STICKY / FREEZE
+===================================================== */
+
+.dashboard-header {
+  position: sticky;
+  top: 0;
+
+  z-index: 100;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+
+  padding-top: 8px;
+  padding-bottom: 6px;
+
+  margin-bottom: 6px;
+
+  background:
+  linear-gradient(
+    rgba(5, 25, 60, 0.72),
+    rgba(5, 25, 60, 0.82)
+  ),
+  url("../images/background.jpg")
+  center / cover no-repeat;
+}
+
+
+/* Logo kekal di tengah */
+.dashboard-logo {
+  position: relative;
+
+  display: block;
+
+  margin: 0 auto;
+
+  z-index: 101;
+}
+
+
+/* Logout kekal kanan atas */
+.logout-button {
+  position: absolute;
+
+  top: 10px;
+  right: 10px;
+
+  z-index: 102;
+}
+
+/* =====================================================
+   MOBILE - COMPACT MEMBER CARD
+===================================================== */
+
+@media (max-width: 650px) {
+
+  /* Header lebih rapat dengan kad ahli */
+  .dashboard-header {
+    margin-bottom: 4px;
+
+    padding-top: 5px;
+    padding-bottom: 4px;
+  }
+
+
+  /* Kotak ahli lebih pendek */
+  .member-card {
+    gap: 5px;
+
+    padding: 10px 12px;
+
+    margin-top: 0;
+
+    border-radius: 16px;
+  }
+
+
+  /* Gambar dikecilkan sedikit */
+  .member-photo {
+    width: 82px;
+    height: 103px;
+
+    border-width: 3px;
+
+    border-radius: 9px;
+  }
+
+
+  .photo-wrapper {
+    margin: 0;
+    padding: 0;
+  }
+
+
+  /* Selamat datang */
+  .welcome-text {
+    margin: 2px 0 2px;
+
+    font-size: 11px;
+    line-height: 1.1;
+  }
+
+
+  /* Nama ahli */
+  .member-details h1 {
+    margin: 0 0 4px;
+
+    font-size: 16px;
+    line-height: 1.12;
+  }
+
+
+  /* ID PASPA + IC */
+  .detail-row {
+    gap: 5px;
+
+    padding: 3px 0;
+
+    font-size: 12px;
+    line-height: 1.1;
+  }
+
+
+  .detail-row strong {
+    font-size: 12px;
+  }
+
+
+  /* Menu dirapatkan dengan kad ahli */
+  .dashboard-menu {
+    margin-top: 9px;
+  }
+
+}
+/* =====================================================
+   HEADER LEBIH PENDEK
+===================================================== */
+
+.dashboard-header {
+  height: 125px;
+  min-height: 125px;
+
+  padding: 0;
+
+  margin-bottom: 4px;
+
+  overflow: hidden;
 }
