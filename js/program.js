@@ -136,6 +136,8 @@ let activeYearFilter =
 let memberCanEditProgram =
   false;
 
+let editingProgram = null;
+
 
 
 /* =====================================================
@@ -640,9 +642,7 @@ function renderPrograms() {
     function (program) {
 
       programList.appendChild(
-        createProgramCard(
-          program
-        )
+        createProgramCard(program)
       );
 
     }
@@ -813,7 +813,6 @@ function createProgramCard(
             <div class="program-detail">
               Sijil:
               <strong>
-
                 <a
                   href="${escapeHtml(
                     program.sijilUrl
@@ -824,7 +823,6 @@ function createProgramCard(
                 >
                   📄 Lihat Sijil
                 </a>
-
               </strong>
             </div>
           `
@@ -836,10 +834,368 @@ function createProgramCard(
   `;
 
 
+  /* =====================================================
+     SATU SAHAJA BLOK EDIT & PADAM
+  ===================================================== */
+
+  if (
+    memberCanEditProgram &&
+    String(
+      program.sumberRekod || ""
+    )
+      .trim()
+      .toLowerCase() === "ahli"
+  ) {
+
+    const actions =
+      document.createElement(
+        "div"
+      );
+
+    actions.className =
+      "program-item-actions";
+
+
+    const editButton =
+      document.createElement(
+        "button"
+      );
+
+    editButton.type =
+      "button";
+
+    editButton.className =
+      "program-edit-button";
+
+    editButton.textContent =
+      "✏️";
+
+
+    editButton.addEventListener(
+      "click",
+      function () {
+
+        openProgramEditForm(
+          program
+        );
+
+      }
+    );
+
+
+    const deleteButton =
+      document.createElement(
+        "button"
+      );
+
+    deleteButton.type =
+      "button";
+
+    deleteButton.className =
+      "program-delete-button";
+
+    deleteButton.textContent =
+      "🗑️";
+
+
+    deleteButton.addEventListener(
+      "click",
+      function () {
+
+        deleteProgramRecord(
+          program
+        );
+
+      }
+    );
+
+
+    actions.appendChild(
+      editButton
+    );
+
+    actions.appendChild(
+      deleteButton
+    );
+
+
+    card.appendChild(
+      actions
+    );
+
+  }
+
+
   return card;
 
 }
 
+
+async function deleteProgramRecord(program) {
+
+  const confirmed =
+    window.confirm(
+      'Adakah anda pasti mahu memadam "' +
+      (program.perkara || "Program ini") +
+      '"?'
+    );
+
+  if (!confirmed) {
+    return;
+  }
+
+  try {
+
+    const result =
+      await apiPost({
+
+        action: "program_delete_history",
+
+        email:
+          currentSession.googleEmail,
+
+        memberCourseId:
+          program.memberCourseId,
+
+        courseId:
+          program.courseId
+
+      });
+
+    if (result.success !== true) {
+
+      throw new Error(
+        result.message ||
+        "Program gagal dipadam."
+      );
+
+    }
+
+    showProgramMessage(
+      "Program berjaya dipadam.",
+      "success"
+    );
+
+    await loadPrograms();
+
+  } catch (error) {
+
+    console.error(error);
+
+    showProgramMessage(
+      error.message,
+      "error"
+    );
+
+  }
+
+}
+
+function formatProgramDateForInput(value) {
+
+  const text =
+    String(value || "").trim();
+
+  const match =
+    text.match(
+      /^(\d{2})\/(\d{2})\/(\d{4})$/
+    );
+
+  if (!match) {
+    return "";
+  }
+
+  return (
+    match[3] +
+    "-" +
+    match[2] +
+    "-" +
+    match[1]
+  );
+}
+
+
+function openProgramEditForm(program) {
+
+  editingProgram =
+    program;
+
+
+  /* KATEGORI */
+
+  const kategoriInput =
+    document.querySelector(
+      'input[name="kategoriProgram"][value="' +
+      program.kategoriProgram +
+      '"]'
+    );
+
+  if (kategoriInput) {
+    kategoriInput.checked = true;
+  }
+
+
+  /* LOKASI */
+
+  const lokasiInput =
+    document.querySelector(
+      'input[name="lokasiProgram"][value="' +
+      program.lokasiProgram +
+      '"]'
+    );
+
+  if (lokasiInput) {
+    lokasiInput.checked = true;
+  }
+
+
+  document.getElementById(
+    "programPerkara"
+  ).value =
+    program.perkara || "";
+
+
+  document.getElementById(
+    "programTarikhMula"
+  ).value =
+    formatProgramDateForInput(
+      program.tarikhMula
+    );
+
+
+  document.getElementById(
+    "programTarikhTamat"
+  ).value =
+    formatProgramDateForInput(
+      program.tarikhTamat
+    );
+
+
+  document.getElementById(
+    "programTempat"
+  ).value =
+    program.tempat || "";
+
+
+  document.getElementById(
+    "programNegeri"
+  ).value =
+    program.negeri || "";
+
+
+  document.getElementById(
+    "programNegara"
+  ).value =
+    program.negara || "";
+
+
+  document.getElementById(
+    "programPeranan"
+  ).value =
+    program.peranan || "";
+
+
+  document.getElementById(
+    "programPenganjur"
+  ).value =
+    program.penganjur || "";
+
+
+  document.getElementById(
+    "programPenganjurLain"
+  ).value =
+    program.penganjurLain || "";
+
+
+  /* PAPAR FIELD LOKASI */
+
+  resetConditionalFields();
+
+
+  if (
+    program.lokasiProgram ===
+    "Dalam Negara"
+  ) {
+
+    domesticProgramFields
+      .classList
+      .remove("hidden");
+
+  }
+
+
+  if (
+    program.lokasiProgram ===
+    "Luar Negara"
+  ) {
+
+    internationalProgramFields
+      .classList
+      .remove("hidden");
+
+  }
+
+
+  /* PENGANJUR LAIN */
+
+  if (
+    program.penganjur ===
+    "Lain-lain"
+  ) {
+
+    otherOrganizerField
+      .classList
+      .remove("hidden");
+
+  } else {
+
+    otherOrganizerField
+      .classList
+      .add("hidden");
+
+  }
+
+
+  /* UBAH TAJUK & BUTTON */
+
+  const formTitle =
+    programFormSection
+      .querySelector(
+        ".program-form-header h2"
+      );
+
+  if (formTitle) {
+    formTitle.textContent =
+      "Edit Program";
+  }
+
+
+  saveProgramButton.textContent =
+    "Simpan Perubahan";
+
+
+  /*
+   * Sijil lama dikekalkan.
+   * Jangan benarkan tukar sijil dahulu.
+   */
+
+  if (programCertificate) {
+    programCertificate.disabled = true;
+  }
+
+
+  programFormSection
+    .classList
+    .remove("hidden");
+
+
+  programFormSection
+    .scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+
+}
 
 /* =====================================================
    ESCAPE
@@ -919,6 +1275,25 @@ closeProgramFormButton
         .add("hidden");
 
       programForm.reset();
+editingProgram = null;
+
+saveProgramButton.textContent =
+  "Simpan Program";
+
+if (programCertificate) {
+  programCertificate.disabled = false;
+}
+
+const formTitle =
+  programFormSection
+    .querySelector(
+      ".program-form-header h2"
+    );
+
+if (formTitle) {
+  formTitle.textContent =
+    "Tambah Program";
+}
 
       resetConditionalFields();
 
@@ -1214,20 +1589,48 @@ programForm.addEventListener(
          1. SIMPAN PROGRAM
       ================================================= */
 
-      const result =
-        await apiPost({
+      let result;
 
-          action:
-            "program_add_history",
 
-          email:
-            currentSession.googleEmail,
+if (editingProgram) {
 
-          data:
-            data
+  result =
+    await apiPost({
 
-        });
+      action:
+        "program_update_history",
 
+      email:
+        currentSession.googleEmail,
+
+      memberCourseId:
+        editingProgram.memberCourseId,
+
+      courseId:
+        editingProgram.courseId,
+
+      data:
+        data
+
+    });
+
+} else {
+
+  result =
+    await apiPost({
+
+      action:
+        "program_add_history",
+
+      email:
+        currentSession.googleEmail,
+
+      data:
+        data
+
+    });
+
+}
 
       if (
         result.success !== true
@@ -1246,8 +1649,9 @@ programForm.addEventListener(
       ================================================= */
 
       if (
-        certificateCheck.file
-      ) {
+  !editingProgram &&
+  certificateCheck.file
+) {
 
         saveProgramButton.textContent =
           "Memuat naik sijil...";
@@ -1317,7 +1721,22 @@ programForm.addEventListener(
             ),
         "success"
       );
+editingProgram = null;
 
+if (programCertificate) {
+  programCertificate.disabled = false;
+}
+
+const formTitle =
+  programFormSection
+    .querySelector(
+      ".program-form-header h2"
+    );
+
+if (formTitle) {
+  formTitle.textContent =
+    "Tambah Program";
+}
 
       programForm.reset();
 
@@ -1371,8 +1790,8 @@ const PASPA_COUNTRY_CODES = [
   "TD","CL","CN","CO","KM","CG","CD","CR","CI","HR","CU",
   "CY","CZ","DK","DJ","DM","DO","EC","EG","SV","GQ","ER",
   "EE","SZ","ET","FJ","FI","FR","GA","GM","GE","DE","GH",
-  "GR","GD","GT","GN","GW","GY","HT","HN","HU","IN",
-  "ID","IR","IQ","IE","IL","IT","JM","JP","JO","KZ","KE",
+  "GR","GD","GT","GN","GW","GY","HT","HN","HU","IN","IS",
+  "ID","IR","IQ","IE","IT","JM","JP","JO","KZ","KE",
   "KI","KP","KR","KW","KG","LA","LV","LB","LS","LR","LY",
   "LI","LT","LU","MG","MW","MY","MV","ML","MT","MH","MR",
   "MU","MX","FM","MD","MC","MN","ME","MA","MZ","MM","NA",
@@ -1590,3 +2009,4 @@ function fileToBase64(file) {
   );
 
 }
+

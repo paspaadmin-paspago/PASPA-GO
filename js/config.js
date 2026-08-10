@@ -6,7 +6,7 @@ const CONFIG = Object.freeze({
     "364669924391-b2ij3j6qif5mv535faceb3qoophjm980.apps.googleusercontent.com",
 
   API_URL:
-    "https://script.google.com/macros/s/AKfycbzDC-BfjaDUEre2X_739ntaFEJPZB4p-Pvnsec-i6PdV1NNxOx998vsQk9XYWg1zBT0Vw/exec",
+    "https://script.google.com/macros/s/AKfycbyv2Hql8YsYdofq6xC_Xg6z6e94-KsGstobDb0Aw78sqWfCoVC3KCiRXo3slgdaXMy9_A/exec",
 
   
   API_KEY:
@@ -16,3 +16,4 @@ const CONFIG = Object.freeze({
     "pages/dashboard.html"
 });
 
+ 

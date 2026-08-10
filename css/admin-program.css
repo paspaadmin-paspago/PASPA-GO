@@ -1,0 +1,528 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #edf3fb;
+  color: #17365f;
+}
+
+.admin-program-page {
+  width: 100%;
+  max-width: 760px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background: #071f47;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.admin-program-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  min-height: 64px;
+
+  display: grid;
+  grid-template-columns: 55px 1fr 55px;
+  align-items: center;
+
+  padding: 6px 12px;
+
+  background: #194d91;
+  border-bottom: 1px solid rgba(255,255,255,.25);
+}
+
+.header-icon-button {
+  appearance: none;
+
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 10px;
+
+  background: transparent;
+  color: #ffffff;
+
+  font-size: 25px;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+.header-icon-button:hover {
+  background: rgba(255,255,255,.10);
+}
+
+.header-title {
+  text-align: center;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.admin-program-content {
+  padding: 16px;
+}
+
+.admin-card {
+  margin-bottom: 16px;
+  padding: 18px;
+
+  background: #ffffff;
+  border-radius: 18px;
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  gap: 12px;
+
+  margin-bottom: 18px;
+}
+
+.section-heading h1,
+.section-heading h2 {
+  margin: 3px 0 0;
+  color: #123f7d;
+}
+
+.section-heading h1 {
+  font-size: 22px;
+}
+
+.section-heading h2 {
+  font-size: 20px;
+}
+
+.section-label {
+  color: #67809f;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .5px;
+}
+
+
+/* =====================================================
+   FORM
+===================================================== */
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #526985;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea,
+.member-search input {
+  width: 100%;
+
+  padding: 12px 13px;
+
+  border: 1px solid #c7d5e6;
+  border-radius: 10px;
+
+  background: #ffffff;
+  color: #243f60;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus,
+.member-search input:focus {
+  border-color: #194d91;
+  box-shadow: 0 0 0 3px rgba(25,77,145,.10);
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-group small {
+  display: block;
+
+  margin-top: 6px;
+
+  color: #71849c;
+
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: 12px;
+}
+
+
+/* =====================================================
+   MEMBER SELECTION
+===================================================== */
+
+.selection-count {
+  padding: 7px 10px;
+
+  border-radius: 20px;
+
+  background: #eaf2fc;
+  color: #194d91;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.select-all-row {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 12px;
+  padding: 12px;
+
+  border-radius: 10px;
+
+  background: #eef5ff;
+  color: #173f70;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.select-all-row input {
+  flex: 0 0 auto;
+
+  width: 18px;
+  height: 18px;
+
+  margin: 0;
+}
+
+.member-search {
+  margin-bottom: 12px;
+}
+
+.member-list {
+  max-height: 330px;
+
+  overflow-y: auto;
+
+  border: 1px solid #d4dfed;
+  border-radius: 12px;
+
+  background: #ffffff;
+}
+
+.member-option {
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  padding: 12px;
+
+  border-bottom: 1px solid #edf1f6;
+
+  cursor: pointer;
+}
+
+.member-option:last-child {
+  border-bottom: none;
+}
+
+.member-option:hover {
+  background: #f4f8fd;
+}
+
+.member-option input {
+  flex: 0 0 auto;
+
+  width: 18px;
+  height: 18px;
+
+  margin: 0;
+}
+
+.member-display {
+  min-width: 0;
+
+  color: #29486c;
+
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+
+  overflow-wrap: anywhere;
+}
+
+.loading-text,
+.empty-text {
+  padding: 20px;
+
+  text-align: center;
+
+  color: #71849c;
+
+  font-size: 13px;
+}
+
+
+/* =====================================================
+   SENARAI AHLI DIPILIH
+===================================================== */
+
+.selected-members-box {
+  margin-top: 18px;
+  padding: 14px;
+
+  border: 1px solid #d9e2ee;
+  border-radius: 12px;
+
+  background: #f7f9fc;
+}
+
+.selected-members-title {
+  margin-bottom: 10px;
+
+  color: #103a78;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.selected-members-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+
+  max-height: 280px;
+
+  overflow-y: auto;
+}
+
+.selected-member-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+
+  gap: 7px;
+
+  padding: 9px 10px;
+
+  border: 1px solid #edf1f6;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #20364f;
+
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.selected-member-number {
+  color: #194d91;
+  font-weight: 700;
+}
+
+.selected-member-name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.action-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: 12px;
+}
+
+.primary-button,
+.secondary-button {
+  min-height: 48px;
+
+  padding: 10px 14px;
+
+  border-radius: 10px;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.primary-button {
+  border: none;
+
+  background: #194d91;
+  color: #ffffff;
+}
+
+.secondary-button {
+  border: 1px solid #194d91;
+
+  background: #ffffff;
+  color: #194d91;
+}
+
+.primary-button:hover {
+  background: #123f7d;
+}
+
+.secondary-button:hover {
+  background: #f4f8fd;
+}
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+.message-box {
+  margin-bottom: 14px;
+  padding: 12px 14px;
+
+  border-radius: 10px;
+
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.message-box.success {
+  background: #e7f7ed;
+  color: #176c36;
+}
+
+.message-box.error {
+  background: #fdeaea;
+  color: #b52a2a;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .admin-program-header {
+    min-height: 58px;
+
+    grid-template-columns: 48px 1fr 48px;
+  }
+
+  .header-icon-button {
+    width: 40px;
+    height: 40px;
+
+    min-width: 40px;
+    min-height: 40px;
+
+    font-size: 22px;
+  }
+
+  .header-title {
+    font-size: 15px;
+  }
+
+  .admin-program-content {
+    padding: 12px;
+  }
+
+  .admin-card {
+    padding: 14px;
+
+    border-radius: 15px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+
+    gap: 0;
+  }
+
+  .member-list {
+    max-height: 290px;
+  }
+
+  .member-option {
+    gap: 9px;
+
+    padding: 11px 10px;
+  }
+
+  .member-display {
+    font-size: 12px;
+  }
+
+  .selected-members-box {
+    margin-top: 14px;
+    padding: 12px;
+  }
+
+  .selected-member-row {
+    font-size: 12px;
+  }
+
+  .action-card {
+    grid-template-columns: 1fr;
+  }
+
+}
