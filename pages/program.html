@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Program | PASPA GO</title>
+
+  <link
+    rel="stylesheet"
+    href="../css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/program.css"
+  >
+
+</head>
+
+
+<body class="program-body">
+
+  <main class="program-shell">
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="program-header">
+
+      <div class="program-top-actions">
+
+        <button
+          type="button"
+          id="programBackButton"
+          class="program-nav-button"
+          title="Kembali"
+          aria-label="Kembali"
+        >
+          ←
+        </button>
+
+
+        <button
+          type="button"
+          id="programHomeButton"
+          class="program-nav-button"
+          title="Home"
+          aria-label="Home"
+        >
+          🏠
+        </button>
+
+      </div>
+
+
+      <img
+        src="../images/logo paspa go.png"
+        alt="PASPA GO"
+        class="program-logo"
+      >
+
+
+      <h1 class="program-page-title">
+        Program
+      </h1>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         RINGKASAN AHLI
+    ====================================================== -->
+
+    <section class="program-member-card">
+
+      <div>
+
+        <p class="program-member-label">
+          Rekod Program
+        </p>
+
+        <h2 id="programMemberName">
+          Memuatkan...
+        </h2>
+
+        <p class="program-member-id">
+          ID PASPA:
+          <strong id="programMemberId">
+            -
+          </strong>
+        </p>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         FILTER
+    ====================================================== -->
+
+    <section class="program-filter-card">
+
+      <div class="program-filter-group">
+
+        <button
+          type="button"
+          class="program-filter-button active"
+          data-location-filter="Semua"
+        >
+          Semua
+        </button>
+
+        <button
+          type="button"
+          class="program-filter-button"
+          data-location-filter="Dalam Negara"
+        >
+          Dalam Negara
+        </button>
+
+        <button
+          type="button"
+          class="program-filter-button"
+          data-location-filter="Luar Negara"
+        >
+          Luar Negara
+        </button>
+
+      </div>
+
+
+      <div class="program-year-section">
+
+        <span class="program-year-label">
+          Tahun
+        </span>
+
+        <div
+          id="programYearFilters"
+          class="program-year-filters"
+        >
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         STATUS EDIT
+    ====================================================== -->
+
+    <div
+      id="programEditStatus"
+      class="program-edit-status hidden"
+    >
+    </div>
+
+
+
+    <!-- =====================================================
+         SENARAI PROGRAM
+    ====================================================== -->
+
+    <section class="program-list-section">
+
+      <div class="program-list-header">
+
+        <h2>
+          Senarai Program
+        </h2>
+
+
+        <button
+          type="button"
+          id="addProgramButton"
+          class="program-add-button hidden"
+        >
+          + Tambah Program
+        </button>
+
+      </div>
+
+
+      <div
+        id="programLoading"
+        class="program-loading"
+      >
+        Memuatkan rekod Program...
+      </div>
+
+
+      <div
+        id="programEmpty"
+        class="program-empty hidden"
+      >
+        Tiada rekod Program ditemui.
+      </div>
+
+
+      <div
+        id="programList"
+        class="program-list"
+      >
+      </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         BORANG TAMBAH PROGRAM
+    ====================================================== -->
+
+    <section
+      id="programFormSection"
+      class="program-form-card hidden"
+    >
+
+      <div class="program-form-header">
+
+        <h2>
+          Tambah Program
+        </h2>
+
+        <button
+          type="button"
+          id="closeProgramFormButton"
+          class="program-form-close"
+        >
+          ✕
+        </button>
+
+      </div>
+
+
+      <form id="programForm">
+
+
+        <!-- KATEGORI -->
+
+        <fieldset class="program-fieldset">
+
+          <legend>
+            Kategori Program
+          </legend>
+
+          <div class="program-radio-group">
+
+            <label>
+              <input
+                type="radio"
+                name="kategoriProgram"
+                value="Kursus"
+                required
+              >
+              Kursus
+            </label>
+
+            <label>
+              <input
+                type="radio"
+                name="kategoriProgram"
+                value="Latihan"
+              >
+              Latihan
+            </label>
+
+            <label>
+              <input
+                type="radio"
+                name="kategoriProgram"
+                value="Majlis"
+              >
+              Majlis
+            </label>
+
+          </div>
+
+        </fieldset>
+
+
+
+        <!-- LOKASI -->
+
+        <fieldset class="program-fieldset">
+
+          <legend>
+            Lokasi Program
+          </legend>
+
+          <div class="program-radio-group">
+
+            <label>
+              <input
+                type="radio"
+                name="lokasiProgram"
+                value="Dalam Negara"
+                required
+              >
+              Dalam Negara
+            </label>
+
+            <label>
+              <input
+                type="radio"
+                name="lokasiProgram"
+                value="Luar Negara"
+              >
+              Luar Negara
+            </label>
+
+          </div>
+
+        </fieldset>
+
+
+
+        <!-- PERKARA -->
+
+        <div class="program-form-row">
+
+          <label for="programPerkara">
+            Perkara
+          </label>
+
+          <input
+            type="text"
+            id="programPerkara"
+            required
+          >
+
+        </div>
+
+
+
+        <!-- TARIKH -->
+
+        <div class="program-date-grid">
+
+          <div class="program-form-row">
+
+            <label for="programTarikhMula">
+              Tarikh Mula
+            </label>
+
+            <input
+              type="date"
+              id="programTarikhMula"
+              required
+            >
+
+          </div>
+
+
+          <div class="program-form-row">
+
+            <label for="programTarikhTamat">
+              Tarikh Tamat
+            </label>
+
+            <input
+              type="date"
+              id="programTarikhTamat"
+              required
+            >
+
+          </div>
+
+        </div>
+
+
+
+        <!-- TEMPAT -->
+
+        <div class="program-form-row">
+
+          <label for="programTempat">
+            Tempat
+          </label>
+
+          <input
+            type="text"
+            id="programTempat"
+            required
+          >
+
+        </div>
+
+
+
+        <!-- DALAM NEGARA -->
+
+        <div
+          id="domesticProgramFields"
+          class="hidden"
+        >
+
+          <div class="program-form-row">
+
+            <label for="programNegeri">
+              Negeri / Pusat Latihan
+            </label>
+
+            <select id="programNegeri">
+
+              <option value="">
+                Sila pilih
+              </option>
+
+              <option>Perlis</option>
+              <option>Kedah</option>
+              <option>Pulau Pinang</option>
+              <option>Perak</option>
+              <option>Selangor</option>
+              <option>Negeri Sembilan</option>
+              <option>Melaka</option>
+              <option>Johor</option>
+              <option>Pahang</option>
+              <option>Terengganu</option>
+              <option>Kelantan</option>
+              <option>Sabah</option>
+              <option>Sarawak</option>
+              <option>WP Kuala Lumpur</option>
+              <option>WP Putrajaya</option>
+              <option>WP Labuan</option>
+              <option>IPPA</option>
+              <option>PULAPAU</option>
+              <option>PULAPAT</option>
+              <option>PULAPAS</option>
+              <option>ALPHA</option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- LUAR NEGARA -->
+
+        <div
+          id="internationalProgramFields"
+          class="hidden"
+        >
+
+          <div class="program-form-row">
+
+            <label for="programNegara">
+              Negara
+            </label>
+
+            <!-- Sementara.
+                 Dropdown negara automatik kita buat kemudian. -->
+            <select id="programNegara">
+  <option value="">
+    Sila pilih negara
+  </option>
+</select>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- PERANAN -->
+
+        <div class="program-form-row">
+
+          <label for="programPeranan">
+            Penyertaan
+          </label>
+
+          <select
+            id="programPeranan"
+            required
+          >
+
+            <option value="">
+              Sila pilih
+            </option>
+
+            <option>Peserta</option>
+            <option>Urusetia</option>
+            <option>Pemerhati</option>
+            <option>Jurulatih</option>
+
+          </select>
+
+        </div>
+
+
+
+        <!-- PENGANJUR -->
+
+        <div class="program-form-row">
+
+          <label for="programPenganjur">
+            Penganjur
+          </label>
+
+          <select
+            id="programPenganjur"
+            required
+          >
+
+            <option value="">
+              Sila pilih
+            </option>
+
+            <option>APM</option>
+            <option>APM Negeri</option>
+            <option>PASPA IPPA</option>
+            <option>Kementerian</option>
+            <option>Kerajaan Negeri</option>
+            <option>Agensi Dalam Negeri</option>
+            <option>Agensi Luar Negara</option>
+            <option>PBB</option>
+            <option>Kerajaan Malaysia</option>
+            <option>ASEAN</option>
+            <option>ICDO</option>
+            <option>CDA</option>
+            <option>Lain-lain</option>
+
+          </select>
+
+        </div>
+
+
+
+        <!-- PENGANJUR LAIN -->
+
+        <div
+          id="otherOrganizerField"
+          class="program-form-row hidden"
+        >
+
+          <label for="programPenganjurLain">
+            Nama Penganjur
+          </label>
+
+          <input
+            type="text"
+            id="programPenganjurLain"
+          >
+
+        </div>
+
+
+
+        <!-- SIJIL - NEXT STEP -->
+
+        <div class="program-form-row">
+
+  <label for="programCertificate">
+    Lampirkan Salinan Sijil
+  </label>
+
+  <input
+    type="file"
+    id="programCertificate"
+    accept="application/pdf,.pdf"
+  >
+
+  <small class="program-file-help">
+    Format PDF sahaja. Maksimum 5 MB.
+  </small>
+
+</div>
+
+
+
+        <button
+          type="submit"
+          id="saveProgramButton"
+          class="program-save-button"
+        >
+          Simpan Program
+        </button>
+
+      </form>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         MESEJ
+    ====================================================== -->
+
+    <div
+      id="programMessage"
+      class="program-message hidden"
+      role="alert"
+    >
+    </div>
+
+
+  </main>
+
+
+
+  <!-- =====================================================
+       JAVASCRIPT
+  ====================================================== -->
+
+  <script src="../js/config.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/program.js"></script>
+
+</body>
+
+</html>
