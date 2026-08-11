@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Pengurusan & Laporan | PASPA GO
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="../css/urus.css"
+  >
+
+</head>
+
+
+<body>
+
+  <div class="manage-page">
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="manage-header">
+
+      <button
+        type="button"
+        id="backButton"
+        class="header-button"
+        aria-label="Kembali"
+      >
+        ←
+      </button>
+
+
+      <div class="header-title">
+        Pengurusan & Laporan
+      </div>
+
+
+      <button
+        type="button"
+        id="homeButton"
+        class="header-button"
+        aria-label="Home"
+      >
+        🏠
+      </button>
+
+    </header>
+
+
+    <!-- =====================================================
+         CONTENT
+    ====================================================== -->
+
+    <main class="manage-content">
+
+
+      <!-- MESSAGE -->
+
+      <div
+        id="manageMessage"
+        class="manage-message"
+        hidden
+      ></div>
+
+
+      <!-- =====================================================
+           INTRO
+      ====================================================== -->
+
+      <section class="intro-card">
+
+        <div class="intro-label">
+          PENGURUSAN & LAPORAN
+        </div>
+
+        <h1>
+          Menu Pentadbir
+        </h1>
+
+        <p>
+          Menu yang dipaparkan adalah berdasarkan
+          akses pentadbir yang diberikan.
+        </p>
+
+      </section>
+
+
+      <!-- =====================================================
+           ADMIN MENU
+      ====================================================== -->
+
+      <section class="menu-card">
+
+
+        <!-- TINDAKAN TERKINI -->
+
+        <div
+          id="latestActionSection"
+          class="latest-action"
+          hidden
+        >
+
+          <button
+            type="button"
+            id="latestActionButton"
+            class="orange-menu-button dropdown-button"
+          >
+
+            <span>
+              TINDAKAN TERKINI
+            </span>
+
+            <span id="latestActionArrow">
+              ▼
+            </span>
+
+          </button>
+
+
+          <div
+            id="latestActionContent"
+            class="latest-action-content"
+            hidden
+          >
+
+            <div class="empty-action">
+              Tiada tindakan terkini.
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- ANJUR PROGRAM -->
+
+        <button
+          type="button"
+          id="adminProgramMenu"
+          class="orange-menu-button"
+          hidden
+        >
+          ANJUR PROGRAM
+        </button>
+
+
+        <!-- ATUR GERAK OPERASI -->
+
+        <button
+          type="button"
+          id="adminOperationMenu"
+          class="orange-menu-button"
+          hidden
+        >
+          ATUR GERAK OPERASI
+        </button>
+
+
+        <!-- INVENTORI -->
+
+        <button
+          type="button"
+          id="adminInventoryMenu"
+          class="orange-menu-button"
+          hidden
+        >
+          INVENTORI
+        </button>
+
+
+        <!-- KEMAHIRAN & PENGIKTIRAFAN -->
+
+        <button
+          type="button"
+          id="adminRecognitionMenu"
+          class="orange-menu-button"
+          hidden
+        >
+          KEMAHIRAN & PENGIKTIRAFAN
+        </button>
+
+
+        <!-- HEBAHAN -->
+
+        <button
+          type="button"
+          id="adminAnnouncementMenu"
+          class="orange-menu-button"
+          hidden
+        >
+          HEBAHAN
+        </button>
+
+
+        <!-- LANTIKAN ADMIN -->
+
+        <button
+          type="button"
+          id="adminAppointmentMenu"
+          class="orange-menu-button"
+          hidden
+        >
+          LANTIKAN ADMIN
+        </button>
+
+
+        <!-- JANA MESEJ -->
+
+        <button
+          type="button"
+          id="adminMessageMenu"
+          class="orange-menu-button"
+          hidden
+        >
+          JANA MESEJ
+        </button>
+
+
+        <!-- TEMPLATE -->
+
+        <button
+          type="button"
+          id="adminTemplateMenu"
+          class="orange-menu-button"
+          hidden
+        >
+          TEMPLATE
+        </button>
+
+
+        <!-- LAPORAN -->
+
+        <button
+          type="button"
+          id="adminReportMenu"
+          class="orange-menu-button"
+          hidden
+        >
+          LAPORAN
+        </button>
+
+
+        <!-- TIADA AKSES -->
+
+        <div
+          id="noAdminAccess"
+          class="no-access-box"
+          hidden
+        >
+
+          Anda belum mempunyai akses
+          pentadbir untuk mana-mana modul.
+
+        </div>
+
+
+      </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         BOTTOM NAVIGATION
+    ====================================================== -->
+
+    <nav class="bottom-nav">
+
+
+      <button
+        type="button"
+        id="dashboardButton"
+        class="bottom-nav-item"
+      >
+
+        <span class="nav-icon">
+          👤
+        </span>
+
+        <span>
+          Utama
+        </span>
+
+      </button>
+
+
+      <button
+        type="button"
+        id="onSceneButton"
+        class="bottom-nav-item"
+      >
+
+        <span class="nav-icon">
+          🚨
+        </span>
+
+        <span>
+          On Scene
+        </span>
+
+      </button>
+
+
+      <div class="bottom-logo">
+
+        <img
+          src="../images/logo.png"
+          alt="PASPA"
+        >
+
+      </div>
+
+
+      <button
+        type="button"
+        id="messageButton"
+        class="bottom-nav-item"
+      >
+
+        <span class="nav-icon">
+          ✉️
+        </span>
+
+        <span>
+          Mesej
+        </span>
+
+      </button>
+
+
+      <button
+        type="button"
+        id="settingsButton"
+        class="bottom-nav-item"
+      >
+
+        <span class="nav-icon">
+          ⚙️
+        </span>
+
+        <span>
+          Tetapan
+        </span>
+
+      </button>
+
+
+    </nav>
+
+
+  </div>
+
+
+  <!-- API helper yang sama seperti page lain -->
+  <script src="../js/config.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/urus.js"></script>
+
+
+</body>
+
+</html>

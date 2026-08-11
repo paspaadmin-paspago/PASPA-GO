@@ -2,516 +2,173 @@
 <html lang="ms">
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pengurusan Program | PASPA GO</title>
-
-  <link
-    rel="stylesheet"
-    href="../css/admin-program.css"
-  >
+  <link rel="stylesheet" href="../css/admin-program.css">
 </head>
-
 <body>
-
   <div class="admin-program-page">
-
-    <!-- ==============================
-         HEADER
-    =============================== -->
     <header class="admin-program-header">
-
-      <button
-        type="button"
-        class="header-icon-button"
-        id="backButton"
-        aria-label="Kembali"
-      >
-        ←
-      </button>
-
-      <div class="header-title">
-        Pengurusan Program
-      </div>
-
-      <button
-        type="button"
-        class="header-icon-button"
-        id="homeButton"
-        aria-label="Home"
-      >
-        🏠
-      </button>
-
+      <button type="button" class="header-icon-button" id="backButton" aria-label="Kembali">←</button>
+      <div class="header-title">Pengurusan Program</div>
+      <button type="button" class="header-icon-button" id="homeButton" aria-label="Home">🏠</button>
     </header>
 
-
     <main class="admin-program-content">
+      <div id="adminProgramMessage" class="message-box" hidden></div>
 
-      <!-- ==============================
-           STATUS
-      =============================== -->
-      <div
-        id="adminProgramMessage"
-        class="message-box"
-        hidden
-      ></div>
-
-
-      <!-- ==============================
-           ANJUR PROGRAM
-      =============================== -->
       <section class="admin-card">
-
         <div class="section-heading">
           <div>
-            <span class="section-label">
-              PENGURUSAN & LAPORAN
-            </span>
-
+            <span class="section-label">PENGURUSAN & LAPORAN</span>
             <h1>Anjur Program</h1>
           </div>
         </div>
 
-
         <form id="adminProgramForm">
-
           <div class="form-group">
-            <label for="kategoriProgram">
-              Kategori Program
-            </label>
-
-            <select
-              id="kategoriProgram"
-              required
-            >
-              <option value="">
-                -- Pilih --
-              </option>
-
-              <option value="Kursus">
-                Kursus
-              </option>
-
-              <option value="Latihan">
-                Latihan
-              </option>
-
-              <option value="Seminar">
-                Seminar
-              </option>
-
-              <option value="Bengkel">
-                Bengkel
-              </option>
-
-              <option value="Program">
-                Program
-              </option>
+            <label for="kategoriProgram">Kategori Program</label>
+            <select id="kategoriProgram" required>
+              <option value="">-- Pilih --</option>
+              <option value="Kursus">Kursus</option>
+              <option value="Latihan">Latihan</option>
+              <option value="Seminar">Seminar</option>
+              <option value="Bengkel">Bengkel</option>
+              <option value="Program">Program</option>
             </select>
           </div>
 
-
           <div class="form-group">
-            <label for="lokasiProgram">
-              Lokasi Program
-            </label>
-
-            <select
-              id="lokasiProgram"
-              required
-            >
-              <option value="">
-                -- Pilih --
-              </option>
-
-              <option value="Dalam Negara">
-                Dalam Negara
-              </option>
-
-              <option value="Luar Negara">
-                Luar Negara
-              </option>
+            <label for="lokasiProgram">Lokasi Program</label>
+            <select id="lokasiProgram" required>
+              <option value="">-- Pilih --</option>
+              <option value="Dalam Negara">Dalam Negara</option>
+              <option value="Luar Negara">Luar Negara</option>
             </select>
           </div>
 
-
           <div class="form-group">
-            <label for="perkaraProgram">
-              Perkara
-            </label>
-
-            <input
-              type="text"
-              id="perkaraProgram"
-              placeholder="Nama / tajuk program"
-              required
-            >
+            <label for="perkaraProgram">Perkara</label>
+            <input type="text" id="perkaraProgram" placeholder="Nama / tajuk program" required>
           </div>
-
 
           <div class="form-row">
-
             <div class="form-group">
-              <label for="tarikhMula">
-                Tarikh Mula
-              </label>
-
-              <input
-                type="date"
-                id="tarikhMula"
-                required
-              >
+              <label for="tarikhMula">Tarikh Mula</label>
+              <input type="date" id="tarikhMula" required>
             </div>
-
-
             <div class="form-group">
-              <label for="tarikhTamat">
-                Tarikh Tamat
-              </label>
-
-              <input
-                type="date"
-                id="tarikhTamat"
-                required
-              >
+              <label for="tarikhTamat">Tarikh Tamat</label>
+              <input type="date" id="tarikhTamat" required>
             </div>
-
           </div>
-
 
           <div class="form-group">
-            <label for="tempatProgram">
-              Tempat
-            </label>
-
-            <input
-              type="text"
-              id="tempatProgram"
-              placeholder="Lokasi program"
-              required
-            >
+            <label for="tempatProgram">Tempat</label>
+            <input type="text" id="tempatProgram" placeholder="Lokasi program" required>
           </div>
 
-
-          <!-- DALAM NEGARA -->
-          <div
-            class="form-group"
-            id="negeriGroup"
-            hidden
-          >
-            <label for="negeriProgram">
-              Negeri / Pusat Latihan
-            </label>
-
+          <div class="form-group" id="negeriGroup" hidden>
+            <label for="negeriProgram">Negeri / Pusat Latihan</label>
             <select id="negeriProgram">
-              <option value="">
-                -- Pilih --
-              </option>
-
-              <option>Perlis</option>
-              <option>Kedah</option>
-              <option>Pulau Pinang</option>
-              <option>Perak</option>
-              <option>Selangor</option>
-              <option>W.P. Kuala Lumpur</option>
-              <option>W.P. Putrajaya</option>
-              <option>Negeri Sembilan</option>
-              <option>Melaka</option>
-              <option>Johor</option>
-              <option>Pahang</option>
-              <option>Terengganu</option>
-              <option>Kelantan</option>
-              <option>Sabah</option>
-              <option>Sarawak</option>
-              <option>W.P. Labuan</option>
-              <option>IPPA</option>
-              <option>PULAPAU</option>
-              <option>PULAPAT</option>
-              <option>PULAPAS</option>
-              <option>ALPHA</option>
+              <option value="">-- Pilih --</option>
+              <option>Perlis</option><option>Kedah</option><option>Pulau Pinang</option><option>Perak</option>
+              <option>Selangor</option><option>W.P. Kuala Lumpur</option><option>W.P. Putrajaya</option>
+              <option>Negeri Sembilan</option><option>Melaka</option><option>Johor</option><option>Pahang</option>
+              <option>Terengganu</option><option>Kelantan</option><option>Sabah</option><option>Sarawak</option>
+              <option>W.P. Labuan</option><option>IPPA</option><option>PULAPAU</option><option>PULAPAT</option>
+              <option>PULAPAS</option><option>ALPHA</option>
             </select>
           </div>
 
-
-          <!-- LUAR NEGARA -->
-          <div
-            class="form-group"
-            id="negaraGroup"
-            hidden
-          >
-            <label for="negaraProgram">
-              Negara
-            </label>
-
+          <div class="form-group" id="negaraGroup" hidden>
+            <label for="negaraProgram">Negara</label>
             <select id="negaraProgram">
-              <option value="">
-                -- Pilih Negara --
-              </option>
+              <option value="">-- Pilih Negara --</option>
             </select>
           </div>
 
-
           <div class="form-group">
-            <label for="penganjurProgram">
-              Penganjur
-            </label>
-
-            <select
-              id="penganjurProgram"
-              required
-            >
-              <option value="">
-                -- Pilih --
-              </option>
-
-              <option value="PASPA IPPA">
-                PASPA IPPA
-              </option>
-
-              <option value="APM">
-                APM
-              </option>
-
-              <option value="APM Negeri">
-                APM Negeri
-              </option>
-
-              <option value="Lain-lain">
-                Lain-lain
-              </option>
+            <label for="penganjurProgram">Penganjur</label>
+            <select id="penganjurProgram" required>
+              <option value="">-- Pilih --</option>
             </select>
           </div>
 
-
-          <div
-            class="form-group"
-            id="penganjurLainGroup"
-            hidden
-          >
-            <label for="penganjurLain">
-              Nama Penganjur
-            </label>
-
-            <input
-              type="text"
-              id="penganjurLain"
-              placeholder="Nyatakan penganjur"
-            >
+          <div class="form-group" id="penganjurLainGroup" hidden>
+            <label for="penganjurLain">Nama Penganjur</label>
+            <input type="text" id="penganjurLain" placeholder="Nyatakan penganjur">
           </div>
-
 
           <div class="form-group">
-            <label for="keteranganProgram">
-              Keterangan
-            </label>
-
-            <textarea
-              id="keteranganProgram"
-              rows="3"
-              placeholder="Keterangan tambahan jika ada"
-            ></textarea>
+            <label for="keteranganProgram">Keterangan</label>
+            <textarea id="keteranganProgram" rows="3" placeholder="Keterangan tambahan jika ada"></textarea>
           </div>
-
 
           <div class="form-group">
-            <label for="suratProgram">
-              Lampiran Surat Program
-            </label>
-
-            <input
-              type="file"
-              id="suratProgram"
-              accept="application/pdf,.pdf"
-            >
-
-            <small>
-              Format PDF sahaja. Maksimum 5 MB.
-            </small>
+            <label for="suratProgram">Lampiran Surat Program</label>
+            <input type="file" id="suratProgram" accept="application/pdf,.pdf">
+            <small>Format PDF sahaja. Maksimum 5 MB.</small>
           </div>
-
         </form>
-
       </section>
 
-
-      <!-- ==============================
-           PESERTA
-      =============================== -->
       <section class="admin-card">
-
         <div class="section-heading">
-
-          <div>
-            <span class="section-label">
-              PEMILIHAN AHLI
-            </span>
-
-            <h2>Peserta</h2>
-          </div>
-
-          <span
-            class="selection-count"
-            id="participantCount"
-          >
-            0 dipilih
-          </span>
-
+          <div><span class="section-label">PEMILIHAN AHLI</span><h2>Peserta</h2></div>
+          <span class="selection-count" id="participantCount">0 dipilih</span>
         </div>
-
 
         <label class="select-all-row">
-
-          <input
-            type="checkbox"
-            id="selectAllParticipants"
-          >
-
-          <span>
-            Jemput semua ahli PASPA
-          </span>
-
+          <input type="checkbox" id="selectAllParticipants">
+          <span>Jemput semua ahli PASPA</span>
         </label>
 
-
         <div class="member-search">
-
-          <input
-            type="search"
-            id="participantSearch"
-            placeholder="Cari ID PASPA atau nama ahli..."
-          >
-
+          <input type="search" id="participantSearch" placeholder="Cari ID PASPA, pangkat atau nama ahli...">
         </div>
 
-
-        <div
-          class="member-list"
-          id="participantList"
-        >
-          <div class="loading-text">
-            Memuatkan senarai ahli...
-          </div>
-        </div>
-
-<div class="selected-members-box">
-
-  <div class="selected-members-title">
-    Senarai Peserta Dipilih
-  </div>
-
-  <div
-    id="selectedParticipantList"
-    class="selected-members-list"
-  >
-    <div class="empty-text">
-      Tiada peserta dipilih.
-    </div>
-  </div>
-
-</div>
-
-      </section>
-
-
-      <!-- ==============================
-           URUSETIA
-      =============================== -->
-      <section class="admin-card">
-
-        <div class="section-heading">
-
-          <div>
-            <span class="section-label">
-              PEMILIHAN AHLI
-            </span>
-
-            <h2>Urusetia</h2>
-          </div>
-
-          <span
-            class="selection-count"
-            id="secretariatCount"
-          >
-            0 dipilih
-          </span>
-
-        </div>
-
-
-        <div class="member-search">
-
-          <input
-            type="search"
-            id="secretariatSearch"
-            placeholder="Cari ID PASPA atau nama ahli..."
-          >
-
-        </div>
-
-
-        <div
-          class="member-list"
-          id="secretariatList"
-        >
-          <div class="loading-text">
-            Memuatkan senarai ahli...
-          </div>
+        <div class="member-list" id="participantList">
+          <div class="loading-text">Memuatkan senarai ahli...</div>
         </div>
 
         <div class="selected-members-box">
-
-  <div class="selected-members-title">
-    Senarai Urusetia Dipilih
-  </div>
-
-  <div
-    id="selectedSecretariatList"
-    class="selected-members-list"
-  >
-    <div class="empty-text">
-      Tiada urusetia dipilih.
-    </div>
-  </div>
-
-</div>
-
+          <div class="selected-members-title">Senarai Peserta Dipilih</div>
+          <div id="selectedParticipantList" class="selected-members-list">
+            <div class="empty-text">Tiada peserta dipilih.</div>
+          </div>
+        </div>
       </section>
 
+      <section class="admin-card">
+        <div class="section-heading">
+          <div><span class="section-label">PEMILIHAN AHLI</span><h2>Urusetia</h2></div>
+          <span class="selection-count" id="secretariatCount">0 dipilih</span>
+        </div>
 
-      <!-- ==============================
-           BUTTON
-      =============================== -->
+        <div class="member-search">
+          <input type="search" id="secretariatSearch" placeholder="Cari ID PASPA, pangkat atau nama ahli...">
+        </div>
+
+        <div class="member-list" id="secretariatList">
+          <div class="loading-text">Memuatkan senarai ahli...</div>
+        </div>
+
+        <div class="selected-members-box">
+          <div class="selected-members-title">Senarai Urusetia Dipilih</div>
+          <div id="selectedSecretariatList" class="selected-members-list">
+            <div class="empty-text">Tiada urusetia dipilih.</div>
+          </div>
+        </div>
+      </section>
+
       <section class="admin-card action-card">
-
-        <button
-          type="button"
-          id="saveDraftButton"
-          class="secondary-button"
-        >
-          Simpan Draf
-        </button>
-
-        <button
-          type="button"
-          id="sendInvitationButton"
-          class="primary-button"
-        >
-          Hantar Jemputan
-        </button>
-
+        <button type="button" id="saveDraftButton" class="secondary-button">Simpan Draf</button>
+        <button type="button" id="sendInvitationButton" class="primary-button">Hantar Jemputan</button>
       </section>
-
     </main>
-
   </div>
-
 
   <script src="../js/admin-program.js"></script>
-
 </body>
 </html>

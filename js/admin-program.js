@@ -627,6 +627,50 @@ async function callAdminProgramApi(
 
 }
 
+/* =====================================================
+   GENERATE PROGRAM REFERENCE
+===================================================== */
+
+function getProgramReference() {
+
+  const now = new Date();
+
+  const year =
+    now.getFullYear();
+
+  const month =
+    String(now.getMonth() + 1)
+      .padStart(2, "0");
+
+  const day =
+    String(now.getDate())
+      .padStart(2, "0");
+
+  const hour =
+    String(now.getHours())
+      .padStart(2, "0");
+
+  const minute =
+    String(now.getMinutes())
+      .padStart(2, "0");
+
+  const second =
+    String(now.getSeconds())
+      .padStart(2, "0");
+
+  return (
+    "PASPA/PROGRAM/" +
+    year +
+    "/" +
+    month +
+    day +
+    "-" +
+    hour +
+    minute +
+    second
+  );
+
+}
 
 /* =====================================================
    LOAD MEMBER
@@ -1345,7 +1389,200 @@ document
     }
   );
 
+  /* =====================================================
+   BUILD REVIEW DATA
+===================================================== */
 
+function buildProgramReviewData() {
+
+  const participants =
+    getSelectedMembers(
+      selectedParticipants
+    );
+
+
+  const secretariat =
+    getSelectedMembers(
+      selectedSecretariat
+    );
+
+    const inviteAll =
+  document.getElementById(
+    "selectAllParticipants"
+  ).checked; 
+
+  if (!participants.length) {
+
+    throw new Error(
+      "Sila pilih sekurang-kurangnya seorang peserta."
+    );
+
+  }
+
+
+  const program = {
+
+    kategoriProgram:
+      document.getElementById(
+        "kategoriProgram"
+      ).value,
+
+    lokasiProgram:
+      document.getElementById(
+        "lokasiProgram"
+      ).value,
+
+    perkara:
+      document.getElementById(
+        "perkaraProgram"
+      ).value.trim(),
+
+    tarikhMula:
+      document.getElementById(
+        "tarikhMula"
+      ).value,
+
+    tarikhTamat:
+      document.getElementById(
+        "tarikhTamat"
+      ).value,
+
+    tempat:
+      document.getElementById(
+        "tempatProgram"
+      ).value.trim(),
+
+    negeri:
+      document.getElementById(
+        "negeriProgram"
+      ).value,
+
+    negara:
+      document.getElementById(
+        "negaraProgram"
+      ).value,
+
+    penganjur:
+      document.getElementById(
+        "penganjurProgram"
+      ).value,
+
+    penganjurLain:
+      document.getElementById(
+        "penganjurLain"
+      ).value.trim(),
+
+    keterangan:
+      document.getElementById(
+        "keteranganProgram"
+      ).value.trim()
+
+  };
+
+
+  if (
+    !program.kategoriProgram ||
+    !program.lokasiProgram ||
+    !program.perkara ||
+    !program.tarikhMula ||
+    !program.tarikhTamat ||
+    !program.tempat ||
+    !program.penganjur
+  ) {
+
+    throw new Error(
+      "Sila lengkapkan semua maklumat Program."
+    );
+
+  }
+
+
+ return {
+
+  program:
+    program,
+
+  inviteAll:
+    inviteAll,
+
+  participants:
+    participants,
+
+  secretariat:
+    secretariat,
+
+  preparedAt:
+    new Date().toISOString()
+
+};
+
+}
+
+/* =====================================================
+   HANTAR KE PAGE REVIEW
+===================================================== */
+
+document
+  .getElementById(
+    "sendInvitationButton"
+  )
+  .addEventListener(
+    "click",
+    async function () {
+
+      try {
+
+        const reviewData =
+          buildProgramReviewData();
+
+
+        /* ==============================
+           JANA NO. RUJUKAN
+        ============================== */
+const noRujukan =
+  getProgramReference();
+
+
+        reviewData.noRujukan =
+          noRujukan;
+
+
+        /* ==============================
+           SIMPAN DATA REVIEW
+        ============================== */
+
+       localStorage.setItem(
+  "paspaProgramReviewDraft",
+  JSON.stringify(reviewData)
+);
+
+window.location.href =
+  "admin-program-review.html";
+        /* ==============================
+           BUKA PAGE REVIEW
+        ============================== */
+
+        window.location.href =
+          "admin-program-review.html";
+
+
+      } catch (error) {
+
+        console.error(
+          "SEND INVITATION REVIEW ERROR:",
+          error
+        );
+
+
+        showAdminMessage(
+          error.message,
+          "error"
+        );
+
+      }
+
+    }
+  );
 /* =====================================================
    START
 ===================================================== */

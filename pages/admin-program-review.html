@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Semakan Jemputan Program | PASPA GO
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="../css/admin-program-review.css"
+  >
+
+</head>
+
+
+<body>
+
+  <div class="review-page">
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="review-header">
+
+      <button
+        type="button"
+        id="backButton"
+        class="header-button"
+        aria-label="Kembali"
+        title="Kembali"
+      >
+        ←
+      </button>
+
+
+      <div class="review-header-title">
+        Semakan Jemputan
+      </div>
+
+
+      <button
+        type="button"
+        id="homeButton"
+        class="header-button"
+        aria-label="Home"
+        title="Home"
+      >
+        🏠
+      </button>
+
+    </header>
+
+
+    <!-- =====================================================
+         ACTION BUTTON
+    ====================================================== -->
+
+    <div class="review-actions no-print">
+
+      <button
+        type="button"
+        id="printButton"
+        class="action-button"
+      >
+        🖨️ Print
+      </button>
+
+
+      <button
+        type="button"
+        id="downloadButton"
+        class="action-button"
+      >
+        ⬇ Download
+      </button>
+
+
+      <button
+        type="button"
+        id="confirmButton"
+        class="confirm-button"
+      >
+        PASTI
+      </button>
+
+    </div>
+
+
+    <!-- =====================================================
+         MESSAGE
+    ====================================================== -->
+
+    <div
+      id="reviewMessage"
+      class="review-message no-print"
+      hidden
+    ></div>
+
+
+    <!-- =====================================================
+         SEMUA MUKA SURAT A4 AKAN DIJANA OLEH JS
+    ====================================================== -->
+
+    <main
+      id="invitationLetter"
+      class="letter-pages"
+    ></main>
+
+  </div>
+
+
+  <!-- =====================================================
+       PDF LIBRARY
+  ====================================================== -->
+
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+  ></script>
+
+
+  <script
+    src="../js/admin-program-review.js"
+  ></script>
+
+</body>
+
+</html>

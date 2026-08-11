@@ -1,4 +1,6 @@
-const CONFIG = Object.freeze({
+"use strict";
+
+window.CONFIG = Object.freeze({
   APP_NAME: "PASPA GO",
   VERSION: "1.0.0",
 

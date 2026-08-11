@@ -1,3 +1,13 @@
+/* =====================================================
+   PASPA GO
+   ADMIN - PENGURUSAN PROGRAM
+===================================================== */
+
+
+/* =====================================================
+   1. GLOBAL
+===================================================== */
+
 * {
   box-sizing: border-box;
 }
@@ -15,17 +25,24 @@ body {
   color: #17365f;
 }
 
+
+/* =====================================================
+   2. MAIN PAGE
+===================================================== */
+
 .admin-program-page {
   width: 100%;
   max-width: 760px;
   min-height: 100vh;
+
   margin: 0 auto;
+
   background: #071f47;
 }
 
 
 /* =====================================================
-   HEADER
+   3. HEADER
 ===================================================== */
 
 .admin-program-header {
@@ -42,14 +59,18 @@ body {
   padding: 6px 12px;
 
   background: #194d91;
-  border-bottom: 1px solid rgba(255,255,255,.25);
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.25);
 }
+
 
 .header-icon-button {
   appearance: none;
 
   width: 44px;
   height: 44px;
+
   min-width: 44px;
   min-height: 44px;
 
@@ -72,33 +93,49 @@ body {
   cursor: pointer;
 }
 
+
 .header-icon-button:hover {
-  background: rgba(255,255,255,.10);
+  background:
+    rgba(255, 255, 255, 0.1);
 }
+
 
 .header-title {
   text-align: center;
+
   color: #ffffff;
+
   font-weight: 700;
   font-size: 18px;
 }
 
 
 /* =====================================================
-   CONTENT
+   4. CONTENT
 ===================================================== */
 
 .admin-program-content {
   padding: 16px;
 }
 
+
+/* =====================================================
+   5. CARD
+===================================================== */
+
 .admin-card {
   margin-bottom: 16px;
   padding: 18px;
 
   background: #ffffff;
+
   border-radius: 18px;
 }
+
+
+/* =====================================================
+   6. SECTION HEADING
+===================================================== */
 
 .section-heading {
   display: flex;
@@ -110,36 +147,43 @@ body {
   margin-bottom: 18px;
 }
 
+
 .section-heading h1,
 .section-heading h2 {
   margin: 3px 0 0;
+
   color: #123f7d;
 }
+
 
 .section-heading h1 {
   font-size: 22px;
 }
 
+
 .section-heading h2 {
   font-size: 20px;
 }
+
 
 .section-label {
   color: #67809f;
 
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: .5px;
+
+  letter-spacing: 0.5px;
 }
 
 
 /* =====================================================
-   FORM
+   7. FORM
 ===================================================== */
 
 .form-group {
   margin-bottom: 15px;
 }
+
 
 .form-group label {
   display: block;
@@ -152,6 +196,7 @@ body {
   font-weight: 700;
 }
 
+
 .form-group input,
 .form-group select,
 .form-group textarea,
@@ -160,7 +205,9 @@ body {
 
   padding: 12px 13px;
 
-  border: 1px solid #c7d5e6;
+  border:
+    1px solid #c7d5e6;
+
   border-radius: 10px;
 
   background: #ffffff;
@@ -172,17 +219,22 @@ body {
   outline: none;
 }
 
+
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus,
 .member-search input:focus {
   border-color: #194d91;
-  box-shadow: 0 0 0 3px rgba(25,77,145,.10);
+
+  box-shadow:
+    0 0 0 3px rgba(25, 77, 145, 0.1);
 }
+
 
 .form-group textarea {
   resize: vertical;
 }
+
 
 .form-group small {
   display: block;
@@ -195,16 +247,23 @@ body {
   line-height: 1.4;
 }
 
+
+/* =====================================================
+   8. FORM ROW
+===================================================== */
+
 .form-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+
+  grid-template-columns:
+    1fr 1fr;
 
   gap: 12px;
 }
 
 
 /* =====================================================
-   MEMBER SELECTION
+   9. SELECTION COUNT
 ===================================================== */
 
 .selection-count {
@@ -220,6 +279,11 @@ body {
 
   white-space: nowrap;
 }
+
+
+/* =====================================================
+   10. SELECT ALL
+===================================================== */
 
 .select-all-row {
   display: flex;
@@ -240,6 +304,7 @@ body {
   cursor: pointer;
 }
 
+
 .select-all-row input {
   flex: 0 0 auto;
 
@@ -249,20 +314,37 @@ body {
   margin: 0;
 }
 
+
+/* =====================================================
+   11. MEMBER SEARCH
+===================================================== */
+
 .member-search {
   margin-bottom: 12px;
 }
+
+
+/* =====================================================
+   12. MEMBER LIST
+===================================================== */
 
 .member-list {
   max-height: 330px;
 
   overflow-y: auto;
 
-  border: 1px solid #d4dfed;
+  border:
+    1px solid #d4dfed;
+
   border-radius: 12px;
 
   background: #ffffff;
 }
+
+
+/* =====================================================
+   13. MEMBER OPTION
+===================================================== */
 
 .member-option {
   display: flex;
@@ -272,18 +354,22 @@ body {
 
   padding: 12px;
 
-  border-bottom: 1px solid #edf1f6;
+  border-bottom:
+    1px solid #edf1f6;
 
   cursor: pointer;
 }
+
 
 .member-option:last-child {
   border-bottom: none;
 }
 
+
 .member-option:hover {
   background: #f4f8fd;
 }
+
 
 .member-option input {
   flex: 0 0 auto;
@@ -293,6 +379,7 @@ body {
 
   margin: 0;
 }
+
 
 .member-display {
   min-width: 0;
@@ -305,6 +392,11 @@ body {
 
   overflow-wrap: anywhere;
 }
+
+
+/* =====================================================
+   14. LOADING / EMPTY TEXT
+===================================================== */
 
 .loading-text,
 .empty-text {
@@ -319,18 +411,21 @@ body {
 
 
 /* =====================================================
-   SENARAI AHLI DIPILIH
+   15. SELECTED MEMBERS BOX
 ===================================================== */
 
 .selected-members-box {
   margin-top: 18px;
   padding: 14px;
 
-  border: 1px solid #d9e2ee;
+  border:
+    1px solid #d9e2ee;
+
   border-radius: 12px;
 
   background: #f7f9fc;
 }
+
 
 .selected-members-title {
   margin-bottom: 10px;
@@ -340,6 +435,7 @@ body {
   font-size: 14px;
   font-weight: 700;
 }
+
 
 .selected-members-list {
   display: flex;
@@ -352,51 +448,71 @@ body {
   overflow-y: auto;
 }
 
+
+/* =====================================================
+   16. SELECTED MEMBER ROW
+===================================================== */
+
 .selected-member-row {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
+
+  grid-template-columns:
+    auto minmax(0, 1fr);
 
   gap: 7px;
 
   padding: 9px 10px;
 
-  border: 1px solid #edf1f6;
+  border:
+    1px solid #edf1f6;
+
   border-radius: 8px;
 
   background: #ffffff;
-
   color: #20364f;
 
   font-size: 13px;
   line-height: 1.4;
 }
 
+
 .selected-member-number {
   color: #194d91;
+
   font-weight: 700;
 }
 
+
 .selected-member-name {
   min-width: 0;
+
   overflow-wrap: anywhere;
 }
 
 
 /* =====================================================
-   BUTTONS
+   17. ACTION BUTTON AREA
 ===================================================== */
 
 .action-card {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+
+  grid-template-columns:
+    1fr 1fr;
 
   gap: 12px;
 }
+
+
+/* =====================================================
+   18. BUTTONS
+===================================================== */
 
 .primary-button,
 .secondary-button {
   min-height: 48px;
 
+  margin: 0;
   padding: 10px 14px;
 
   border-radius: 10px;
@@ -408,6 +524,7 @@ body {
   cursor: pointer;
 }
 
+
 .primary-button {
   border: none;
 
@@ -415,16 +532,20 @@ body {
   color: #ffffff;
 }
 
+
 .secondary-button {
-  border: 1px solid #194d91;
+  border:
+    1px solid #194d91;
 
   background: #ffffff;
   color: #194d91;
 }
 
+
 .primary-button:hover {
   background: #123f7d;
 }
+
 
 .secondary-button:hover {
   background: #f4f8fd;
@@ -432,7 +553,7 @@ body {
 
 
 /* =====================================================
-   MESSAGE
+   19. MESSAGE BOX
 ===================================================== */
 
 .message-box {
@@ -445,10 +566,12 @@ body {
   line-height: 1.45;
 }
 
+
 .message-box.success {
   background: #e7f7ed;
   color: #176c36;
 }
+
 
 .message-box.error {
   background: #fdeaea;
@@ -456,8 +579,14 @@ body {
 }
 
 
+.message-box.info {
+  background: #edf5ff;
+  color: #174f8f;
+}
+
+
 /* =====================================================
-   MOBILE
+   20. MOBILE RESPONSIVE
 ===================================================== */
 
 @media (max-width: 600px) {
@@ -465,8 +594,10 @@ body {
   .admin-program-header {
     min-height: 58px;
 
-    grid-template-columns: 48px 1fr 48px;
+    grid-template-columns:
+      48px 1fr 48px;
   }
+
 
   .header-icon-button {
     width: 40px;
@@ -478,13 +609,16 @@ body {
     font-size: 22px;
   }
 
+
   .header-title {
     font-size: 15px;
   }
 
+
   .admin-program-content {
     padding: 12px;
   }
+
 
   .admin-card {
     padding: 14px;
@@ -492,15 +626,19 @@ body {
     border-radius: 15px;
   }
 
+
   .form-row {
-    grid-template-columns: 1fr;
+    grid-template-columns:
+      1fr;
 
     gap: 0;
   }
 
+
   .member-list {
     max-height: 290px;
   }
+
 
   .member-option {
     gap: 9px;
@@ -508,21 +646,27 @@ body {
     padding: 11px 10px;
   }
 
+
   .member-display {
     font-size: 12px;
   }
 
+
   .selected-members-box {
     margin-top: 14px;
+
     padding: 12px;
   }
+
 
   .selected-member-row {
     font-size: 12px;
   }
 
+
   .action-card {
-    grid-template-columns: 1fr;
+    grid-template-columns:
+      1fr;
   }
 
 }

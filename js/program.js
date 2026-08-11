@@ -223,12 +223,15 @@ async function loadProgramEditAccess() {
   try {
 
     const result =
-      await apiPost({
+  await apiPost({
 
-        action:
-          "program_edit_access"
+    action:
+      "program_edit_access",
 
-      });
+    idPaspa:
+      currentSession.idPaspa
+
+  });
 
 
     if (

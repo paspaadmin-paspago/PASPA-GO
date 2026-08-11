@@ -21,6 +21,11 @@ const dashboardMessage =
 const logoutButton =
   document.getElementById("logoutButton");
 
+const managementReportButton =
+  document.getElementById(
+    "managementReportButton"
+  );
+
 
 function getSession() {
   try {
@@ -177,6 +182,18 @@ logoutButton.addEventListener(
   }
 );
 
+if (managementReportButton) {
 
+  managementReportButton.addEventListener(
+    "click",
+    function () {
+
+      window.location.href =
+        "urus.html";
+
+    }
+  );
+
+}
 
 loadDashboard();

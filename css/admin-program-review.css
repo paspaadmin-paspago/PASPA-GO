@@ -1,0 +1,868 @@
+/* =====================================================
+   PASPA GO
+   ADMIN PROGRAM REVIEW
+===================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+
+  min-height: 100%;
+}
+
+
+body {
+  font-family: Arial, sans-serif;
+
+  background: #071f47;
+
+  color: #111111;
+}
+
+
+/* =====================================================
+   PAGE
+===================================================== */
+
+.review-page {
+  width: 100%;
+
+  min-height: 100vh;
+
+  padding-bottom: 40px;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.review-header {
+  position: sticky;
+
+  top: 0;
+
+  z-index: 1000;
+
+  display: grid;
+
+  grid-template-columns:
+    50px 1fr 50px;
+
+  align-items: center;
+
+  min-height: 60px;
+
+  padding: 6px 15px;
+
+  background: #194d91;
+
+  border-bottom:
+    1px solid
+    rgba(255,255,255,.22);
+}
+
+
+.header-button {
+  appearance: none;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 42px;
+  height: 42px;
+
+  min-width: 42px;
+  min-height: 42px;
+
+  margin: 0;
+  padding: 0;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background: transparent;
+
+  color: #ffffff;
+
+  font-size: 23px;
+
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+
+.header-button:hover {
+  background:
+    rgba(255,255,255,.10);
+}
+
+
+.review-header-title {
+  text-align: center;
+
+  color: #ffffff;
+
+  font-size: 17px;
+
+  font-weight: 700;
+}
+
+
+/* =====================================================
+   ACTION BUTTON
+===================================================== */
+
+.review-actions {
+  width:
+    min(
+      210mm,
+      calc(100% - 24px)
+    );
+
+  margin:
+    18px auto 12px;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      3,
+      minmax(0, 1fr)
+    );
+
+  gap: 10px;
+}
+
+
+.action-button,
+.confirm-button {
+  min-height: 46px;
+
+  margin: 0;
+
+  padding:
+    10px 12px;
+
+  border-radius: 10px;
+
+  font-family: Arial, sans-serif;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+.action-button {
+  border:
+    1px solid #ffffff;
+
+  background: #ffffff;
+
+  color: #194d91;
+}
+
+
+.confirm-button {
+  border:
+    1px solid #245ca2;
+
+  background: #245ca2;
+
+  color: #ffffff;
+}
+
+
+.action-button:hover {
+  background: #f4f7fb;
+}
+
+
+.confirm-button:hover {
+  background: #194d91;
+}
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+.review-message {
+  width:
+    min(
+      210mm,
+      calc(100% - 24px)
+    );
+
+  margin:
+    0 auto 12px;
+
+  padding:
+    12px 14px;
+
+  border-radius: 9px;
+
+  font-size: 13px;
+
+  line-height: 1.45;
+}
+
+
+.review-message.error {
+  background: #fdeaea;
+
+  color: #a82020;
+}
+
+
+.review-message.success {
+  background: #e7f7ed;
+
+  color: #176c36;
+}
+
+
+.review-message.info {
+  background: #edf5ff;
+
+  color: #174f8f;
+}
+
+
+/* =====================================================
+   LETTER PAGES
+===================================================== */
+
+.letter-pages {
+  width: 100%;
+}
+
+
+/* =====================================================
+   SATU HELAIAN A4
+===================================================== */
+
+.letter-sheet {
+  position: relative;
+
+  width: 210mm;
+  height: 297mm;
+
+  margin:
+    0 auto 20px;
+
+  padding:
+    14mm 14mm 19mm;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 10px 30px
+    rgba(0,0,0,.28);
+
+  font-family:
+    "Arial Narrow",
+    Arial,
+    sans-serif;
+
+  font-size: 10pt;
+
+  line-height: 1.15;
+}
+
+
+/* =====================================================
+   LETTER HEAD
+===================================================== */
+
+.letter-head {
+  text-align: center;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size: 12pt;
+
+  font-weight: 700;
+
+  line-height: 1.15;
+}
+
+
+.letter-logo {
+  display: block;
+
+  width: 76px;
+  height: 76px;
+
+  margin:
+    0 auto 7px;
+
+  object-fit: contain;
+}
+
+
+.letter-organisation {
+  margin: 0;
+
+  line-height: 1.15;
+}
+
+
+/* =====================================================
+   REFERENCE
+===================================================== */
+
+.letter-reference {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  margin-top: 14px;
+
+  padding:
+    7px 4px;
+
+  border-top:
+    1px solid #222222;
+
+  border-bottom:
+    1px solid #222222;
+
+  font-size: 9pt;
+}
+
+
+.letter-reference-right {
+  text-align: right;
+}
+
+
+/* =====================================================
+   SUBJECT
+===================================================== */
+
+.letter-subject {
+  display: grid;
+
+  grid-template-columns:
+    30mm 1fr;
+
+  border-bottom:
+    1px solid #222222;
+}
+
+
+.letter-label {
+  padding:
+    7px 5px;
+
+  border-right:
+    1px solid #222222;
+
+  font-weight: 700;
+}
+
+
+.letter-value {
+  padding:
+    7px 8px;
+}
+
+
+.subject-value {
+  font-weight: 700;
+
+  text-transform: uppercase;
+}
+
+
+/* =====================================================
+   RECIPIENT AREA
+   Tinggi ikut bilangan nama
+===================================================== */
+
+.recipient-section {
+  display: grid;
+
+  grid-template-columns:
+    30mm 1fr;
+
+  height: auto;
+  min-height: 0;
+
+  border-bottom:
+    1px solid #222222;
+}
+
+.recipient-label {
+  padding:
+    8px 5px;
+
+  border-right:
+    1px solid #222222;
+
+  font-weight: 700;
+}
+
+
+.recipient-content {
+  padding:
+    8px 10px;
+
+  height: auto;
+  min-height: 0;
+}
+
+
+.recipient-type-heading {
+  display: block;
+
+  margin:
+    0 0 5px;
+
+  font-weight: 700;
+}
+
+
+.recipient-type-heading:not(:first-child) {
+  margin-top: 14px;
+}
+
+
+.name-list {
+  margin:
+    0 0 10px;
+
+  padding-left:
+    26px;
+}
+
+
+.name-list li {
+  margin-bottom:
+    3px;
+
+  line-height:
+    1.16;
+}
+
+
+/* =====================================================
+   CONTINUATION PAGE
+===================================================== */
+
+.continuation-header {
+  padding-bottom: 10px;
+
+  margin-bottom: 15px;
+
+  border-bottom:
+    1px solid #222222;
+
+  text-align: center;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size: 10pt;
+
+  line-height: 1.35;
+}
+
+
+.continuation-title {
+  margin-top: 4px;
+
+  font-weight: 400;
+}
+
+
+.continuation-name-list {
+  padding:
+    3px 10px;
+}
+
+
+/* =====================================================
+   LETTER BODY
+===================================================== */
+
+.letter-body {
+  padding:
+    18px 8px 0;
+
+  font-family:
+    "Arial Narrow",
+    Arial,
+    sans-serif;
+
+  font-size: 10pt;
+}
+
+
+.letter-body p {
+  margin:
+    0 0 20px;
+
+  line-height:
+    1.3;
+}
+
+
+.program-info {
+  display: grid;
+
+  grid-template-columns:
+    34mm 1fr;
+
+  gap:
+    8px 10px;
+
+  margin:
+    28px 12mm;
+}
+
+
+.program-info-label {
+  font-weight: 700;
+}
+
+
+.letter-description {
+  margin-top: 15px !important;
+  margin-bottom: 0;
+
+  white-space: pre-wrap;
+
+  line-height: 1.4;
+}
+
+
+.response-text {
+  margin-top: -15px !important;
+  margin-bottom: 0;
+
+  line-height: 1.4;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.letter-footer {
+  position: absolute;
+
+  left: 14mm;
+  right: 14mm;
+  bottom: 15mm;
+
+  text-align: center;
+
+  font-size: 8.5pt;
+}
+
+
+/* =====================================================
+   PAGE NUMBER
+===================================================== */
+
+.page-number {
+  position: absolute;
+
+  right: 14mm;
+  bottom: 7mm;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size: 8pt;
+
+  color: #555555;
+}
+
+
+/* =====================================================
+   EMPTY
+===================================================== */
+
+.review-empty {
+  padding: 30px;
+
+  text-align: center;
+
+  color: #666666;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media screen and (max-width: 850px) {
+
+  .review-header {
+    grid-template-columns:
+      44px 1fr 44px;
+
+    min-height: 56px;
+
+    padding:
+      5px 10px;
+  }
+
+
+  .header-button {
+    width: 38px;
+    height: 38px;
+
+    min-width: 38px;
+    min-height: 38px;
+
+    font-size: 21px;
+  }
+
+
+  .review-header-title {
+    font-size: 15px;
+  }
+
+
+  .review-actions {
+    grid-template-columns:
+      repeat(
+        3,
+        minmax(0, 1fr)
+      );
+
+    gap: 8px;
+  }
+
+
+  .action-button,
+  .confirm-button {
+    padding:
+      8px 5px;
+
+    font-size: 12px;
+  }
+
+
+  /*
+    Paparan mobile mengecilkan A4
+    tetapi nisbah muka surat dikekalkan.
+  */
+
+  .letter-sheet {
+    width:
+      calc(100% - 24px);
+
+    height: auto;
+
+    min-height: 297mm;
+
+    margin-bottom: 14px;
+
+    padding:
+      22px 18px 55px;
+
+    font-size: 9px;
+  }
+
+
+  .letter-logo {
+    width: 60px;
+    height: 60px;
+  }
+
+
+  .letter-head {
+    font-size: 11px;
+  }
+
+
+  .letter-reference {
+    font-size: 8px;
+  }
+
+
+  .letter-subject {
+    grid-template-columns:
+      90px 1fr;
+  }
+
+
+  .recipient-section {
+    grid-template-columns:
+      90px 1fr;
+
+    min-height: 220mm;
+  }
+
+
+  .name-list {
+    padding-left:
+      20px;
+  }
+
+
+  .program-info {
+    grid-template-columns:
+      90px 1fr;
+
+    margin:
+      25px 12px;
+  }
+
+
+  .letter-footer {
+    left: 18px;
+    right: 18px;
+    bottom: 35px;
+
+    font-size: 8px;
+  }
+
+
+  .page-number {
+    right: 18px;
+    bottom: 15px;
+
+    font-size: 8px;
+  }
+
+}
+
+
+/* =====================================================
+   PRINT
+===================================================== */
+
+@page {
+  size: A4;
+
+  margin: 0;
+}
+
+
+@media print {
+
+  html,
+  body {
+    margin: 0;
+
+    padding: 0;
+
+    background: #ffffff;
+  }
+
+
+  .no-print,
+  .review-header {
+    display: none !important;
+  }
+
+
+  .review-page {
+    padding: 0;
+  }
+
+
+  .letter-pages {
+    margin: 0;
+
+    padding: 0;
+  }
+
+
+  .letter-sheet {
+    width: 210mm;
+
+    height: 297mm;
+
+    min-height: 297mm;
+
+    margin: 0;
+
+    box-shadow: none;
+
+    page-break-after: always;
+
+    break-after: page;
+  }
+
+
+  .letter-sheet:last-child {
+    page-break-after: auto;
+
+    break-after: auto;
+  }
+
+}
+
+/* =====================================================
+   PAGE FOOTER
+===================================================== */
+
+.letter-sheet {
+  position: relative;
+
+  padding-bottom: 25mm;
+}
+
+
+.page-footer-area {
+  position: absolute;
+
+  left: 15mm;
+  right: 15mm;
+  bottom: 8mm;
+
+  min-height: 12mm;
+}
+
+
+.computer-generated-note {
+  padding-top: 5px;
+
+  border-top: 1px solid #cccccc;
+
+  text-align: center;
+
+  color: #555555;
+
+  font-size: 9px;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+
+.page-number {
+  margin-top: 4px;
+
+  text-align: right;
+
+  color: #333333;
+
+  font-size: 9px;
+}
