@@ -806,8 +806,6 @@ body {
 
     box-shadow: none;
 
-    page-break-after: always;
-
     break-after: page;
   }
 
@@ -865,4 +863,167 @@ body {
   color: #333333;
 
   font-size: 9px;
+}
+
+/* =====================================================
+   MOBILE - KEKALKAN SAIZ A4 SEBENAR
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .invitation-letter {
+    width: 210mm;
+    margin: 0;
+    transform-origin: top left;
+  }
+
+
+  .letter-sheet {
+    width: 210mm;
+    min-height: 297mm;
+    height: 297mm;
+
+    margin: 0 0 8mm 0;
+
+    padding:
+      12mm 14mm 20mm;
+
+    position: relative;
+
+    background: #ffffff;
+
+    overflow: hidden;
+  }
+
+
+  /*
+    Container luar hanya mengecilkan
+    keseluruhan A4, bukan mengubah layout.
+  */
+
+  .review-letter-container {
+    width: 100%;
+
+    overflow-x: hidden;
+
+    display: flex;
+    justify-content: flex-start;
+  }
+
+
+  .review-letter-scale {
+    width: 210mm;
+
+    transform-origin: top left;
+  }
+
+}
+
+/* =====================================================
+   A4 PAGE - ELAK BLANK PAGE
+===================================================== */
+
+.letter-pages {
+  margin: 0;
+  padding: 0;
+}
+
+.letter-sheet {
+  position: relative;
+
+  width: 210mm;
+  min-height: 297mm;
+
+  height: auto;
+
+  margin: 0 auto 8mm;
+
+  padding:
+    12mm
+    14mm
+    20mm;
+
+  background: #ffffff;
+
+  box-sizing: border-box;
+
+  overflow: visible;
+
+  page-break-before: auto;
+  page-break-after: auto;
+
+  break-before: auto;
+  break-after: auto;
+}
+
+
+/* Page terakhir tak perlu margin bawah */
+
+.letter-sheet:last-child {
+  margin-bottom: 0;
+}
+
+
+/* =====================================================
+   RUANG KEPADA IKUT KANDUNGAN
+===================================================== */
+
+.recipient-section {
+  height: auto !important;
+  min-height: 0 !important;
+
+  align-items: stretch;
+}
+
+
+.recipient-content {
+  height: auto !important;
+  min-height: 0 !important;
+
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+
+.continuation-name-list {
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+
+/* =====================================================
+   SENARAI NAMA PADAT
+===================================================== */
+
+.name-list {
+  margin-top: 4px;
+  margin-bottom: 8px;
+
+  padding-left: 22px;
+}
+
+
+.name-list li {
+  margin: 0 0 2px;
+
+  line-height: 1.25;
+}
+
+
+.recipient-type-heading {
+  display: block;
+
+  margin-top: 5px;
+  margin-bottom: 2px;
+}
+
+/* =====================================================
+   GARIS SELEPAS SENARAI URUSETIA
+===================================================== */
+
+.secretariat-divider {
+  width: 100%;
+  border-top: 1px solid #222;
+  margin-top: 10px;
+  margin-bottom: 14px;
 }

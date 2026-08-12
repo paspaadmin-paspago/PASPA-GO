@@ -305,9 +305,101 @@ function splitRecipientPages(items) {
    LOAD REVIEW DATA
 ===================================================== */
 
-function loadReviewData() {
+async function loadReviewData() {
 
   try {
+
+    /* =====================================================
+       SEMAK URL
+       Contoh:
+       ?messageId=MSG-123&from=mesej
+    ===================================================== */
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+
+    const messageId =
+      String(
+        params.get("messageId") || ""
+      ).trim();
+
+
+    /* =====================================================
+       DIBUKA DARIPADA MESEJ.HTML
+    ===================================================== */
+
+    if (messageId) {
+
+      console.log(
+        "LOAD INVITATION FROM MESSAGE:",
+        messageId
+      );
+
+
+      const result =
+        await apiPost({
+
+          action:
+            "program_invitation_detail",
+
+          messageId:
+            messageId
+
+        });
+
+
+      if (
+        !result ||
+        result.success !== true
+      ) {
+
+        throw new Error(
+          result?.message ||
+          "Surat jemputan tidak dapat diperoleh."
+        );
+
+      }
+
+
+      reviewData =
+        result.data;
+
+
+      if (
+        !reviewData ||
+        typeof reviewData !==
+          "object"
+      ) {
+
+        throw new Error(
+          "Data surat jemputan tidak sah."
+        );
+
+      }
+
+
+      console.log(
+        "MESSAGE REVIEW DATA:",
+        reviewData
+      );
+
+
+      renderReviewLetter();
+
+      scaleReviewLetterForMobile();
+
+      return;
+
+    }
+
+
+    /* =====================================================
+       DIBUKA OLEH ADMIN SEMASA BUAT PROGRAM
+       GUNA LOCAL STORAGE SEPERTI BIASA
+    ===================================================== */
 
     const text =
       localStorage.getItem(
@@ -357,6 +449,8 @@ function loadReviewData() {
 
     renderReviewLetter();
 
+    scaleReviewLetterForMobile();
+
 
   } catch (error) {
 
@@ -367,7 +461,8 @@ function loadReviewData() {
 
 
     showReviewMessage(
-      error.message,
+      error.message ||
+      "Surat jemputan tidak dapat dipaparkan.",
       "error"
     );
 
@@ -786,6 +881,8 @@ function renderRecipientChunk(
     secretariatMembers,
     secretariatStart
   );
+
+ 
 
 }
 
@@ -1593,29 +1690,29 @@ function renderReviewLetter() {
   );
 
 
-  /* ===================================================
-     BODY DOES NOT FIT
-  =================================================== */
+ /* ===================================================
+   BODY DOES NOT FIT
+=================================================== */
 
-  if (!bodyFits) {
+if (!bodyFits) {
 
-    lastPage.removeChild(
-      bodySection
+  lastPage.removeChild(
+    bodySection
+  );
+
+  const bodyPage =
+    createBodyPage(
+      1,
+      1
     );
 
+  pages.push(
+    bodyPage
+  );
 
-    const bodyPage =
-      createBodyPage(
-        1,
-        1
-      );
+}
 
 
-    pages.push(
-      bodyPage
-    );
-
-  }
 
 
   /*
@@ -1800,68 +1897,65 @@ document
           ".pdf";
 
 
-        const options = {
+const options = {
 
-          margin:
-            0,
+  margin:
+    0,
 
+  filename:
+    filename,
 
-          filename:
-            filename,
+  image: {
 
+    type:
+      "jpeg",
 
-          image: {
+    quality:
+      0.98
 
-            type:
-              "jpeg",
+  },
 
-            quality:
-              0.98
+  html2canvas: {
 
-          },
+    scale:
+      2,
 
+    useCORS:
+      true,
 
-          html2canvas: {
+    backgroundColor:
+      "#ffffff"
 
-            scale:
-              2,
+  },
 
-            useCORS:
-              true,
+  jsPDF: {
 
-            backgroundColor:
-              "#ffffff"
+    unit:
+      "mm",
 
-          },
+    format:
+      "a4",
 
+    orientation:
+      "portrait"
 
-          jsPDF: {
+  },
 
-            unit:
-              "mm",
+  pagebreak: {
 
-            format:
-              "a4",
+    mode: [
+      "avoid-all",
+      "css",
+      "legacy"
+    ],
 
-            orientation:
-              "portrait"
+    avoid: [
+      ".letter-sheet"
+    ]
 
-          },
+  }
 
-
-          pagebreak: {
-
-            mode: [
-              "css",
-              "legacy"
-            ],
-
-            after:
-              ".letter-sheet"
-
-          }
-
-        };
+};
 
 
         await html2pdf()
@@ -1897,24 +1991,230 @@ document
    PASTI
 ===================================================== */
 
+/* =====================================================
+   PASTI - HANTAR JEMPUTAN KEPADA AHLI
+===================================================== */
+
 document
   .getElementById(
     "confirmButton"
   )
   .addEventListener(
     "click",
-    function () {
+    async function () {
 
-      /*
-        Fungsi penghantaran sebenar
-        ke MESSAGE akan disambungkan
-        selepas paparan surat disahkan.
-      */
+      const confirmButton =
+        document.getElementById(
+          "confirmButton"
+        );
+
+
+      /* =================================================
+         SEMAK DATA SURAT
+      ================================================= */
+
+      if (!reviewData) {
+
+        showReviewMessage(
+          "Data jemputan tidak tersedia.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      /* =================================================
+         SEMAK SESSION ADMIN
+      ================================================= */
+
+      let session = null;
+
+
+      try {
+
+        session =
+          JSON.parse(
+            localStorage.getItem(
+              "paspaGoSession"
+            )
+          );
+
+      } catch (error) {
+
+        session = null;
+
+      }
+
+
+      if (
+        !session ||
+        session.isLoggedIn !== true ||
+        !session.googleEmail
+      ) {
+
+        showReviewMessage(
+          "Sesi log masuk tidak ditemui. Sila log masuk semula.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      /* =================================================
+         CONFIRMATION
+      ================================================= */
+
+      const perkara =
+        reviewData.program?.perkara ||
+        "program ini";
+
+
+      const confirmed =
+        window.confirm(
+          "Adakah anda pasti mahu menghantar jemputan " +
+          perkara +
+          " kepada ahli yang dipilih?"
+        );
+
+
+      if (!confirmed) {
+        return;
+      }
+
+
+      /* =================================================
+         ELAK DOUBLE CLICK
+      ================================================= */
+
+      confirmButton.disabled =
+        true;
+
+
+      const originalText =
+        confirmButton.textContent;
+
+
+      confirmButton.textContent =
+        "MENGHANTAR...";
+
 
       showReviewMessage(
-        "Paparan jemputan telah sedia. Fungsi PASTI akan disambungkan ke mesej ahli pada langkah seterusnya.",
+        "Jemputan sedang dihantar. Sila tunggu...",
         "info"
       );
+
+
+      try {
+
+        /* ===============================================
+           HANTAR KE GOOGLE APPS SCRIPT
+        =============================================== */
+
+        const result =
+          await apiPost({
+
+            action:
+              "send_program_invitation",
+
+            email:
+              session.googleEmail,
+
+            data:
+              reviewData
+
+          });
+
+
+        /* ===============================================
+           SEMAK RESPONSE
+        =============================================== */
+if (
+  !result ||
+  result.success !== true
+) {
+
+  console.error(
+    "BACKEND RESPONSE:",
+    result
+  );
+
+  throw new Error(
+    result?.error ||
+    result?.message ||
+    "Jemputan gagal dihantar."
+  );
+
+}
+
+
+        /* ===============================================
+           SIMPAN MESSAGE ID DALAM DRAFT
+        =============================================== */
+
+        reviewData.messageId =
+          result.messageId;
+
+
+        reviewData.invitationSent =
+          true;
+
+
+        localStorage.setItem(
+          REVIEW_STORAGE_KEY,
+          JSON.stringify(
+            reviewData
+          )
+        );
+
+
+        /* ===============================================
+           SUCCESS
+        =============================================== */
+
+        showReviewMessage(
+          "Jemputan berjaya dihantar kepada " +
+          result.totalRecipients +
+          " ahli. ID Mesej: " +
+          result.messageId,
+          "success"
+        );
+
+
+        confirmButton.textContent =
+          "✓ DIHANTAR";
+
+
+        confirmButton.disabled =
+          true;
+
+
+      } catch (error) {
+
+        console.error(
+          "SEND INVITATION ERROR:",
+          error
+        );
+
+
+        showReviewMessage(
+          error.message ||
+          "Jemputan gagal dihantar.",
+          "error"
+        );
+
+
+        confirmButton.disabled =
+          false;
+
+
+        confirmButton.textContent =
+          originalText;
+
+      }
 
     }
   );
@@ -1932,6 +2232,26 @@ document
     "click",
     function () {
 
+      const params =
+        new URLSearchParams(
+          window.location.search
+        );
+
+
+      const from =
+        params.get("from");
+
+
+      if (from === "mesej") {
+
+        window.location.href =
+          "mesej.html";
+
+        return;
+
+      }
+
+
       history.back();
 
     }
@@ -1947,17 +2267,149 @@ document
     function () {
 
       window.location.href =
-        "pengurusan-laporan.html";
+        "dashboard.html";
 
     }
   );
 
+/* =====================================================
+   MOBILE A4 SCALE
+===================================================== */
 
+function scaleReviewLetterForMobile() {
+
+  const scaleWrapper =
+    document.getElementById(
+      "reviewLetterScale"
+    );
+
+  if (!scaleWrapper) {
+    return;
+  }
+
+
+  if (
+    window.innerWidth > 600
+  ) {
+
+    scaleWrapper.style.transform =
+      "";
+
+    scaleWrapper.style.height =
+      "";
+
+    scaleWrapper.style.marginBottom =
+      "";
+
+    return;
+
+  }
+
+
+  const a4WidthPx =
+    793.7;
+
+
+  const availableWidth =
+    window.innerWidth - 20;
+
+
+  const scale =
+    Math.min(
+      1,
+      availableWidth /
+      a4WidthPx
+    );
+
+
+  const originalHeight =
+    scaleWrapper.scrollHeight;
+
+
+  scaleWrapper.style.transform =
+    "scale(" +
+    scale +
+    ")";
+
+
+  scaleWrapper.style.transformOrigin =
+    "top left";
+
+
+  scaleWrapper.style.height =
+    (
+      originalHeight *
+      scale
+    ) +
+    "px";
+
+
+  scaleWrapper.style.marginBottom =
+    "0";
+
+}
+
+function applyReviewMode() {
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  const from =
+    params.get("from");
+
+  const confirmButton =
+    document.getElementById(
+      "confirmButton"
+    );
+
+  if (
+    from === "mesej" &&
+    confirmButton
+  ) {
+
+    confirmButton.style.display =
+      "none";
+
+  }
+
+}
 /* =====================================================
    START
 ===================================================== */
 
 document.addEventListener(
   "DOMContentLoaded",
-  loadReviewData
+  async function () {
+
+    applyReviewMode();
+
+    await loadReviewData();
+
+    requestAnimationFrame(
+      function () {
+        scaleReviewLetterForMobile();
+      }
+    );
+
+  }
+);
+
+
+/* =====================================================
+   RESIZE
+===================================================== */
+
+window.addEventListener(
+  "resize",
+  function () {
+
+    requestAnimationFrame(
+      function () {
+        scaleReviewLetterForMobile();
+      }
+    );
+
+  }
 );

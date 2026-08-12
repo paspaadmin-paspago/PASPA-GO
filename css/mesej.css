@@ -1,0 +1,457 @@
+/* =====================================================
+   PASPA GO
+   MESEJ AHLI
+===================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #071f47;
+  color: #111111;
+}
+
+
+/* =====================================================
+   PAGE
+===================================================== */
+
+.message-page {
+  min-height: 100vh;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.message-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  display: grid;
+  grid-template-columns: 50px 1fr 50px;
+  align-items: center;
+
+  min-height: 60px;
+  padding: 6px 15px;
+
+  background: #194d91;
+
+  border-bottom:
+    1px solid rgba(255,255,255,.22);
+}
+
+.header-button {
+  appearance: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 42px;
+  height: 42px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: transparent;
+  color: #ffffff;
+
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.header-button:hover {
+  background: rgba(255,255,255,.10);
+}
+
+.message-header-title {
+  text-align: center;
+
+  color: #ffffff;
+
+  font-size: 17px;
+  font-weight: 700;
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.message-status {
+  width: min(700px, calc(100% - 24px));
+
+  margin: 15px auto 0;
+
+  padding: 12px 14px;
+
+  border-radius: 10px;
+
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.message-status.error {
+  background: #fdeaea;
+  color: #a82020;
+}
+
+.message-status.success {
+  background: #e7f7ed;
+  color: #176c36;
+}
+
+.message-status.info {
+  background: #edf5ff;
+  color: #174f8f;
+}
+
+
+/* =====================================================
+   MESSAGE LIST
+===================================================== */
+
+.message-list {
+  width: min(700px, calc(100% - 24px));
+
+  margin: 18px auto 40px;
+}
+
+
+/* =====================================================
+   LOADING / EMPTY
+===================================================== */
+
+.loading-message,
+.empty-message {
+  padding: 30px 20px;
+
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  text-align: center;
+
+  color: #555555;
+}
+
+
+/* =====================================================
+   MESSAGE CARD
+===================================================== */
+
+.message-card {
+  margin-bottom: 14px;
+
+  padding: 16px;
+
+  border-radius: 14px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 6px 18px rgba(0,0,0,.18);
+}
+
+.message-card.unread {
+  border-left: 5px solid #245ca2;
+}
+
+.message-card.read {
+  border-left: 5px solid #aaaaaa;
+}
+
+.message-title {
+  margin: 0 0 8px;
+
+  font-size: 17px;
+  font-weight: 700;
+
+  color: #12396f;
+}
+
+.message-meta {
+  margin-bottom: 4px;
+
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.message-label {
+  font-weight: 700;
+}
+
+.message-details {
+  margin-top: 12px;
+
+  padding-top: 12px;
+
+  border-top: 1px solid #dddddd;
+
+  white-space: pre-wrap;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+
+/* =====================================================
+   ROLE
+===================================================== */
+
+.message-role {
+  display: inline-block;
+
+  margin-top: 10px;
+
+  padding: 5px 9px;
+
+  border-radius: 20px;
+
+  background: #edf5ff;
+
+  color: #174f8f;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+/* =====================================================
+   RESPONSE STATUS
+===================================================== */
+
+.response-status {
+  margin-top: 12px;
+
+  padding: 9px 10px;
+
+  border-radius: 9px;
+
+  background: #f4f4f4;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+/* =====================================================
+   RESPONSE BUTTONS
+===================================================== */
+
+.response-buttons {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 10px;
+
+  margin-top: 12px;
+}
+
+.response-button {
+  min-height: 44px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.response-button.hadir {
+  background: #1e7d43;
+  color: #ffffff;
+}
+
+.response-button.tidak-hadir {
+  background: #b52a2a;
+  color: #ffffff;
+}
+
+.response-button:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media screen and (max-width: 600px) {
+
+  .message-header {
+    grid-template-columns:
+      44px 1fr 44px;
+
+    min-height: 56px;
+
+    padding: 5px 10px;
+  }
+
+  .header-button {
+    width: 38px;
+    height: 38px;
+
+    font-size: 20px;
+  }
+
+  .message-header-title {
+    font-size: 15px;
+  }
+
+  .message-list {
+    margin-top: 14px;
+  }
+
+  .message-card {
+    padding: 14px;
+  }
+
+  .message-title {
+    font-size: 16px;
+  }
+
+}
+
+/* =====================================================
+   MESSAGE CARD HEADER
+===================================================== */
+
+.message-card-header {
+  display: flex;
+
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  margin-bottom: 8px;
+}
+
+
+.message-card-header .message-title {
+  flex: 1;
+
+  margin-bottom: 0;
+}
+
+
+/* =====================================================
+   VIEW BUTTON
+===================================================== */
+
+.view-button {
+  appearance: none;
+
+  flex-shrink: 0;
+
+  min-height: 34px;
+
+  padding:
+    6px 11px;
+
+  border:
+    1px solid #245ca2;
+
+  border-radius: 8px;
+
+  background: #edf5ff;
+
+  color: #174f8f;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+.view-button:hover {
+  background: #245ca2;
+
+  color: #ffffff;
+}
+
+
+/* =====================================================
+   KETERANGAN
+===================================================== */
+
+.message-description {
+  margin-top: 6px;
+
+  white-space: pre-wrap;
+
+  line-height: 1.5;
+}
+
+/* =====================================================
+   COMPACT MESSAGE CARD
+   Tinggi kad ikut jumlah kandungan
+===================================================== */
+
+.message-card {
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+/* Bahagian kandungan / keterangan */
+.message-description,
+.message-details,
+.message-content,
+.message-body {
+  height: auto !important;
+  min-height: 0 !important;
+
+  margin-top: -30px !important;
+  margin-bottom: 12px !important;
+
+  padding-top: -2px !important;
+  padding-bottom: 8px !important;
+}
+
+/* Perenggan dalam keterangan */
+.message-description p,
+.message-details p,
+.message-content p,
+.message-body p {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding: 0 !important;
+  line-height: 1.5;
+}
+
+/* Status respon jangan terlalu jauh */
+.response-status,
+.status-response {
+  margin-top: 12px !important;
+}
+
+/* Ruang button */
+.response-buttons,
+.message-actions {
+  margin-top: 12px !important;
+}

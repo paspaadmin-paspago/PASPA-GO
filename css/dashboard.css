@@ -1,6 +1,10 @@
+/* =====================================================
+   DASHBOARD
+===================================================== */
 
 .dashboard-body {
   min-height: 100vh;
+
   background:
     linear-gradient(
       rgba(5, 25, 60, 0.76),
@@ -10,35 +14,76 @@
     center / cover no-repeat fixed;
 }
 
+
 .dashboard-shell {
   width: 100%;
   max-width: 900px;
+
   min-height: 100vh;
+
   margin: 0 auto;
+
   padding: 20px;
+
+  padding-bottom: 120px;
 }
 
-.dashboard-header {
 
-  position: relative;
+/* =====================================================
+   HEADER
+===================================================== */
+
+.dashboard-header {
+  position: sticky;
+
+  top: 0;
+
+  z-index: 100;
 
   display: flex;
+
   justify-content: center;
   align-items: center;
 
-  margin-bottom: 22px;
+  width: 100%;
 
+  height: 125px;
+  min-height: 125px;
+
+  padding: 0;
+
+  margin-bottom: 4px;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      rgba(5, 25, 60, 0.72),
+      rgba(5, 25, 60, 0.82)
+    ),
+    url("../images/background.jpg")
+    center / cover no-repeat;
 }
+
 
 .dashboard-logo {
-  width: 250px;
-  max-height: auto;
+  position: relative;
 
-  object-fit: contain;
+  display: block;
+
+  width: 250px;
+  height: auto;
+
   margin: 0 auto;
 
-  transform: translateY(25px);
+  object-fit: contain;
+
+  transform:
+    translateY(25px);
+
+  z-index: 101;
 }
+
 
 .logout-button {
   position: absolute;
@@ -46,415 +91,196 @@
   top: 10px;
   right: 10px;
 
+  z-index: 102;
+
   display: flex;
+
   align-items: center;
   justify-content: center;
 
   width: 42px;
   height: 42px;
+
   min-height: 42px;
 
   margin: 0;
   padding: 0;
 
   border: none;
-  border-radius: 0;
 
-  background: transparent !important;
-  box-shadow: none !important;
+  background:
+    transparent !important;
 
-  color: #f7f4f4 !important;
+  box-shadow:
+    none !important;
+
+  color:
+    #ffffff !important;
 
   font-size: 30px;
+
   font-weight: 700;
+
   line-height: 1;
 
   cursor: pointer;
-
-  z-index: 50;
 }
 
-.logout-button:hover {
-  background: transparent !important;
-  color: #ffffff;
 
-  transform: scale(1.08);
-}
+/* =====================================================
+   MEMBER CARD
+===================================================== */
 
 .member-card {
   display: flex;
+
   align-items: center;
+
   gap: 24px;
+
   padding: 25px;
-  background: rgba(255, 255, 255, 0.96);
+
+  background:
+    rgba(255,255,255,.96);
+
   border-radius: 20px;
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.25);
+
+  box-shadow:
+    0 18px 45px
+    rgba(0,0,0,.25);
 }
+
 
 .photo-wrapper {
   flex-shrink: 0;
 }
 
+
 .member-photo {
   width: 140px;
   height: 175px;
+
   object-fit: cover;
-  border: 4px solid #ffffff;
+
+  border:
+    4px solid #ffffff;
+
   border-radius: 12px;
-  box-shadow: 0 8px 22px rgba(16, 58, 120, 0.25);
-  background: #e7edf5;
+
+  box-shadow:
+    0 8px 22px
+    rgba(16,58,120,.25);
+
+  background:
+    #e7edf5;
 }
+
 
 .member-details {
   flex: 1;
 }
 
+
 .welcome-text {
   margin-bottom: 5px;
+
   color: #6a7685;
+
   font-size: 14px;
 }
 
+
 .member-details h1 {
   margin-bottom: 18px;
+
   text-align: left;
+
   color: #103a78;
+
   font-size: 27px;
 }
 
+
 .detail-row {
   display: grid;
-  grid-template-columns: 160px 1fr;
+
+  grid-template-columns:
+    160px 1fr;
+
   gap: 10px;
+
   padding: 9px 0;
-  border-bottom: 1px solid #e5eaf0;
+
+  border-bottom:
+    1px solid #e5eaf0;
+
   color: #34445a;
 }
+
 
 .detail-row strong {
   color: #132f53;
 }
 
+
+/* =====================================================
+   DASHBOARD MENU
+===================================================== */
+
 .dashboard-menu {
   display: grid;
+
   grid-template-columns:
-    repeat(3, minmax(0, 1fr));
+    repeat(
+      3,
+      minmax(0,1fr)
+    );
+
   gap: 15px;
+
   margin-top: 20px;
-   margin-bottom: 60px; /* jarak kedudukan logo bulat dengan menu */
+
+  margin-bottom: 60px;
 }
+
 
 .menu-card {
   min-height: 115px;
+
   margin: 0;
-  padding: 18px 12px;
-  background: rgba(255, 255, 255, 0.96);
+
+  padding:
+    18px 12px;
+
+  background:
+    rgba(255,255,255,.96);
+
   color: #103a78;
+
   border-radius: 16px;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.16);
+
+  box-shadow:
+    0 8px 22px
+    rgba(0,0,0,.16);
 }
 
+
 .menu-card:hover {
-  background: #ffffff;
-  transform: translateY(-2px);
+  background:
+    #ffffff;
+
+  transform:
+    translateY(-2px);
 }
+
 
 .menu-icon {
   display: block;
+
   margin-bottom: 9px;
+
   font-size: 30px;
 }
-
-/* =====================================================
-   DASHBOARD - PAPARAN MOBILE
-===================================================== */
-
-@media (max-width: 650px) {
-
-  .dashboard-shell {
-    padding: 14px;
-  }
-
-  /* ===================================================
-     HEADER
-  =================================================== */
-
-  .dashboard-header {
-    margin-bottom: 12px;
-  }
-
-  /* Logo kekal */
-  .dashboard-logo {
-    width: 230px;
-    height: auto;
-  }
-
-  .logout-button {
-    min-height: 36px;
-
-    padding: 7px 12px;
-
-    border-radius: 9px;
-
-    font-size: 13px;
-  }
-
-  /* ===================================================
-     KAD AHLI
-  =================================================== */
-
-  .member-card {
-    flex-direction: column;
-
-    gap: 8px;
-
-    padding: 14px 12px;
-
-    border-radius: 16px;
-
-    text-align: center;
-  }
-
-  .photo-wrapper {
-    margin: 0;
-  }
-
-  /* Gambar lebih kecil */
-  .member-photo {
-    width: 95px;
-    height: 120px;
-
-    border-width: 3px;
-    border-radius: 10px;
-  }
-
-  .member-details {
-    width: 100%;
-  }
-
-  .welcome-text {
-    margin: 2px 0 3px;
-
-    font-size: 12px;
-  }
-
-  /* Nama ahli */
-  .member-details h1 {
-    margin: 0 0 7px;
-
-    text-align: center;
-
-    font-size: 18px;
-    line-height: 1.15;
-  }
-
-  /* ID PASPA dan IC */
-  .detail-row {
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    gap: 7px;
-
-    padding: 4px 0;
-
-    border-bottom:
-      1px solid #e5eaf0;
-
-    font-size: 13px;
-    line-height: 1.2;
-  }
-
-  .detail-row strong {
-    font-size: 13px;
-  }
-
-  /* ===================================================
-     MENU DASHBOARD
-  =================================================== */
-
-  .dashboard-menu {
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
-
-    gap: 9px;
-
-    margin-top: 10px;
-  }
-
-  .menu-card {
-    min-height: 70px;
-
-    padding:6px 7px;
-
-    border-radius: 12px;
-
-    font-size: 12px;
-    line-height: 1.1;
-  }
-
-  .menu-icon {
-    margin-bottom: 5px;
-
-    font-size: 25px;
-  }
-
-}
-
-   /* TAMBAH DI SINI */
-    .logout-button{
-
-        position:absolute;
-
-        top:0;
-        right:0;
-
-        width:38px;
-        height:38px;
-        min-height:38px;
-
-        padding:0;
-
-        font-size:20px;
-
-    }
-
-}
-
-/* =====================================================
-   LOGO PASPA BAWAH
-===================================================== */
-
-.dashboard-footer{
-
-    width:100%;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    /* Jarak dari menu */
-    margin-top:150px;
-
-    /* Jarak dari bawah page */
-    margin-bottom:1px;
-
-    text-align:center;
-
-}
-
-.paspa-footer-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  width: 72px;
-  height: 72px;
-  min-height: 72px;
-
-  margin: 0 auto;
-  padding: 5px;
-
-  border: 3px solid #ffffff;
-  border-radius: 50%;
-
-  background:
-    rgba(255, 255, 255, 0.10);
-
-  cursor: pointer;
-
-  transition:
-    transform 0.2s ease,
-    background 0.2s ease;
-
-  box-shadow:
-    0 6px 18px
-    rgba(0, 0, 0, 0.25);
-}
-
-.paspa-footer-button:hover {
-  transform: scale(1.08);
-
-  border-color: #ffffff;
-
-  background:
-    rgba(255, 255, 255, 0.18);
-}
-
-.paspa-footer-button img {
-  display: block;
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: contain;
-
-  border-radius: 50%;
-}
-
-/* MOBILE */
-
-@media (max-width: 650px) {
-
-  .dashboard-footer {
-    margin-top: 20px;
-    margin-bottom: 8px;
-  }
-
-  .paspa-footer-button {
-    width: 58px;
-    height: 58px;
-    min-height: 58px;
-
-    padding: 4px;
-  }
-
-}
-
-/* =====================================================
-   MOBILE - LOGOUT BUTTON
-===================================================== */
-
-@media (max-width: 650px) {
-
-  .dashboard-header {
-    position: relative;
-  }
-
-  .logout-button {
-    position: absolute;
-    top: 4px;
-    right: 4px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 42px;
-    height: 42px;
-    min-height: 42px;
-
-    margin: 0;
-    padding: 0;
-
-    border: none;
-    border-radius: 11px;
-
-    background: #ffffff;
-    color: #f2f4f8 !important;
-
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 1;
-
-    z-index: 10;
-  }
-
-}
-
 
 
 /* =====================================================
@@ -467,33 +293,44 @@
   left: 50%;
   bottom: 14px;
 
-  transform: translateX(-50%);
+  transform:
+    translateX(-50%);
 
-  width: min(94%, 520px);
+  width:
+    min(
+      94%,
+      520px
+    );
 
   display: grid;
 
   grid-template-columns:
-    1fr 1fr 80px 1fr 1fr;
+    1fr
+    1fr
+    80px
+    1fr
+    1fr;
 
   align-items: center;
 
-  padding: 9px 10px;
+  padding:
+    9px 10px;
 
   border-radius: 18px;
 
   background:
-    rgba(255, 255, 255, 0.96);
+    rgba(255,255,255,.96);
 
   box-shadow:
     0 8px 28px
-    rgba(0, 0, 0, 0.25);
+    rgba(0,0,0,.25);
 
   z-index: 9999;
 }
 
+
 /* =====================================================
-   BUTTON KIRI / KANAN
+   BOTTOM ITEM
 ===================================================== */
 
 .bottom-nav-item {
@@ -502,7 +339,9 @@
   min-height: 48px;
 
   margin: 0;
-  padding: 5px 3px;
+
+  padding:
+    5px 3px;
 
   display: flex;
 
@@ -515,29 +354,69 @@
 
   border: none;
 
-  background: transparent;
+  background:
+    transparent;
 
   color: #103a78;
 
+  font-family:
+    Arial,
+    sans-serif;
+
   cursor: pointer;
+
+  text-decoration:
+    none !important;
 }
 
+
+.bottom-nav-item:link,
+.bottom-nav-item:visited,
+.bottom-nav-item:hover,
+.bottom-nav-item:active {
+
+  color: #103a78;
+
+  text-decoration:
+    none !important;
+}
+
+
+.bottom-nav-item:hover {
+  background:
+    rgba(16,58,120,.08);
+
+  border-radius: 10px;
+}
+
+
 .bottom-nav-icon {
+  display: block;
+
   font-size: 20px;
 
   line-height: 1;
 }
 
+
 .bottom-nav-text {
+  display: block;
+
   font-size: 11px;
 
   font-weight: 700;
 
   line-height: 1.1;
+
+  color: #103a78;
+
+  text-decoration:
+    none !important;
 }
 
+
 /* =====================================================
-   LOGO TENGAH
+   LOGO PASPA TENGAH
 ===================================================== */
 
 .bottom-nav-logo {
@@ -548,7 +427,8 @@
 
   min-height: 70px;
 
-  margin: -35px auto 0;
+  margin:
+    -35px auto 0;
 
   padding: 4px;
 
@@ -562,14 +442,16 @@
 
   border-radius: 50%;
 
-  background: #103a78;
+  background:
+    #103a78;
 
   box-shadow:
     0 5px 15px
-    rgba(0, 0, 0, 0.25);
+    rgba(0,0,0,.25);
 
   cursor: pointer;
 }
+
 
 .bottom-nav-logo img {
   display: block;
@@ -582,221 +464,352 @@
   border-radius: 50%;
 }
 
+
 /* =====================================================
-   HOVER
+   MESSAGE BADGE
 ===================================================== */
 
-.bottom-nav-item:hover {
+.message-icon-wrapper {
+  position: relative;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  overflow: visible;
+}
+
+
+.message-badge {
+  position: absolute;
+
+  top: -9px;
+  right: -13px;
+
+  z-index: 20;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: 19px;
+  height: 19px;
+
+  padding:
+    0 5px;
+
+  border:
+    2px solid #ffffff;
+
+  border-radius: 999px;
+
   background:
-    rgba(16, 58, 120, 0.08);
+    #e11d2e;
 
-  border-radius: 10px;
+  color:
+    #ffffff !important;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  line-height: 1;
+
+  box-shadow:
+    0 2px 5px
+    rgba(0,0,0,.25);
+
+  pointer-events: none;
 }
 
-.bottom-nav-logo:hover {
-  transform: scale(1.05);
+
+.message-badge[hidden] {
+  display:
+    none !important;
 }
 
-/* =====================================================
-   BAGI RUANG BAWAH PAGE
-   SUPAYA CONTENT TAK DITUTUP NAV
-===================================================== */
 
-.dashboard-shell {
-  padding-bottom: 120px;
+.message-badge.show {
+  display:
+    flex;
 }
+
 
 /* =====================================================
    MOBILE
 ===================================================== */
 
-@media (max-width: 650px) {
+@media
+(max-width: 650px) {
+
+
+  .dashboard-shell {
+    padding:
+      14px;
+
+    padding-bottom:
+      110px;
+  }
+
+
+  .dashboard-header {
+    height:
+      125px;
+
+    min-height:
+      125px;
+
+    margin-bottom:
+      4px;
+  }
+
+
+  .dashboard-logo {
+    width:
+      230px;
+  }
+
+
+  .logout-button {
+    top: 4px;
+    right: 4px;
+
+    width: 42px;
+    height: 42px;
+
+    min-height:
+      42px;
+
+    font-size:
+      24px;
+  }
+
+
+  /* MEMBER */
+
+  .member-card {
+    flex-direction:
+      column;
+
+    gap: 5px;
+
+    padding:
+      10px 12px;
+
+    border-radius:
+      16px;
+
+    text-align:
+      center;
+  }
+
+
+  .member-photo {
+    width:
+      82px;
+
+    height:
+      103px;
+
+    border-width:
+      3px;
+
+    border-radius:
+      9px;
+  }
+
+
+  .member-details {
+    width:
+      100%;
+  }
+
+
+  .welcome-text {
+    margin:
+      2px 0;
+
+    font-size:
+      11px;
+
+    line-height:
+      1.1;
+  }
+
+
+  .member-details h1 {
+    margin:
+      0 0 4px;
+
+    text-align:
+      center;
+
+    font-size:
+      16px;
+
+    line-height:
+      1.12;
+  }
+
+
+  .detail-row {
+    display:
+      flex;
+
+    align-items:
+      center;
+
+    justify-content:
+      center;
+
+    gap:
+      5px;
+
+    padding:
+      3px 0;
+
+    font-size:
+      12px;
+
+    line-height:
+      1.1;
+  }
+
+
+  .detail-row strong {
+    font-size:
+      12px;
+  }
+
+
+  /* MENU */
+
+  .dashboard-menu {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0,1fr)
+      );
+
+    gap:
+      9px;
+
+    margin-top:
+      9px;
+  }
+
+
+  .menu-card {
+    min-height:
+      70px;
+
+    padding:
+      6px 7px;
+
+    border-radius:
+      12px;
+
+    font-size:
+      12px;
+
+    line-height:
+      1.1;
+  }
+
+
+  .menu-icon {
+    margin-bottom:
+      5px;
+
+    font-size:
+      25px;
+  }
+
+
+  /* BOTTOM NAV */
 
   .bottom-nav {
-    bottom: 10px;
+    bottom:
+      10px;
 
-    width: calc(100% - 20px);
+    width:
+      calc(100% - 20px);
 
     grid-template-columns:
-      1fr 1fr 68px 1fr 1fr;
+      1fr
+      1fr
+      68px
+      1fr
+      1fr;
 
     padding:
       8px 6px;
 
-    border-radius: 16px;
+    border-radius:
+      16px;
   }
+
 
   .bottom-nav-item {
-    min-height: 44px;
+    min-height:
+      44px;
 
-    padding: 4px 2px;
+    padding:
+      4px 2px;
   }
+
 
   .bottom-nav-icon {
-    font-size: 18px;
+    font-size:
+      18px;
   }
+
 
   .bottom-nav-text {
-    font-size: 10px;
+    font-size:
+      10px;
   }
+
 
   .bottom-nav-logo {
-    width: 62px;
-    height: 62px;
+    width:
+      62px;
 
-    min-height: 62px;
+    height:
+      62px;
 
-    margin-top: -31px;
+    min-height:
+      62px;
 
-    border-width: 3px;
+    margin-top:
+      -31px;
+
+    border-width:
+      3px;
   }
 
-  .dashboard-shell {
-    padding-bottom: 110px;
-  }
 
-}
+  .message-badge {
+    top:
+      -8px;
 
-/* =====================================================
-   HEADER PASPA GO - STICKY / FREEZE
-===================================================== */
+    right:
+      -12px;
 
-.dashboard-header {
-  position: sticky;
-  top: 0;
+    min-width:
+      18px;
 
-  z-index: 100;
+    height:
+      18px;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  width: 100%;
-
-  padding-top: 8px;
-  padding-bottom: 6px;
-
-  margin-bottom: 6px;
-
-  background:
-  linear-gradient(
-    rgba(5, 25, 60, 0.72),
-    rgba(5, 25, 60, 0.82)
-  ),
-  url("../images/background.jpg")
-  center / cover no-repeat;
-}
-
-/* Logo kekal di tengah */
-.dashboard-logo {
-  position: relative;
-
-  display: block;
-
-  margin: 0 auto;
-
-  z-index: 101;
-}
-
-/* Logout kekal kanan atas */
-.logout-button {
-  position: absolute;
-
-  top: 10px;
-  right: 10px;
-
-  z-index: 102;
-}
-
-/* =====================================================
-   MOBILE - COMPACT MEMBER CARD
-===================================================== */
-
-@media (max-width: 650px) {
-
-  /* Header lebih rapat dengan kad ahli */
-  .dashboard-header {
-    margin-bottom: 4px;
-
-    padding-top: 5px;
-    padding-bottom: 4px;
-  }
-
-  /* Kotak ahli lebih pendek */
-  .member-card {
-    gap: 5px;
-
-    padding: 10px 12px;
-
-    margin-top: 0;
-
-    border-radius: 16px;
-  }
-
-  /* Gambar dikecilkan sedikit */
-  .member-photo {
-    width: 82px;
-    height: 103px;
-
-    border-width: 3px;
-
-    border-radius: 9px;
-  }
-
-  .photo-wrapper {
-    margin: 0;
-    padding: 0;
-  }
-
-  /* Selamat datang */
-  .welcome-text {
-    margin: 2px 0 2px;
-
-    font-size: 11px;
-    line-height: 1.1;
-  }
-
-  /* Nama ahli */
-  .member-details h1 {
-    margin: 0 0 4px;
-
-    font-size: 16px;
-    line-height: 1.12;
-  }
-
-  /* ID PASPA + IC */
-  .detail-row {
-    gap: 5px;
-
-    padding: 3px 0;
-
-    font-size: 12px;
-    line-height: 1.1;
-  }
-
-  .detail-row strong {
-    font-size: 12px;
-  }
-
-  /* Menu dirapatkan dengan kad ahli */
-  .dashboard-menu {
-    margin-top: 9px;
+    font-size:
+      9px;
   }
 
 }
-/* =====================================================
-   HEADER LEBIH PENDEK
-===================================================== */
-
-.dashboard-header {
-  height: 125px;
-  min-height: 125px;
-
-  padding: 0;
-
-  margin-bottom: 4px;
-
-  overflow: hidden;
-}
-
-

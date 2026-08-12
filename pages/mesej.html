@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Mesej | PASPA GO
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="../css/mesej.css"
+  >
+
+</head>
+
+
+<body>
+
+  <div class="message-page">
+
+    <!-- HEADER -->
+
+    <header class="message-header">
+
+      <button
+        type="button"
+        id="backButton"
+        class="header-button"
+      >
+        ←
+      </button>
+
+
+      <div class="message-header-title">
+        Mesej
+      </div>
+
+
+      <button
+        type="button"
+        id="homeButton"
+        class="header-button"
+      >
+        🏠
+      </button>
+
+    </header>
+
+
+    <!-- STATUS -->
+
+    <div
+      id="messageStatus"
+      class="message-status"
+      hidden
+    ></div>
+
+
+    <!-- SENARAI MESEJ -->
+
+    <main
+      id="messageList"
+      class="message-list"
+    >
+
+      <div class="loading-message">
+        Memuatkan mesej...
+      </div>
+
+    </main>
+
+  </div>
+
+
+  <script src="../js/config.js"></script>
+
+  <script src="../js/api.js"></script>
+
+  <script src="../js/mesej.js"></script>
+
+</body>
+
+</html>

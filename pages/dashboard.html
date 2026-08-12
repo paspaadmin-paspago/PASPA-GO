@@ -14,11 +14,13 @@
     Dashboard | PASPA GO
   </title>
 
+
   <!-- CSS UTAMA -->
   <link
     rel="stylesheet"
     href="../css/style.css"
   >
+
 
   <!-- CSS DASHBOARD -->
   <link
@@ -31,6 +33,7 @@
 
 <body class="dashboard-body">
 
+
   <main class="dashboard-shell">
 
 
@@ -40,7 +43,7 @@
 
     <header class="dashboard-header">
 
-      <!-- LOGO PASPA GO -->
+
       <img
         src="../images/logo paspa go.png"
         alt="Logo PASPA GO"
@@ -48,7 +51,6 @@
       >
 
 
-      <!-- LOGOUT -->
       <button
         type="button"
         id="logoutButton"
@@ -58,6 +60,7 @@
       >
         ↪
       </button>
+
 
     </header>
 
@@ -83,6 +86,7 @@
 
 
       <div class="member-details">
+
 
         <p class="welcome-text">
           Selamat datang
@@ -119,7 +123,9 @@
 
         </div>
 
+
       </div>
+
 
     </section>
 
@@ -152,23 +158,23 @@
 
 
 
-      <!-- SEJARAH KURSUS -->
+      <!-- PROGRAM -->
 
       <button
-  type="button"
-  class="menu-card"
-  onclick="window.location.href='program.html'"
->
+        type="button"
+        class="menu-card"
+        onclick="window.location.href='program.html'"
+      >
 
-  <span class="menu-icon">
-    📚
-  </span>
+        <span class="menu-icon">
+          📚
+        </span>
 
-  <span>
-    Program
-  </span>
+        <span>
+          Program
+        </span>
 
-</button>
+      </button>
 
 
 
@@ -250,51 +256,48 @@
 
       </button>
 
-      <!-- =====================================================
-     DIREKTORI
-===================================================== -->
-
-<button
-  type="button"
-  class="menu-card"
-  id="directoryButton"
->
-
-  <span class="menu-icon">
-    📇
-  </span>
-
-  <span>
-    Direktori
-  </span>
-
-</button>
 
 
-<!-- =====================================================
-     PENGURUSAN & LAPORAN
-===================================================== -->
+      <!-- DIREKTORI -->
 
-<button
-  type="button"
-  id="managementReportButton"
-  class="menu-card"
+      <button
+        type="button"
+        class="menu-card"
+        id="directoryButton"
+      >
 
->
-<span class="menu-icon">
-  📊</span>
-  <span>Pengurusan & Laporan</span>
-</button>
+        <span class="menu-icon">
+          📇
+        </span>
+
+        <span>
+          Direktori
+        </span>
+
+      </button>
+
+
+
+      <!-- PENGURUSAN & LAPORAN -->
+
+      <button
+        type="button"
+        id="managementReportButton"
+        class="menu-card"
+      >
+
+        <span class="menu-icon">
+          📊
+        </span>
+
+        <span>
+          Pengurusan & Laporan
+        </span>
+
+      </button>
+
 
     </section>
-
-
-
-    <!-- =====================================================
-         LOGO PASPA DI BAHAGIAN BAWAH
-    ====================================================== -->
-
-
 
 
 
@@ -314,7 +317,132 @@
 
 
   <!-- =====================================================
+       BOTTOM NAVIGATION
+  ====================================================== -->
+
+  <nav class="bottom-nav">
+
+
+    <!-- PROFIL -->
+
+    <button
+      type="button"
+      class="bottom-nav-item"
+      onclick="window.location.href='profile.html'"
+    >
+
+      <span class="bottom-nav-icon">
+        👤
+      </span>
+
+      <span class="bottom-nav-text">
+        Profil
+      </span>
+
+    </button>
+
+
+
+    <!-- ON SCENE -->
+
+    <button
+      type="button"
+      class="bottom-nav-item"
+      onclick="window.location.href='onScene.html'"
+    >
+
+      <span class="bottom-nav-icon">
+        🚨
+      </span>
+
+      <span class="bottom-nav-text">
+        On Scene
+      </span>
+
+    </button>
+
+
+
+    <!-- LOGO PASPA -->
+
+    <button
+      type="button"
+      class="bottom-nav-logo"
+      id="bottomPaspaLogo"
+      title="ID Kad Digital"
+      onclick="window.location.href='idcard.html'"
+    >
+
+      <img
+        src="../images/logo.png"
+        alt="PASPA"
+      >
+
+    </button>
+
+
+
+    <!-- MESEJ -->
+
+    <a
+      href="mesej.html"
+      class="bottom-nav-item"
+      id="messageNavButton"
+    >
+
+      <span class="message-icon-wrapper">
+
+        <span class="bottom-nav-icon">
+          ✉️
+        </span>
+
+
+        <span
+          id="messageBadge"
+          class="message-badge"
+          hidden
+        >
+          0
+        </span>
+
+      </span>
+
+
+      <span class="bottom-nav-text">
+        Mesej
+      </span>
+
+    </a>
+
+
+
+    <!-- TETAPAN -->
+
+    <button
+      type="button"
+      class="bottom-nav-item"
+      onclick="window.location.href='settings.html'"
+    >
+
+      <span class="bottom-nav-icon">
+        ⚙️
+      </span>
+
+      <span class="bottom-nav-text">
+        Tetapan
+      </span>
+
+    </button>
+
+
+  </nav>
+
+
+
+  <!-- =====================================================
        JAVASCRIPT
+       PENTING:
+       Letak selepas bottom navigation
   ====================================================== -->
 
   <script src="../js/config.js"></script>
@@ -323,67 +451,6 @@
 
   <script src="../js/dashboard.js"></script>
 
-<!-- =====================================================
-     FIXED BOTTOM NAVIGATION
-===================================================== -->
-
-<nav class="bottom-nav">
-
-  <button
-    type="button"
-    class="bottom-nav-item"
-    onclick="window.location.href='profile.html'"
-  >
-    <span class="bottom-nav-icon">👤</span>
-    <span class="bottom-nav-text">Profil</span>
-  </button>
-
-
-  <button
-    type="button"
-    class="bottom-nav-item"
-    onclick="window.location.href='onScene.html'"
-  >
-    <span class="bottom-nav-icon">🚨</span>
-    <span class="bottom-nav-text">On Scene</span>
-  </button>
-
-
-  <!-- LOGO TENGAH -->
-  <button
-  type="button"
-  class="bottom-nav-logo"
-  id="bottomPaspaLogo"
-  title="ID Kad Digital"
-  onclick="window.location.href='idcard.html'"
->
-    <img
-      src="../images/logo.png"
-      alt="PASPA"
-    >
-  </button>
-
-
-  <button
-    type="button"
-    class="bottom-nav-item"
-    onclick="window.location.href='message.html'"
-  >
-    <span class="bottom-nav-icon">✉️</span>
-    <span class="bottom-nav-text">Mesej</span>
-  </button>
-
-
-  <button
-    type="button"
-    class="bottom-nav-item"
-    onclick="window.location.href='settings.html'"
-  >
-    <span class="bottom-nav-icon">⚙️</span>
-    <span class="bottom-nav-text">Tetapan</span>
-  </button>
-
-</nav>
 
 </body>
 

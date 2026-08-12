@@ -952,10 +952,14 @@ async function deleteProgramRecord(program) {
     const result =
       await apiPost({
 
-        action: "program_delete_history",
+        action:
+          "program_delete_history",
 
         email:
           currentSession.googleEmail,
+
+        idPaspa:
+          currentSession.idPaspa,
 
         memberCourseId:
           program.memberCourseId,
@@ -964,6 +968,7 @@ async function deleteProgramRecord(program) {
           program.courseId
 
       });
+
 
     if (result.success !== true) {
 
@@ -974,16 +979,22 @@ async function deleteProgramRecord(program) {
 
     }
 
+
     showProgramMessage(
       "Program berjaya dipadam.",
       "success"
     );
 
+
     await loadPrograms();
+
 
   } catch (error) {
 
-    console.error(error);
+    console.error(
+      error
+    );
+
 
     showProgramMessage(
       error.message,
@@ -993,7 +1004,6 @@ async function deleteProgramRecord(program) {
   }
 
 }
-
 function formatProgramDateForInput(value) {
 
   const text =
