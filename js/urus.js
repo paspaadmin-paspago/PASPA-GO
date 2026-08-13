@@ -391,6 +391,662 @@ async function loadAdminMenus() {
 
 }
 
+/* =====================================================
+   LOAD TINDAKAN TERKINI
+===================================================== */
+
+async function loadLatestProgramActions() {
+
+  if (
+    !currentSession ||
+    !currentSession.googleEmail
+  ) {
+    return;
+  }
+
+
+  try {
+
+    latestActionContent.innerHTML =
+      '<div class="empty-action">Memuatkan tindakan terkini...</div>';
+
+
+    const result =
+      await apiPost({
+
+        action:
+          "admin_recent_programs",
+
+        email:
+          currentSession.googleEmail
+
+      });
+
+
+    if (
+      !result ||
+      result.success !== true
+    ) {
+
+      throw new Error(
+        result &&
+        result.message
+          ? result.message
+          : "Tindakan terkini tidak dapat dimuatkan."
+      );
+
+    }
+
+
+    const programs =
+      Array.isArray(
+        result.programs
+      )
+        ? result.programs
+        : [];
+
+
+    if (!programs.length) {
+
+      latestActionContent.innerHTML =
+        '<div class="empty-action">Tiada tindakan terkini.</div>';
+
+      return;
+
+    }
+
+
+    latestActionContent.innerHTML =
+      "";
+
+
+    programs.forEach(
+      function (program) {
+
+        latestActionContent.appendChild(
+          createLatestProgramCard(
+            program
+          )
+        );
+
+      }
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "LOAD LATEST ACTION ERROR:",
+      error
+    );
+
+
+    latestActionContent.innerHTML =
+      '<div class="empty-action">Tindakan terkini tidak dapat dimuatkan.</div>';
+
+  }
+
+}
+
+
+/* =====================================================
+   CREATE PROGRAM CARD
+===================================================== */
+
+/* =====================================================
+   CREATE PROGRAM CARD
+===================================================== */
+
+function createLatestProgramCard(
+  program
+) {
+
+  const card =
+    document.createElement(
+      "div"
+    );
+
+
+  card.className =
+    "latest-program-card";
+
+
+  const status =
+    String(
+      program.statusMesej ||
+      ""
+    )
+      .trim()
+      .toUpperCase();
+
+
+  card.innerHTML = `
+
+    <div class="latest-program-header">
+
+      <div>
+
+
+        <!-- ============================================
+             TAJUK
+        ============================================= -->
+
+        <div class="latest-program-title">
+
+          <strong>
+            TAJUK:
+          </strong>
+
+          ${escapeManageHtml(
+            program.tajuk ||
+            "-"
+          )}
+
+        </div>
+
+
+        <div class="latest-program-meta">
+
+
+          <!-- TARIKH -->
+
+          <span>
+
+            Tarikh:
+
+            ${escapeManageHtml(
+              program.tarikhAcara ||
+              "-"
+            )}
+
+          </span>
+
+
+          <!-- TEMPAT -->
+
+          <span>
+
+            Tempat:
+
+            ${escapeManageHtml(
+              program.tempat ||
+              "-"
+            )}
+
+          </span>
+
+
+          <!-- DIHANTAR OLEH -->
+
+          <span>
+
+            Dihantar Oleh:
+
+            ${escapeManageHtml(
+              program.dihantarOleh ||
+              "-"
+            )}
+
+          </span>
+
+
+          <!-- BILANGAN PESERTA -->
+
+          <span>
+
+            Bilangan Peserta:
+
+            <strong>
+
+              ${Number(
+                program.bilanganPeserta ||
+                0
+              )}
+              orang
+
+            </strong>
+
+          </span>
+
+
+          <!-- BILANGAN URUSETIA -->
+
+          <span>
+
+            Bilangan Urusetia:
+
+            <strong>
+
+              ${Number(
+                program.bilanganUrusetia ||
+                0
+              )}
+              orang
+
+            </strong>
+
+          </span>
+
+
+        </div>
+
+      </div>
+
+
+      <!-- STATUS -->
+
+      <span
+        class="latest-program-status ${
+          status === "BATAL"
+            ? "cancelled"
+            : ""
+        }"
+      >
+
+        ${escapeManageHtml(
+          status ||
+          "-"
+        )}
+
+      </span>
+
+    </div>
+
+
+    <!-- ================================================
+         STATISTIK
+    ================================================= -->
+
+    <div class="latest-status-grid">
+
+
+      <div class="latest-status-item">
+
+        <span>
+          Telah Baca
+        </span>
+
+        <strong>
+          ${Number(
+            program.telahBaca ||
+            0
+          )}
+        </strong>
+
+      </div>
+
+
+      <div class="latest-status-item">
+
+        <span>
+          Belum Baca
+        </span>
+
+        <strong>
+          ${Number(
+            program.belumBaca ||
+            0
+          )}
+        </strong>
+
+      </div>
+
+
+      <div class="latest-status-item">
+
+        <span>
+          HADIR
+        </span>
+
+        <strong>
+          ${Number(
+            program.hadir ||
+            0
+          )}
+        </strong>
+
+      </div>
+
+
+      <div class="latest-status-item">
+
+        <span>
+          TIDAK HADIR
+        </span>
+
+        <strong>
+          ${Number(
+            program.tidakHadir ||
+            0
+          )}
+        </strong>
+
+      </div>
+
+
+    </div>
+
+
+    <!-- ================================================
+         SENARAI HADIR
+    ================================================= -->
+
+    <div class="latest-member-section">
+
+      <button
+        type="button"
+        class="latest-member-toggle"
+        data-list="hadir"
+      >
+
+        Nama HADIR
+
+      </button>
+
+
+      <div
+        class="latest-member-list"
+        data-list-content="hadir"
+        hidden
+      >
+      </div>
+
+    </div>
+
+
+    <!-- ================================================
+         SENARAI TIDAK HADIR
+    ================================================= -->
+
+    <div class="latest-member-section">
+
+      <button
+        type="button"
+        class="latest-member-toggle"
+        data-list="tidakHadir"
+      >
+
+      Nama TIDAK HADIR
+
+      </button>
+
+
+      <div
+        class="latest-member-list"
+        data-list-content="tidakHadir"
+        hidden
+      >
+      </div>
+
+    </div>
+
+
+    <!-- ================================================
+         BELUM RESPON
+    ================================================= -->
+
+    <div class="latest-unanswered">
+
+      Belum Respon:
+
+      <strong>
+
+        ${Number(
+          program.belumRespon ||
+          0
+        )}
+
+      </strong>
+
+    </div>
+
+
+    <!-- ================================================
+         BUTTON
+    ================================================= -->
+
+    <div class="latest-program-actions">
+
+
+      <button
+        type="button"
+        class="latest-edit-button"
+      >
+
+        EDIT
+
+      </button>
+
+
+      <button
+        type="button"
+        class="latest-cancel-button"
+      >
+
+        BATAL PROGRAM
+
+      </button>
+
+
+    </div>
+
+  `;
+
+
+  /* ===================================================
+     SENARAI HADIR
+  =================================================== */
+
+  setupMemberList(
+    card,
+    "hadir",
+    program.hadirMembers ||
+    []
+  );
+
+
+  /* ===================================================
+     SENARAI TIDAK HADIR
+  =================================================== */
+
+  setupMemberList(
+    card,
+    "tidakHadir",
+    program.tidakHadirMembers ||
+    []
+  );
+
+
+  /* ===================================================
+     EDIT
+  =================================================== */
+
+  const editButton =
+    card.querySelector(
+      ".latest-edit-button"
+    );
+
+
+  if (editButton) {
+
+    editButton.addEventListener(
+      "click",
+      function () {
+
+        window.location.href =
+          "admin-program.html" +
+          "?mode=edit" +
+          "&messageId=" +
+          encodeURIComponent(
+            program.messageId ||
+            ""
+          );
+
+      }
+    );
+
+  }
+
+
+  /* ===================================================
+     BATAL PROGRAM
+     Backend akan kita sambungkan selepas ini
+  =================================================== */
+
+  const cancelButton =
+    card.querySelector(
+      ".latest-cancel-button"
+    );
+
+
+  if (cancelButton) {
+
+    cancelButton.addEventListener(
+      "click",
+      function () {
+
+        showManageMessage(
+          "Fungsi Batal Program akan disambungkan pada langkah seterusnya.",
+          "info"
+        );
+
+      }
+    );
+
+  }
+
+
+  return card;
+
+}
+
+
+/* =====================================================
+   MEMBER LIST
+===================================================== */
+
+function setupMemberList(
+  card,
+  type,
+  members
+) {
+
+  const button =
+    card.querySelector(
+      '[data-list="' +
+      type +
+      '"]'
+    );
+
+
+  const list =
+    card.querySelector(
+      '[data-list-content="' +
+      type +
+      '"]'
+    );
+
+
+  if (
+    !button ||
+    !list
+  ) {
+    return;
+  }
+
+
+  if (!members.length) {
+
+    button.disabled =
+      true;
+
+    button.textContent =
+      type === "hadir"
+        ? "Tiada ahli HADIR"
+        : "Tiada ahli TIDAK HADIR";
+
+    return;
+
+  }
+
+
+  list.innerHTML =
+    members
+      .map(
+        function (
+          member,
+          index
+        ) {
+
+          return `
+            <div class="latest-member-row">
+
+              <span class="latest-member-number">
+                ${index + 1}.
+              </span>
+
+              <span>
+                ${escapeManageHtml(
+                  member.namaAhli ||
+                  member.idPaspa ||
+                  "-"
+                )}
+              </span>
+
+            </div>
+          `;
+
+        }
+      )
+      .join("");
+
+
+  button.addEventListener(
+    "click",
+    function () {
+
+      list.hidden =
+        !list.hidden;
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   ESCAPE
+===================================================== */
+
+function escapeManageHtml(
+  value
+) {
+
+  return String(
+    value || ""
+  )
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
 
 /* =====================================================
    TINDAKAN TERKINI DROPDOWN
@@ -536,5 +1192,11 @@ if (adminProgramButton) {
 
 document.addEventListener(
   "DOMContentLoaded",
-  loadAdminMenus
+  async function () {
+
+    await loadAdminMenus();
+
+    await loadLatestProgramActions();
+
+  }
 );

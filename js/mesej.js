@@ -332,14 +332,33 @@ function createMessageCard(
       </h2>
 
 
-      <button
-        type="button"
-        class="view-button"
-        title="Lihat surat jemputan"
-        aria-label="Lihat surat jemputan"
-      >
-        👁 LIHAT
-      </button>
+      <div class="message-card-actions">
+
+  <button
+    type="button"
+    class="view-button"
+    title="Lihat surat jemputan"
+    aria-label="Lihat surat jemputan"
+  >
+    👁 LIHAT
+  </button>
+
+  ${
+    message.pautan
+      ? `
+        <button
+          type="button"
+          class="attachment-button"
+          title="Lihat lampiran PDF"
+          aria-label="Lihat lampiran PDF"
+        >
+          📎 LAMPIRAN
+        </button>
+      `
+      : ""
+  }
+
+</div>
 
     </div>
 
@@ -441,6 +460,31 @@ function createMessageCard(
       ".view-button"
     );
 
+const attachmentButton =
+  card.querySelector(
+    ".attachment-button"
+  );
+
+
+if (
+  attachmentButton &&
+  message.pautan
+) {
+
+  attachmentButton.addEventListener(
+    "click",
+    function () {
+
+      window.open(
+        message.pautan,
+        "_blank",
+        "noopener,noreferrer"
+      );
+
+    }
+  );
+
+}
 
   viewButton.addEventListener(
     "click",

@@ -606,3 +606,165 @@ body {
   }
 
 }
+
+/* =====================================================
+   TINDAKAN TERKINI - PROGRAM
+===================================================== */
+
+.latest-program-card {
+  margin-bottom: 12px;
+  padding: 14px;
+  border: 1px solid #ead0bd;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+
+.latest-program-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+
+.latest-program-title {
+  color: #123f7d;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+
+.latest-program-meta {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  color: #69788c;
+  font-size: 11px;
+}
+
+
+.latest-program-status {
+  padding: 5px 8px;
+  border-radius: 7px;
+  background: #e9f3ff;
+  color: #174f8f;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+
+.latest-program-status.cancelled {
+  background: #fdeaea;
+  color: #b52a2a;
+}
+
+
+.latest-status-grid {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+
+.latest-status-item {
+  padding: 9px;
+  border-radius: 8px;
+  background: #f5f7fa;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 12px;
+}
+
+
+.latest-member-section {
+  margin-top: 8px;
+}
+
+
+.latest-member-toggle {
+  width: 100%;
+  padding: 8px 0;
+  border: none;
+  background: transparent;
+  color: #174f8f;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+
+.latest-member-toggle:disabled {
+  color: #8b97a6;
+  cursor: default;
+}
+
+
+.latest-member-list {
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: #f7f9fc;
+}
+
+
+.latest-member-row {
+  display: flex;
+  gap: 7px;
+  padding: 4px 0;
+  color: #334b68;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+
+.latest-member-number {
+  flex: 0 0 18px;
+  font-weight: 700;
+}
+
+
+.latest-unanswered {
+  margin-top: 10px;
+  padding: 8px;
+  border-radius: 8px;
+  background: #fff6e9;
+  color: #71552f;
+  font-size: 12px;
+}
+
+
+.latest-program-actions {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+
+.latest-edit-button,
+.latest-cancel-button {
+  min-height: 38px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+
+.latest-edit-button {
+  border: 1px solid #174f8f;
+  background: #edf5ff;
+  color: #174f8f;
+}
+
+
+.latest-cancel-button {
+  border: 1px solid #c83636;
+  background: #fdeaea;
+  color: #b52a2a;
+}

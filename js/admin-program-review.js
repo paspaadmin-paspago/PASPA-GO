@@ -440,12 +440,28 @@ async function loadReviewData() {
 
     }
 
-
     console.log(
       "REVIEW DATA:",
       reviewData
     );
+if (
+  reviewData.mode === "edit"
+) {
 
+  const confirmButton =
+    document.getElementById(
+      "confirmButton"
+    );
+
+
+  if (confirmButton) {
+
+    confirmButton.textContent =
+      "PASTI PERUBAHAN";
+
+  }
+
+}
 
     renderReviewLetter();
 
@@ -2114,19 +2130,59 @@ document
            HANTAR KE GOOGLE APPS SCRIPT
         =============================================== */
 
-        const result =
-          await apiPost({
+        let result;
 
-            action:
-              "send_program_invitation",
 
-            email:
-              session.googleEmail,
+/* =================================================
+   EDIT PROGRAM SEDIA ADA
+================================================= */
 
-            data:
-              reviewData
+if (
+  reviewData.mode === "edit" &&
+  reviewData.messageId
+) {
 
-          });
+  result =
+    await apiPost({
+
+      action:
+        "admin_program_update",
+
+      email:
+        session.googleEmail,
+
+      messageId:
+        reviewData.messageId,
+
+      data:
+        reviewData
+
+    });
+
+}
+
+
+/* =================================================
+   PROGRAM BARU
+================================================= */
+
+else {
+
+  result =
+    await apiPost({
+
+      action:
+        "send_program_invitation",
+
+      email:
+        session.googleEmail,
+
+      data:
+        reviewData
+
+    });
+
+}
 
 
         /* ===============================================

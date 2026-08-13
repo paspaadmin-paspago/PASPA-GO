@@ -455,3 +455,50 @@ body {
 .message-actions {
   margin-top: 12px !important;
 }
+
+/* =====================================================
+   BUTTON ACTION MESEJ
+===================================================== */
+
+.message-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+
+/* =====================================================
+   BUTTON LAMPIRAN
+===================================================== */
+
+.attachment-button {
+  appearance: none;
+
+  min-height: 34px;
+
+  padding: 6px 11px;
+
+  border:
+    1px solid #7a5a15;
+
+  border-radius: 8px;
+
+  background: #fff8e6;
+
+  color: #7a5a15;
+
+  font-family: Arial, sans-serif;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+.attachment-button:hover {
+  background: #7a5a15;
+  color: #ffffff;
+}

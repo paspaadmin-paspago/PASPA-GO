@@ -9,10 +9,10 @@
 ===================================================== */
 
 const ADMIN_PROGRAM_API_URL =
-  "https://script.google.com/macros/s/AKfycbyv2Hql8YsYdofq6xC_Xg6z6e94-KsGstobDb0Aw78sqWfCoVC3KCiRXo3slgdaXMy9_A/exec";
+  CONFIG.API_URL;
 
 const ADMIN_PROGRAM_API_KEY =
-  "b4a9ebb07ffd46f1a9ed90b57f3bb6e4685d6f7644cc42fe8e126cdfb4c95e81";
+  CONFIG.API_KEY;
 
 
 /* =====================================================
@@ -27,7 +27,37 @@ const selectedParticipants =
 const selectedSecretariat =
   new Set();
 
+/* =====================================================
+   EDIT MODE
+===================================================== */
 
+const adminProgramUrlParams =
+  new URLSearchParams(
+    window.location.search
+  );
+
+const adminProgramMode =
+  String(
+    adminProgramUrlParams.get("mode") || ""
+  )
+    .trim()
+    .toLowerCase();
+
+const adminProgramEditMessageId =
+  String(
+    adminProgramUrlParams.get("messageId") || ""
+  ).trim();
+
+
+const isAdminProgramEditMode =
+  (
+    adminProgramMode === "edit" &&
+    adminProgramEditMessageId !== ""
+  );
+
+
+let existingProgramAttachmentUrl =
+  "";
 /* =====================================================
    DROPDOWN DATA
 ===================================================== */
@@ -351,6 +381,13 @@ const selectedSecretariatList =
     "selectedSecretariatList"
   );
 
+/* PDF LAMPIRAN */
+
+const suratProgram =
+  document.getElementById(
+    "suratProgram"
+  );
+
 
 /* =====================================================
    HELPERS
@@ -431,8 +468,7 @@ function sortProgramMembers(members) {
         ),
         "ms",
         {
-          sensitivity:
-            "base"
+          sensitivity: "base"
         }
       );
 
@@ -497,8 +533,7 @@ function populateCountries() {
             b,
             "ms",
             {
-              sensitivity:
-                "base"
+              sensitivity: "base"
             }
           );
 
@@ -583,6 +618,7 @@ async function callAdminProgramApi(
 ) {
 
   const payload = {
+
     action:
       action,
 
@@ -593,12 +629,21 @@ async function callAdminProgramApi(
       getAdminEmail(),
 
     ...extraData
+
   };
+
+
+  const requestUrl =
+    ADMIN_PROGRAM_API_URL +
+    "?_ts=" +
+    Date.now();
+
 
   const response =
     await fetch(
-      ADMIN_PROGRAM_API_URL,
+      requestUrl,
       {
+
         method:
           "POST",
 
@@ -610,9 +655,17 @@ async function callAdminProgramApi(
         body:
           JSON.stringify(
             payload
-          )
+          ),
+
+        redirect:
+          "follow",
+
+        cache:
+          "no-store"
+
       }
     );
+
 
   if (!response.ok) {
 
@@ -623,9 +676,249 @@ async function callAdminProgramApi(
 
   }
 
-  return response.json();
+
+  const text =
+    await response.text();
+
+
+  try {
+
+    return JSON.parse(
+      text
+    );
+
+  } catch (error) {
+
+    console.error(
+      "RESPONS API:",
+      text
+    );
+
+    throw new Error(
+      "Respons API tidak sah."
+    );
+
+  }
 
 }
+
+
+/* =====================================================
+   PDF - VALIDATION
+===================================================== */
+
+function getProgramAttachmentFile() {
+
+  if (
+    !suratProgram ||
+    !suratProgram.files ||
+    !suratProgram.files.length
+  ) {
+
+    return null;
+
+  }
+
+
+  return suratProgram.files[0];
+
+}
+
+
+function validateProgramAttachment(file) {
+
+  if (!file) {
+    return true;
+  }
+
+
+  const maxSize =
+    5 * 1024 * 1024;
+
+
+  const isPdf =
+    file.type ===
+      "application/pdf" ||
+    String(
+      file.name || ""
+    )
+      .toLowerCase()
+      .endsWith(".pdf");
+
+
+  if (!isPdf) {
+
+    throw new Error(
+      "Lampiran mestilah dalam format PDF."
+    );
+
+  }
+
+
+  if (
+    file.size > maxSize
+  ) {
+
+    throw new Error(
+      "Saiz lampiran maksimum ialah 5 MB."
+    );
+
+  }
+
+
+  return true;
+
+}
+
+
+/* =====================================================
+   PDF - FILE → BASE64
+===================================================== */
+
+function fileToBase64(file) {
+
+  return new Promise(
+    function (
+      resolve,
+      reject
+    ) {
+
+      const reader =
+        new FileReader();
+
+
+      reader.onload =
+        function () {
+
+          const result =
+            String(
+              reader.result || ""
+            );
+
+
+          const commaIndex =
+            result.indexOf(",");
+
+
+          if (
+            commaIndex === -1
+          ) {
+
+            reject(
+              new Error(
+                "Lampiran tidak dapat dibaca."
+              )
+            );
+
+            return;
+
+          }
+
+
+          resolve(
+            result.substring(
+              commaIndex + 1
+            )
+          );
+
+        };
+
+
+      reader.onerror =
+        function () {
+
+          reject(
+            new Error(
+              "Lampiran tidak dapat dibaca."
+            )
+          );
+
+        };
+
+
+      reader.readAsDataURL(
+        file
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   PDF - UPLOAD KE GOOGLE DRIVE
+===================================================== */
+
+async function uploadProgramAttachment(
+  file
+) {
+
+  if (!file) {
+
+    return null;
+
+  }
+
+
+  validateProgramAttachment(
+    file
+  );
+
+
+  const base64Data =
+    await fileToBase64(
+      file
+    );
+
+
+  const result =
+    await callAdminProgramApi(
+      "upload_program_attachment",
+      {
+
+        fileName:
+          file.name,
+
+        mimeType:
+          "application/pdf",
+
+        base64Data:
+          base64Data
+
+      }
+    );
+
+
+  if (
+    !result ||
+    result.success !== true
+  ) {
+
+    throw new Error(
+      result?.message ||
+      "Lampiran gagal dimuat naik."
+    );
+
+  }
+
+
+  return {
+
+    fileId:
+      result.fileId || "",
+
+    url:
+      result.url || "",
+
+    fileName:
+      result.fileName ||
+      file.name
+
+  };
+
+}
+
 
 /* =====================================================
    GENERATE PROGRAM REFERENCE
@@ -633,30 +926,52 @@ async function callAdminProgramApi(
 
 function getProgramReference() {
 
-  const now = new Date();
+  const now =
+    new Date();
 
   const year =
     now.getFullYear();
 
   const month =
-    String(now.getMonth() + 1)
-      .padStart(2, "0");
+    String(
+      now.getMonth() + 1
+    ).padStart(
+      2,
+      "0"
+    );
 
   const day =
-    String(now.getDate())
-      .padStart(2, "0");
+    String(
+      now.getDate()
+    ).padStart(
+      2,
+      "0"
+    );
 
   const hour =
-    String(now.getHours())
-      .padStart(2, "0");
+    String(
+      now.getHours()
+    ).padStart(
+      2,
+      "0"
+    );
 
   const minute =
-    String(now.getMinutes())
-      .padStart(2, "0");
+    String(
+      now.getMinutes()
+    ).padStart(
+      2,
+      "0"
+    );
 
   const second =
-    String(now.getSeconds())
-      .padStart(2, "0");
+    String(
+      now.getSeconds()
+    ).padStart(
+      2,
+      "0"
+    );
+
 
   return (
     "PASPA/PROGRAM/" +
@@ -672,6 +987,7 @@ function getProgramReference() {
 
 }
 
+
 /* =====================================================
    LOAD MEMBER
 ===================================================== */
@@ -684,12 +1000,14 @@ async function loadProgramMembers() {
   secretariatList.innerHTML =
     '<div class="loading-text">Memuatkan senarai ahli...</div>';
 
+
   try {
 
     const result =
       await callAdminProgramApi(
         "admin_program_members"
       );
+
 
     if (
       !result ||
@@ -703,6 +1021,7 @@ async function loadProgramMembers() {
 
     }
 
+
     const rawMembers =
       Array.isArray(
         result.members
@@ -710,8 +1029,10 @@ async function loadProgramMembers() {
         ? result.members
         : [];
 
+
     const memberMap =
       new Map();
+
 
     rawMembers.forEach(
       function (member) {
@@ -721,29 +1042,37 @@ async function loadProgramMembers() {
             member.idPaspa
           );
 
+
         if (!idPaspa) {
           return;
         }
 
+
         memberMap.set(
           idPaspa,
           {
+
             ...member,
+
             idPaspa:
               idPaspa,
+
             pangkat:
               String(
                 member.pangkat || ""
               ).trim(),
+
             namaPenuh:
               String(
                 member.namaPenuh || ""
               ).trim()
+
           }
         );
 
       }
     );
+
 
     adminProgramMembers =
       sortProgramMembers(
@@ -752,11 +1081,13 @@ async function loadProgramMembers() {
         )
       );
 
+
     renderParticipants();
 
     renderSecretariat();
 
     updateSelectionUI();
+
 
   } catch (error) {
 
@@ -765,11 +1096,13 @@ async function loadProgramMembers() {
       error
     );
 
+
     participantList.innerHTML =
       '<div class="empty-text">Senarai ahli tidak dapat dimuatkan.</div>';
 
     secretariatList.innerHTML =
       '<div class="empty-text">Senarai ahli tidak dapat dimuatkan.</div>';
+
 
     showAdminMessage(
       error.message,
@@ -785,31 +1118,43 @@ async function loadProgramMembers() {
    FILTER MEMBER
 ===================================================== */
 
-function filterMembers(searchValue) {
+function filterMembers(
+  searchValue
+) {
 
   const keyword =
-    String(searchValue || "")
+    String(
+      searchValue || ""
+    )
       .trim()
       .toLowerCase();
 
+
   if (!keyword) {
+
     return adminProgramMembers;
+
   }
+
 
   return adminProgramMembers.filter(
     function (member) {
 
       const searchText =
         [
+
           member.idPaspa,
           member.pangkat,
           member.namaPenuh,
+
           getMemberDisplayName(
             member
           )
+
         ]
           .join(" ")
           .toLowerCase();
+
 
       return searchText.includes(
         keyword
@@ -822,7 +1167,7 @@ function filterMembers(searchValue) {
 
 
 /* =====================================================
-   CREATE MEMBER CHECKBOX ROW
+   CREATE MEMBER CHECKBOX
 ===================================================== */
 
 function createMemberOption(
@@ -835,43 +1180,54 @@ function createMemberOption(
       member.idPaspa
     );
 
+
   const selectedSet =
     type === "participant"
       ? selectedParticipants
       : selectedSecretariat;
+
 
   const label =
     document.createElement(
       "label"
     );
 
+
   label.className =
     "member-option";
+
 
   const checkbox =
     document.createElement(
       "input"
     );
 
+
   checkbox.type =
     "checkbox";
+
 
   checkbox.value =
     memberId;
 
+
   checkbox.dataset.memberId =
     memberId;
+
 
   checkbox.checked =
     selectedSet.has(
       memberId
     );
 
+
   checkbox.addEventListener(
     "change",
     function () {
 
-      if (checkbox.checked) {
+      if (
+        checkbox.checked
+      ) {
 
         selectedSet.add(
           memberId
@@ -885,18 +1241,22 @@ function createMemberOption(
 
       }
 
+
       updateSelectionUI();
 
     }
   );
+
 
   const text =
     document.createElement(
       "span"
     );
 
+
   text.className =
     "member-display";
+
 
   text.textContent =
     getMemberDisplayName(
@@ -905,13 +1265,16 @@ function createMemberOption(
     " | ID " +
     memberId;
 
+
   label.appendChild(
     checkbox
   );
 
+
   label.appendChild(
     text
   );
+
 
   return label;
 
@@ -929,8 +1292,10 @@ function renderParticipants() {
       participantSearch.value
     );
 
+
   participantList.innerHTML =
     "";
+
 
   if (!members.length) {
 
@@ -942,6 +1307,7 @@ function renderParticipants() {
     return;
 
   }
+
 
   members.forEach(
     function (member) {
@@ -955,6 +1321,7 @@ function renderParticipants() {
 
     }
   );
+
 
   updateSelectionUI();
 
@@ -972,8 +1339,10 @@ function renderSecretariat() {
       secretariatSearch.value
     );
 
+
   secretariatList.innerHTML =
     "";
+
 
   if (!members.length) {
 
@@ -985,6 +1354,7 @@ function renderSecretariat() {
     return;
 
   }
+
 
   members.forEach(
     function (member) {
@@ -999,13 +1369,14 @@ function renderSecretariat() {
     }
   );
 
+
   updateSelectionUI();
 
 }
 
 
 /* =====================================================
-   SELECTED MEMBER LIST
+   SELECTED MEMBERS
 ===================================================== */
 
 function getSelectedMembers(
@@ -1025,12 +1396,17 @@ function getSelectedMembers(
       }
     );
 
+
   return sortProgramMembers(
     members
   );
 
 }
 
+
+/* =====================================================
+   RENDER SELECTED MEMBERS
+===================================================== */
 
 function renderSelectedMembers(
   selectedSet,
@@ -1042,15 +1418,20 @@ function renderSelectedMembers(
     return;
   }
 
+
   targetElement.innerHTML =
     "";
+
 
   const selectedMembers =
     getSelectedMembers(
       selectedSet
     );
 
-  if (!selectedMembers.length) {
+
+  if (
+    !selectedMembers.length
+  ) {
 
     targetElement.innerHTML =
       '<div class="empty-text">' +
@@ -1060,6 +1441,7 @@ function renderSelectedMembers(
     return;
 
   }
+
 
   selectedMembers.forEach(
     function (
@@ -1072,28 +1454,35 @@ function renderSelectedMembers(
           "div"
         );
 
+
       row.className =
         "selected-member-row";
+
 
       const number =
         document.createElement(
           "span"
         );
 
+
       number.className =
         "selected-member-number";
+
 
       number.textContent =
         (index + 1) +
         ".";
+
 
       const name =
         document.createElement(
           "span"
         );
 
+
       name.className =
         "selected-member-name";
+
 
       name.textContent =
         getMemberDisplayName(
@@ -1102,13 +1491,16 @@ function renderSelectedMembers(
         " | ID " +
         member.idPaspa;
 
+
       row.appendChild(
         number
       );
 
+
       row.appendChild(
         name
       );
+
 
       targetElement.appendChild(
         row
@@ -1120,11 +1512,16 @@ function renderSelectedMembers(
 }
 
 
+/* =====================================================
+   UPDATE SELECTED UI
+===================================================== */
+
 function updateSelectionUI() {
 
   participantCount.textContent =
     selectedParticipants.size +
     " dipilih";
+
 
   secretariatCount.textContent =
     selectedSecretariat.size +
@@ -1133,6 +1530,7 @@ function updateSelectionUI() {
 
   const totalMembers =
     adminProgramMembers.length;
+
 
   if (
     totalMembers > 0 &&
@@ -1173,6 +1571,7 @@ function updateSelectionUI() {
     "Tiada peserta dipilih."
   );
 
+
   renderSelectedMembers(
     selectedSecretariat,
     selectedSecretariatList,
@@ -1192,6 +1591,7 @@ selectAllParticipants.addEventListener(
 
     selectedParticipants.clear();
 
+
     if (
       selectAllParticipants.checked
     ) {
@@ -1209,6 +1609,7 @@ selectAllParticipants.addEventListener(
       );
 
     }
+
 
     renderParticipants();
 
@@ -1249,13 +1650,16 @@ function updateLocationFields() {
   const value =
     lokasiProgram.value;
 
+
   negeriGroup.hidden =
     value !==
     "Dalam Negara";
 
+
   negaraGroup.hidden =
     value !==
     "Luar Negara";
+
 
   if (
     value !==
@@ -1267,16 +1671,22 @@ function updateLocationFields() {
         "negeriProgram"
       );
 
-    if (negeriProgram) {
+
+    if (
+      negeriProgram
+    ) {
+
       negeriProgram.value =
         "";
+
     }
 
   }
 
+
   if (
     value !==
-    "Luar Negara" &&
+      "Luar Negara" &&
     negaraProgram
   ) {
 
@@ -1304,8 +1714,10 @@ function updateOrganizerField() {
     penganjurProgram.value ===
     "Lain-lain";
 
+
   penganjurLainGroup.hidden =
     !isOther;
+
 
   if (
     !isOther &&
@@ -1340,16 +1752,20 @@ function showAdminMessage(
       "adminProgramMessage"
     );
 
+
   if (!box) {
     return;
   }
 
+
   box.textContent =
     message;
+
 
   box.className =
     "message-box " +
     type;
+
 
   box.hidden =
     false;
@@ -1384,12 +1800,297 @@ document
     function () {
 
       window.location.href =
-        "pengurusan-laporan.html";
+        "dashboard.html";
 
     }
   );
 
   /* =====================================================
+   LOAD PROGRAM UNTUK EDIT
+===================================================== */
+
+async function loadAdminProgramEditData() {
+
+  if (!isAdminProgramEditMode) {
+    return;
+  }
+
+
+  try {
+
+    showAdminMessage(
+      "Memuatkan Program untuk dikemaskini...",
+      "info"
+    );
+
+
+    const result =
+      await callAdminProgramApi(
+        "admin_program_edit_data",
+        {
+          messageId:
+            adminProgramEditMessageId
+        }
+      );
+
+
+    if (
+      !result ||
+      result.success !== true
+    ) {
+
+      throw new Error(
+        result?.message ||
+        "Maklumat Program tidak dapat dimuatkan."
+      );
+
+    }
+
+
+    const program =
+      result.program || {};
+
+
+    /* =================================================
+       MAKLUMAT PROGRAM
+    ================================================= */
+
+    const kategoriElement =
+      document.getElementById(
+        "kategoriProgram"
+      );
+
+    if (kategoriElement) {
+      kategoriElement.value =
+        program.kategoriProgram || "";
+    }
+
+
+    const lokasiElement =
+      document.getElementById(
+        "lokasiProgram"
+      );
+
+    if (lokasiElement) {
+      lokasiElement.value =
+        program.lokasiProgram || "";
+    }
+
+
+    document.getElementById(
+      "perkaraProgram"
+    ).value =
+      program.perkara || "";
+
+
+    document.getElementById(
+      "tarikhMula"
+    ).value =
+      program.tarikhMula || "";
+
+
+    document.getElementById(
+      "tarikhTamat"
+    ).value =
+      program.tarikhTamat || "";
+
+
+    document.getElementById(
+      "tempatProgram"
+    ).value =
+      program.tempat || "";
+
+
+    /* =================================================
+       PENGANJUR
+    ================================================= */
+
+    let organizer =
+      program.penganjur || "";
+
+
+    if (
+      PROGRAM_ORGANIZERS.includes(
+        organizer
+      )
+    ) {
+
+      penganjurProgram.value =
+        organizer;
+
+      penganjurLain.value =
+        "";
+
+    } else if (organizer) {
+
+      penganjurProgram.value =
+        "Lain-lain";
+
+      penganjurLain.value =
+        organizer;
+
+    }
+
+
+    updateOrganizerField();
+
+
+    /* =================================================
+       KETERANGAN
+    ================================================= */
+
+    document.getElementById(
+      "keteranganProgram"
+    ).value =
+      program.keterangan || "";
+
+
+    /* =================================================
+       LAMPIRAN LAMA
+    ================================================= */
+
+    existingProgramAttachmentUrl =
+      String(
+        program.pautan || ""
+      ).trim();
+
+
+    /* =================================================
+       PESERTA LAMA
+    ================================================= */
+
+    selectedParticipants.clear();
+
+
+    (
+      Array.isArray(
+        result.participants
+      )
+        ? result.participants
+        : []
+    )
+      .forEach(
+        function (member) {
+
+          const id =
+            normalizeMemberId(
+              member.idPaspa
+            );
+
+
+          if (id) {
+
+            selectedParticipants.add(
+              id
+            );
+
+          }
+
+        }
+      );
+
+
+    /* =================================================
+       URUSETIA LAMA
+    ================================================= */
+
+    selectedSecretariat.clear();
+
+
+    (
+      Array.isArray(
+        result.secretariat
+      )
+        ? result.secretariat
+        : []
+    )
+      .forEach(
+        function (member) {
+
+          const id =
+            normalizeMemberId(
+              member.idPaspa
+            );
+
+
+          if (id) {
+
+            selectedSecretariat.add(
+              id
+            );
+
+          }
+
+        }
+      );
+
+
+    /* =================================================
+       REFRESH CHECKBOX
+    ================================================= */
+
+    renderParticipants();
+
+    renderSecretariat();
+
+    updateSelectionUI();
+
+
+    /* =================================================
+       TAJUK / BUTTON
+    ================================================= */
+
+    const pageTitle =
+      document.querySelector(
+        ".program-form-card h1, .program-form-card h2"
+      );
+
+
+    if (pageTitle) {
+      pageTitle.textContent =
+        "Edit Program";
+    }
+
+
+    const sendButton =
+      document.getElementById(
+        "sendInvitationButton"
+      );
+
+
+    if (sendButton) {
+
+      sendButton.textContent =
+        "SEMAK PERUBAHAN";
+
+    }
+
+
+    showAdminMessage(
+      "Program sedia ada telah dimuatkan. Status respon ahli akan dikekalkan.",
+      "success"
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "LOAD ADMIN PROGRAM EDIT ERROR:",
+      error
+    );
+
+
+    showAdminMessage(
+      error.message ||
+      "Program tidak dapat dimuatkan untuk edit.",
+      "error"
+    );
+
+  }
+
+}
+
+/* =====================================================
    BUILD REVIEW DATA
 ===================================================== */
 
@@ -1406,12 +2107,16 @@ function buildProgramReviewData() {
       selectedSecretariat
     );
 
-    const inviteAll =
-  document.getElementById(
-    "selectAllParticipants"
-  ).checked; 
 
-  if (!participants.length) {
+  const inviteAll =
+    document.getElementById(
+      "selectAllParticipants"
+    ).checked;
+
+
+  if (
+    !participants.length
+  ) {
 
     throw new Error(
       "Sila pilih sekurang-kurangnya seorang peserta."
@@ -1497,7 +2202,26 @@ function buildProgramReviewData() {
   }
 
 
- return {
+  const attachmentFile =
+    getProgramAttachmentFile();
+
+
+  validateProgramAttachment(
+    attachmentFile
+  );
+
+
+  return {
+
+  mode:
+    isAdminProgramEditMode
+      ? "edit"
+      : "create",
+
+  messageId:
+    isAdminProgramEditMode
+      ? adminProgramEditMessageId
+      : "",
 
   program:
     program,
@@ -1511,12 +2235,16 @@ function buildProgramReviewData() {
   secretariat:
     secretariat,
 
+  existingAttachmentUrl:
+    existingProgramAttachmentUrl,
+
   preparedAt:
     new Date().toISOString()
 
 };
 
 }
+
 
 /* =====================================================
    HANTAR KE PAGE REVIEW
@@ -1530,37 +2258,138 @@ document
     "click",
     async function () {
 
+      const button =
+        document.getElementById(
+          "sendInvitationButton"
+        );
+
+
+      const originalText =
+        button
+          ? button.textContent
+          : "";
+
+
       try {
+
+        if (button) {
+
+          button.disabled =
+            true;
+
+        }
+
 
         const reviewData =
           buildProgramReviewData();
 
 
-        /* ==============================
-           JANA NO. RUJUKAN
-        ============================== */
-const noRujukan =
-  getProgramReference();
+        /* =================================================
+           LAMPIRAN
+        ================================================= */
+
+        const attachmentFile =
+          getProgramAttachmentFile();
 
 
-        reviewData.noRujukan =
-          noRujukan;
+        if (
+          attachmentFile
+        ) {
+
+          if (button) {
+
+            button.textContent =
+              "MEMUAT NAIK LAMPIRAN...";
+
+          }
 
 
-        /* ==============================
-           SIMPAN DATA REVIEW
-        ============================== */
+          showAdminMessage(
+            "Lampiran PDF sedang dimuat naik...",
+            "info"
+          );
 
-       localStorage.setItem(
-  "paspaProgramReviewDraft",
-  JSON.stringify(reviewData)
-);
 
-window.location.href =
-  "admin-program-review.html";
-        /* ==============================
+          const uploaded =
+            await uploadProgramAttachment(
+              attachmentFile
+            );
+
+
+          reviewData.lampiran = {
+
+            fileId:
+              uploaded.fileId,
+
+            url:
+              uploaded.url,
+
+            fileName:
+              uploaded.fileName
+
+          };
+
+     } else {
+
+  if (
+    isAdminProgramEditMode &&
+    existingProgramAttachmentUrl
+  ) {
+
+    reviewData.lampiran = {
+
+      fileId:
+        "",
+
+      url:
+        existingProgramAttachmentUrl,
+
+      fileName:
+        "Lampiran sedia ada"
+
+    };
+
+  } else {
+
+    reviewData.lampiran =
+      null;
+
+  }
+
+}
+
+
+        /* =================================================
+           NO RUJUKAN
+        ================================================= */
+
+        if (
+  !isAdminProgramEditMode
+) {
+
+  reviewData.noRujukan =
+    getProgramReference();
+
+}
+
+
+        /* =================================================
+           SIMPAN DRAFT
+           Hanya metadata lampiran disimpan,
+           bukan fail PDF.
+        ================================================= */
+
+        localStorage.setItem(
+          "paspaProgramReviewDraft",
+          JSON.stringify(
+            reviewData
+          )
+        );
+
+
+        /* =================================================
            BUKA PAGE REVIEW
-        ============================== */
+        ================================================= */
 
         window.location.href =
           "admin-program-review.html";
@@ -1575,21 +2404,36 @@ window.location.href =
 
 
         showAdminMessage(
-          error.message,
+          error.message ||
+          "Program tidak dapat diproses.",
           "error"
         );
+
+
+        if (button) {
+
+          button.disabled =
+            false;
+
+
+          button.textContent =
+            originalText;
+
+        }
 
       }
 
     }
   );
+
+
 /* =====================================================
    START
 ===================================================== */
 
 document.addEventListener(
   "DOMContentLoaded",
-  function () {
+  async function () {
 
     populateOrganizerDropdown();
 
@@ -1601,7 +2445,24 @@ document.addEventListener(
 
     updateSelectionUI();
 
-    loadProgramMembers();
+
+    /*
+     * Tunggu senarai ahli siap dahulu.
+     * Ini penting untuk mode EDIT supaya
+     * checkbox peserta/urusetia lama
+     * dapat ditanda dengan betul.
+     */
+
+    await loadProgramMembers();
+
+
+    if (
+      isAdminProgramEditMode
+    ) {
+
+      await loadAdminProgramEditData();
+
+    }
 
   }
 );

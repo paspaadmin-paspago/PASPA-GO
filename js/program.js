@@ -360,6 +360,10 @@ async function loadPrograms() {
         : [];
 
 
+        console.log(
+  "PROGRAM API RESULT:",
+  result.programs
+);
     createYearFilters();
 
     renderPrograms();
@@ -576,7 +580,71 @@ document
     }
   );
 
+/* =====================================================
+   TARIKH UNTUK SUSUNAN PROGRAM
+===================================================== */
 
+function parseProgramDateForSort(value) {
+
+  const text =
+    String(
+      value || ""
+    ).trim();
+
+
+  if (!text) {
+    return 0;
+  }
+
+
+  /*
+   * dd/mm/yyyy
+   */
+
+  let match =
+    text.match(
+      /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/
+    );
+
+
+  if (match) {
+
+    return new Date(
+      Number(match[3]),
+      Number(match[2]) - 1,
+      Number(match[1])
+    ).getTime();
+
+  }
+
+
+  /*
+   * yyyy-mm-dd
+   */
+
+  match =
+    text.match(
+      /^(\d{4})-(\d{1,2})-(\d{1,2})$/
+    );
+
+
+  if (match) {
+
+    return new Date(
+      Number(match[1]),
+      Number(match[2]) - 1,
+      Number(match[3])
+    ).getTime();
+
+  }
+
+
+  return 0;
+}
+
+/* =====================================================
+   RENDER PROGRAM
+===================================================== */
 
 /* =====================================================
    RENDER PROGRAM
@@ -584,45 +652,68 @@ document
 
 function renderPrograms() {
 
-  programList.innerHTML =
-    "";
+  programList.innerHTML = "";
 
 
   const filtered =
-    allPrograms.filter(
-      function (program) {
+    allPrograms
+      .filter(
+        function (program) {
 
-        const locationMatch =
-          activeLocationFilter ===
-            "Semua" ||
-          String(
-            program.lokasiProgram || ""
-          ) ===
-            activeLocationFilter;
-
-
-        const year =
-          getProgramYear(
-            program
-          );
-
-
-        const yearMatch =
-          activeYearFilter ===
-            "Semua" ||
-          year ===
+          const locationMatch =
+            activeLocationFilter ===
+              "Semua" ||
             String(
-              activeYearFilter
+              program.lokasiProgram || ""
+            ) ===
+              activeLocationFilter;
+
+
+          const year =
+            getProgramYear(
+              program
             );
 
 
-        return (
-          locationMatch &&
-          yearMatch
-        );
+          const yearMatch =
+            activeYearFilter ===
+              "Semua" ||
+            year ===
+              String(
+                activeYearFilter
+              );
 
-      }
-    );
+
+          return (
+            locationMatch &&
+            yearMatch
+          );
+
+        }
+      )
+
+      /* ===============================================
+         SUSUN TARIKH TERBARU → TERLAMA
+      =============================================== */
+
+      .sort(
+        function (a, b) {
+
+          const dateA =
+            parseProgramDateForSort(
+              a.tarikhMula
+            );
+
+          const dateB =
+            parseProgramDateForSort(
+              b.tarikhMula
+            );
+
+
+          return dateB - dateA;
+
+        }
+      );
 
 
   if (!filtered.length) {
@@ -645,7 +736,9 @@ function renderPrograms() {
     function (program) {
 
       programList.appendChild(
-        createProgramCard(program)
+        createProgramCard(
+          program
+        )
       );
 
     }
@@ -742,18 +835,20 @@ function createProgramCard(
     <div class="program-item-details">
 
       <div class="program-detail">
-        Tarikh:
-        <strong>
-          ${escapeHtml(
-            program.tarikhMula ||
-            "-"
-          )}
-          hingga
-          ${escapeHtml(
-            program.tarikhTamat ||
-            "-"
-          )}
-        </strong>
+       Tarikh:
+<strong>
+  ${escapeHtml(
+    formatProgramDate(
+      program.tarikhMula
+    )
+  )}
+  hingga
+  ${escapeHtml(
+    formatProgramDate(
+      program.tarikhTamat
+    )
+  )}
+</strong>
       </div>
 
 
@@ -1004,27 +1099,169 @@ async function deleteProgramRecord(program) {
   }
 
 }
+/* =====================================================
+   FORMAT TARIKH PROGRAM
+===================================================== */
+
+function formatProgramDate(value) {
+
+  const text =
+    String(value || "").trim();
+
+
+  if (!text) {
+    return "-";
+  }
+
+
+  /*
+   * Format dari input HTML:
+   * yyyy-mm-dd
+   */
+
+  let match =
+    text.match(
+      /^(\d{4})-(\d{2})-(\d{2})$/
+    );
+
+
+  if (match) {
+
+    return (
+      match[3] +
+      "/" +
+      match[2] +
+      "/" +
+      match[1]
+    );
+
+  }
+
+
+  /*
+   * Jika API sudah beri:
+   * dd/mm/yyyy
+   */
+
+  match =
+    text.match(
+      /^(\d{2})\/(\d{2})\/(\d{4})$/
+    );
+
+
+  if (match) {
+
+    return text;
+
+  }
+
+
+  /*
+   * Jika Google Sheets / Apps Script
+   * pulangkan ISO Date
+   */
+
+  match =
+    text.match(
+      /^(\d{4})-(\d{2})-(\d{2})T/
+    );
+
+
+  if (match) {
+
+    return (
+      match[3] +
+      "/" +
+      match[2] +
+      "/" +
+      match[1]
+    );
+
+  }
+
+
+  return text;
+}
+
+
+
+/* =====================================================
+   FORMAT TARIKH UNTUK INPUT TYPE="DATE"
+===================================================== */
+
 function formatProgramDateForInput(value) {
 
   const text =
     String(value || "").trim();
 
-  const match =
+
+  if (!text) {
+    return "";
+  }
+
+
+  /*
+   * Sudah dalam format yyyy-mm-dd
+   */
+
+  let match =
+    text.match(
+      /^(\d{4})-(\d{2})-(\d{2})$/
+    );
+
+
+  if (match) {
+    return text;
+  }
+
+
+  /*
+   * dd/mm/yyyy -> yyyy-mm-dd
+   */
+
+  match =
     text.match(
       /^(\d{2})\/(\d{2})\/(\d{4})$/
     );
 
-  if (!match) {
-    return "";
+
+  if (match) {
+
+    return (
+      match[3] +
+      "-" +
+      match[2] +
+      "-" +
+      match[1]
+    );
+
   }
 
-  return (
-    match[3] +
-    "-" +
-    match[2] +
-    "-" +
-    match[1]
-  );
+
+  /*
+   * ISO Date daripada Google Sheets
+   */
+
+  match =
+    text.match(
+      /^(\d{4})-(\d{2})-(\d{2})T/
+    );
+
+
+  if (match) {
+
+    return (
+      match[1] +
+      "-" +
+      match[2] +
+      "-" +
+      match[3]
+    );
+
+  }
+
+
+  return "";
 }
 
 
