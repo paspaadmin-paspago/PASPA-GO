@@ -119,6 +119,127 @@ function showDashboardMessage(text) {
 
 
 /* =====================================================
+   WELCOME SPLASH SCREEN
+===================================================== */
+
+const welcomeSplash =
+  document.getElementById(
+    "welcomeSplash"
+  );
+
+const closeWelcomeSplash =
+  document.getElementById(
+    "closeWelcomeSplash"
+  );
+
+
+let welcomeSplashTimer =
+  null;
+
+
+/* =====================================================
+   TUTUP SPLASH
+===================================================== */
+
+function hideWelcomeSplash() {
+
+  if (!welcomeSplash) {
+    return;
+  }
+
+
+  /*
+   * Elak function dipanggil banyak kali.
+   */
+
+  if (
+    welcomeSplash.classList.contains(
+      "is-closing"
+    )
+  ) {
+    return;
+  }
+
+
+  welcomeSplash.classList.add(
+    "is-closing"
+  );
+
+
+  if (welcomeSplashTimer) {
+
+    clearTimeout(
+      welcomeSplashTimer
+    );
+
+    welcomeSplashTimer =
+      null;
+
+  }
+
+
+  /*
+   * Selepas animation fade selesai,
+   * buang terus overlay dari page.
+   */
+
+  setTimeout(
+    function () {
+
+      if (welcomeSplash) {
+
+        welcomeSplash.style.display =
+          "none";
+
+      }
+
+    },
+    850
+  );
+
+}
+
+
+/* =====================================================
+   BUTTON X
+===================================================== */
+
+if (
+  closeWelcomeSplash
+) {
+
+  closeWelcomeSplash.addEventListener(
+    "click",
+    hideWelcomeSplash
+  );
+
+}
+
+
+/* =====================================================
+   AUTO TUTUP SELEPAS 10 SAAT
+===================================================== */
+
+if (
+  welcomeSplash
+) {
+
+  welcomeSplashTimer =
+    setTimeout(
+      hideWelcomeSplash,
+      10000
+    );
+
+}
+
+
+
+
+
+
+
+
+/* =====================================================
    LOAD DASHBOARD
 ===================================================== */
 

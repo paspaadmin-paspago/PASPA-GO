@@ -21,7 +21,7 @@
   min-height: 100vh;
 
   margin: 0 auto;
-  padding: 18px 18px 40px;
+  padding-top: 0;
 }
 
 
@@ -31,7 +31,7 @@
 
 .profile-summary-card {
   margin-bottom: 18px;
-  padding: 20px;
+  padding: 10px;
 
   border-radius: 20px;
 
@@ -837,50 +837,54 @@ MAKLUMAT KECERGASAN - VIEW MODE
   z-index: 9999;
 
   width: 100%;
-  height: 58px;
+  height: 64px;
 
-  display: flex;
+  display: grid;
+  grid-template-columns: 48px 1fr 48px;
   align-items: center;
-  justify-content: space-between;
 
-  padding: 8px 18px;
+  padding: 0 16px;
 
-  background: rgba(16, 58, 120, 0.96);
+  background: #20579a;
 
-  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
-
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.16);
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.18);
 }
 
+
+.paspa-nav-title {
+  margin: 0;
+
+  color: #ffffff;
+
+  text-align: center;
+
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+}
 
 /* BUTANG BACK & HOME */
 
 .paspa-nav-button {
   width: 40px;
   height: 40px;
-  min-height: 40px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  margin: 0;
   padding: 0;
 
   border: none;
-  border-radius: 0;
-
   background: transparent;
-  box-shadow: none;
+
   color: #ffffff;
 
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
-  line-height: 1;
 
   cursor: pointer;
-
-  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.18);
 }
 
 
@@ -970,4 +974,212 @@ MAKLUMAT KECERGASAN - VIEW MODE
 /* Kandungan apabila dibuka */
 .profile-section-card .collapsible-content {
   background: transparent;
+}
+
+/* =====================================================
+   MAKLUMAT PERIBADI
+===================================================== */
+
+.editable-section[data-section="personal"]
+.profile-info-row {
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  gap: 3px;
+
+  padding: 10px 0 14px;
+}
+
+
+/* IC & EMAIL - KEKAL READ ONLY */
+
+.editable-section[data-section="personal"]
+.profile-info-row span {
+  color: #687587;
+
+  font-size: 14px;
+  font-weight: 400;
+}
+
+
+.editable-section[data-section="personal"]
+.profile-info-row strong {
+  color: #103a78;
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+
+/* MODE EDIT */
+
+.editable-section[data-section="personal"].is-editing
+.editable-row {
+  margin-bottom: 7px;
+}
+
+/* =====================================================
+   CROP GAMBAR PROFIL
+===================================================== */
+
+.photo-crop-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 18px;
+
+  background: rgba(0, 0, 0, 0.72);
+}
+
+
+.photo-crop-box {
+  width: 100%;
+  max-width: 430px;
+
+  padding: 20px;
+
+  border-radius: 16px;
+
+  background: #ffffff;
+
+  text-align: center;
+}
+
+
+.photo-crop-box h3 {
+  margin: 0 0 6px;
+
+  color: #103a78;
+}
+
+
+.photo-crop-box p {
+  margin: 0 0 15px;
+
+  color: #687587;
+  font-size: 13px;
+}
+
+
+.photo-crop-preview {
+  width: 260px;
+  height: 330px;
+
+  margin: 0 auto 15px;
+
+  overflow: hidden;
+
+  border: 2px solid #103a78;
+  border-radius: 12px;
+
+  background: #e7edf5;
+
+  touch-action: none;
+}
+
+
+#photoCropCanvas {
+  display: block;
+
+  width: 260px;
+  height: 330px;
+
+  cursor: grab;
+}
+
+
+#photoCropCanvas:active {
+  cursor: grabbing;
+}
+
+
+.photo-zoom-label {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #103a78;
+  font-weight: 700;
+}
+
+
+#photoZoomRange {
+  width: 100%;
+}
+
+
+.photo-crop-actions {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 10px;
+
+  margin-top: 18px;
+}
+
+
+.photo-crop-cancel,
+.photo-crop-apply {
+  min-height: 44px;
+
+  border: none;
+  border-radius: 9px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+.photo-crop-cancel {
+  background: #eef2f7;
+  color: #103a78;
+}
+
+
+.photo-crop-apply {
+  background: #103a78;
+  color: #ffffff;
+}
+
+
+
+
+
+/* =====================================================
+   LOGO PASPA GO BAWAH HEADER
+===================================================== */
+
+.profile-logo-section {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 5px 20px 0;
+  margin-bottom: -35px;
+}
+
+.profile-summary-card {
+  margin-top: 0;
+}
+
+.profile-page-logo {
+  display: block;
+
+  width: 230px;
+  max-width: 65%;
+
+  height: auto;
+
+  object-fit: contain;
 }

@@ -17,4 +17,3 @@ window.CONFIG = Object.freeze({
   DASHBOARD_URL:
     "pages/dashboard.html"
 });
-

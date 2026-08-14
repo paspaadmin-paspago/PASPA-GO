@@ -40,6 +40,12 @@
     ←
   </button>
 
+
+  <h1 class="paspa-nav-title">
+    Data Peribadi
+  </h1>
+
+
   <button
     type="button"
     class="paspa-nav-button paspa-home-button"
@@ -52,25 +58,20 @@
 
 </nav>
 
-
-  <main class="profile-shell">
-
-    <!-- HEADER STANDARD -->
-<header class="app-header">
-
-  
+<!-- LOGO PASPA GO -->
+<div class="profile-logo-section">
 
   <img
     src="../images/logo paspa go.png"
     alt="PASPA GO"
-    class="app-page-logo"
+    class="profile-page-logo"
   >
 
-  <h1 class="app-page-title">
-    Data Peribadi
-  </h1>
+</div>
 
-</header>
+  <main class="profile-shell">
+
+    <!-- HEADER STANDARD -->
 
 
     <!-- KOTAK 1: RINGKASAN AHLI -->
@@ -104,6 +105,74 @@
     accept="image/jpeg,image/png"
     hidden
   >
+<!-- =====================================================
+     MODAL CROP GAMBAR
+===================================================== -->
+
+<div
+  id="photoCropModal"
+  class="photo-crop-modal hidden"
+>
+
+  <div class="photo-crop-box">
+
+    <h3>
+      Laraskan Gambar
+    </h3>
+
+    <p>
+      Gerakkan gambar dan laraskan zoom sehingga sesuai.
+    </p>
+
+    <div class="photo-crop-preview">
+
+      <canvas
+        id="photoCropCanvas"
+        width="390"
+        height="495"
+      ></canvas>
+
+    </div>
+
+    <label
+      for="photoZoomRange"
+      class="photo-zoom-label"
+    >
+      Zoom
+    </label>
+
+    <input
+      id="photoZoomRange"
+      type="range"
+      min="1"
+      max="3"
+      step="0.01"
+      value="1"
+    >
+
+    <div class="photo-crop-actions">
+
+      <button
+        type="button"
+        id="cancelCropButton"
+        class="photo-crop-cancel"
+      >
+        Batal
+      </button>
+
+      <button
+        type="button"
+        id="applyCropButton"
+        class="photo-crop-apply"
+      >
+        Pasti
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
 
   <p class="profile-photo-help">
     JPG atau PNG, maksimum 3 MB
@@ -130,8 +199,14 @@
     </section>
 
 
-   <!-- KOTAK 2: MAKLUMAT PERIBADI -->
-<section class="profile-section-card">
+   <!-- =====================================================
+     KOTAK 2: MAKLUMAT PERIBADI
+===================================================== -->
+
+<section
+  class="profile-section-card editable-section"
+  data-section="personal"
+>
 
   <div
     class="section-card-header collapsible-header"
@@ -141,6 +216,14 @@
     <h3>
       Maklumat Peribadi
     </h3>
+
+    <button
+      type="button"
+      class="section-edit-button"
+      data-edit-section="personal"
+    >
+      Edit
+    </button>
 
     <span class="collapse-icon">
       ▼
@@ -154,35 +237,222 @@
     class="collapsible-content"
   >
 
-    <div class="profile-info-row">
-      <span>No. Kad Pengenalan</span>
-      <strong id="profileIc">-</strong>
-    </div>
+    <!-- =================================================
+         NO KAD PENGENALAN
+         TIDAK BOLEH EDIT
+    ================================================= -->
 
     <div class="profile-info-row">
-      <span>Jantina</span>
-      <strong id="profileGender">-</strong>
+
+      <span>
+        No. Kad Pengenalan
+      </span>
+
+      <strong id="profileIc">
+        -
+      </strong>
+
     </div>
 
-    <div class="profile-info-row">
-      <span>Email</span>
-      <strong id="profileEmail">-</strong>
+
+    <!-- =================================================
+         JANTINA
+         BOLEH EDIT
+    ================================================= -->
+
+    <div class="editable-row">
+
+      <label for="personalGender">
+        Jantina
+      </label>
+
+      <select
+        id="personalGender"
+        disabled
+      >
+
+        <option value="">
+          Sila pilih
+        </option>
+
+        <option value="Lelaki">
+          Lelaki
+        </option>
+
+        <option value="Perempuan">
+          Perempuan
+        </option>
+
+      </select>
+
     </div>
 
-    <div class="profile-info-row">
-      <span>No. Badan</span>
-      <strong id="profileBodyNumber">-</strong>
-    </div>
+
+    <!-- =================================================
+         EMAIL
+         TIDAK BOLEH EDIT
+    ================================================= -->
 
     <div class="profile-info-row">
-      <span>Tarikh Lantikan PASPA</span>
-      <strong id="profileAppointmentDate">-</strong>
+
+      <span>
+        Email
+      </span>
+
+      <strong id="profileEmail">
+        -
+      </strong>
+
     </div>
 
-    <div class="profile-info-row">
-      <span>Jawatan PASPA</span>
-      <strong id="profilePaspaPosition">-</strong>
+
+    <!-- =================================================
+         NO BADAN
+         BOLEH EDIT
+    ================================================= -->
+
+    <div class="editable-row">
+
+      <label for="personalBodyNumber">
+        No. Badan
+      </label>
+
+      <input
+        id="personalBodyNumber"
+        type="text"
+        disabled
+      >
+
     </div>
+
+
+    <!-- =================================================
+         TARIKH LANTIKAN PASPA
+         BOLEH EDIT
+    ================================================= -->
+
+    <div class="editable-row">
+
+      <label for="personalAppointmentDate">
+        Tarikh Lantikan PASPA
+      </label>
+
+      <input
+        id="personalAppointmentDate"
+        type="date"
+        disabled
+      >
+
+    </div>
+
+
+    <!-- =================================================
+         JAWATAN PASPA
+         BOLEH EDIT
+    ================================================= -->
+
+   <div class="editable-row">
+
+  <label for="personalPaspaPosition">
+    Jawatan PASPA
+  </label>
+
+  <select
+    id="personalPaspaPosition"
+    disabled
+  >
+
+    <option value="">
+      Sila pilih
+    </option>
+
+    <option value="Komander">
+      Komander
+    </option>
+
+    <option value="Timbalan Komander">
+      Timbalan Komander
+    </option>
+
+    <option value="Cawangan PASPA IPPA">
+      Cawangan PASPA IPPA
+    </option>
+
+    <option value="Unit PASPA IPPA">
+      Unit PASPA IPPA
+    </option>
+
+    <option value="Ketua Zon Utara">
+      Ketua Zon Utara
+    </option>
+
+    <option value="Ketua Zon Tengah">
+      Ketua Zon Tengah
+    </option>
+
+    <option value="Ketua Zon Selatan">
+      Ketua Zon Selatan
+    </option>
+
+    <option value="Ketua Zon Timur">
+      Ketua Zon Timur
+    </option>
+
+    <option value="Ketua Zon Sabah">
+      Ketua Zon Sabah
+    </option>
+
+    <option value="Ketua Zon Sarawak">
+      Ketua Zon Sarawak
+    </option>
+
+    <option value="Timbalan Ketua Zon Utara">
+      Timbalan Ketua Zon Utara
+    </option>
+
+    <option value="Timbalan Ketua Zon Tengah">
+      Timbalan Ketua Zon Tengah
+    </option>
+
+    <option value="Timbalan Ketua Zon Selatan">
+      Timbalan Ketua Zon Selatan
+    </option>
+
+    <option value="Timbalan Ketua Zon Timur">
+      Timbalan Ketua Zon Timur
+    </option>
+
+    <option value="Timbalan Ketua Zon Sabah">
+      Timbalan Ketua Zon Sabah
+    </option>
+
+    <option value="Timbalan Ketua Zon Sarawak">
+      Timbalan Ketua Zon Sarawak
+    </option>
+
+    <option value="Ketua Operasi Negeri">
+      Ketua Operasi Negeri
+    </option>
+
+      <option value="Ahli">
+      Ahli
+    </option>
+
+  </select>
+
+</div>
+
+    <!-- =================================================
+         SIMPAN
+    ================================================= -->
+
+    <button
+      type="button"
+      class="section-save-button hidden"
+      data-save-section="personal"
+    >
+      Simpan Perubahan
+    </button>
 
   </div>
 
@@ -300,7 +570,7 @@
     <div class="editable-row">
 
       <label for="serviceState">
-        Negeri Berkhidmat
+        Negeri Berkhidmat (PTJ)
       </label>
 
       <select

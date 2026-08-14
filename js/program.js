@@ -1024,6 +1024,67 @@ function createProgramCard(
   }
 
 
+  /* =====================================================
+   REKOD ADMIN
+   AHLI HANYA BOLEH TAMBAH / GANTI SIJIL
+===================================================== */
+
+if (
+  String(
+    program.sumberRekod || ""
+  )
+    .trim()
+    .toLowerCase() === "admin"
+) {
+
+  const certificateActions =
+    document.createElement(
+      "div"
+    );
+
+  certificateActions.className =
+    "program-item-actions";
+
+
+  const certificateButton =
+    document.createElement(
+      "button"
+    );
+
+  certificateButton.type =
+    "button";
+
+  certificateButton.className =
+    "program-edit-button";
+
+  certificateButton.textContent =
+    "📎 Sijil";
+
+
+  certificateButton.addEventListener(
+    "click",
+    function () {
+
+      openAdminProgramCertificateForm(
+        program
+      );
+
+    }
+  );
+
+
+  certificateActions.appendChild(
+    certificateButton
+  );
+
+  card.appendChild(
+    certificateActions
+  );
+
+}
+
+
+
   return card;
 
 }
@@ -1429,9 +1490,23 @@ function openProgramEditForm(program) {
    * Jangan benarkan tukar sijil dahulu.
    */
 
-  if (programCertificate) {
-    programCertificate.disabled = true;
-  }
+  /*
+ * Benarkan ahli tambah / tukar sijil
+ * semasa Edit Program.
+ *
+ * Jika ahli tidak pilih fail baru,
+ * sijil lama akan dikekalkan.
+ */
+
+if (programCertificate) {
+
+  programCertificate.disabled =
+    false;
+
+  programCertificate.value =
+    "";
+
+}
 
 
   programFormSection
@@ -1446,6 +1521,204 @@ function openProgramEditForm(program) {
     });
 
 }
+
+function openAdminProgramCertificateForm(
+  program
+) {
+
+  editingProgram =
+    {
+      ...program,
+      certificateOnly:
+        true
+    };
+
+
+  programFormSection
+    .classList
+    .remove(
+      "hidden"
+    );
+
+
+  /* =================================================
+     ISI DATA PROGRAM
+     TAPI SEMUA DIKUNCI
+  ================================================= */
+
+  const fields =
+    programFormSection
+      .querySelectorAll(
+        'input:not([type="file"]), select'
+      );
+
+
+  fields.forEach(
+    function (field) {
+
+      field.disabled =
+        true;
+
+    }
+  );
+
+
+  /* =================================================
+     ISI MAKLUMAT UNTUK PAPARAN
+  ================================================= */
+
+  const kategori =
+    programForm
+      .querySelector(
+        `input[name="kategoriProgram"][value="${program.kategoriProgram}"]`
+      );
+
+  if (kategori) {
+    kategori.checked =
+      true;
+  }
+
+
+  const lokasi =
+    programForm
+      .querySelector(
+        `input[name="lokasiProgram"][value="${program.lokasiProgram}"]`
+      );
+
+  if (lokasi) {
+    lokasi.checked =
+      true;
+  }
+
+
+  document
+    .getElementById(
+      "programPerkara"
+    )
+    .value =
+      program.perkara || "";
+
+
+  document
+    .getElementById(
+      "programTarikhMula"
+    )
+    .value =
+      formatProgramDateForInput(
+        program.tarikhMula
+      );
+
+
+  document
+    .getElementById(
+      "programTarikhTamat"
+    )
+    .value =
+      formatProgramDateForInput(
+        program.tarikhTamat
+      );
+
+
+  document
+    .getElementById(
+      "programTempat"
+    )
+    .value =
+      program.tempat || "";
+
+
+  document
+    .getElementById(
+      "programNegeri"
+    )
+    .value =
+      program.negeri || "";
+
+
+  document
+    .getElementById(
+      "programNegara"
+    )
+    .value =
+      program.negara || "";
+
+
+  document
+    .getElementById(
+      "programPeranan"
+    )
+    .value =
+      program.peranan || "";
+
+
+  document
+    .getElementById(
+      "programPenganjur"
+    )
+    .value =
+      program.penganjur || "";
+
+
+  document
+    .getElementById(
+      "programPenganjurLain"
+    )
+    .value =
+      program.penganjurLain || "";
+
+
+  /* =================================================
+     SIJIL SAHAJA AKTIF
+  ================================================= */
+
+  if (
+    programCertificate
+  ) {
+
+    programCertificate.disabled =
+      false;
+
+    programCertificate.value =
+      "";
+
+  }
+
+
+  /* =================================================
+     TAJUK
+  ================================================= */
+
+  const formTitle =
+    programFormSection
+      .querySelector(
+        ".program-form-header h2"
+      );
+
+
+  if (formTitle) {
+
+    formTitle.textContent =
+      "Kemaskini Sijil Program";
+
+  }
+
+
+  saveProgramButton.textContent =
+    program.sijilUrl
+      ? "Ganti Sijil"
+      : "Simpan Sijil";
+
+
+  programFormSection
+    .scrollIntoView({
+      behavior:
+        "smooth",
+      block:
+        "start"
+    });
+
+}
+
 
 /* =====================================================
    ESCAPE
@@ -1738,6 +2011,143 @@ programForm.addEventListener(
 
     }
 
+    /* =================================================
+   REKOD ADMIN
+   SIJIL SAHAJA
+================================================= */
+
+if (
+  editingProgram &&
+  editingProgram.certificateOnly === true
+) {
+
+  if (
+    !certificateCheck.file
+  ) {
+
+    showProgramMessage(
+      "Sila pilih fail sijil PDF.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  const originalText =
+    saveProgramButton.textContent;
+
+
+  saveProgramButton.disabled =
+    true;
+
+  saveProgramButton.textContent =
+    "Memuat naik sijil...";
+
+
+  try {
+
+    const base64Data =
+      await fileToBase64(
+        certificateCheck.file
+      );
+
+
+    const certificateResult =
+      await apiPost({
+
+        action:
+          "program_upload_certificate",
+
+        email:
+          currentSession.googleEmail,
+
+        memberCourseId:
+          editingProgram.memberCourseId,
+
+        courseId:
+          editingProgram.courseId,
+
+        fileName:
+          certificateCheck.file.name,
+
+        mimeType:
+          certificateCheck.file.type ||
+          "application/pdf",
+
+        base64Data:
+          base64Data
+
+      });
+
+
+    if (
+      certificateResult.success !== true
+    ) {
+
+      throw new Error(
+        certificateResult.message ||
+        "Sijil gagal dimuat naik."
+      );
+
+    }
+
+
+    showProgramMessage(
+      "Sijil Program berjaya dikemas kini.",
+      "success"
+    );
+
+
+    editingProgram =
+      null;
+
+
+    programForm.reset();
+
+
+    programFormSection
+      .classList
+      .add(
+        "hidden"
+      );
+
+
+    await loadPrograms();
+
+
+    return;
+
+
+  } catch (error) {
+
+    console.error(
+      "UPLOAD ADMIN PROGRAM CERTIFICATE ERROR:",
+      error
+    );
+
+
+    showProgramMessage(
+      error.message,
+      "error"
+    );
+
+
+    return;
+
+
+  } finally {
+
+    saveProgramButton.disabled =
+      false;
+
+    saveProgramButton.textContent =
+      originalText;
+
+  }
+
+}
 
     /* =================================================
        DATA PROGRAM
@@ -1894,68 +2304,87 @@ if (editingProgram) {
       }
 
 
-      /* =================================================
-         2. UPLOAD SIJIL JIKA ADA
-      ================================================= */
+    /* =================================================
+   2. UPLOAD / GANTI SIJIL JIKA ADA
+================================================= */
 
-      if (
-  !editingProgram &&
+if (
   certificateCheck.file
 ) {
 
-        saveProgramButton.textContent =
-          "Memuat naik sijil...";
+  saveProgramButton.textContent =
+    "Memuat naik sijil...";
 
 
-        const base64Data =
-          await fileToBase64(
-            certificateCheck.file
-          );
+  const base64Data =
+    await fileToBase64(
+      certificateCheck.file
+    );
 
 
-        const certificateResult =
-          await apiPost({
+  /*
+   * CREATE:
+   * ID datang daripada result program_add_history
+   *
+   * EDIT:
+   * ID menggunakan rekod yang sedang diedit
+   */
 
-            action:
-              "program_upload_certificate",
-
-            email:
-              currentSession.googleEmail,
-
-            memberCourseId:
-              result.memberCourseId,
-
-            courseId:
-              result.courseId,
-
-            fileName:
-              certificateCheck.file.name,
-
-            mimeType:
-              certificateCheck.file.type ||
-              "application/pdf",
-
-            base64Data:
-              base64Data
-
-          });
+  const targetMemberCourseId =
+    editingProgram
+      ? editingProgram.memberCourseId
+      : result.memberCourseId;
 
 
-        if (
-          certificateResult.success !== true
-        ) {
+  const targetCourseId =
+    editingProgram
+      ? editingProgram.courseId
+      : result.courseId;
 
-          throw new Error(
-            "Program telah disimpan, tetapi sijil gagal dimuat naik: " +
-            (
-              certificateResult.message ||
-              ""
-            )
-          );
 
-        }
+  const certificateResult =
+    await apiPost({
 
-      }
+      action:
+        "program_upload_certificate",
+
+      email:
+        currentSession.googleEmail,
+
+      memberCourseId:
+        targetMemberCourseId,
+
+      courseId:
+        targetCourseId,
+
+      fileName:
+        certificateCheck.file.name,
+
+      mimeType:
+        certificateCheck.file.type ||
+        "application/pdf",
+
+      base64Data:
+        base64Data
+
+    });
+
+
+  if (
+    certificateResult.success !== true
+  ) {
+
+    throw new Error(
+      "Maklumat Program telah disimpan, tetapi sijil gagal dimuat naik: " +
+      (
+        certificateResult.message ||
+        ""
+      )
+    );
+
+  }
+
+}
 
 
       /* =================================================

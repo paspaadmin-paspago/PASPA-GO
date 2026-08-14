@@ -670,3 +670,121 @@ body {
   }
 
 }
+
+/* =====================================================
+   MODE SAHKAN - KEHADIRAN
+===================================================== */
+
+.confirm-attendance-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+
+.confirm-all-present-button {
+  border: 1px solid #21884a;
+  border-radius: 8px;
+  padding: 8px 12px;
+  background: #e8f7ee;
+  color: #17733d;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+
+.confirm-attendance-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
+.confirm-attendance-row {
+  padding: 12px;
+  border: 1px solid #d8e2ef;
+  border-radius: 9px;
+  background: #ffffff;
+}
+
+
+.confirm-member-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 9px;
+  font-size: 13px;
+  color: #39516f;
+}
+
+
+.confirm-member-name {
+  color: #073b78;
+  font-size: 14px;
+}
+
+
+.confirm-attendance-select {
+  width: 100%;
+  min-height: 38px;
+  border: 1px solid #bfcde0;
+  border-radius: 7px;
+  padding: 6px 10px;
+  font-family: inherit;
+  background: #ffffff;
+}
+
+.finish-program-button {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 10px;
+
+  border: 0;
+  border-radius: 9px;
+
+  background: #21884a;
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.finish-program-button:hover {
+  background: #176f3b;
+}
+
+.finish-program-button:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+
+
+
+
+
+.finish-program-button {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 9px;
+  background: #21884a;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.finish-program-button:disabled {
+  opacity: 0.7;
+  cursor: default;
+}

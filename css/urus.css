@@ -768,3 +768,109 @@ body {
   background: #fdeaea;
   color: #b52a2a;
 }
+
+/* =====================================================
+   BUTTON EDIT / SAHKAN / BATAL
+===================================================== */
+
+.latest-program-actions-3 {
+  display: grid;
+  grid-template-columns:
+    1fr 1fr 1fr;
+  gap: 8px;
+}
+
+
+.latest-confirm-button {
+  min-height: 38px;
+
+  border:
+    1px solid
+    #21884a;
+
+  border-radius:
+    8px;
+
+  background:
+    #e8f7ee;
+
+  color:
+    #17733d;
+
+  font-family:
+    inherit;
+
+  font-size:
+    11px;
+
+  font-weight:
+    700;
+
+  cursor:
+    pointer;
+}
+
+
+.latest-confirm-button:hover {
+  background:
+    #d9f2e3;
+}
+
+
+@media (
+  max-width: 420px
+) {
+
+  .latest-program-actions-3 {
+    grid-template-columns:
+      1fr;
+  }
+
+}
+
+/* =====================================================
+   PROGRAM SELESAI
+===================================================== */
+
+.latest-program-status.finished {
+  background: #e7f7ed;
+  color: #16733a;
+}
+
+
+.latest-program-finished-note {
+  margin-top: 12px;
+  padding: 12px;
+
+  border: 1px solid #9dd5ae;
+  border-radius: 9px;
+
+  background: #eaf8ef;
+  color: #16733a;
+
+  text-align: center;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+/* =====================================================
+   PROGRAM BATAL
+===================================================== */
+
+.latest-program-cancelled-note {
+  margin-top: 12px;
+  padding: 12px;
+
+  border: 1px solid #efb2b2;
+  border-radius: 9px;
+
+  background: #fff0f0;
+  color: #c62828;
+
+  text-align: center;
+
+  font-size: 13px;
+  font-weight: 700;
+}

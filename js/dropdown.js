@@ -122,6 +122,27 @@ window.PASPA_DROPDOWNS = Object.freeze({
     "Free Size"
   ]),
 
+  saizBeret: Object.freeze([
+  "6",
+  "6 1/8",
+  "6 1/4",
+  "6 3/8",
+  "6 1/2",
+  "6 5/8",
+  "6 3/4",
+  "6 7/8",
+  "7",
+  "7 1/8",
+  "7 1/4",
+  "7 3/8",
+  "7 1/2",
+  "7 5/8",
+  "7 3/4",
+  "8"
+]),
+
+ 
+
   saizKasut: Object.freeze([
     "6",
     "7",

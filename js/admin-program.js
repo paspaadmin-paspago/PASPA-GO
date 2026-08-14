@@ -1852,7 +1852,7 @@ async function loadAdminProgramEditData() {
 
 
     /* =================================================
-       MAKLUMAT PROGRAM
+       ELEMENT PROGRAM
     ================================================= */
 
     const kategoriElement =
@@ -1860,53 +1860,185 @@ async function loadAdminProgramEditData() {
         "kategoriProgram"
       );
 
-    if (kategoriElement) {
-      kategoriElement.value =
-        program.kategoriProgram || "";
-    }
-
 
     const lokasiElement =
       document.getElementById(
         "lokasiProgram"
       );
 
-    if (lokasiElement) {
-      lokasiElement.value =
-        program.lokasiProgram || "";
+
+    const negeriElement =
+      document.getElementById(
+        "negeriProgram"
+      );
+
+
+    const negaraElement =
+      document.getElementById(
+        "negaraProgram"
+      );
+
+
+    const perkaraElement =
+      document.getElementById(
+        "perkaraProgram"
+      );
+
+
+    const tarikhMulaElement =
+      document.getElementById(
+        "tarikhMula"
+      );
+
+
+    const tarikhTamatElement =
+      document.getElementById(
+        "tarikhTamat"
+      );
+
+
+    const tempatElement =
+      document.getElementById(
+        "tempatProgram"
+      );
+
+
+    const keteranganElement =
+      document.getElementById(
+        "keteranganProgram"
+      );
+
+
+    /* =================================================
+       KATEGORI
+    ================================================= */
+
+    if (kategoriElement) {
+
+      kategoriElement.value =
+        program.kategoriProgram || "";
+
     }
 
 
-    document.getElementById(
-      "perkaraProgram"
-    ).value =
-      program.perkara || "";
+    /* =================================================
+       LOKASI
+
+       Dalam Negara:
+       - Papar dropdown Negeri
+       - Isi nama Negeri
+       - Negara kosong
+
+       Luar Negara:
+       - Papar dropdown Negara
+       - Isi nama Negara
+       - Negeri kosong
+    ================================================= */
+
+    if (lokasiElement) {
+
+      lokasiElement.value =
+        program.lokasiProgram || "";
+
+    }
 
 
-    document.getElementById(
-      "tarikhMula"
-    ).value =
-      program.tarikhMula || "";
+    /*
+     * WAJIB dibuat dahulu.
+     * Fungsi ini menentukan dropdown
+     * Negeri atau Negara yang perlu dipaparkan.
+     */
+
+    updateLocationFields();
 
 
-    document.getElementById(
-      "tarikhTamat"
-    ).value =
-      program.tarikhTamat || "";
+    if (
+      program.lokasiProgram ===
+      "Dalam Negara"
+    ) {
+
+      if (negeriElement) {
+
+        negeriElement.value =
+          program.negeri || "";
+
+      }
 
 
-    document.getElementById(
-      "tempatProgram"
-    ).value =
-      program.tempat || "";
+      if (negaraElement) {
+
+        negaraElement.value =
+          "";
+
+      }
+
+    } else if (
+      program.lokasiProgram ===
+      "Luar Negara"
+    ) {
+
+      if (negaraElement) {
+
+        negaraElement.value =
+          program.negara || "";
+
+      }
+
+
+      if (negeriElement) {
+
+        negeriElement.value =
+          "";
+
+      }
+
+    }
+
+
+    /* =================================================
+       MAKLUMAT PROGRAM LAIN
+    ================================================= */
+
+    if (perkaraElement) {
+
+      perkaraElement.value =
+        program.perkara || "";
+
+    }
+
+
+    if (tarikhMulaElement) {
+
+      tarikhMulaElement.value =
+        program.tarikhMula || "";
+
+    }
+
+
+    if (tarikhTamatElement) {
+
+      tarikhTamatElement.value =
+        program.tarikhTamat || "";
+
+    }
+
+
+    if (tempatElement) {
+
+      tempatElement.value =
+        program.tempat || "";
+
+    }
 
 
     /* =================================================
        PENGANJUR
     ================================================= */
 
-    let organizer =
-      program.penganjur || "";
+    const organizer =
+      String(
+        program.penganjur || ""
+      ).trim();
 
 
     if (
@@ -1939,10 +2071,12 @@ async function loadAdminProgramEditData() {
        KETERANGAN
     ================================================= */
 
-    document.getElementById(
-      "keteranganProgram"
-    ).value =
-      program.keterangan || "";
+    if (keteranganElement) {
+
+      keteranganElement.value =
+        program.keterangan || "";
+
+    }
 
 
     /* =================================================
@@ -2037,7 +2171,7 @@ async function loadAdminProgramEditData() {
 
 
     /* =================================================
-       TAJUK / BUTTON
+       TITLE PAGE
     ================================================= */
 
     const pageTitle =
@@ -2047,10 +2181,16 @@ async function loadAdminProgramEditData() {
 
 
     if (pageTitle) {
+
       pageTitle.textContent =
         "Edit Program";
+
     }
 
+
+    /* =================================================
+       BUTTON
+    ================================================= */
 
     const sendButton =
       document.getElementById(
@@ -2089,7 +2229,6 @@ async function loadAdminProgramEditData() {
   }
 
 }
-
 /* =====================================================
    BUILD REVIEW DATA
 ===================================================== */
@@ -2426,6 +2565,1373 @@ document
     }
   );
 
+  /* =====================================================
+   MODE SAHKAN PROGRAM
+===================================================== */
+
+function isProgramConfirmMode() {
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+
+  return (
+    String(
+      params.get("mode") ||
+      ""
+    )
+      .trim()
+      .toLowerCase() ===
+    "confirm"
+  );
+
+}
+
+
+/* =====================================================
+   MESSAGE ID
+===================================================== */
+
+function getConfirmMessageId() {
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+
+  return String(
+    params.get("messageId") ||
+    ""
+  ).trim();
+
+}
+
+
+/* =====================================================
+   CREATE ATTENDANCE ROW
+===================================================== */
+
+function createAttendanceSelect(
+  member,
+  type
+) {
+
+  const row =
+    document.createElement(
+      "div"
+    );
+
+
+  row.className =
+    "confirm-attendance-row";
+
+
+  /* =================================================
+     MEMBER INFO
+  ================================================= */
+
+  const memberInfo =
+    document.createElement(
+      "div"
+    );
+
+
+  memberInfo.className =
+    "confirm-member-info";
+
+
+  const memberName =
+    String(
+      member.namaAhli ||
+      member.namaPenuh ||
+      ""
+    ).trim();
+
+
+  const memberId =
+    normalizeMemberId(
+      member.idPaspa
+    );
+
+
+  memberInfo.innerHTML = `
+
+    <strong class="confirm-member-name">
+      ${memberName || "-"}
+    </strong>
+
+    <span>
+      ID PASPA:
+      ${memberId || "-"}
+    </span>
+
+    <span>
+      Peranan:
+      ${type}
+    </span>
+
+    <span>
+      Respon Jemputan:
+      ${
+        String(
+          member.statusRespon ||
+          "BELUM RESPON"
+        )
+      }
+    </span>
+
+  `;
+
+
+  /* =================================================
+     SELECT
+  ================================================= */
+
+  const select =
+    document.createElement(
+      "select"
+    );
+
+
+  select.className =
+    "confirm-attendance-select";
+
+
+  select.dataset.idPaspa =
+    memberId;
+
+
+  select.dataset.peranan =
+    type;
+
+
+  select.innerHTML = `
+
+    <option value="">
+      -- Pilih Kehadiran --
+    </option>
+
+    <option value="Hadir">
+      Hadir
+    </option>
+
+    <option value="Tidak Hadir">
+      Tidak Hadir
+    </option>
+
+  `;
+
+
+  /* =================================================
+     DEFAULT IKUT RESPON AHLI
+  ================================================= */
+
+  const responseStatus =
+    String(
+      member.statusRespon ||
+      ""
+    )
+      .trim()
+      .toLowerCase();
+
+
+  if (
+    responseStatus === "hadir"
+  ) {
+
+    select.value =
+      "Hadir";
+
+  }
+
+
+  if (
+    responseStatus ===
+    "tidak hadir"
+  ) {
+
+    select.value =
+      "Tidak Hadir";
+
+  }
+
+
+  row.appendChild(
+    memberInfo
+  );
+
+
+  row.appendChild(
+    select
+  );
+
+
+  return row;
+
+}
+
+
+/* =====================================================
+   RENDER CONFIRM LIST
+===================================================== */
+
+function renderConfirmAttendanceList(
+  target,
+  members,
+  type
+) {
+
+  if (!target) {
+    return;
+  }
+
+
+  target.innerHTML =
+    "";
+
+
+  if (
+    !Array.isArray(members) ||
+    !members.length
+  ) {
+
+    target.innerHTML =
+      '<div class="empty-text">' +
+      "Tiada " +
+      type.toLowerCase() +
+      "." +
+      "</div>";
+
+    return;
+
+  }
+
+
+  /* =================================================
+     HEADER
+  ================================================= */
+
+  const header =
+    document.createElement(
+      "div"
+    );
+
+
+  header.className =
+    "confirm-attendance-header";
+
+
+  const title =
+    document.createElement(
+      "strong"
+    );
+
+
+  title.textContent =
+    type === "Peserta"
+      ? "Senarai Peserta"
+      : "Senarai Urusetia";
+
+
+  const allPresentButton =
+    document.createElement(
+      "button"
+    );
+
+
+  allPresentButton.type =
+    "button";
+
+
+  allPresentButton.className =
+    "confirm-all-present-button";
+
+
+  allPresentButton.textContent =
+    "✓ SEMUA HADIR";
+
+
+  header.appendChild(
+    title
+  );
+
+
+  header.appendChild(
+    allPresentButton
+  );
+
+
+  target.appendChild(
+    header
+  );
+
+
+  /* =================================================
+     LIST
+  ================================================= */
+
+  const listContainer =
+    document.createElement(
+      "div"
+    );
+
+
+  listContainer.className =
+    "confirm-attendance-list";
+
+
+  members.forEach(
+    function (member) {
+
+      listContainer.appendChild(
+        createAttendanceSelect(
+          member,
+          type
+        )
+      );
+
+    }
+  );
+
+
+  target.appendChild(
+    listContainer
+  );
+
+
+  /* =================================================
+     SEMUA HADIR
+  ================================================= */
+
+  allPresentButton.addEventListener(
+    "click",
+    function () {
+
+      const selects =
+        listContainer
+          .querySelectorAll(
+            ".confirm-attendance-select"
+          );
+
+
+      selects.forEach(
+        function (select) {
+
+          select.value =
+            "Hadir";
+
+        }
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   LOAD CONFIRM MODE
+===================================================== */
+
+async function loadProgramConfirmMode() {
+
+  const messageId =
+    getConfirmMessageId();
+
+
+  if (!messageId) {
+
+    showAdminMessage(
+      "MESSAGE_ID Program tidak ditemui.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  try {
+
+    showAdminMessage(
+      "Memuatkan maklumat Program untuk pengesahan...",
+      "info"
+    );
+
+
+    /* =================================================
+       LOAD DATA
+    ================================================= */
+
+    const result =
+      await callAdminProgramApi(
+        "admin_program_edit_data",
+        {
+          messageId:
+            messageId
+        }
+      );
+
+
+    if (
+      !result ||
+      result.success !== true
+    ) {
+
+      throw new Error(
+        result?.message ||
+        "Maklumat Program tidak dapat dimuatkan."
+      );
+
+    }
+
+
+    const program =
+      result.program || {};
+
+
+    /* =================================================
+       ELEMENT PROGRAM
+    ================================================= */
+
+    const kategoriElement =
+      document.getElementById(
+        "kategoriProgram"
+      );
+
+
+    const lokasiElement =
+      document.getElementById(
+        "lokasiProgram"
+      );
+
+
+    const perkaraElement =
+      document.getElementById(
+        "perkaraProgram"
+      );
+
+
+    const tarikhMulaElement =
+      document.getElementById(
+        "tarikhMula"
+      );
+
+
+    const tarikhTamatElement =
+      document.getElementById(
+        "tarikhTamat"
+      );
+
+
+    const tempatElement =
+      document.getElementById(
+        "tempatProgram"
+      );
+
+
+    const negeriElement =
+      document.getElementById(
+        "negeriProgram"
+      );
+
+
+    const negaraElement =
+      document.getElementById(
+        "negaraProgram"
+      );
+
+
+    const keteranganElement =
+      document.getElementById(
+        "keteranganProgram"
+      );
+
+
+    /* =================================================
+       KATEGORI
+    ================================================= */
+
+    if (kategoriElement) {
+
+      kategoriElement.value =
+        program.kategoriProgram || "";
+
+    }
+
+
+    /* =================================================
+       LOKASI + NEGERI / NEGARA
+    ================================================= */
+
+    if (lokasiElement) {
+
+      lokasiElement.value =
+        program.lokasiProgram || "";
+
+    }
+
+
+    /*
+     * Paparkan dropdown yang betul dahulu.
+     */
+
+    updateLocationFields();
+
+
+    /*
+     * DALAM NEGARA
+     */
+
+    if (
+      program.lokasiProgram ===
+      "Dalam Negara"
+    ) {
+
+      if (negeriElement) {
+
+        negeriElement.value =
+          program.negeri || "";
+
+      }
+
+
+      if (negaraElement) {
+
+        negaraElement.value =
+          "";
+
+      }
+
+    }
+
+
+    /*
+     * LUAR NEGARA
+     */
+
+    else if (
+      program.lokasiProgram ===
+      "Luar Negara"
+    ) {
+
+      if (negaraElement) {
+
+        negaraElement.value =
+          program.negara || "";
+
+      }
+
+
+      if (negeriElement) {
+
+        negeriElement.value =
+          "";
+
+      }
+
+    }
+
+
+    /* =================================================
+       MAKLUMAT PROGRAM
+    ================================================= */
+
+    if (perkaraElement) {
+
+      perkaraElement.value =
+        program.perkara || "";
+
+    }
+
+
+    if (tarikhMulaElement) {
+
+      tarikhMulaElement.value =
+        program.tarikhMula || "";
+
+    }
+
+
+    if (tarikhTamatElement) {
+
+      tarikhTamatElement.value =
+        program.tarikhTamat || "";
+
+    }
+
+
+    if (tempatElement) {
+
+      tempatElement.value =
+        program.tempat || "";
+
+    }
+
+
+    if (keteranganElement) {
+
+      keteranganElement.value =
+        program.keterangan || "";
+
+    }
+
+
+    /* =================================================
+       PENGANJUR
+    ================================================= */
+
+    const organizer =
+      String(
+        program.penganjur || ""
+      ).trim();
+
+
+    if (
+      PROGRAM_ORGANIZERS.includes(
+        organizer
+      )
+    ) {
+
+      penganjurProgram.value =
+        organizer;
+
+      penganjurLain.value =
+        "";
+
+    } else if (organizer) {
+
+      penganjurProgram.value =
+        "Lain-lain";
+
+      penganjurLain.value =
+        organizer;
+
+    }
+
+
+    updateOrganizerField();
+
+
+    /* =================================================
+       LOCK MAKLUMAT PROGRAM
+    ================================================= */
+
+    [
+      "kategoriProgram",
+      "lokasiProgram",
+      "perkaraProgram",
+      "tarikhMula",
+      "tarikhTamat",
+      "tempatProgram",
+      "negeriProgram",
+      "negaraProgram",
+      "penganjurProgram",
+      "penganjurLain",
+      "keteranganProgram",
+      "suratProgram"
+    ]
+      .forEach(
+        function (id) {
+
+          const element =
+            document.getElementById(
+              id
+            );
+
+
+          if (element) {
+
+            element.disabled =
+              true;
+
+          }
+
+        }
+      );
+
+
+    /* =================================================
+       HIDE MEMBER SEARCH
+    ================================================= */
+
+    if (participantSearch) {
+
+      participantSearch.style.display =
+        "none";
+
+    }
+
+
+    if (secretariatSearch) {
+
+      secretariatSearch.style.display =
+        "none";
+
+    }
+
+
+    if (selectAllParticipants) {
+
+      const wrapper =
+        selectAllParticipants.closest(
+          "label"
+        );
+
+
+      if (wrapper) {
+
+        wrapper.style.display =
+          "none";
+
+      }
+
+    }
+
+
+    if (participantList) {
+
+      participantList.style.display =
+        "none";
+
+    }
+
+
+    if (secretariatList) {
+
+      secretariatList.style.display =
+        "none";
+
+    }
+
+
+    /* =================================================
+       RENDER PESERTA / URUSETIA
+    ================================================= */
+
+    renderConfirmAttendanceList(
+      selectedParticipantList,
+      result.participants || [],
+      "Peserta"
+    );
+
+
+    renderConfirmAttendanceList(
+      selectedSecretariatList,
+      result.secretariat || [],
+      "Urusetia"
+    );
+
+
+    if (participantCount) {
+
+      participantCount.textContent =
+        String(
+          (
+            result.participants || []
+          ).length
+        ) +
+        " orang";
+
+    }
+
+
+    if (secretariatCount) {
+
+      secretariatCount.textContent =
+        String(
+          (
+            result.secretariat || []
+          ).length
+        ) +
+        " orang";
+
+    }
+
+
+    /* =================================================
+       HIDE SIMPAN DRAF
+    ================================================= */
+
+    const saveDraftButton =
+      document.getElementById(
+        "saveDraftButton"
+      );
+
+
+    if (saveDraftButton) {
+
+      saveDraftButton.style.display =
+        "none";
+
+    }
+
+
+    /* =================================================
+       BUTTON SAHKAN
+    ================================================= */
+
+    const oldButton =
+      document.getElementById(
+        "sendInvitationButton"
+      );
+
+
+    if (!oldButton) {
+
+      throw new Error(
+        "Button SAHKAN MAKLUMAT tidak ditemui."
+      );
+
+    }
+
+
+    /*
+     * Buang event CREATE lama.
+     */
+
+    const newButton =
+      oldButton.cloneNode(
+        true
+      );
+
+
+    oldButton.replaceWith(
+      newButton
+    );
+
+
+    newButton.id =
+      "sendInvitationButton";
+
+
+    newButton.textContent =
+      "SAHKAN MAKLUMAT";
+
+
+    /* =================================================
+       CLICK SAHKAN
+    ================================================= */
+
+    newButton.addEventListener(
+      "click",
+      async function () {
+
+        const attendanceSelects =
+          document.querySelectorAll(
+            ".confirm-attendance-select"
+          );
+
+
+        const attendance =
+          [];
+
+
+        let incomplete =
+          false;
+
+
+        attendanceSelects.forEach(
+          function (select) {
+
+            if (!select.value) {
+
+              incomplete =
+                true;
+
+              return;
+
+            }
+
+
+            attendance.push({
+
+              idPaspa:
+                select.dataset.idPaspa,
+
+              peranan:
+                select.dataset.peranan,
+
+              statusKehadiran:
+                select.value
+
+            });
+
+          }
+        );
+
+
+        /* =============================================
+           SEMAK KEHADIRAN
+        ============================================= */
+
+        if (incomplete) {
+
+          showAdminMessage(
+            "Sila sahkan kehadiran semua peserta dan urusetia.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        /* =============================================
+           DATA PROGRAM AKHIR
+        ============================================= */
+
+        const selectedLocation =
+          lokasiElement
+            ? lokasiElement.value
+            : (
+                program.lokasiProgram ||
+                ""
+              );
+
+
+        let finalNegeri =
+          "";
+
+
+        let finalNegara =
+          "";
+
+
+        if (
+          selectedLocation ===
+          "Dalam Negara"
+        ) {
+
+          finalNegeri =
+            negeriElement
+              ? negeriElement.value
+              : (
+                  program.negeri ||
+                  ""
+                );
+
+        }
+
+
+        if (
+          selectedLocation ===
+          "Luar Negara"
+        ) {
+
+          finalNegara =
+            negaraElement
+              ? negaraElement.value
+              : (
+                  program.negara ||
+                  ""
+                );
+
+        }
+
+
+        const finalProgram = {
+
+          ...program,
+
+
+          kategoriProgram:
+            kategoriElement
+              ? kategoriElement.value
+              : (
+                  program.kategoriProgram ||
+                  ""
+                ),
+
+
+          lokasiProgram:
+            selectedLocation,
+
+
+          perkara:
+            perkaraElement
+              ? perkaraElement.value.trim()
+              : (
+                  program.perkara ||
+                  ""
+                ),
+
+
+          tarikhMula:
+            tarikhMulaElement
+              ? tarikhMulaElement.value
+              : (
+                  program.tarikhMula ||
+                  ""
+                ),
+
+
+          tarikhTamat:
+            tarikhTamatElement
+              ? tarikhTamatElement.value
+              : (
+                  program.tarikhTamat ||
+                  ""
+                ),
+
+
+          tempat:
+            tempatElement
+              ? tempatElement.value.trim()
+              : (
+                  program.tempat ||
+                  ""
+                ),
+
+
+          /*
+           * Penting:
+           * Dalam Negara = Negeri sahaja
+           * Luar Negara = Negara sahaja
+           */
+
+          negeri:
+            finalNegeri,
+
+
+          negara:
+            finalNegara,
+
+
+          penganjur:
+            penganjurProgram
+              ? penganjurProgram.value
+              : (
+                  program.penganjur ||
+                  ""
+                ),
+
+
+          penganjurLain:
+            penganjurLain
+              ? penganjurLain.value.trim()
+              : (
+                  program.penganjurLain ||
+                  ""
+                ),
+
+
+          keterangan:
+            keteranganElement
+              ? keteranganElement.value.trim()
+              : (
+                  program.keterangan ||
+                  ""
+                )
+
+        };
+
+
+        /* =============================================
+           DATA CONFIRM
+        ============================================= */
+
+        const confirmData = {
+
+          messageId:
+            messageId,
+
+          program:
+            finalProgram,
+
+          participants:
+            result.participants || [],
+
+          secretariat:
+            result.secretariat || [],
+
+          attendance:
+            attendance
+
+        };
+
+
+        /* =============================================
+           CONFIRM
+        ============================================= */
+
+        const confirmed =
+          window.confirm(
+            "Adakah anda pasti mahu mengesahkan maklumat Program dan kehadiran ini?"
+          );
+
+
+        if (!confirmed) {
+
+          return;
+
+        }
+
+
+        newButton.disabled =
+          true;
+
+
+        newButton.textContent =
+          "MENYIMPAN...";
+
+
+        showAdminMessage(
+          "Maklumat Program sedang disimpan ke database...",
+          "info"
+        );
+
+
+        try {
+
+          const saveResult =
+            await callAdminProgramApi(
+              "admin_confirm_program",
+              {
+                data:
+                  confirmData
+              }
+            );
+
+
+          if (
+            !saveResult ||
+            saveResult.success !== true
+          ) {
+
+            console.error(
+              "CONFIRM BACKEND RESPONSE:",
+              saveResult
+            );
+
+
+            throw new Error(
+              saveResult?.error ||
+              saveResult?.message ||
+              "Maklumat gagal disahkan."
+            );
+
+          }
+
+
+          console.log(
+            "PROGRAM CONFIRMED:",
+            saveResult
+          );
+
+
+          showAdminMessage(
+            "Maklumat Program dan kehadiran berjaya direkodkan ke database.",
+            "success"
+          );
+
+
+          newButton.textContent =
+            "✓ TELAH DISAHKAN";
+
+
+          newButton.disabled =
+            true;
+
+
+          /* ===========================================
+             BUTTON SELESAI
+          =========================================== */
+
+          let finishButton =
+            document.getElementById(
+              "finishProgramButton"
+            );
+
+
+          if (!finishButton) {
+
+            finishButton =
+              document.createElement(
+                "button"
+              );
+
+
+            finishButton.type =
+              "button";
+
+
+            finishButton.id =
+              "finishProgramButton";
+
+
+            finishButton.className =
+              "finish-program-button";
+
+
+            finishButton.textContent =
+              "SELESAI";
+
+
+            newButton
+              .parentElement
+              .appendChild(
+                finishButton
+              );
+
+          }
+
+
+          finishButton.addEventListener(
+            "click",
+            async function () {
+
+              const confirmedFinish =
+                window.confirm(
+                  "Adakah anda pasti Program ini telah selesai? Selepas ini Program tidak boleh diedit atau dibatalkan."
+                );
+
+
+              if (!confirmedFinish) {
+
+                return;
+
+              }
+
+
+              finishButton.disabled =
+                true;
+
+
+              finishButton.textContent =
+                "MENYELESAIKAN...";
+
+
+              try {
+
+                const finishResult =
+                  await callAdminProgramApi(
+                    "admin_program_finish",
+                    {
+                      messageId:
+                        messageId
+                    }
+                  );
+
+
+                if (
+                  !finishResult ||
+                  finishResult.success !== true
+                ) {
+
+                  throw new Error(
+                    finishResult?.error ||
+                    finishResult?.message ||
+                    "Program gagal diselesaikan."
+                  );
+
+                }
+
+
+                finishButton.textContent =
+                  "✓ SELESAI";
+
+
+                showAdminMessage(
+                  "Program telah selesai.",
+                  "success"
+                );
+
+
+                setTimeout(
+                  function () {
+
+                    window.location.href =
+                      "urus.html";
+
+                  },
+                  700
+                );
+
+
+              } catch (error) {
+
+                console.error(
+                  "FINISH PROGRAM ERROR:",
+                  error
+                );
+
+
+                showAdminMessage(
+                  error.message ||
+                  "Program gagal diselesaikan.",
+                  "error"
+                );
+
+
+                finishButton.disabled =
+                  false;
+
+
+                finishButton.textContent =
+                  "SELESAI";
+
+              }
+
+            }
+          );
+
+
+        } catch (error) {
+
+          console.error(
+            "CONFIRM PROGRAM ERROR:",
+            error
+          );
+
+
+          showAdminMessage(
+            error.message ||
+            "Maklumat Program gagal disahkan.",
+            "error"
+          );
+
+
+          newButton.disabled =
+            false;
+
+
+          newButton.textContent =
+            "SAHKAN MAKLUMAT";
+
+        }
+
+      }
+    );
+
+
+    showAdminMessage(
+      "Sila semak dan sahkan kehadiran sebenar peserta serta urusetia.",
+      "success"
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "LOAD PROGRAM CONFIRM ERROR:",
+      error
+    );
+
+
+    showAdminMessage(
+      error.message ||
+      "Program tidak dapat dimuatkan untuk pengesahan.",
+      "error"
+    );
+
+  }
+
+}
+
 
 /* =====================================================
    START
@@ -2446,17 +3952,31 @@ document.addEventListener(
     updateSelectionUI();
 
 
-    /*
-     * Tunggu senarai ahli siap dahulu.
-     * Ini penting untuk mode EDIT supaya
-     * checkbox peserta/urusetia lama
-     * dapat ditanda dengan betul.
-     */
-
     await loadProgramMembers();
 
 
+    /* =================================================
+       MODE SAHKAN
+    ================================================= */
+
     if (
+      isProgramConfirmMode()
+    ) {
+
+      await loadProgramConfirmMode();
+
+      return;
+
+    }
+
+
+    /* =================================================
+       MODE EDIT
+    ================================================= */
+
+    if (
+      typeof isAdminProgramEditMode !==
+        "undefined" &&
       isAdminProgramEditMode
     ) {
 

@@ -62,6 +62,208 @@ let currentSession = null;
 let latestProfileData = null;
 let selectedPhotoFile = null;
 
+let cropImage = null;
+
+let cropScale = 1;
+
+let cropOffsetX = 0;
+
+let cropOffsetY = 0;
+
+let cropDragging = false;
+
+let cropStartX = 0;
+
+let cropStartY = 0;
+
+let croppedPhotoBlob = null;
+
+
+const photoCropModal =
+  document.getElementById(
+    "photoCropModal"
+  );
+
+const photoCropCanvas =
+  document.getElementById(
+    "photoCropCanvas"
+  );
+
+const photoZoomRange =
+  document.getElementById(
+    "photoZoomRange"
+  );
+
+const cancelCropButton =
+  document.getElementById(
+    "cancelCropButton"
+  );
+
+const applyCropButton =
+  document.getElementById(
+    "applyCropButton"
+  );
+
+
+  /* =====================================================
+   DRAW CROP
+===================================================== */
+
+function drawCropImage() {
+
+  if (
+    !photoCropCanvas ||
+    !cropImage
+  ) {
+    return;
+  }
+
+
+  const ctx =
+    photoCropCanvas.getContext(
+      "2d"
+    );
+
+
+  const canvasWidth =
+    photoCropCanvas.width;
+
+  const canvasHeight =
+    photoCropCanvas.height;
+
+
+  ctx.clearRect(
+    0,
+    0,
+    canvasWidth,
+    canvasHeight
+  );
+
+
+  const baseScale =
+    Math.max(
+      canvasWidth /
+        cropImage.width,
+
+      canvasHeight /
+        cropImage.height
+    );
+
+
+  const finalScale =
+    baseScale *
+    cropScale;
+
+
+  const drawWidth =
+    cropImage.width *
+    finalScale;
+
+
+  const drawHeight =
+    cropImage.height *
+    finalScale;
+
+
+  const x =
+    (
+      canvasWidth -
+      drawWidth
+    ) /
+    2 +
+    cropOffsetX;
+
+
+  const y =
+    (
+      canvasHeight -
+      drawHeight
+    ) /
+    2 +
+    cropOffsetY;
+
+
+  ctx.drawImage(
+    cropImage,
+    x,
+    y,
+    drawWidth,
+    drawHeight
+  );
+
+}
+
+function openPhotoCropper(
+  file
+) {
+
+  const reader =
+    new FileReader();
+
+
+  reader.onload =
+    function () {
+
+      const image =
+        new Image();
+
+
+      image.onload =
+        function () {
+
+          cropImage =
+            image;
+
+          cropScale =
+            1;
+
+          cropOffsetX =
+            0;
+
+          cropOffsetY =
+            0;
+
+
+          if (
+            photoZoomRange
+          ) {
+
+            photoZoomRange.value =
+              "1";
+
+          }
+
+
+          drawCropImage();
+
+
+          if (
+            photoCropModal
+          ) {
+
+            photoCropModal
+              .classList
+              .remove(
+                "hidden"
+              );
+
+          }
+
+        };
+
+
+      image.src =
+        reader.result;
+
+    };
+
+
+  reader.readAsDataURL(
+    file
+  );
+
+}
+
 
 /* =====================================================
    SESSION
@@ -480,11 +682,11 @@ function initializeProfileDropdowns(
   );
 
   populateDropdown(
-    "clothingBeret",
-    PASPA_DROPDOWNS
-      .saizPakaian,
-    sizes.beret
-  );
+  "clothingBeret",
+  PASPA_DROPDOWNS
+    .saizBeret,
+  sizes.beret
+);
 
   populateDropdown(
     "clothingJacket",
@@ -727,44 +929,72 @@ function displayProfileData(
 
 
   /* ===================================================
-     KOTAK 2: MAKLUMAT PERIBADI
-  =================================================== */
+   KOTAK 2: MAKLUMAT PERIBADI
+=================================================== */
 
-  setText(
-    "profileIc",
-    formatNoKP(
-      profile.noKadPengenalan
-    )
-  );
+/*
+ * IC - TIDAK BOLEH EDIT
+ */
 
-  setText(
-    "profileGender",
-    profile.jantina
-  );
+setText(
+  "profileIc",
+  formatNoKP(
+    profile.noKadPengenalan
+  )
+);
 
-  setText(
-    "profileEmail",
-    profile.googleEmail ||
-    currentSession.googleEmail
-  );
 
-  setText(
-    "profileBodyNumber",
-    service.noBadan
-  );
+/*
+ * EMAIL - TIDAK BOLEH EDIT
+ */
 
-  setText(
-    "profileAppointmentDate",
-    formatDate(
-      membership.tarikhLantikan
-    )
-  );
+setText(
+  "profileEmail",
+  profile.googleEmail ||
+  currentSession.googleEmail
+);
 
-  setText(
-    "profilePaspaPosition",
-    membership.jawatanPaspa
-  );
 
+/*
+ * JANTINA
+ */
+
+setValue(
+  "personalGender",
+  profile.jantina
+);
+
+
+/*
+ * NO. BADAN
+ */
+
+setValue(
+  "personalBodyNumber",
+  service.noBadan
+);
+
+
+/*
+ * TARIKH LANTIKAN PASPA
+ */
+
+setValue(
+  "personalAppointmentDate",
+  formatDateForInput(
+    membership.tarikhLantikan
+  )
+);
+
+
+/*
+ * JAWATAN PASPA
+ */
+
+setValue(
+  "personalPaspaPosition",
+  membership.jawatanPaspa
+);
 
   /* ===================================================
      KOTAK 3: MAKLUMAT PERKHIDMATAN
@@ -1095,6 +1325,44 @@ function getSectionPayload(
   sectionName
 ) {
   switch (sectionName) {
+
+    case "personal":
+
+  return {
+
+    jantina:
+      document
+        .getElementById(
+          "personalGender"
+        )
+        .value
+        .trim(),
+
+    noBadan:
+      document
+        .getElementById(
+          "personalBodyNumber"
+        )
+        .value
+        .trim(),
+
+    tarikhLantikanPaspa:
+      document
+        .getElementById(
+          "personalAppointmentDate"
+        )
+        .value,
+
+    jawatanPaspa:
+      document
+        .getElementById(
+          "personalPaspaPosition"
+        )
+        .value
+        .trim()
+
+  };
+
 
     case "service":
       return {
@@ -1525,13 +1793,264 @@ if (profilePhotoInput) {
           return;
         }
 
-        selectedPhotoFile =
-          file;
+       selectedPhotoFile =
+  file;
 
-        const previewUrl =
-          URL.createObjectURL(
-            file
+croppedPhotoBlob =
+  null;
+
+openPhotoCropper(
+  file
+);
+
+if (
+  photoZoomRange
+) {
+
+  photoZoomRange.addEventListener(
+    "input",
+    function () {
+
+      cropScale =
+        Number(
+          photoZoomRange.value
+        ) || 1;
+
+      drawCropImage();
+
+    }
+  );
+
+}
+
+if (
+  photoCropCanvas
+) {
+
+  photoCropCanvas.addEventListener(
+    "pointerdown",
+    function (event) {
+
+      cropDragging =
+        true;
+
+      cropStartX =
+        event.clientX;
+
+      cropStartY =
+        event.clientY;
+
+      photoCropCanvas
+        .setPointerCapture(
+          event.pointerId
+        );
+
+    }
+  );
+
+
+  photoCropCanvas.addEventListener(
+    "pointermove",
+    function (event) {
+
+      if (
+        !cropDragging
+      ) {
+        return;
+      }
+
+
+      const deltaX =
+        event.clientX -
+        cropStartX;
+
+
+      const deltaY =
+        event.clientY -
+        cropStartY;
+
+
+      /*
+       * Canvas sebenar 390x495,
+       * paparan CSS 260x330.
+       */
+
+      cropOffsetX +=
+        deltaX * 1.5;
+
+      cropOffsetY +=
+        deltaY * 1.5;
+
+
+      cropStartX =
+        event.clientX;
+
+      cropStartY =
+        event.clientY;
+
+
+      drawCropImage();
+
+    }
+  );
+
+
+  photoCropCanvas.addEventListener(
+    "pointerup",
+    function () {
+
+      cropDragging =
+        false;
+
+    }
+  );
+
+
+  photoCropCanvas.addEventListener(
+    "pointercancel",
+    function () {
+
+      cropDragging =
+        false;
+
+    }
+  );
+
+}
+
+if (
+  cancelCropButton
+) {
+
+  cancelCropButton.addEventListener(
+    "click",
+    function () {
+
+      photoCropModal
+        .classList
+        .add(
+          "hidden"
+        );
+
+      cropImage =
+        null;
+
+      croppedPhotoBlob =
+        null;
+
+      selectedPhotoFile =
+        null;
+
+      profilePhotoInput.value =
+        "";
+
+    }
+  );
+
+}
+
+if (
+  applyCropButton
+) {
+
+  applyCropButton.addEventListener(
+    "click",
+    function () {
+
+      if (
+        !photoCropCanvas
+      ) {
+        return;
+      }
+
+
+      photoCropCanvas.toBlob(
+        function (blob) {
+
+          if (!blob) {
+
+            showProfileMessage(
+              "Gambar crop tidak dapat dihasilkan.",
+              "error"
+            );
+
+            return;
+
+          }
+
+
+          croppedPhotoBlob =
+            blob;
+
+
+          const croppedFile =
+            new File(
+              [
+                blob
+              ],
+              "profile.jpg",
+              {
+                type:
+                  "image/jpeg"
+              }
+            );
+
+
+          selectedPhotoFile =
+            croppedFile;
+
+
+          const previewUrl =
+            URL.createObjectURL(
+              blob
+            );
+
+
+          if (
+            profilePhoto
+          ) {
+
+            profilePhoto.src =
+              previewUrl;
+
+          }
+
+
+          if (
+            uploadPhotoButton
+          ) {
+
+            uploadPhotoButton
+              .classList
+              .remove(
+                "hidden"
+              );
+
+          }
+
+
+          photoCropModal
+            .classList
+            .add(
+              "hidden"
+            );
+
+
+          showProfileMessage(
+            "Jika berpuashati, Muat Naik Gambar untuk simpan.",
+            "info"
           );
+
+        },
+        "image/jpeg",
+        0.92
+      );
+
+    }
+  );
+
+}
+
 
         if (profilePhoto) {
           profilePhoto.src =

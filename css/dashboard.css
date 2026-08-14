@@ -813,3 +813,151 @@
   }
 
 }
+
+/* =====================================================
+   WELCOME SPLASH SCREEN
+===================================================== */
+
+.welcome-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  background: #061b3d;
+
+  opacity: 1;
+  visibility: visible;
+
+  transition:
+    opacity 0.8s ease,
+    visibility 0.8s ease;
+}
+
+
+/* GAMBAR FULLSCREEN */
+
+.welcome-splash-image {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  transform: none;
+  animation: none;
+}
+
+
+/* OVERLAY LEMBUT */
+
+.welcome-splash-overlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(5, 20, 50, 0.05),
+      rgba(5, 20, 50, 0.28)
+    );
+
+  pointer-events: none;
+}
+
+
+/* BUTTON X */
+
+.welcome-splash-close {
+  position: absolute;
+
+  top: 22px;
+  right: 22px;
+
+  z-index: 3;
+
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0;
+  padding: 0;
+
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 50%;
+
+  background: rgba(0, 0, 0, 0.28);
+
+  color: #ffffff;
+
+  font-size: 22px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  backdrop-filter: blur(6px);
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+
+.welcome-splash-close:hover {
+  transform: scale(1.08);
+
+  background:
+    rgba(0, 0, 0, 0.5);
+}
+
+
+/* KETIKA TUTUP */
+
+.welcome-splash.is-closing {
+  opacity: 0;
+
+  visibility: hidden;
+}
+
+
+/* ZOOM SLOW
+
+@keyframes welcomeZoom {
+
+  from {
+    transform: scale(1.08);
+  }
+
+  to {
+    transform: scale(1);
+  }
+
+} */
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+  .welcome-splash-close {
+    top: 16px;
+    right: 16px;
+
+    width: 42px;
+    height: 42px;
+
+    font-size: 20px;
+  }
+
+}

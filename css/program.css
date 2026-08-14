@@ -44,103 +44,140 @@
    HEADER
 ===================================================== */
 
-.program-header {
-  width: 100%;
+/* =====================================================
+   STANDARD PASPA GO TOP NAVIGATION
+===================================================== */
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  margin-bottom: 22px;
-}
-
-
-.program-top-actions {
-  width: 100%;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  margin: 0 0 12px 0;
-  padding: 8px 10px;
-
-  background: #174789;
-
-  border-bottom: 1px solid rgba(255,255,255,0.18);
-
-  /* FREEZE HEADER */
+.paspa-top-nav {
   position: sticky;
   top: 0;
   z-index: 9999;
+
+  width: 100%;
+  height: 64px;
+
+  display: grid;
+  grid-template-columns: 48px 1fr 48px;
+  align-items: center;
+
+  padding: 0 16px;
+
+  background: #20579a;
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.18);
 }
 
 
-.program-nav-button {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+.paspa-nav-title {
+  margin: 0;
 
-  width: 40px !important;
-  height: 40px !important;
-  min-width: 40px !important;
-  min-height: 40px !important;
+  color: #ffffff;
 
-  margin: 0 !important;
-  padding: 0 !important;
+  text-align: center;
 
-  border: none !important;
-  border-radius: 0 !important;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+}
 
-  background: transparent !important;
-  box-shadow: none !important;
 
-  color: #ffffff !important;
+.paspa-nav-button {
+  width: 40px;
+  height: 40px;
 
-  font-size: 22px !important;
-  font-weight: 700 !important;
-  line-height: 1 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+  color: #ffffff;
+
+  font-size: 22px;
+  font-weight: 700;
 
   cursor: pointer;
-
-  
 }
 
-.program-nav-button:hover,
-.program-nav-button:focus,
-.program-nav-button:active {
-  background: transparent !important;
-  color: #ffffff !important;
-  box-shadow: none !important;
+
+.paspa-nav-button:hover {
+  opacity: 0.75;
 }
 
-.program-logo {
+
+/* =====================================================
+   LOGO PASPA GO BAWAH HEADER
+===================================================== */
+
+.program-logo-section {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 5px 20px 0;
+
+  margin-bottom: -35px;
+}
+
+
+.program-page-logo {
   display: block;
 
-  width:
-    min(250px, 65vw);
+  width: 230px;
+  max-width: 65%;
 
   height: auto;
-
-  margin: 2px auto 0;
 
   object-fit: contain;
 }
 
 
-.program-page-title {
-  margin:
-    10px 0 0;
+/* =====================================================
+   PROGRAM SHELL
+===================================================== */
 
-  color:
-    #ffffff;
+.program-shell {
+  width: 100%;
+  max-width: 760px;
+  min-height: 100vh;
 
-  font-size:
-    30px;
+  margin: 0 auto;
 
-  text-align: center;
+  padding-top: 0;
 }
 
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .paspa-top-nav {
+    height: 52px;
+    padding: 6px 12px;
+  }
+
+
+  .paspa-nav-button {
+    width: 36px;
+    height: 36px;
+
+    font-size: 18px;
+  }
+
+
+  .program-page-logo {
+    width: 200px;
+  }
+
+}
 
 
 /* =====================================================

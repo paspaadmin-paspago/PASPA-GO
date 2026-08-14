@@ -493,10 +493,6 @@ async function loadLatestProgramActions() {
    CREATE PROGRAM CARD
 ===================================================== */
 
-/* =====================================================
-   CREATE PROGRAM CARD
-===================================================== */
-
 function createLatestProgramCard(
   program
 ) {
@@ -511,6 +507,10 @@ function createLatestProgramCard(
     "latest-program-card";
 
 
+  /* ===================================================
+     STATUS PROGRAM
+  =================================================== */
+
   const status =
     String(
       program.statusMesej ||
@@ -520,12 +520,23 @@ function createLatestProgramCard(
       .toUpperCase();
 
 
+  const isProgramFinished =
+    status === "SELESAI";
+
+
+  const isProgramCancelled =
+    status === "BATAL";
+
+
+  /* ===================================================
+     PAPAR CARD
+  =================================================== */
+
   card.innerHTML = `
 
     <div class="latest-program-header">
 
       <div>
-
 
         <!-- ============================================
              TAJUK
@@ -627,20 +638,27 @@ function createLatestProgramCard(
 
           </span>
 
-
         </div>
 
       </div>
 
 
-      <!-- STATUS -->
+      <!-- ============================================
+           STATUS PROGRAM
+      ============================================= -->
 
       <span
-        class="latest-program-status ${
-          status === "BATAL"
+        class="
+          latest-program-status
+          ${isProgramCancelled
             ? "cancelled"
             : ""
-        }"
+          }
+          ${isProgramFinished
+            ? "finished"
+            : ""
+          }
+        "
       >
 
         ${escapeManageHtml(
@@ -739,7 +757,7 @@ function createLatestProgramCard(
         data-list="hadir"
       >
 
-        Nama HADIR
+        Lihat Nama HADIR >
 
       </button>
 
@@ -766,7 +784,7 @@ function createLatestProgramCard(
         data-list="tidakHadir"
       >
 
-      Nama TIDAK HADIR
+        Lihat Nama TIDAK HADIR >
 
       </button>
 
@@ -802,33 +820,80 @@ function createLatestProgramCard(
 
 
     <!-- ================================================
-         BUTTON
+         BUTTON / STATUS SELESAI
     ================================================= -->
 
-    <div class="latest-program-actions">
+    ${
+      isProgramFinished
+        ? `
+
+          <div class="latest-program-finished-note">
+
+            ✓ PROGRAM TELAH SELESAI
+
+          </div>
+
+        `
+        : isProgramCancelled
+          ? `
+
+            <div class="latest-program-cancelled-note">
+
+              PROGRAM DIBATALKAN
+
+            </div>
+
+          `
+          : `
+
+            <div
+              class="
+                latest-program-actions
+                latest-program-actions-3
+              "
+            >
 
 
-      <button
-        type="button"
-        class="latest-edit-button"
-      >
+              <!-- EDIT -->
 
-        EDIT
+              <button
+                type="button"
+                class="latest-edit-button"
+              >
 
-      </button>
+                EDIT
 
-
-      <button
-        type="button"
-        class="latest-cancel-button"
-      >
-
-        BATAL PROGRAM
-
-      </button>
+              </button>
 
 
-    </div>
+              <!-- SAHKAN -->
+
+              <button
+                type="button"
+                class="latest-confirm-button"
+              >
+
+                SAHKAN
+
+              </button>
+
+
+              <!-- BATAL -->
+
+              <button
+                type="button"
+                class="latest-cancel-button"
+              >
+
+                BATAL PROGRAM
+
+              </button>
+
+
+            </div>
+
+          `
+    }
 
   `;
 
@@ -858,7 +923,7 @@ function createLatestProgramCard(
 
 
   /* ===================================================
-     EDIT
+     BUTTON EDIT
   =================================================== */
 
   const editButton =
@@ -889,8 +954,52 @@ function createLatestProgramCard(
 
 
   /* ===================================================
-     BATAL PROGRAM
-     Backend akan kita sambungkan selepas ini
+     BUTTON SAHKAN
+  =================================================== */
+
+  const confirmButton =
+    card.querySelector(
+      ".latest-confirm-button"
+    );
+
+
+  if (confirmButton) {
+
+    confirmButton.addEventListener(
+      "click",
+      function () {
+
+        if (
+          !program.messageId
+        ) {
+
+          showManageMessage(
+            "MESSAGE_ID Program tidak ditemui.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        window.location.href =
+          "admin-program.html" +
+          "?mode=confirm" +
+          "&messageId=" +
+          encodeURIComponent(
+            program.messageId
+          );
+
+      }
+    );
+
+  }
+
+
+  /* ===================================================
+     BUTTON BATAL PROGRAM
+     Belum diaktifkan.
   =================================================== */
 
   const cancelButton =
@@ -906,7 +1015,7 @@ function createLatestProgramCard(
       function () {
 
         showManageMessage(
-          "Fungsi Batal Program akan disambungkan pada langkah seterusnya.",
+          "Fungsi Batal Program akan disambungkan selepas fungsi SAHKAN selesai.",
           "info"
         );
 
