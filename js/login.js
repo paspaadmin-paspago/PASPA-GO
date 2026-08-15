@@ -261,11 +261,23 @@ function proceedToDashboard(result) {
 
   saveUserSession(result);
 
+
+  /* =================================================
+     WELCOME HANYA SELEPAS LOGIN BERJAYA
+  ================================================= */
+
+  sessionStorage.setItem(
+    "showWelcomeSplash",
+    "1"
+  );
+
+
   showMessage(
     result.message ||
       "Log masuk berjaya.",
     "success"
   );
+
 
   setTimeout(
     function () {
@@ -278,7 +290,6 @@ function proceedToDashboard(result) {
   );
 
 }
-
 
 /* =====================================================
    LOGIN LAMA

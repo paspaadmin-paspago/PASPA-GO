@@ -117,9 +117,9 @@ function showDashboardMessage(text) {
 
 }
 
-
 /* =====================================================
-   WELCOME SPLASH SCREEN
+   WELCOME SPLASH
+   HANYA SELEPAS LOGIN BERJAYA
 ===================================================== */
 
 const welcomeSplash =
@@ -133,12 +133,42 @@ const closeWelcomeSplash =
   );
 
 
+  const welcomeCountdown =
+  document.getElementById(
+    "welcomeCountdown"
+  );
+
+let countdownInterval =
+  null;
+
+
+
+
+
+
+
+
 let welcomeSplashTimer =
   null;
 
 
 /* =====================================================
-   TUTUP SPLASH
+   SEMAK FLAG LOGIN
+===================================================== */
+
+const shouldShowWelcomeSplash =
+  sessionStorage.getItem(
+    "showWelcomeSplash"
+  ) === "1";
+
+
+sessionStorage.removeItem(
+  "showWelcomeSplash"
+);
+
+
+/* =====================================================
+   TUTUP WELCOME
 ===================================================== */
 
 function hideWelcomeSplash() {
@@ -146,11 +176,6 @@ function hideWelcomeSplash() {
   if (!welcomeSplash) {
     return;
   }
-
-
-  /*
-   * Elak function dipanggil banyak kali.
-   */
 
   if (
     welcomeSplash.classList.contains(
@@ -160,11 +185,9 @@ function hideWelcomeSplash() {
     return;
   }
 
-
   welcomeSplash.classList.add(
     "is-closing"
   );
-
 
   if (welcomeSplashTimer) {
 
@@ -172,31 +195,86 @@ function hideWelcomeSplash() {
       welcomeSplashTimer
     );
 
+
+    if (countdownInterval) {
+
+  clearInterval(
+    countdownInterval
+  );
+
+  countdownInterval =
+    null;
+}
+
     welcomeSplashTimer =
       null;
-
   }
-
-
-  /*
-   * Selepas animation fade selesai,
-   * buang terus overlay dari page.
-   */
 
   setTimeout(
     function () {
 
-      if (welcomeSplash) {
+      welcomeSplash.style.display =
+        "none";
 
-        welcomeSplash.style.display =
-          "none";
+    },
+    1000
+  );
+}
+
+
+/* =====================================================
+   PAPAR WELCOME
+===================================================== */
+
+if (welcomeSplash) {
+
+  if (shouldShowWelcomeSplash) {
+
+    welcomeSplash.style.display =
+      "flex";
+
+    let countdownValue = 10;
+
+if (welcomeCountdown) {
+  welcomeCountdown.textContent =
+    countdownValue;
+}
+
+
+countdownInterval =
+  setInterval(
+    function () {
+
+      countdownValue--;
+
+      if (welcomeCountdown) {
+        welcomeCountdown.textContent =
+          countdownValue;
+      }
+
+
+      if (countdownValue <= 0) {
+
+        clearInterval(
+          countdownInterval
+        );
+
+        countdownInterval =
+          null;
+
+        hideWelcomeSplash();
 
       }
 
     },
-    850
+    1000
   );
 
+  } else {
+
+    welcomeSplash.style.display =
+      "none";
+  }
 }
 
 
@@ -204,17 +282,13 @@ function hideWelcomeSplash() {
    BUTTON X
 ===================================================== */
 
-if (
-  closeWelcomeSplash
-) {
+if (closeWelcomeSplash) {
 
   closeWelcomeSplash.addEventListener(
     "click",
     hideWelcomeSplash
   );
-
 }
-
 
 /* =====================================================
    AUTO TUTUP SELEPAS 10 SAAT

@@ -820,8 +820,19 @@
 
 .welcome-splash {
   position: fixed;
-  inset: 0;
-  z-index: 99999;
+
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  z-index: 999999;
+
+  width: 100vw;
+  height: 100vh;
+
+  margin: 0;
+  padding: 0;
 
   display: flex;
   align-items: center;
@@ -829,18 +840,165 @@
 
   overflow: hidden;
 
-  background: #061b3d;
+  background: #000000;
 
   opacity: 1;
   visibility: visible;
 
   transition:
-    opacity 0.8s ease,
-    visibility 0.8s ease;
+    opacity 1s ease,
+    visibility 1s ease;
 }
 
 
-/* GAMBAR FULLSCREEN */
+/* =====================================================
+   GAMBAR
+===================================================== */
+
+.welcome-splash-image {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  display: block;
+
+  object-fit: cover;
+  object-position: center;
+
+  transform: none;
+  animation: none;
+}
+
+
+/* =====================================================
+   OVERLAY
+===================================================== */
+
+.welcome-splash-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 2;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.02),
+      rgba(0, 0, 0, 0.15)
+    );
+
+  pointer-events: none;
+}
+
+
+/* =====================================================
+   BUTTON X
+===================================================== */
+
+.welcome-splash-close {
+  position: absolute;
+
+  top: 18px;
+  right: 18px;
+
+  z-index: 10;
+
+  width: auto;
+  height: auto;
+
+  padding: 4px;
+
+  border: none;
+  border-radius: 0;
+
+  background: transparent;
+
+  color: #ffffff;
+
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1;
+
+  cursor: pointer;
+
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+
+/* =====================================================
+   FADE OUT
+===================================================== */
+
+.welcome-splash.is-closing {
+  opacity: 0;
+  visibility: hidden;
+
+  pointer-events: none;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .welcome-splash-close {
+
+    top: 16px;
+    right: 16px;
+
+    width: 42px;
+    height: 42px;
+
+    font-size: 19px;
+
+  }
+
+}
+
+/* =====================================================
+   WELCOME SPLASH SCREEN
+===================================================== */
+
+.welcome-splash {
+  position: fixed;
+  inset: 0;
+
+  z-index: 999999;
+
+  width: 100vw;
+  height: 100vh;
+
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  background: #000;
+
+  opacity: 1;
+  visibility: visible;
+
+  transition:
+    opacity 1s ease,
+    visibility 1s ease;
+}
+
 
 .welcome-splash-image {
   position: absolute;
@@ -857,107 +1015,177 @@
 }
 
 
-/* OVERLAY LEMBUT */
-
 .welcome-splash-overlay {
   position: absolute;
   inset: 0;
 
+  z-index: 2;
+
   background:
     linear-gradient(
       to bottom,
-      rgba(5, 20, 50, 0.05),
-      rgba(5, 20, 50, 0.28)
+      rgba(0, 0, 0, 0.02),
+      rgba(0, 0, 0, 0.15)
     );
 
   pointer-events: none;
 }
 
 
-/* BUTTON X */
-
 .welcome-splash-close {
   position: absolute;
 
-  top: 22px;
-  right: 22px;
+  top: 18px;
+  right: 18px;
 
-  z-index: 3;
+  z-index: 10;
 
-  width: 46px;
-  height: 46px;
+  width: 44px;
+  height: 44px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  margin: 0;
-  padding: 0;
+  border:
+    1px solid
+    rgba(255,255,255,0.65);
 
-  border: 1px solid rgba(255, 255, 255, 0.45);
   border-radius: 50%;
 
-  background: rgba(0, 0, 0, 0.28);
+  background:
+    rgba(0,0,0,0.35);
 
-  color: #ffffff;
+  color: #fff;
 
   font-size: 22px;
   font-weight: 700;
 
   cursor: pointer;
-
-  backdrop-filter: blur(6px);
-
-  transition:
-    transform 0.2s ease,
-    background 0.2s ease;
 }
 
-
-.welcome-splash-close:hover {
-  transform: scale(1.08);
-
-  background:
-    rgba(0, 0, 0, 0.5);
-}
-
-
-/* KETIKA TUTUP */
 
 .welcome-splash.is-closing {
   opacity: 0;
-
   visibility: hidden;
+
+  pointer-events: none;
 }
 
 
-/* ZOOM SLOW
+/* =====================================================
+   WELCOME COUNTDOWN
+===================================================== */
 
-@keyframes welcomeZoom {
+.welcome-countdown {
+  position: absolute;
 
-  from {
-    transform: scale(1.08);
-  }
+  top: 18px;
+  left: 18px;
 
-  to {
-    transform: scale(1);
-  }
+  z-index: 10;
 
-} */
+  color: #ffffff;
+
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+
+  text-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.65);
+
+  pointer-events: none;
+}
+
+/* =====================================================
+   FINAL OVERRIDE - WELCOME COUNTDOWN + CLOSE
+===================================================== */
+
+/* COUNTDOWN KIRI ATAS */
+
+#welcomeCountdown {
+  position: absolute !important;
+
+  top: 18px !important;
+  left: 18px !important;
+
+  z-index: 9999999 !important;
+
+  display: block !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  background: transparent !important;
+
+  color: #ffffff !important;
+
+  font-size: 32px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+
+  text-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.85);
+
+  pointer-events: none;
+}
 
 
-/* MOBILE */
+/* X KANAN ATAS - TANPA BULATAN */
 
-@media (max-width: 600px) {
+#welcomeSplash
+#welcomeCountdown {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
 
-  .welcome-splash-close {
-    top: 16px;
-    right: 16px;
 
-    width: 42px;
-    height: 42px;
+#welcomeSplash
+#welcomeCountdown[hidden] {
+  display: block !important;
+}
 
-    font-size: 20px;
-  }
 
+#welcomeSplash
+#welcomeCountdown {
+  color: #ffffff !important;
+}
+
+
+#welcomeSplash
+#welcomeCountdown::before {
+  display: none;
+}
+
+
+#welcomeSplash
+.welcome-splash-close {
+  position: absolute !important;
+
+  top: 18px !important;
+  right: 18px !important;
+
+  z-index: 9999999 !important;
+
+  width: auto !important;
+  height: auto !important;
+
+  margin: 0 !important;
+  padding: 3px !important;
+
+  border: none !important;
+  border-radius: 0 !important;
+
+  background: transparent !important;
+
+  box-shadow: none !important;
+
+  color: #ffffff !important;
+
+  font-size: 30px !important;
+  font-weight: 400 !important;
+  line-height: 1 !important;
+
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
