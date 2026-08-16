@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Direktori | PASPA GO</title>
+
+  <link
+    rel="stylesheet"
+    href="../css/direktori.css"
+  >
+
+</head>
+
+
+<body>
+
+  <div class="app-shell">
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="top-header">
+
+      <button
+        type="button"
+        class="header-button"
+        id="backButton"
+        aria-label="Kembali"
+      >
+        ←
+      </button>
+
+
+      <h1>
+        Direktori
+      </h1>
+
+
+      <button
+        type="button"
+        class="header-button"
+        id="homeButton"
+        aria-label="Halaman utama"
+      >
+        🏠
+      </button>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="directory-main">
+
+
+      <!-- ===================================================
+           LOGO
+      ==================================================== -->
+
+      <section class="logo-section">
+
+        <img
+          src="../images/logo paspa go.png"
+          alt="PASPA GO"
+          class="paspa-logo"
+          id="paspaLogo"
+        >
+
+      </section>
+
+
+
+      <!-- ===================================================
+           PAGE 1
+           SENARAI NEGERI / CAWANGAN
+      ==================================================== -->
+
+      <section
+        id="directoryStateList"
+        class="directory-view"
+      >
+
+        <div class="directory-intro">
+
+          <span class="section-label">
+            DIREKTORI PASPA
+          </span>
+
+          <h2>
+            Negeri & Cawangan
+          </h2>
+
+          <p>
+            Pilih negeri atau cawangan untuk melihat
+            senarai ahli PASPA.
+          </p>
+
+        </div>
+
+
+
+        <!-- SENARAI BENDERA -->
+
+        <div
+          id="stateGrid"
+          class="state-grid"
+        >
+
+          <!--
+            Bendera akan dibina oleh direktori.js
+          -->
+
+        </div>
+
+      </section>
+
+
+
+      <!-- ===================================================
+           PAGE 2
+           SENARAI AHLI
+      ==================================================== -->
+
+      <section
+        id="directoryMemberList"
+        class="directory-view"
+        hidden
+      >
+
+
+        <!-- HEADER NEGERI -->
+
+        <div class="selected-state-card">
+
+          <button
+            type="button"
+            id="selectedStateButton"
+            class="selected-state-button"
+            title="Kembali ke senarai negeri"
+          >
+
+            <img
+              id="selectedStateFlag"
+              src=""
+              alt=""
+            >
+
+          </button>
+
+
+          <div class="selected-state-information">
+
+            <span class="section-label">
+              NEGERI
+            </span>
+
+            <h2
+              id="selectedStateName"
+            >
+              -
+            </h2>
+
+            <p>
+              Bilangan Ahli:
+              <strong
+                id="selectedStateTotal"
+              >
+                0
+              </strong>
+            </p>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- STATUS -->
+
+        <div
+          id="directoryStatus"
+          class="directory-status"
+          hidden
+        >
+        </div>
+
+
+
+        <!-- LOADING -->
+
+        <div
+          id="directoryLoading"
+          class="directory-loading"
+          hidden
+        >
+
+          Memuatkan senarai ahli...
+
+        </div>
+
+
+
+        <!-- SENARAI AHLI -->
+
+        <div
+          id="memberDirectoryList"
+          class="member-directory-list"
+        >
+
+          <!--
+            Kad ahli akan dibina oleh direktori.js
+          -->
+
+        </div>
+
+
+
+        <!-- TIADA AHLI -->
+
+        <div
+          id="emptyDirectory"
+          class="empty-directory"
+          hidden
+        >
+
+          Tiada ahli ditemui bagi negeri /
+          cawangan ini.
+
+        </div>
+
+
+      </section>
+
+
+    </main>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       JAVASCRIPT
+  ====================================================== -->
+
+  <script src="../js/config.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/session.js"></script>
+  <script src="../js/direktori.js"></script>
+
+
+</body>
+
+</html>

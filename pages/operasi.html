@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Operasi | PASPA GO
+  </title>
+
+
+  <!-- CSS UTAMA -->
+  <link
+    rel="stylesheet"
+    href="../css/style.css"
+  >
+
+
+  <!-- CSS OPERASI -->
+  <link
+    rel="stylesheet"
+    href="../css/operasi.css"
+  >
+
+</head>
+
+
+<body class="operasi-body">
+
+
+  <main class="operasi-shell">
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <nav class="paspa-top-nav">
+
+      <button
+        type="button"
+        id="operasiBackButton"
+        class="paspa-nav-button"
+        title="Kembali"
+        aria-label="Kembali"
+      >
+        ←
+      </button>
+
+
+      <h1 class="paspa-nav-title">
+        Operasi
+      </h1>
+
+
+      <button
+        type="button"
+        id="operasiHomeButton"
+        class="paspa-nav-button"
+        title="Home"
+        aria-label="Home"
+      >
+        🏠
+      </button>
+
+    </nav>
+
+
+
+    <!-- =====================================================
+         LOGO PASPA GO
+    ====================================================== -->
+
+    <div class="operasi-logo-section">
+
+      <img
+        src="../images/logo paspa go.png"
+        alt="PASPA GO"
+        class="operasi-page-logo"
+      >
+
+    </div>
+
+
+
+    <!-- =====================================================
+         RINGKASAN AHLI
+    ====================================================== -->
+
+    <section class="operasi-member-card">
+
+      <p class="operasi-member-label">
+        Rekod Operasi
+      </p>
+
+      <h2 id="operasiMemberName">
+        Memuatkan...
+      </h2>
+
+      <p>
+        ID PASPA:
+        <strong id="operasiMemberId">
+          -
+        </strong>
+      </p>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         FILTER
+    ====================================================== -->
+
+    <section class="operasi-filter-card">
+
+
+      <div class="operasi-filter-group">
+
+        <span class="operasi-filter-label">
+          Lokasi
+        </span>
+
+        <div class="operasi-filter-buttons">
+
+          <button
+            type="button"
+            class="operasi-filter-button active"
+            data-location-filter="semua"
+          >
+            Semua
+          </button>
+
+          <button
+            type="button"
+            class="operasi-filter-button"
+            data-location-filter="dalam negara"
+          >
+            Dalam Negara
+          </button>
+
+          <button
+            type="button"
+            class="operasi-filter-button"
+            data-location-filter="luar negara"
+          >
+            Luar Negara
+          </button>
+
+        </div>
+
+      </div>
+
+
+
+      <div class="operasi-filter-group">
+
+        <span class="operasi-filter-label">
+          Tahun
+        </span>
+
+        <div
+          id="operasiYearFilters"
+          class="operasi-filter-buttons"
+        >
+
+          <button
+            type="button"
+            class="operasi-year-button active"
+            data-year-filter="semua"
+          >
+            Semua
+          </button>
+
+        </div>
+
+      </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         SENARAI OPERASI
+    ====================================================== -->
+
+    <section class="operasi-list-section">
+
+
+      <div class="operasi-list-header">
+
+        <h2>
+          Senarai Operasi
+        </h2>
+
+
+        <button
+          type="button"
+          id="addOperasiButton"
+          class="add-operasi-button"
+        >
+          + Tambah Operasi
+        </button>
+
+      </div>
+
+
+
+      <div
+        id="operasiList"
+        class="operasi-list"
+      >
+
+        <p class="operasi-empty">
+          Memuatkan rekod operasi...
+        </p>
+
+      </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         BORANG TAMBAH / EDIT OPERASI
+    ====================================================== -->
+
+    <section
+      id="operasiFormSection"
+      class="operasi-form-section hidden"
+    >
+
+
+      <div class="operasi-form-header">
+
+        <h2 id="operasiFormTitle">
+          Tambah Operasi
+        </h2>
+
+
+        <button
+          type="button"
+          id="closeOperasiFormButton"
+          class="operasi-form-close"
+          aria-label="Tutup"
+          title="Tutup"
+        >
+          ✕
+        </button>
+
+      </div>
+
+
+
+      <form
+        id="operasiForm"
+        novalidate
+      >
+
+
+        <!-- ===============================================
+             KATEGORI OPERASI
+        ================================================ -->
+
+        <div class="operasi-form-group">
+
+          <label for="operasiKategori">
+            Kategori Operasi
+          </label>
+
+
+          <select
+            id="operasiKategori"
+            required
+          >
+
+            <option value="">
+              Sila pilih
+            </option>
+
+            <option value="Operasi">
+              Operasi
+            </option>
+
+            <option value="Misi Kemanusiaan">
+              Misi Kemanusiaan
+            </option>
+
+            <option value="CSR">
+              CSR
+            </option>
+
+          </select>
+
+        </div>
+
+
+
+        <!-- ===============================================
+             LOKASI OPERASI
+        ================================================ -->
+
+        <div class="operasi-form-group">
+
+          <label>
+            Lokasi Operasi
+          </label>
+
+
+          <div class="operasi-radio-group">
+
+            <label>
+
+              <input
+                type="radio"
+                name="lokasiOperasi"
+                value="Dalam Negara"
+                checked
+              >
+
+              Dalam Negara
+
+            </label>
+
+
+            <label>
+
+              <input
+                type="radio"
+                name="lokasiOperasi"
+                value="Luar Negara"
+              >
+
+              Luar Negara
+
+            </label>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- ===============================================
+             PERKARA
+        ================================================ -->
+
+        <div class="operasi-form-group">
+
+          <label for="operasiPerkara">
+            Perkara
+          </label>
+
+          <input
+            type="text"
+            id="operasiPerkara"
+            required
+          >
+
+        </div>
+
+
+
+        <!-- ===============================================
+             TARIKH
+        ================================================ -->
+
+        <div class="operasi-date-grid">
+
+
+          <div class="operasi-form-group">
+
+            <label for="operasiTarikhMula">
+              Tarikh Mula
+            </label>
+
+            <input
+              type="date"
+              id="operasiTarikhMula"
+              required
+            >
+
+          </div>
+
+
+          <div class="operasi-form-group">
+
+            <label for="operasiTarikhTamat">
+              Tarikh Tamat
+            </label>
+
+            <input
+              type="date"
+              id="operasiTarikhTamat"
+              required
+            >
+
+          </div>
+
+
+        </div>
+
+
+
+        <!-- ===============================================
+             TEMPAT
+        ================================================ -->
+
+        <div class="operasi-form-group">
+
+          <label for="operasiTempat">
+            Tempat
+          </label>
+
+          <input
+            type="text"
+            id="operasiTempat"
+            required
+          >
+
+        </div>
+
+
+
+        <!-- ===============================================
+             NEGERI
+        ================================================ -->
+
+        <div
+          id="operasiNegeriGroup"
+          class="operasi-form-group"
+        >
+
+          <label for="operasiNegeri">
+            Negeri
+          </label>
+
+
+          <select id="operasiNegeri">
+
+            <option value="">
+              Sila pilih negeri
+            </option>
+
+            <option value="Johor">Johor</option>
+            <option value="Kedah">Kedah</option>
+            <option value="Kelantan">Kelantan</option>
+            <option value="Melaka">Melaka</option>
+            <option value="Negeri Sembilan">Negeri Sembilan</option>
+            <option value="Pahang">Pahang</option>
+            <option value="Perak">Perak</option>
+            <option value="Perlis">Perlis</option>
+            <option value="Pulau Pinang">Pulau Pinang</option>
+            <option value="Sabah">Sabah</option>
+            <option value="Sarawak">Sarawak</option>
+            <option value="Selangor">Selangor</option>
+            <option value="Terengganu">Terengganu</option>
+            <option value="W.P. Kuala Lumpur">W.P. Kuala Lumpur</option>
+            <option value="W.P. Labuan">W.P. Labuan</option>
+            <option value="W.P. Putrajaya">W.P. Putrajaya</option>
+
+          </select>
+
+        </div>
+
+
+
+        <!-- ===============================================
+             NEGARA
+        ================================================ -->
+
+        <div
+          id="operasiNegaraGroup"
+          class="operasi-form-group hidden"
+        >
+
+          <label for="operasiNegara">
+            Negara
+          </label>
+
+
+          <select id="operasiNegara">
+
+            <option value="">
+              Sila pilih negara
+            </option>
+
+          </select>
+
+        </div>
+
+
+
+        <!-- ===============================================
+             CATATAN
+        ================================================ -->
+
+        <div class="operasi-form-group">
+
+          <label for="operasiCatatan">
+            Catatan
+          </label>
+
+          <textarea
+            id="operasiCatatan"
+            rows="4"
+            placeholder="Masukkan catatan berkaitan operasi"
+          ></textarea>
+
+        </div>
+
+
+
+        <!-- ===============================================
+             DOKUMEN
+        ================================================ -->
+
+        <div class="operasi-form-group">
+
+  <label for="operasiDocument">
+    Lampirkan Dokumen
+  </label>
+
+
+  <!-- DOKUMEN SEDIA ADA -->
+
+  <div
+    id="operasiExistingDocument"
+    class="operasi-existing-document hidden"
+  >
+
+    <span>
+      Dokumen Semasa:
+    </span>
+
+    <a
+      id="operasiExistingDocumentLink"
+      href="#"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      📄 Lihat Dokumen
+    </a>
+
+  </div>
+
+
+  <!-- PILIH FAIL BARU -->
+
+  <input
+    type="file"
+    id="operasiDocument"
+    accept="application/pdf,.pdf"
+  >
+
+
+  <small class="operasi-field-note">
+    Format PDF sahaja. Pilih fail baru hanya jika mahu menggantikan dokumen sedia ada.
+  </small>
+
+</div>
+
+
+        <!-- ===============================================
+             BUTTON SIMPAN
+        ================================================ -->
+
+        <button
+          type="submit"
+          id="saveOperasiButton"
+          class="save-operasi-button"
+        >
+          SIMPAN OPERASI
+        </button>
+
+
+      </form>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         MESEJ SISTEM
+    ====================================================== -->
+
+    <div
+      id="operasiMessage"
+      class="message hidden"
+      role="alert"
+    ></div>
+
+
+  </main>
+
+
+
+  <!-- =====================================================
+       JAVASCRIPT
+  ====================================================== -->
+
+  <script src="../js/config.js"></script>
+
+  <script src="../js/api.js"></script>
+
+  <script src="../js/operasi.js"></script>
+
+
+</body>
+
+</html>

@@ -388,6 +388,16 @@ const suratProgram =
     "suratProgram"
   );
 
+  const existingProgramAttachment =
+  document.getElementById(
+    "existingProgramAttachment"
+  );
+
+const existingProgramAttachmentLink =
+  document.getElementById(
+    "existingProgramAttachmentLink"
+  );
+
 
 /* =====================================================
    HELPERS
@@ -2087,6 +2097,60 @@ async function loadAdminProgramEditData() {
       String(
         program.pautan || ""
       ).trim();
+
+/* =================================================
+   PAPAR LAMPIRAN SEDIA ADA
+================================================= */
+
+if (
+  existingProgramAttachmentUrl
+) {
+
+  if (
+    existingProgramAttachment
+  ) {
+
+    existingProgramAttachment.hidden =
+      false;
+
+  }
+
+
+  if (
+    existingProgramAttachmentLink
+  ) {
+
+    existingProgramAttachmentLink.href =
+      existingProgramAttachmentUrl;
+
+  }
+
+} else {
+
+  if (
+    existingProgramAttachment
+  ) {
+
+    existingProgramAttachment.hidden =
+      true;
+
+  }
+
+
+  if (
+    existingProgramAttachmentLink
+  ) {
+
+    existingProgramAttachmentLink.href =
+      "#";
+
+  }
+
+}
+
+
+
+
 
 
     /* =================================================
@@ -3955,6 +4019,316 @@ document.addEventListener(
     await loadProgramMembers();
 
 
+      /* =================================================
+   BUTTON SIMPAN DRAF
+================================================= */
+
+const saveDraftButton =
+  document.getElementById(
+    "saveDraftButton"
+  );
+
+
+if (saveDraftButton) {
+
+  saveDraftButton.addEventListener(
+    "click",
+    async function () {
+
+      const originalText =
+        saveDraftButton.textContent;
+
+
+      try {
+
+        saveDraftButton.disabled =
+          true;
+
+        saveDraftButton.textContent =
+          "MENYIMPAN DRAF...";
+
+
+        showAdminMessage(
+          "Draf Program sedang disimpan...",
+          "info"
+        );
+
+
+        /* =============================================
+           PESERTA & URUSETIA
+        ============================================= */
+
+        const participants =
+          getSelectedMembers(
+            selectedParticipants
+          );
+
+
+        const secretariat =
+          getSelectedMembers(
+            selectedSecretariat
+          );
+
+
+        /* =============================================
+           MAKLUMAT PROGRAM
+        ============================================= */
+
+        const program = {
+
+          kategoriProgram:
+            document
+              .getElementById(
+                "kategoriProgram"
+              )
+              .value,
+
+          lokasiProgram:
+            document
+              .getElementById(
+                "lokasiProgram"
+              )
+              .value,
+
+          perkara:
+            document
+              .getElementById(
+                "perkaraProgram"
+              )
+              .value
+              .trim(),
+
+          tarikhMula:
+            document
+              .getElementById(
+                "tarikhMula"
+              )
+              .value,
+
+          tarikhTamat:
+            document
+              .getElementById(
+                "tarikhTamat"
+              )
+              .value,
+
+          tempat:
+            document
+              .getElementById(
+                "tempatProgram"
+              )
+              .value
+              .trim(),
+
+          negeri:
+            document
+              .getElementById(
+                "negeriProgram"
+              )
+              .value,
+
+          negara:
+            document
+              .getElementById(
+                "negaraProgram"
+              )
+              .value,
+
+          penganjur:
+            document
+              .getElementById(
+                "penganjurProgram"
+              )
+              .value,
+
+          penganjurLain:
+            document
+              .getElementById(
+                "penganjurLain"
+              )
+              .value
+              .trim(),
+
+          keterangan:
+            document
+              .getElementById(
+                "keteranganProgram"
+              )
+              .value
+              .trim()
+
+        };
+
+
+        /*
+         * DRAF hanya wajib ada Perkara.
+         */
+
+        if (!program.perkara) {
+
+          throw new Error(
+            "Sila masukkan Perkara Program sebelum menyimpan Draf."
+          );
+
+        }
+
+
+        const draftData = {
+
+          program:
+            program,
+
+          inviteAll:
+            selectAllParticipants
+              ? selectAllParticipants.checked
+              : false,
+
+          participants:
+            participants,
+
+          secretariat:
+            secretariat,
+
+          existingAttachmentUrl:
+            existingProgramAttachmentUrl
+
+        };
+
+
+        /* =============================================
+           LAMPIRAN PDF JIKA ADA
+        ============================================= */
+
+        const attachmentFile =
+          getProgramAttachmentFile();
+
+
+        if (attachmentFile) {
+
+          saveDraftButton.textContent =
+            "MEMUAT NAIK LAMPIRAN...";
+
+
+          const uploaded =
+            await uploadProgramAttachment(
+              attachmentFile
+            );
+
+
+          draftData.lampiran = {
+
+            fileId:
+              uploaded.fileId,
+
+            url:
+              uploaded.url,
+
+            fileName:
+              uploaded.fileName
+
+          };
+
+        }
+
+
+        /* =============================================
+           SIMPAN KE BACKEND
+        ============================================= */
+
+        saveDraftButton.textContent =
+          "MENYIMPAN DRAF...";
+
+
+        const result =
+          await callAdminProgramApi(
+            "admin_program_save_draft",
+            {
+
+              messageId:
+                isAdminProgramEditMode
+                  ? adminProgramEditMessageId
+                  : "",
+
+              data:
+                draftData
+
+            }
+          );
+
+
+        console.log(
+          "SAVE DRAFT RESULT:",
+          result
+        );
+
+
+        if (
+          !result ||
+          result.success !== true
+        ) {
+
+          throw new Error(
+            result?.error ||
+            result?.message ||
+            "Draf Program gagal disimpan."
+          );
+
+        }
+
+
+        showAdminMessage(
+          "Draf Program berjaya disimpan.",
+          "success"
+        );
+
+
+        saveDraftButton.textContent =
+          "✓ DRAF DISIMPAN";
+
+
+        /* =============================================
+           PERGI KE URUS.HTML
+        ============================================= */
+
+        setTimeout(
+          function () {
+
+            window.location.href =
+              "urus.html";
+
+          },
+          500
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          "SAVE PROGRAM DRAFT ERROR:",
+          error
+        );
+
+
+        showAdminMessage(
+          error.message ||
+          "Draf Program gagal disimpan.",
+          "error"
+        );
+
+
+        saveDraftButton.disabled =
+          false;
+
+
+        saveDraftButton.textContent =
+          originalText;
+
+      }
+
+    }
+  );
+
+}
     /* =================================================
        MODE SAHKAN
     ================================================= */
@@ -3981,6 +4355,7 @@ document.addEventListener(
     ) {
 
       await loadAdminProgramEditData();
+
 
     }
 

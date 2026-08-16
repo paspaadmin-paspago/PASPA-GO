@@ -527,6 +527,10 @@ function createLatestProgramCard(
   const isProgramCancelled =
     status === "BATAL";
 
+  
+  const isProgramDraft =
+  status === "DRAF";
+
 
   /* ===================================================
      PAPAR CARD
@@ -868,14 +872,18 @@ function createLatestProgramCard(
 
               <!-- SAHKAN -->
 
-              <button
-                type="button"
-                class="latest-confirm-button"
-              >
-
-                SAHKAN
-
-              </button>
+${
+  !isProgramDraft
+    ? `
+      <button
+        type="button"
+        class="latest-confirm-button"
+      >
+        SAHKAN
+      </button>
+    `
+    : ""
+}
 
 
               <!-- BATAL -->
@@ -994,35 +1002,144 @@ function createLatestProgramCard(
       }
     );
 
+
   }
 
 
-  /* ===================================================
-     BUTTON BATAL PROGRAM
-     Belum diaktifkan.
-  =================================================== */
+/* ===================================================
+   BUTTON BATAL PROGRAM
+=================================================== */
 
-  const cancelButton =
-    card.querySelector(
-      ".latest-cancel-button"
-    );
+const cancelButton =
+  card.querySelector(
+    ".latest-cancel-button"
+  );
 
 
-  if (cancelButton) {
+if (cancelButton) {
 
-    cancelButton.addEventListener(
-      "click",
-      function () {
+  cancelButton.addEventListener(
+    "click",
+    async function () {
+
+      if (
+        !program.messageId
+      ) {
 
         showManageMessage(
-          "Fungsi Batal Program akan disambungkan selepas fungsi SAHKAN selesai.",
-          "info"
+          "MESSAGE_ID Program tidak ditemui.",
+          "error"
         );
 
-      }
-    );
+        return;
 
-  }
+      }
+
+
+      const confirmText =
+        isProgramDraft
+
+          ? "Adakah anda pasti mahu membatalkan Draf Program ini?"
+
+          : "Adakah anda pasti mahu membatalkan Program ini?";
+
+
+      const confirmed =
+        window.confirm(
+          confirmText
+        );
+
+
+      if (!confirmed) {
+        return;
+      }
+
+
+      const originalText =
+        cancelButton.textContent;
+
+
+      cancelButton.disabled =
+        true;
+
+
+      cancelButton.textContent =
+        "MEMBATALKAN...";
+
+
+      try {
+
+        const result =
+          await apiPost({
+
+            action:
+              "admin_program_cancel",
+
+            email:
+              currentSession.googleEmail,
+
+            messageId:
+              program.messageId
+
+          });
+
+
+        if (
+          !result ||
+          result.success !== true
+        ) {
+
+          throw new Error(
+            result?.error ||
+            result?.message ||
+            "Program gagal dibatalkan."
+          );
+
+        }
+
+
+        showManageMessage(
+          "Program berjaya dibatalkan.",
+          "success"
+        );
+
+
+        /*
+         * Refresh TINDAKAN TERKINI.
+         * Status akan berubah menjadi BATAL.
+         */
+
+        await loadLatestProgramActions();
+
+
+      } catch (error) {
+
+        console.error(
+          "CANCEL PROGRAM ERROR:",
+          error
+        );
+
+
+        showManageMessage(
+          error.message ||
+          "Program gagal dibatalkan.",
+          "error"
+        );
+
+
+        cancelButton.disabled =
+          false;
+
+
+        cancelButton.textContent =
+          originalText;
+
+      }
+
+    }
+  );
+
+}
 
 
   return card;

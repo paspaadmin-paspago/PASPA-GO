@@ -103,11 +103,52 @@
             <textarea id="keteranganProgram" rows="3" placeholder="Keterangan tambahan jika ada"></textarea>
           </div>
 
-          <div class="form-group">
-            <label for="suratProgram">Lampiran Surat Program</label>
-            <input type="file" id="suratProgram" accept="application/pdf,.pdf">
-            <small>Format PDF sahaja. Maksimum 5 MB.</small>
-          </div>
+<div class="form-group">
+
+  <label for="suratProgram">
+    Lampiran Surat Program
+  </label>
+
+
+  <!-- LAMPIRAN SEDIA ADA -->
+
+  <div
+    id="existingProgramAttachment"
+    class="existing-program-attachment"
+    hidden
+  >
+
+    <span>
+      Lampiran Semasa:
+    </span>
+
+    <a
+      id="existingProgramAttachmentLink"
+      href="#"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      📎 Lihat Lampiran
+    </a>
+
+  </div>
+
+
+  <!-- PILIH LAMPIRAN BARU -->
+
+  <input
+    type="file"
+    id="suratProgram"
+    accept="application/pdf,.pdf"
+  >
+
+
+  <small>
+    Format PDF sahaja. Maksimum 5 MB.
+    Pilih fail baru hanya jika mahu menggantikan lampiran sedia ada.
+  </small>
+
+</div>
         </form>
       </section>
 

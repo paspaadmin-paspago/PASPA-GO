@@ -1,0 +1,928 @@
+/* =====================================================
+   PAGE OPERASI
+===================================================== */
+
+.operasi-body {
+  min-height: 100vh;
+
+  margin: 0;
+
+  background:
+    linear-gradient(
+      rgba(5, 25, 60, 0.78),
+      rgba(5, 25, 60, 0.92)
+    ),
+    url("../images/background.jpg")
+    center / cover no-repeat fixed;
+}
+
+
+.operasi-shell {
+  width: 100%;
+  max-width: 760px;
+  min-height: 100vh;
+
+  margin: 0 auto;
+
+  padding-top: 0;
+  padding-bottom: 40px;
+}
+
+
+/* =====================================================
+   HEADER STANDARD PASPA GO
+===================================================== */
+
+.paspa-top-nav {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+
+  width: 100%;
+  height: 64px;
+
+  display: grid;
+  grid-template-columns: 48px 1fr 48px;
+  align-items: center;
+
+  padding: 0 16px;
+
+  background: #20579a;
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.18);
+}
+
+
+.paspa-nav-title {
+  margin: 0;
+
+  color: #ffffff;
+
+  text-align: center;
+
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+
+.paspa-nav-button {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+  color: #ffffff;
+
+  font-size: 22px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+.paspa-nav-button:hover {
+  opacity: 0.75;
+}
+
+
+/* =====================================================
+   LOGO PASPA GO
+===================================================== */
+
+.operasi-logo-section {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 5px 20px 0;
+
+  margin-bottom: -35px;
+}
+
+
+.operasi-page-logo {
+  display: block;
+
+  width: 230px;
+  max-width: 65%;
+
+  height: auto;
+
+  object-fit: contain;
+}
+
+
+/* =====================================================
+   KAD RINGKASAN AHLI
+===================================================== */
+
+.operasi-member-card {
+  margin: 0 18px 18px;
+  padding: 18px 20px;
+
+  border-radius: 16px;
+
+  background:
+    rgba(255, 255, 255, 0.97);
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+
+.operasi-member-label {
+  margin: 0 0 6px;
+
+  color: #69788b;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+.operasi-member-card h2 {
+  margin: 0;
+
+  color: #103a78;
+
+  font-size: 20px;
+  line-height: 1.35;
+}
+
+
+.operasi-member-card p {
+  margin: 8px 0 0;
+
+  color: #526174;
+
+  font-size: 14px;
+}
+
+
+.operasi-member-card strong {
+  color: #103a78;
+}
+
+
+/* =====================================================
+   FILTER
+===================================================== */
+
+.operasi-filter-card {
+  margin: 0 18px 18px;
+  padding: 18px;
+
+  border-radius: 16px;
+
+  background:
+    rgba(255, 255, 255, 0.97);
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+
+.operasi-filter-group + .operasi-filter-group {
+  margin-top: 16px;
+}
+
+
+.operasi-filter-label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #103a78;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+
+.operasi-filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 8px;
+}
+
+
+.operasi-filter-button,
+.operasi-year-button {
+  min-height: 38px;
+
+  padding: 7px 14px;
+
+  border:
+    1px solid #c6d2df;
+
+  border-radius: 9px;
+
+  background: #ffffff;
+  color: #103a78;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+.operasi-filter-button.active,
+.operasi-year-button.active {
+  border-color: #103a78;
+
+  background: #103a78;
+  color: #ffffff;
+}
+
+
+/* =====================================================
+   SENARAI OPERASI
+===================================================== */
+
+.operasi-list-section {
+  margin: 0 18px 18px;
+  padding: 20px;
+
+  border-radius: 16px;
+
+  background:
+    rgba(255, 255, 255, 0.97);
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+
+.operasi-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  margin-bottom: 16px;
+}
+
+
+.operasi-list-header h2 {
+  margin: 0;
+
+  color: #103a78;
+
+  font-size: 19px;
+}
+
+
+.add-operasi-button {
+  min-height: 39px;
+
+  padding: 8px 14px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: #103a78;
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+.add-operasi-button:hover {
+  background: #0b2e62;
+}
+
+
+.operasi-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+
+.operasi-empty {
+  margin: 0;
+
+  padding: 18px;
+
+  border-radius: 10px;
+
+  background: #f3f6fa;
+  color: #667588;
+
+  text-align: center;
+
+  font-size: 14px;
+}
+
+
+/* =====================================================
+   KAD OPERASI
+===================================================== */
+
+.operasi-item {
+  position: relative;
+
+  padding: 17px;
+
+  border:
+    1px solid #d8e0ea;
+
+  border-radius: 13px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 5px 15px rgba(16, 58, 120, 0.08);
+}
+
+
+.operasi-item-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 12px;
+}
+
+
+.operasi-item-type {
+  display: inline-block;
+
+  margin-bottom: 5px;
+
+  color: #667588;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+.operasi-item h3 {
+  margin: 0;
+
+  color: #103a78;
+
+  font-size: 17px;
+  line-height: 1.3;
+}
+
+
+.operasi-location-badge {
+  flex-shrink: 0;
+
+  padding: 6px 9px;
+
+  border-radius: 999px;
+
+  background: #edf3fb;
+  color: #103a78;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+
+.operasi-item-details {
+  margin-top: 14px;
+
+  display: grid;
+
+  gap: 8px;
+}
+
+
+.operasi-detail {
+  color: #667588;
+
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+
+.operasi-detail strong {
+  color: #20364f;
+}
+
+
+.operasi-document-link {
+  color: #103a78;
+
+  text-decoration: none;
+
+  font-weight: 700;
+}
+
+
+.operasi-document-link:hover {
+  text-decoration: underline;
+}
+
+
+/* =====================================================
+   BUTTON EDIT / BUANG
+===================================================== */
+
+.operasi-item-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  gap: 8px;
+
+  margin-top: 14px;
+}
+
+
+.operasi-edit-button,
+.operasi-delete-button {
+  min-width: 42px;
+  min-height: 38px;
+
+  border: none;
+  border-radius: 8px;
+
+  font-size: 16px;
+
+  cursor: pointer;
+}
+
+
+.operasi-edit-button {
+  background: #e8f0fb;
+}
+
+
+.operasi-delete-button {
+  background: #fdecec;
+}
+
+
+/* =====================================================
+   BORANG OPERASI
+===================================================== */
+
+.operasi-form-section {
+  margin: 0 18px 18px;
+  padding: 20px;
+
+  border-radius: 16px;
+
+  background:
+    rgba(255, 255, 255, 0.98);
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.22);
+}
+
+
+.operasi-form-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  margin-bottom: 18px;
+}
+
+
+.operasi-form-header h2 {
+  margin: 0;
+
+  color: #103a78;
+
+  font-size: 19px;
+}
+
+
+.operasi-form-close {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #eef2f7;
+  color: #103a78;
+
+  font-size: 17px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+/* =====================================================
+   FIELD FORM
+===================================================== */
+
+.operasi-form-group {
+  margin-bottom: 15px;
+}
+
+
+.operasi-form-group label {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #4d5c6e;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+.operasi-form-group input,
+.operasi-form-group select,
+.operasi-form-group textarea {
+  width: 100%;
+  min-height: 44px;
+
+  padding: 9px 10px;
+
+  border:
+    1px solid #c9d3df;
+
+  border-radius: 9px;
+
+  background: #ffffff;
+  color: #20364f;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  outline: none;
+}
+
+
+.operasi-form-group textarea {
+  min-height: 95px;
+
+  resize: vertical;
+}
+
+
+.operasi-form-group input:focus,
+.operasi-form-group select:focus,
+.operasi-form-group textarea:focus {
+  border-color: #1557a6;
+
+  box-shadow:
+    0 0 0 3px rgba(21, 87, 166, 0.12);
+}
+
+
+.operasi-date-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: 12px;
+}
+
+
+.operasi-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 14px;
+}
+
+
+.operasi-radio-group label {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  margin: 0;
+
+  color: #20364f;
+
+  font-weight: 500;
+}
+
+
+.operasi-radio-group input {
+  width: auto;
+  min-height: auto;
+}
+
+
+.operasi-field-note {
+  display: block;
+
+  margin-top: 6px;
+
+  color: #748194;
+
+  font-size: 11px;
+}
+
+
+/* =====================================================
+   BUTTON SIMPAN
+===================================================== */
+
+.save-operasi-button {
+  width: 100%;
+  min-height: 47px;
+
+  margin-top: 5px;
+  padding: 9px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #103a78;
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+.save-operasi-button:hover {
+  background: #0b2e62;
+}
+
+
+.save-operasi-button:disabled {
+  opacity: 0.65;
+
+  cursor: not-allowed;
+}
+
+
+/* =====================================================
+   MESEJ
+===================================================== */
+
+.message {
+  margin: 0 18px 18px;
+  padding: 10px 12px;
+
+  border-radius: 9px;
+
+  font-size: 13px;
+}
+
+
+.message.success {
+  border:
+    1px solid #8fd5a5;
+
+  background: #e9f8ee;
+  color: #176b32;
+}
+
+
+.message.error {
+  border:
+    1px solid #efaaaa;
+
+  background: #fff0f0;
+  color: #a51e1e;
+}
+
+
+.message.info {
+  border:
+    1px solid #9fc2eb;
+
+  background: #edf5ff;
+  color: #174f8f;
+}
+
+
+.hidden {
+  display: none !important;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .paspa-top-nav {
+    height: 52px;
+
+    padding: 6px 12px;
+  }
+
+
+  .paspa-nav-button {
+    width: 36px;
+    height: 36px;
+
+    font-size: 18px;
+  }
+
+
+  .operasi-page-logo {
+    width: 200px;
+  }
+
+
+  .operasi-member-card,
+  .operasi-filter-card,
+  .operasi-list-section,
+  .operasi-form-section {
+    margin-left: 14px;
+    margin-right: 14px;
+  }
+
+
+  .operasi-list-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+
+  .add-operasi-button {
+    width: 100%;
+  }
+
+
+  .operasi-date-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  .operasi-item-top {
+    flex-direction: column;
+  }
+
+
+  .operasi-location-badge {
+    align-self: flex-start;
+  }
+
+}
+/* =====================================================
+   FINAL - SUSUNAN FILTER OPERASI
+===================================================== */
+
+.operasi-filter-card {
+  display: block;
+}
+
+.operasi-filter-group {
+  display: block;
+  width: 100%;
+}
+
+.operasi-filter-group + .operasi-filter-group {
+  margin-top: 14px;
+}
+
+.operasi-filter-label {
+  display: block;
+  width: 100%;
+  margin-bottom: 7px;
+}
+
+.operasi-filter-buttons {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: center;
+  justify-content: flex-start;
+
+  gap: 8px;
+}
+
+.operasi-filter-button,
+.operasi-year-button {
+  width: auto !important;
+  min-width: 0 !important;
+
+  flex: 0 0 auto !important;
+
+  margin: 0 !important;
+}
+
+/* =====================================================
+   DOKUMEN SEDIA ADA - EDIT OPERASI
+===================================================== */
+
+.operasi-existing-document {
+  margin-bottom: 10px;
+  padding: 10px 12px;
+
+  border: 1px solid #d6e1ee;
+  border-radius: 8px;
+
+  background: #f5f8fc;
+
+  font-size: 13px;
+}
+
+.operasi-existing-document span {
+  color: #65758a;
+}
+
+.operasi-existing-document a {
+  margin-left: 5px;
+
+  color: #103a78;
+
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.operasi-existing-document a:hover {
+  text-decoration: underline;
+}
+
+/* =====================================================
+   BUTTON + TAMBAH OPERASI - COMPACT
+===================================================== */
+
+#addOperasiButton {
+  width: auto !important;
+  min-width: 145px;
+  padding: 11px 18px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+/* =====================================================
+   EDIT & DELETE ICON - OPERASI
+===================================================== */
+
+.operasi-item-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 18px;
+
+  margin-top: 18px;
+  padding-right: 8px;
+}
+
+.operasi-edit-button,
+.operasi-delete-button {
+  width: auto !important;
+  min-width: 0 !important;
+  height: auto !important;
+
+  padding: 2px !important;
+  margin: 0 !important;
+
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+
+  font-size: 21px;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+.operasi-edit-button:hover,
+.operasi-delete-button:hover {
+  background: transparent !important;
+  transform: scale(1.1);
+}
+
+.operasi-edit-button:active,
+.operasi-delete-button:active {
+  transform: scale(0.9);
+}
