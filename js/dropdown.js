@@ -46,7 +46,7 @@ window.PASPA_DROPDOWNS = Object.freeze({
     "KP10",
     "KP11",
     "KP12",
-    "Lain-Lain"
+    "Lain-lain"
   ]),
 
   negeriBerkhidmat: Object.freeze([
@@ -144,6 +144,8 @@ window.PASPA_DROPDOWNS = Object.freeze({
  
 
   saizKasut: Object.freeze([
+    "4",
+    "5",
     "6",
     "7",
     "8",
