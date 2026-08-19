@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Laporan | PASPA GO</title>
+
+  <link
+    rel="stylesheet"
+    href="../css/laporan.css"
+  >
+</head>
+
+<body>
+
+  <div class="report-page">
+
+    <!-- HEADER -->
+    <header class="report-header">
+
+      <button
+        type="button"
+        id="backButton"
+        class="header-button"
+      >
+        ←
+      </button>
+
+      <div class="header-title">
+        Laporan
+      </div>
+
+      <button
+        type="button"
+        id="homeButton"
+        class="header-button"
+      >
+        🏠
+      </button>
+
+    </header>
+
+
+    <main class="report-content">
+
+      <!-- INTRO -->
+      <section class="intro-card">
+
+        <div class="intro-label">
+          LAPORAN PASPA
+        </div>
+
+        <h1>
+          Maklumat Semasa Ahli PASPA
+        </h1>
+
+        <p>
+          Ringkasan maklumat keahlian PASPA terkini.
+        </p>
+
+      </section>
+
+
+      <!-- LOADING / MESSAGE -->
+      <div
+        id="reportMessage"
+        class="report-message"
+        hidden
+      ></div>
+
+
+      <!-- JUMLAH AHLI -->
+      <section class="summary-card">
+
+        <div class="section-title">
+          RINGKASAN AHLI
+        </div>
+
+        <div class="total-member-box">
+
+          <span>
+            JUMLAH AHLI PASPA
+          </span>
+
+          <strong id="totalMembers">
+            0
+          </strong>
+
+        </div>
+
+
+        <div class="gender-grid">
+
+          <div class="stat-box">
+
+            <span>
+              Lelaki
+            </span>
+
+            <strong id="totalMale">
+              0
+            </strong>
+
+          </div>
+
+
+          <div class="stat-box">
+
+            <span>
+              Wanita
+            </span>
+
+            <strong id="totalFemale">
+              0
+            </strong>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- NEGERI / PTJ -->
+      <section class="summary-card">
+
+        <div class="section-title">
+          AHLI MENGIKUT NEGERI / PTJ
+        </div>
+
+        <div
+          id="stateList"
+          class="state-list"
+        >
+
+          <div class="empty-text">
+            Memuatkan data...
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+     PENGGUNA PASPA GO
+===================================================== -->
+
+<section class="summary-card">
+
+  <div class="section-title">
+    PENGGUNA PASPA GO
+  </div>
+
+
+  <div class="login-stat">
+
+    <span>
+      Telah Login PASPA GO
+    </span>
+
+    <strong id="totalLoggedIn">
+      0
+    </strong>
+
+  </div>
+
+
+  <div class="login-stat">
+
+    <span>
+      Belum Login PASPA GO
+    </span>
+
+    <strong id="totalNotLoggedIn">
+      0
+    </strong>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     LAPORAN BMI
+===================================================== -->
+
+<section class="summary-card">
+
+  <div class="section-title">
+    LAPORAN BMI
+  </div>
+
+
+  <div class="bmi-subtitle">
+    SKALA BACAAN BMI
+  </div>
+
+
+  <!-- KURANG BERAT -->
+
+  <div class="bmi-scale-row">
+
+    <div class="bmi-range">
+      Kurang 18.5
+    </div>
+
+    <div class="bmi-status">
+      KURANG BERAT BADAN
+    </div>
+
+    <button
+      type="button"
+      class="bmi-count-button"
+      data-bmi-category="KURANG BERAT BADAN"
+    >
+      <span id="bmiUnderweight">
+        0
+      </span>
+      orang
+    </button>
+
+  </div>
+
+
+  <!-- NORMAL -->
+
+  <div class="bmi-scale-row">
+
+    <div class="bmi-range">
+      18.5 - 24.9
+    </div>
+
+    <div class="bmi-status">
+      BERAT BADAN NORMAL
+    </div>
+
+    <button
+      type="button"
+      class="bmi-count-button"
+      data-bmi-category="BERAT BADAN NORMAL"
+    >
+      <span id="bmiNormal">
+        0
+      </span>
+      orang
+    </button>
+
+  </div>
+
+
+  <!-- BERLEBIHAN -->
+
+  <div class="bmi-scale-row">
+
+    <div class="bmi-range">
+      25.0 - 29.9
+    </div>
+
+    <div class="bmi-status">
+      BERAT BADAN BERLEBIHAN
+    </div>
+
+    <button
+      type="button"
+      class="bmi-count-button"
+      data-bmi-category="BERAT BADAN BERLEBIHAN"
+    >
+      <span id="bmiOverweight">
+        0
+      </span>
+      orang
+    </button>
+
+  </div>
+
+
+  <!-- OBES -->
+
+  <div class="bmi-scale-row">
+
+    <div class="bmi-range">
+      30.0 ke atas
+    </div>
+
+    <div class="bmi-status">
+      OBES
+    </div>
+
+    <button
+      type="button"
+      class="bmi-count-button"
+      data-bmi-category="OBES"
+    >
+      <span id="bmiObese">
+        0
+      </span>
+      orang
+    </button>
+
+  </div>
+
+
+  <!-- SENARAI KATEGORI -->
+
+  <div
+    id="bmiCategoryList"
+    class="bmi-category-list"
+    hidden
+  ></div>
+
+
+  <!-- JEJAK BERAT -->
+
+  <div class="bmi-search-section">
+
+    <div class="bmi-subtitle">
+      JEJAK BERAT
+    </div>
+
+
+    <input
+      type="search"
+      id="bmiMemberSearch"
+      class="bmi-search-input"
+      placeholder="Cari ID PASPA / Nama Ahli PASPA..."
+      autocomplete="off"
+    >
+
+
+    <div
+      id="bmiSearchResults"
+      class="bmi-search-results"
+    ></div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     SENARAI SAIZ
+===================================================== -->
+
+<section class="summary-card">
+
+  <div class="section-title">
+    SENARAI SAIZ PAKAIAN DAN AKSESORI AHLI
+  </div>
+
+
+  <div
+    id="sizeReportList"
+    class="size-report-list"
+  >
+
+    <div class="empty-text">
+      Memuatkan data saiz...
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     PROGRAM
+===================================================== -->
+
+<section class="summary-card">
+
+  <div class="section-title">
+    SENARAI PROGRAM
+  </div>
+
+
+  <div class="report-filter-row">
+
+    <select
+      id="programYear"
+      class="report-select"
+    >
+      <option value="">
+        Pilih Tahun
+      </option>
+    </select>
+
+  </div>
+
+
+  <div class="report-filter-buttons">
+
+    <button
+      type="button"
+      class="program-filter active"
+      data-location="SEMUA"
+    >
+      SEMUA
+    </button>
+
+
+    <button
+      type="button"
+      class="program-filter"
+      data-location="DALAM NEGARA"
+    >
+      DALAM NEGARA
+    </button>
+
+
+    <button
+      type="button"
+      class="program-filter"
+      data-location="LUAR NEGARA"
+    >
+      LUAR NEGARA
+    </button>
+
+  </div>
+
+
+  <div class="program-total-box">
+
+    <span>
+      JUMLAH PROGRAM
+    </span>
+
+    <strong id="totalPrograms">
+      0
+    </strong>
+
+  </div>
+
+
+  <button
+    type="button"
+    id="viewProgramsButton"
+    class="report-view-button"
+  >
+    LIHAT
+  </button>
+
+
+  <div
+    id="programList"
+    class="program-list"
+    hidden
+  ></div>
+
+</section>
+
+
+
+<!-- =====================================================
+     OPERASI
+===================================================== -->
+
+<section class="summary-card">
+
+  <div class="section-title">
+    SENARAI OPERASI
+  </div>
+
+
+  <div class="report-filter-row">
+
+    <select
+      id="operationYear"
+      class="report-select"
+    >
+      <option value="">
+        Pilih Tahun
+      </option>
+    </select>
+
+  </div>
+
+
+  <div class="report-filter-buttons">
+
+    <button
+      type="button"
+      class="operation-filter active"
+      data-location="SEMUA"
+    >
+      SEMUA
+    </button>
+
+
+    <button
+      type="button"
+      class="operation-filter"
+      data-location="DALAM NEGARA"
+    >
+      DALAM NEGARA
+    </button>
+
+
+    <button
+      type="button"
+      class="operation-filter"
+      data-location="LUAR NEGARA"
+    >
+      LUAR NEGARA
+    </button>
+
+  </div>
+
+
+  <div class="program-total-box">
+
+    <span>
+      JUMLAH OPERASI
+    </span>
+
+    <strong id="totalOperations">
+      0
+    </strong>
+
+  </div>
+
+
+  <button
+    type="button"
+    id="viewOperationsButton"
+    class="report-view-button"
+  >
+    LIHAT
+  </button>
+
+
+  <div
+    id="operationList"
+    class="program-list"
+    hidden
+  ></div>
+
+</section>
+
+
+    </main>
+
+  </div>
+
+
+  <script src="../js/config.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/laporan.js"></script>
+
+</body>
+
+</html>

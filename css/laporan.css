@@ -1,0 +1,1396 @@
+/* =====================================================
+   PASPA GO - LAPORAN
+   CORPORATE UNIFIED UI
+===================================================== */
+
+:root {
+  --navy-950: #061d42;
+  --navy-900: #082653;
+  --navy-800: #0b356f;
+  --blue-700: #1f5c9e;
+  --blue-600: #2767aa;
+
+  --blue-100: #eaf3ff;
+  --blue-050: #f4f8fd;
+
+  --orange: #f39a65;
+  --orange-soft: #fff1e8;
+
+  --white: #ffffff;
+
+  --text-main: #0a326b;
+  --text-body: #40556f;
+  --text-muted: #74849a;
+
+  --border: #dbe4ef;
+  --surface: #f5f8fc;
+
+  --success-bg: #eaf7ef;
+  --success-text: #176b3b;
+
+  --danger-bg: #fff0f0;
+  --danger-text: #a32b2b;
+
+  --radius-card: 16px;
+  --radius-inner: 10px;
+
+  --shadow-card:
+    0 5px 18px rgba(4, 32, 74, 0.10);
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  background: #edf3fa;
+
+  color: var(--text-main);
+}
+
+
+/* =====================================================
+   PAGE
+===================================================== */
+
+.report-page {
+  width: 100%;
+  max-width: 840px;
+  min-height: 100vh;
+
+  margin: 0 auto;
+
+  background:
+    linear-gradient(
+      180deg,
+      #082653 0%,
+      #061d42 100%
+    );
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.report-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  height: 60px;
+
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  align-items: center;
+
+  padding: 0 16px;
+
+  background: var(--blue-700);
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.14);
+}
+
+
+.header-title {
+  color: #ffffff;
+
+  text-align: center;
+
+  font-size: 19px;
+  font-weight: 700;
+}
+
+
+.header-button {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+  color: #ffffff;
+
+  font-size: 22px;
+
+  cursor: pointer;
+}
+
+
+.header-button:active {
+  transform: scale(0.92);
+}
+
+
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.report-content {
+  padding: 18px;
+}
+
+
+/* =====================================================
+   MAIN CARDS
+===================================================== */
+
+.intro-card,
+.summary-card {
+  margin: 0 0 16px;
+
+  padding: 18px;
+
+  border:
+    1px solid rgba(219, 228, 239, 0.8);
+
+  border-radius: var(--radius-card);
+
+  background: var(--white);
+
+  box-shadow: var(--shadow-card);
+}
+
+
+/* =====================================================
+   INTRO
+===================================================== */
+
+.intro-card {
+  position: relative;
+
+  overflow: hidden;
+
+  padding-left: 20px;
+}
+
+
+.intro-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 5px;
+  height: 100%;
+
+  background: var(--orange);
+}
+
+
+.intro-label {
+  margin-bottom: 5px;
+
+  color: var(--blue-600);
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 0.06em;
+}
+
+
+.intro-card h1 {
+  margin: 0 0 7px;
+
+  color: var(--navy-800);
+
+  font-size: 21px;
+  font-weight: 700;
+
+  line-height: 1.25;
+}
+
+
+.intro-card p {
+  margin: 0;
+
+  color: var(--text-muted);
+
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+
+/* =====================================================
+   SECTION TITLE
+===================================================== */
+
+.section-title {
+  position: relative;
+
+  margin: 0 0 14px;
+
+  padding-left: 10px;
+
+  color: var(--navy-800);
+
+  font-size: 13px;
+  font-weight: 800;
+
+  letter-spacing: 0.025em;
+}
+
+
+.section-title::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 2px;
+
+  width: 3px;
+  height: 14px;
+
+  border-radius: 5px;
+
+  background: var(--orange);
+}
+
+
+/* =====================================================
+   RINGKASAN AHLI
+===================================================== */
+
+.total-member-box {
+  min-height: 70px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 15px 17px;
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f6a06b,
+      #f49a64
+    );
+
+  color: #16304d;
+}
+
+
+.total-member-box span {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+
+.total-member-box strong {
+  color: var(--navy-900);
+
+  font-size: 28px;
+  font-weight: 800;
+}
+
+
+.gender-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: 10px;
+
+  margin-top: 10px;
+}
+
+
+.stat-box {
+  min-height: 55px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 13px 14px;
+
+  border:
+    1px solid #e5ebf3;
+
+  border-radius: var(--radius-inner);
+
+  background: var(--surface);
+
+  color: var(--text-body);
+}
+
+
+.stat-box span {
+  font-size: 13px;
+}
+
+
+.stat-box strong {
+  color: var(--navy-800);
+
+  font-size: 18px;
+  font-weight: 800;
+}
+
+
+/* =====================================================
+   NEGERI / PTJ
+===================================================== */
+
+.state-list {
+  display: grid;
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0, 1fr)
+    );
+
+  gap: 7px;
+}
+
+
+.state-row {
+  min-width: 0;
+  min-height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 8px;
+
+  padding: 9px 11px;
+
+  border:
+    1px solid #e6ebf2;
+
+  border-radius: 9px;
+
+  background: var(--surface);
+}
+
+
+.state-row span {
+  min-width: 0;
+
+  overflow: hidden;
+
+  color: var(--text-body);
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  text-transform: uppercase;
+}
+
+
+.state-row strong {
+  flex-shrink: 0;
+
+  min-width: 22px;
+
+  color: var(--navy-800);
+
+  text-align: right;
+
+  font-size: 13px;
+  font-weight: 800;
+}
+
+
+/* =====================================================
+   PASPA GO LOGIN
+===================================================== */
+
+.login-stat {
+  min-height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 8px;
+
+  padding: 11px 13px;
+
+  border:
+    1px solid #e5ebf3;
+
+  border-radius: var(--radius-inner);
+
+  background: var(--surface);
+
+  color: var(--text-body);
+}
+
+
+.login-stat:last-child {
+  margin-bottom: 0;
+}
+
+
+.login-stat span {
+  font-size: 13px;
+}
+
+
+.login-stat strong {
+  color: var(--navy-800);
+
+  font-size: 17px;
+  font-weight: 800;
+}
+
+
+/* =====================================================
+   BMI
+===================================================== */
+
+.bmi-subtitle {
+  margin: 5px 0 9px;
+
+  color: var(--text-muted);
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 0.06em;
+}
+
+
+.bmi-scale-row {
+  display: grid;
+
+  grid-template-columns:
+    82px
+    1fr
+    67px;
+
+  align-items: center;
+
+  gap: 7px;
+
+  min-height: 45px;
+
+  padding: 8px 7px;
+
+  border-bottom:
+    1px solid #e8edf3;
+}
+
+
+.bmi-scale-row:last-of-type {
+  border-bottom: none;
+}
+
+
+.bmi-range {
+  color: var(--text-muted);
+
+  font-size: 10px;
+}
+
+
+.bmi-status {
+  color: var(--navy-800);
+
+  font-size: 10px;
+  font-weight: 700;
+}
+
+
+.bmi-count-button {
+  min-height: 28px;
+
+  padding: 5px 7px;
+
+  border:
+    1px solid #d9e8fa;
+
+  border-radius: 999px;
+
+  background: var(--blue-100);
+  color: var(--navy-800);
+
+  font-size: 10px;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+
+.bmi-count-button:hover {
+  background: #dcecff;
+}
+
+
+/* BMI RESULT */
+
+.bmi-category-list {
+  margin-top: 10px;
+
+  padding: 8px 10px;
+
+  border:
+    1px solid #e1e8f0;
+
+  border-radius: 10px;
+
+  background: var(--blue-050);
+}
+
+
+.bmi-member-row {
+  padding: 9px 3px;
+
+  border-bottom:
+    1px solid #e3e9f0;
+}
+
+
+.bmi-member-row:last-child {
+  border-bottom: none;
+}
+
+
+.bmi-member-name {
+  color: var(--navy-800);
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+
+.bmi-member-detail {
+  margin-top: 3px;
+
+  color: var(--text-muted);
+
+  font-size: 10px;
+}
+
+
+/* =====================================================
+   JEJAK BERAT
+===================================================== */
+
+.bmi-search-section {
+  margin-top: 17px;
+
+  padding-top: 14px;
+
+  border-top:
+    1px solid #e4eaf1;
+}
+
+
+.bmi-search-input {
+  width: 100%;
+  min-height: 42px;
+
+  padding: 9px 11px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 9px;
+
+  background: #ffffff;
+  color: var(--text-body);
+
+  font-family: inherit;
+  font-size: 12px;
+
+  outline: none;
+}
+
+
+.bmi-search-input::placeholder {
+  color: #8997a9;
+}
+
+
+.bmi-search-input:focus {
+  border-color: var(--blue-600);
+
+  box-shadow:
+    0 0 0 3px rgba(39, 103, 170, 0.10);
+}
+
+
+.bmi-search-results {
+  margin-top: 9px;
+}
+
+
+.bmi-search-card {
+  margin-bottom: 8px;
+
+  padding: 11px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: var(--radius-inner);
+
+  background: var(--surface);
+}
+
+
+.bmi-search-name {
+  color: var(--navy-800);
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+
+.bmi-search-meta,
+.bmi-search-status {
+  margin-top: 4px;
+
+  color: var(--text-muted);
+
+  font-size: 10px;
+}
+
+
+.bmi-search-status strong {
+  color: var(--navy-800);
+}
+
+
+/* =====================================================
+   SIZE REPORT
+===================================================== */
+
+.size-report-list {
+  display: grid;
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0, 1fr)
+    );
+
+  gap: 8px;
+}
+
+
+.size-report-item {
+  align-self: start;
+
+  overflow: hidden;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 10px;
+
+  background: #ffffff;
+}
+
+
+.size-report-header {
+  width: 100%;
+  min-height: 61px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 6px;
+
+  padding: 9px 10px;
+
+  border: none;
+
+  background: var(--blue-100);
+  color: var(--navy-800);
+
+  text-align: left;
+
+  cursor: pointer;
+}
+
+
+.size-report-name {
+  font-size: 11px;
+  font-weight: 800;
+}
+
+
+.size-report-total {
+  margin-top: 3px;
+
+  color: var(--text-muted);
+
+  font-size: 9px;
+  font-weight: 600;
+}
+
+
+.size-report-arrow {
+  flex-shrink: 0;
+
+  color: var(--blue-700);
+
+  font-size: 10px;
+}
+
+
+.size-report-detail {
+  padding: 6px 9px;
+
+  background: #ffffff;
+}
+
+
+.size-report-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: 29px;
+
+  padding: 5px 2px;
+
+  border-bottom:
+    1px solid #edf1f5;
+
+  color: var(--text-body);
+
+  font-size: 10px;
+}
+
+
+.size-report-row:last-child {
+  border-bottom: none;
+}
+
+
+.size-report-row strong {
+  color: var(--navy-800);
+
+  font-size: 11px;
+  font-weight: 800;
+}
+
+
+/* =====================================================
+   PROGRAM + OPERASI
+===================================================== */
+
+.report-filter-row {
+  margin-bottom: 8px;
+}
+
+
+.report-select {
+  width: 100%;
+  min-height: 42px;
+
+  padding: 9px 11px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 9px;
+
+  background: var(--surface);
+  color: var(--navy-800);
+
+  font-size: 12px;
+
+  outline: none;
+}
+
+
+.report-select:focus {
+  border-color: var(--blue-600);
+}
+
+
+.report-filter-buttons {
+  display: grid;
+  grid-template-columns:
+    repeat(
+      3,
+      minmax(0, 1fr)
+    );
+
+  gap: 6px;
+
+  margin-bottom: 9px;
+}
+
+
+/* PROGRAM + OPERASI GUNA DESIGN SAMA */
+
+.program-filter,
+.operation-filter {
+  min-height: 37px;
+
+  padding: 6px 5px;
+
+  border:
+    1px solid #e1e7ef;
+
+  border-radius: 8px;
+
+  background: var(--surface);
+  color: var(--navy-800);
+
+  font-size: 9px;
+  font-weight: 700;
+
+  line-height: 1.15;
+
+  cursor: pointer;
+}
+
+
+.program-filter.active,
+.operation-filter.active {
+  border-color: var(--orange);
+
+  background: var(--orange);
+  color: #162d49;
+}
+
+
+.program-total-box {
+  min-height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 9px;
+
+  padding: 10px 13px;
+
+  border:
+    1px solid #e5ebf3;
+
+  border-radius: 9px;
+
+  background: var(--surface);
+
+  color: var(--text-body);
+}
+
+
+.program-total-box span {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+
+.program-total-box strong {
+  color: var(--navy-800);
+
+  font-size: 19px;
+  font-weight: 800;
+}
+
+
+/* =====================================================
+   VIEW BUTTON
+===================================================== */
+
+.report-view-button {
+  width: 100%;
+  min-height: 39px;
+
+  padding: 8px 12px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: var(--blue-700);
+  color: #ffffff;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 0.02em;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease;
+}
+
+
+.report-view-button:hover {
+  background: var(--navy-800);
+}
+
+
+.report-view-button:active {
+  transform: scale(0.985);
+}
+
+
+/* =====================================================
+   PROGRAM / OPERATION LIST
+===================================================== */
+
+.program-list {
+  margin-top: 10px;
+
+  overflow: hidden;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 9px;
+
+  background: var(--surface);
+}
+
+
+.program-row {
+  padding: 10px 11px;
+
+  border-bottom:
+    1px solid #e2e8ef;
+}
+
+
+.program-row:last-child {
+  border-bottom: none;
+}
+
+
+.program-name {
+  color: var(--navy-800);
+
+  font-size: 11px;
+  font-weight: 800;
+
+  line-height: 1.35;
+}
+
+
+.program-date {
+  margin-top: 3px;
+
+  color: var(--text-muted);
+
+  font-size: 10px;
+}
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+.report-message {
+  margin-bottom: 12px;
+
+  padding: 10px 12px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  font-size: 12px;
+}
+
+
+.report-message.error {
+  border-color: #f0bcbc;
+
+  background: var(--danger-bg);
+  color: var(--danger-text);
+}
+
+
+.report-message.success {
+  border-color: #a7dcb8;
+
+  background: var(--success-bg);
+  color: var(--success-text);
+}
+
+
+/* =====================================================
+   EMPTY
+===================================================== */
+
+.empty-text {
+  padding: 13px 8px;
+
+  color: var(--text-muted);
+
+  text-align: center;
+
+  font-size: 11px;
+}
+
+
+/* =====================================================
+   HIDDEN
+===================================================== */
+
+[hidden] {
+  display: none !important;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 500px) {
+
+  .report-header {
+    height: 54px;
+
+    padding: 0 12px;
+  }
+
+
+  .header-title {
+    font-size: 17px;
+  }
+
+
+  .header-button {
+    width: 34px;
+    height: 34px;
+
+    font-size: 19px;
+  }
+
+
+  .report-content {
+    padding: 12px;
+  }
+
+
+  .intro-card,
+  .summary-card {
+    margin-bottom: 12px;
+
+    padding: 14px;
+
+    border-radius: 14px;
+  }
+
+
+  .intro-card {
+    padding-left: 17px;
+  }
+
+
+  .intro-card h1 {
+    font-size: 18px;
+  }
+
+
+  .intro-card p {
+    font-size: 11px;
+  }
+
+
+  .section-title {
+    margin-bottom: 11px;
+
+    font-size: 11px;
+  }
+
+
+  .total-member-box {
+    min-height: 61px;
+
+    padding: 12px 14px;
+  }
+
+
+  .total-member-box span {
+    font-size: 12px;
+  }
+
+
+  .total-member-box strong {
+    font-size: 24px;
+  }
+
+
+  .stat-box {
+    padding: 11px;
+  }
+
+
+  .stat-box span {
+    font-size: 11px;
+  }
+
+
+  .stat-box strong {
+    font-size: 16px;
+  }
+
+
+  .state-row {
+    min-height: 34px;
+
+    padding: 7px 9px;
+  }
+
+
+  .state-row span {
+    font-size: 9px;
+  }
+
+
+  .state-row strong {
+    font-size: 11px;
+  }
+
+
+  .login-stat {
+    min-height: 42px;
+
+    padding: 9px 11px;
+  }
+
+
+  .login-stat span {
+    font-size: 11px;
+  }
+
+
+  .login-stat strong {
+    font-size: 15px;
+  }
+
+
+  .bmi-scale-row {
+    grid-template-columns:
+      76px
+      1fr
+      61px;
+
+    gap: 5px;
+
+    padding:
+      7px 3px;
+  }
+
+
+  .bmi-range {
+    font-size: 9px;
+  }
+
+
+  .bmi-status {
+    font-size: 9px;
+  }
+
+
+  .bmi-count-button {
+    padding: 5px;
+
+    font-size: 9px;
+  }
+
+
+  .size-report-list {
+    gap: 7px;
+  }
+
+
+  .size-report-header {
+    min-height: 57px;
+
+    padding: 8px;
+  }
+
+
+  .size-report-name {
+    font-size: 10px;
+  }
+
+
+  .size-report-total {
+    font-size: 8px;
+  }
+
+}
+
+/* =====================================================
+   NAIKKAN SAIZ TULISAN +1PX
+===================================================== */
+
+.intro-label {
+  font-size: 12px;
+}
+
+.intro-card h1 {
+  font-size: 22px;
+}
+
+.intro-card p {
+  font-size: 14px;
+}
+
+.section-title {
+  font-size: 14px;
+}
+
+.total-member-box span {
+  font-size: 15px;
+}
+
+.total-member-box strong {
+  font-size: 29px;
+}
+
+.stat-box span {
+  font-size: 14px;
+}
+
+.stat-box strong {
+  font-size: 19px;
+}
+
+.state-row span {
+  font-size: 12px;
+}
+
+.state-row strong {
+  font-size: 14px;
+}
+
+.login-stat span {
+  font-size: 14px;
+}
+
+.login-stat strong {
+  font-size: 18px;
+}
+
+.bmi-subtitle {
+  font-size: 11px;
+}
+
+.bmi-range {
+  font-size: 11px;
+}
+
+.bmi-status {
+  font-size: 11px;
+}
+
+.bmi-count-button {
+  font-size: 11px;
+}
+
+.bmi-member-name {
+  font-size: 12px;
+}
+
+.bmi-member-detail {
+  font-size: 11px;
+}
+
+.bmi-search-input {
+  font-size: 13px;
+}
+
+.bmi-search-name {
+  font-size: 13px;
+}
+
+.bmi-search-meta,
+.bmi-search-status {
+  font-size: 11px;
+}
+
+.size-report-name {
+  font-size: 12px;
+}
+
+.size-report-total {
+  font-size: 10px;
+}
+
+.size-report-row {
+  font-size: 11px;
+}
+
+.size-report-row strong {
+  font-size: 12px;
+}
+
+.report-select {
+  font-size: 13px;
+}
+
+.program-filter,
+.operation-filter {
+  font-size: 10px;
+}
+
+.program-total-box span {
+  font-size: 13px;
+}
+
+.program-total-box strong {
+  font-size: 20px;
+}
+
+.report-view-button {
+  font-size: 12px;
+}
+
+.program-name {
+  font-size: 12px;
+}
+
+.program-date {
+  font-size: 11px;
+}
+
+.empty-text {
+  font-size: 12px;
+}
+
+.report-message {
+  font-size: 13px;
+}

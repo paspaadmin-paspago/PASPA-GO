@@ -488,6 +488,37 @@ async function loadLatestProgramActions() {
 
 }
 
+/* =====================================================
+   FORMAT TARIKH PROGRAM
+   2026-08-21 hingga 2026-08-31
+   -> 21/08/2026 hingga 31/08/2026
+===================================================== */
+
+function formatProgramDate(value) {
+
+  const text =
+    String(value || "").trim();
+
+  if (!text) {
+    return "-";
+  }
+
+  return text.replace(
+    /(\d{4})-(\d{2})-(\d{2})/g,
+    function (match, year, month, day) {
+
+      return (
+        day +
+        "/" +
+        month +
+        "/" +
+        year
+      );
+
+    }
+  );
+
+}
 
 /* =====================================================
    CREATE PROGRAM CARD
@@ -569,10 +600,13 @@ function createLatestProgramCard(
 
             Tarikh:
 
-            ${escapeManageHtml(
-              program.tarikhAcara ||
-              "-"
-            )}
+           ${escapeManageHtml(
+  String(program.tarikhAcara || "-")
+    .replace(
+      /(\d{4})-(\d{2})-(\d{2})/g,
+      "$3/$2/$1"
+    )
+)}
 
           </span>
 
@@ -1406,6 +1440,31 @@ if (adminProgramButton) {
 
       window.location.href =
         "admin-program.html";
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   LAPORAN
+===================================================== */
+
+const adminReportButton =
+  document.getElementById(
+    "adminReportMenu"
+  );
+
+
+if (adminReportButton) {
+
+  adminReportButton.addEventListener(
+    "click",
+    function () {
+
+      window.location.href =
+        "laporan.html";
 
     }
   );
