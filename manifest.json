@@ -1,22 +1,21 @@
 {
   "name": "PASPA GO",
   "short_name": "PASPA GO",
-  "description": "Malaysia Civil Defence Special Force",
-  "start_url": "./index.html",
-  "scope": "./",
+
+  "start_url": "/PASPA-GO/index.html",
+  "scope": "/PASPA-GO/",
+
   "display": "standalone",
-  "background_color": "#0b2550",
-  "theme_color": "#0b2550",
+
+  "background_color": "#082653",
+  "theme_color": "#21599b",
+
   "icons": [
     {
-      "src": "./images/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "./images/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
+      "src": "/PASPA-GO/images/logo.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any"
     }
   ]
 }
