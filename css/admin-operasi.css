@@ -1,0 +1,1011 @@
+/* =====================================================
+   PASPA GO
+   ADMIN OPERASI
+   admin-operasi.css
+===================================================== */
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+
+  width: 100%;
+  min-height: 100%;
+}
+
+
+body {
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  background: #edf3fb;
+  color: #17365f;
+}
+
+
+/* =====================================================
+   PAGE
+===================================================== */
+
+.admin-operasi-page {
+  width: 100%;
+  max-width: 760px;
+  min-height: 100vh;
+
+  margin: 0 auto;
+
+  background: #071f47;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.admin-operasi-header {
+  position: sticky;
+
+  top: 0;
+
+  z-index: 1000;
+
+  min-height: 64px;
+
+  display: grid;
+
+  grid-template-columns:
+    55px
+    1fr
+    55px;
+
+  align-items: center;
+
+  padding: 6px 12px;
+
+  background: #245d9f;
+
+  border-bottom:
+    1px solid
+    rgba(255,255,255,.20);
+}
+
+
+.admin-operasi-header .header-title {
+  color: #ffffff;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  text-align: center;
+}
+
+
+.header-icon-button {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 10px;
+
+  background: transparent;
+
+  color: #ffffff;
+
+  font-size: 21px;
+
+  cursor: pointer;
+}
+
+
+.header-icon-button:hover {
+  background:
+    rgba(255,255,255,.12);
+}
+
+
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.admin-operasi-content {
+  width: 100%;
+
+  padding: 16px;
+}
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+.message-box {
+  width: 100%;
+
+  margin-bottom: 14px;
+
+  padding: 12px 14px;
+
+  border-radius: 12px;
+
+  background: #eaf4ff;
+
+  color: #174b82;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+
+.message-box.success {
+  background: #e9f8ef;
+
+  color: #176a3a;
+}
+
+
+.message-box.error {
+  background: #fff0f0;
+
+  color: #a52020;
+}
+
+
+.message-box.warning {
+  background: #fff6e8;
+
+  color: #8b5500;
+}
+
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.admin-card {
+  width: 100%;
+
+  margin-bottom: 16px;
+
+  padding: 18px;
+
+  background: #ffffff;
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 2px 8px
+    rgba(0,0,0,.05);
+}
+
+
+/* =====================================================
+   SECTION HEADING
+===================================================== */
+
+.section-heading {
+  display: flex;
+
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  margin-bottom: 18px;
+}
+
+
+.section-label {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #667f9e;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: .5px;
+
+  text-transform: uppercase;
+}
+
+
+.section-heading h1,
+.section-heading h2 {
+  margin: 0;
+
+  color: #073a7d;
+
+  font-weight: 700;
+}
+
+
+.section-heading h1 {
+  font-size: 23px;
+}
+
+
+.section-heading h2 {
+  font-size: 19px;
+}
+
+
+/* =====================================================
+   FORM
+===================================================== */
+
+.form-group {
+  width: 100%;
+
+  margin-bottom: 14px;
+}
+
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #536d8c;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+
+  min-height: 44px;
+
+  padding: 10px 12px;
+
+  border:
+    1px solid
+    #c9d8e9;
+
+  border-radius: 10px;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: #23456e;
+
+  font-family: inherit;
+  font-size: 13px;
+
+  transition:
+    border-color .2s ease,
+    box-shadow .2s ease;
+}
+
+
+.form-group textarea {
+  min-height: 100px;
+
+  resize: vertical;
+
+  line-height: 1.5;
+}
+
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #2463a6;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(36,99,166,.10);
+}
+
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #8ba0b8;
+}
+
+
+/* =====================================================
+   SMALL INFO
+===================================================== */
+
+.form-group small {
+  display: block;
+
+  margin-top: 6px;
+
+  color: #71869f;
+
+  font-size: 11px;
+
+  line-height: 1.4;
+}
+
+
+/* =====================================================
+   FORM ROW
+===================================================== */
+
+.form-row {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0,1fr));
+
+  gap: 12px;
+}
+
+
+/* =====================================================
+   FILE INPUT
+===================================================== */
+
+.form-group input[type="file"] {
+  min-height: auto;
+
+  padding: 10px;
+
+  background: #f8fbff;
+}
+
+
+/* =====================================================
+   ZON OPERASI
+===================================================== */
+
+.zone-info {
+  width: 100%;
+
+  margin-top: 4px;
+
+  padding: 12px 14px;
+
+  border:
+    1px solid
+    #d7e3f1;
+
+  border-radius: 10px;
+
+  background: #eef5ff;
+
+  color: #315575;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+
+
+.zone-info strong {
+  color: #073a7d;
+}
+
+
+/* =====================================================
+   JUMLAH ANGGOTA DIPILIH
+===================================================== */
+
+.selection-count {
+  flex-shrink: 0;
+
+  padding: 7px 10px;
+
+  border-radius: 10px;
+
+  background: #edf4fc;
+
+  color: #174d8a;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+
+/* =====================================================
+   PILIH SEMUA
+===================================================== */
+
+.select-all-row {
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  margin-bottom: 12px;
+
+  padding: 11px 12px;
+
+  border:
+    1px solid
+    #d8e3ef;
+
+  border-radius: 10px;
+
+  background: #f6f9fd;
+
+  color: #345575;
+
+  font-size: 12px;
+
+  cursor: pointer;
+}
+
+
+.select-all-row input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+
+  margin: 0;
+
+  accent-color: #174d8a;
+}
+
+
+/* =====================================================
+   SEARCH AHLI
+===================================================== */
+
+.member-search {
+  width: 100%;
+
+  margin-bottom: 12px;
+}
+
+
+.member-search input {
+  width: 100%;
+
+  min-height: 44px;
+
+  padding: 10px 13px;
+
+  border:
+    1px solid
+    #c9d8e9;
+
+  border-radius: 10px;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: #23456e;
+
+  font-family: inherit;
+  font-size: 13px;
+}
+
+
+.member-search input:focus {
+  border-color: #2463a6;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(36,99,166,.10);
+}
+
+
+.member-search input::placeholder {
+  color: #8ba0b8;
+}
+
+
+/* =====================================================
+   MEMBER LIST
+===================================================== */
+
+.member-list {
+  width: 100%;
+
+  max-height: 390px;
+
+  overflow-y: auto;
+
+  margin-bottom: 16px;
+
+  padding: 8px;
+
+  border:
+    1px solid
+    #d9e4f0;
+
+  border-radius: 12px;
+
+  background: #f8fbff;
+}
+
+
+/* =====================================================
+   MEMBER ITEM
+===================================================== */
+
+.member-item {
+  width: 100%;
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 10px;
+
+  margin-bottom: 7px;
+
+  padding: 11px;
+
+  border:
+    1px solid
+    #e0e8f1;
+
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  cursor: pointer;
+
+  transition:
+    border-color .2s ease,
+    background .2s ease;
+}
+
+
+.member-item:last-child {
+  margin-bottom: 0;
+}
+
+
+.member-item:hover {
+  border-color: #b9cee4;
+
+  background: #f5f9ff;
+}
+
+
+.member-item.selected {
+  border-color: #2463a6;
+
+  background: #edf5ff;
+}
+
+
+.member-item input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+
+  flex-shrink: 0;
+
+  margin-top: 2px;
+
+  accent-color: #174d8a;
+}
+
+
+/* =====================================================
+   MEMBER INFORMATION
+===================================================== */
+
+.member-info {
+  min-width: 0;
+
+  flex: 1;
+}
+
+
+.member-name {
+  margin-bottom: 4px;
+
+  color: #073a7d;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  line-height: 1.35;
+}
+
+
+.member-meta {
+  color: #667f9e;
+
+  font-size: 11px;
+
+  line-height: 1.45;
+}
+
+
+/* =====================================================
+   LOADING / EMPTY
+===================================================== */
+
+.loading-text,
+.empty-text {
+  width: 100%;
+
+  padding: 18px 10px;
+
+  color: #758ba5;
+
+  font-size: 12px;
+
+  text-align: center;
+}
+
+
+/* =====================================================
+   SELECTED MEMBER BOX
+===================================================== */
+
+.selected-members-box {
+  width: 100%;
+
+  padding: 13px;
+
+  border:
+    1px solid
+    #d8e3ef;
+
+  border-radius: 12px;
+
+  background: #f6f9fd;
+}
+
+
+.selected-members-title {
+  margin-bottom: 10px;
+
+  color: #073a7d;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+.selected-members-list {
+  width: 100%;
+}
+
+
+/* =====================================================
+   SELECTED MEMBER
+===================================================== */
+
+.selected-member-item {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  margin-bottom: 7px;
+
+  padding: 9px 10px;
+
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  color: #315575;
+
+  font-size: 11px;
+}
+
+
+.selected-member-item:last-child {
+  margin-bottom: 0;
+}
+
+
+.selected-member-name {
+  min-width: 0;
+
+  flex: 1;
+
+  color: #073a7d;
+
+  font-weight: 700;
+}
+
+
+.remove-member-button {
+  flex-shrink: 0;
+
+  padding: 5px 8px;
+
+  border: none;
+
+  border-radius: 7px;
+
+  background: #ffecec;
+
+  color: #b32020;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+/* =====================================================
+   ACTION CARD
+===================================================== */
+
+.action-card {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0,1fr));
+
+  gap: 10px;
+}
+
+
+/* =====================================================
+   BUTTON
+===================================================== */
+
+.primary-button,
+.secondary-button {
+  width: 100%;
+
+  min-height: 46px;
+
+  padding: 10px 14px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  font-family: inherit;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform .15s ease,
+    opacity .15s ease,
+    background .15s ease;
+}
+
+
+.primary-button {
+  background: #174d8a;
+
+  color: #ffffff;
+}
+
+
+.secondary-button {
+  border:
+    1px solid
+    #bcd0e6;
+
+  background: #edf4fc;
+
+  color: #174d8a;
+}
+
+
+.primary-button:hover,
+.secondary-button:hover {
+  transform: translateY(-1px);
+}
+
+
+.primary-button:disabled,
+.secondary-button:disabled {
+  opacity: .55;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+
+/* =====================================================
+   BUTTON PANGGIL
+===================================================== */
+
+.operation-call-button {
+  background: #c62828;
+
+  color: #ffffff;
+}
+
+
+.operation-call-button:hover {
+  background: #a91f1f;
+}
+
+
+/* =====================================================
+   SCROLLBAR MEMBER LIST
+===================================================== */
+
+.member-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+
+.member-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
+.member-list::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+
+  background: #c4d3e3;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .admin-operasi-page {
+    max-width: 100%;
+  }
+
+
+  .admin-operasi-header {
+    min-height: 58px;
+
+    grid-template-columns:
+      48px
+      1fr
+      48px;
+
+    padding:
+      5px
+      8px;
+  }
+
+
+  .admin-operasi-header .header-title {
+    font-size: 16px;
+  }
+
+
+  .header-icon-button {
+    width: 38px;
+    height: 38px;
+
+    font-size: 19px;
+  }
+
+
+  .admin-operasi-content {
+    padding: 12px;
+  }
+
+
+  .admin-card {
+    margin-bottom: 13px;
+
+    padding: 15px;
+
+    border-radius: 16px;
+  }
+
+
+  .section-heading {
+    margin-bottom: 15px;
+  }
+
+
+  .section-heading h1 {
+    font-size: 20px;
+  }
+
+
+  .section-heading h2 {
+    font-size: 17px;
+  }
+
+
+  .form-row {
+    grid-template-columns: 1fr;
+
+    gap: 0;
+  }
+
+
+  .form-group {
+    margin-bottom: 12px;
+  }
+
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea,
+  .member-search input {
+    font-size: 13px;
+  }
+
+
+  .member-list {
+    max-height: 360px;
+  }
+
+
+  .action-card {
+    grid-template-columns: 1fr;
+  }
+
+
+  .primary-button,
+  .secondary-button {
+    min-height: 45px;
+  }
+
+}
+
+
+/* =====================================================
+   VERY SMALL MOBILE
+===================================================== */
+
+@media (max-width: 380px) {
+
+  .admin-operasi-content {
+    padding: 10px;
+  }
+
+
+  .admin-card {
+    padding: 13px;
+  }
+
+
+  .section-heading {
+    gap: 8px;
+  }
+
+
+  .selection-count {
+    padding: 6px 8px;
+
+    font-size: 10px;
+  }
+
+
+  .section-heading h1 {
+    font-size: 19px;
+  }
+
+
+  .section-heading h2 {
+    font-size: 16px;
+  }
+
+}

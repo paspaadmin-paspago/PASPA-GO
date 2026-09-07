@@ -1441,6 +1441,294 @@ function createOperasiCard(
   }
 
 
+  /* =================================================
+   OPERASI DARIPADA ADMIN
+   TIDAK BOLEH EDIT / PADAM
+   HANYA BOLEH TAMBAH LAMPIRAN SENDIRI
+================================================= */
+
+if (
+  sumberRekod ===
+  "admin"
+) {
+
+  const actions =
+    document.createElement(
+      "div"
+    );
+
+
+  actions.className =
+    "operasi-item-actions";
+
+
+  /* ===============================================
+     INPUT FILE TERSEMBUNYI
+  =============================================== */
+
+  const attachmentInput =
+    document.createElement(
+      "input"
+    );
+
+
+  attachmentInput.type =
+    "file";
+
+
+  attachmentInput.accept =
+    "application/pdf,.pdf";
+
+
+  attachmentInput.style.display =
+    "none";
+
+
+  /* ===============================================
+     BUTTON KLIP KERTAS
+  =============================================== */
+
+  const attachmentButton =
+    document.createElement(
+      "button"
+    );
+
+
+  attachmentButton.type =
+    "button";
+
+
+  attachmentButton.className =
+    "operasi-attachment-button";
+
+
+  attachmentButton.innerHTML =
+    "📎";
+
+
+  attachmentButton.title =
+    "Tambah / Kemaskini Lampiran";
+
+
+  /* ===============================================
+     KLIK KLIP
+  =============================================== */
+
+  attachmentButton.addEventListener(
+    "click",
+    function () {
+
+      attachmentInput.click();
+
+    }
+  );
+
+
+  /* ===============================================
+     PILIH FILE
+  =============================================== */
+
+  attachmentInput.addEventListener(
+    "change",
+    async function () {
+
+      if (
+        !attachmentInput.files ||
+        !attachmentInput.files.length
+      ) {
+
+        return;
+
+      }
+
+
+      const file =
+        attachmentInput.files[0];
+
+
+      /* =============================================
+         PDF SAHAJA
+      ============================================= */
+
+      const isPdf =
+        file.type ===
+          "application/pdf" ||
+        file.name
+          .toLowerCase()
+          .endsWith(
+            ".pdf"
+          );
+
+
+      if (!isPdf) {
+
+        showOperasiMessage(
+          "Lampiran mestilah dalam format PDF.",
+          "error"
+        );
+
+
+        attachmentInput.value =
+          "";
+
+        return;
+
+      }
+
+
+      /* =============================================
+         MAX 5MB
+      ============================================= */
+
+      const maxSize =
+        5 *
+        1024 *
+        1024;
+
+
+      if (
+        file.size >
+        maxSize
+      ) {
+
+        showOperasiMessage(
+          "Saiz lampiran tidak boleh melebihi 5 MB.",
+          "error"
+        );
+
+
+        attachmentInput.value =
+          "";
+
+        return;
+
+      }
+
+
+      const originalContent =
+        attachmentButton.innerHTML;
+
+
+      attachmentButton.disabled =
+        true;
+
+
+      attachmentButton.innerHTML =
+        "⏳";
+
+
+      try {
+
+        const base64Data =
+          await operasiFileToBase64(
+            file
+          );
+
+
+        const result =
+          await apiPost({
+
+            action:
+              "operasi_upload_document",
+
+            email:
+              currentSession.googleEmail,
+
+            operasiId:
+              record.operasiId,
+
+            memberOperasiId:
+              record.memberOperasiId,
+
+            fileName:
+              file.name,
+
+            mimeType:
+              file.type ||
+              "application/pdf",
+
+            base64Data:
+              base64Data
+
+          });
+
+
+        if (
+          !result ||
+          result.success !== true
+        ) {
+
+          throw new Error(
+            result?.message ||
+            "Lampiran tidak berjaya dimuat naik."
+          );
+
+        }
+
+
+        showOperasiMessage(
+          "Lampiran Operasi berjaya dikemaskini.",
+          "success"
+        );
+
+
+        /* =============================================
+           REFRESH SENARAI
+        ============================================= */
+
+        await loadOperasiRecords();
+
+
+      } catch (error) {
+
+        console.error(
+          "UPLOAD ADMIN OPERATION ATTACHMENT ERROR:",
+          error
+        );
+
+
+        showOperasiMessage(
+          error.message ||
+          "Lampiran Operasi gagal dimuat naik.",
+          "error"
+        );
+
+
+      } finally {
+
+        attachmentButton.disabled =
+          false;
+
+
+        attachmentButton.innerHTML =
+          originalContent;
+
+
+        attachmentInput.value =
+          "";
+
+      }
+
+    }
+  );
+
+
+  actions.appendChild(
+    attachmentInput
+  );
+
+
+  actions.appendChild(
+    attachmentButton
+  );
+
+
+  card.appendChild(
+    actions
+  );
+
+}
+
   return card;
 
 }

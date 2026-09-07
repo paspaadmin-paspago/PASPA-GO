@@ -1,0 +1,199 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #071f46;
+  color: #0b356f;
+}
+
+.onscene-page {
+  min-height: 100vh;
+}
+
+.onscene-header {
+  height: 64px;
+  background: #245fa3;
+  color: #ffffff;
+
+  display: grid;
+  grid-template-columns: 60px 1fr 60px;
+  align-items: center;
+
+  padding: 0 14px;
+}
+
+.header-title {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.header-button {
+  border: 0;
+  background: transparent;
+  color: #ffffff;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.onscene-content {
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.intro-card,
+.operation-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 22px;
+  margin-bottom: 18px;
+}
+
+.intro-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #6f86a4;
+}
+
+.intro-card h1 {
+  margin: 6px 0;
+}
+
+.operation-title {
+  margin: 0 0 14px;
+  font-size: 20px;
+  color: #0b3a79;
+}
+
+.operation-meta {
+  display: grid;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.operation-meta strong {
+  color: #0b356f;
+}
+
+.operation-note {
+  margin-top: 18px;
+  padding: 14px;
+  background: #f4f7fb;
+  border-radius: 12px;
+  line-height: 1.5;
+}
+
+.operation-actions {
+  margin-top: 18px;
+  display: grid;
+  gap: 10px;
+}
+
+.action-button {
+  width: 100%;
+  min-height: 46px;
+
+  border: 0;
+  border-radius: 10px;
+
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.accept-button {
+  background: #1d8f4e;
+  color: #ffffff;
+}
+
+.location-button,
+.attachment-button {
+  background: #eaf2fd;
+  color: #0b4f9c;
+}
+
+.accept-button.accepted {
+  background: #dff3e7;
+  color: #17723d;
+  cursor: default;
+}
+
+.empty-text,
+.loading-text {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 16px;
+  text-align: center;
+}
+
+.onscene-message {
+  padding: 14px;
+  margin-bottom: 16px;
+  border-radius: 12px;
+}
+
+.onscene-message.success {
+  background: #e2f5e9;
+  color: #176b3a;
+}
+
+.onscene-message.error {
+  background: #ffe6e6;
+  color: #a80000;
+}
+
+/* =====================================================
+   STATUS OPERASI
+===================================================== */
+
+.operation-status-row {
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.operation-status {
+  display: inline-block;
+  margin-left: 6px;
+
+  padding: 5px 10px;
+
+  border-radius: 999px;
+
+  background: #eaf2fd;
+  color: #0b4f9c;
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+
+/* =====================================================
+   BUTTON RESPON
+===================================================== */
+
+.response-action-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.reject-button {
+  background: #d83232;
+  color: #ffffff;
+}
+
+.reject-button.rejected {
+  background: #ffe4e4;
+  color: #a00000;
+}
+
+@media (max-width: 520px) {
+
+  .response-action-row {
+    grid-template-columns: 1fr;
+  }
+
+}

@@ -1189,3 +1189,203 @@
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
+
+/* =====================================================
+   ON SCENE - DASHBOARD
+===================================================== */
+
+.onscene-nav-item {
+  position: relative;
+}
+
+
+.onscene-icon-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* BADGE PANGGILAN */
+
+.onscene-badge {
+  position: absolute;
+
+  top: -8px;
+  right: -12px;
+
+  min-width: 18px;
+  height: 18px;
+
+  padding: 0 5px;
+
+  border-radius: 999px;
+
+  background: #e31b23;
+  color: #ffffff;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  line-height: 18px;
+  text-align: center;
+
+  box-shadow:
+    0 2px 6px
+    rgba(0, 0, 0, 0.25);
+}
+
+
+/* ADA OPERASI AKTIF */
+
+.onscene-nav-item.active-onscene {
+
+  background:
+    rgba(
+      255,
+      235,
+      235,
+      0.95
+    );
+}
+
+
+.onscene-nav-item.active-onscene
+.nav-icon {
+
+  animation:
+    onScenePulse
+    1.2s
+    infinite;
+
+}
+
+
+@keyframes onScenePulse {
+
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.18);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+
+}
+
+/* =====================================================
+   ON SCENE - OPERASI AKTIF
+===================================================== */
+
+.onscene-nav-item.active-onscene {
+
+  animation:
+    onSceneActiveBlink
+    1.2s
+    infinite;
+
+}
+
+
+/* =====================================================
+   ON SCENE - BELUM RESPON
+===================================================== */
+
+.onscene-nav-item.pending-onscene
+.onscene-badge {
+
+  animation:
+    onSceneBadgeBlink
+    0.8s
+    infinite;
+
+}
+
+
+/* =====================================================
+   LOREKAN MERAH BERKELIP
+===================================================== */
+
+@keyframes onSceneActiveBlink {
+
+  0% {
+
+    background:
+      rgba(
+        255,
+        225,
+        225,
+        0.95
+      );
+
+  }
+
+  50% {
+
+    background:
+      rgba(
+        255,
+        180,
+        180,
+        0.95
+      );
+
+  }
+
+  100% {
+
+    background:
+      rgba(
+        255,
+        225,
+        225,
+        0.95
+      );
+
+  }
+
+}
+
+
+/* =====================================================
+   BADGE BERKELIP
+===================================================== */
+
+@keyframes onSceneBadgeBlink {
+
+  0% {
+
+    transform:
+      scale(1);
+
+    opacity:
+      1;
+
+  }
+
+  50% {
+
+    transform:
+      scale(1.18);
+
+    opacity:
+      0.55;
+
+  }
+
+  100% {
+
+    transform:
+      scale(1);
+
+    opacity:
+      1;
+
+  }
+
+}

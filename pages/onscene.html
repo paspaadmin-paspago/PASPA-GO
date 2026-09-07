@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    On Scene | PASPA GO
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="../css/onscene.css"
+  >
+
+</head>
+
+
+<body>
+
+  <div class="onscene-page">
+
+    <header class="onscene-header">
+
+      <button
+        type="button"
+        id="backButton"
+        class="header-button"
+      >
+        ←
+      </button>
+
+      <div class="header-title">
+        On Scene
+      </div>
+
+      <button
+        type="button"
+        id="homeButton"
+        class="header-button"
+      >
+        🏠
+      </button>
+
+    </header>
+
+
+    <main class="onscene-content">
+
+      <div
+        id="onSceneMessage"
+        class="onscene-message"
+        hidden
+      ></div>
+
+
+      <section class="intro-card">
+
+        <div class="intro-label">
+          PANGGILAN OPERASI
+        </div>
+
+        <h1>
+          On Scene
+        </h1>
+
+        <p>
+          Semak arahan operasi aktif yang dihantar kepada anda.
+        </p>
+
+      </section>
+
+
+      <section
+        id="activeOperationList"
+        class="operation-list"
+      >
+
+        <div class="loading-text">
+          Memuatkan panggilan operasi...
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+  <script src="../js/config.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/onscene.js"></script>
+
+</body>
+
+</html>

@@ -946,3 +946,38 @@
 .operasi-delete-button:active {
   transform: scale(0.9);
 }
+
+/* =====================================================
+   LAMPIRAN OPERASI ADMIN
+===================================================== */
+
+.operasi-attachment-button {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 1px solid #c8d7e9;
+  border-radius: 10px;
+
+  background: #eef5ff;
+
+  font-size: 21px;
+
+  cursor: pointer;
+}
+
+
+.operasi-attachment-button:hover {
+  background: #dcecff;
+}
+
+
+.operasi-attachment-button:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}

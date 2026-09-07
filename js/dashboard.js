@@ -46,6 +46,336 @@ const messageBadge =
   );
 
 
+
+
+/* =====================================================
+   ON SCENE
+===================================================== */
+
+const onSceneButton =
+  document.getElementById(
+    "onSceneButton"
+  );
+
+
+const onSceneBadge =
+  document.getElementById(
+    "onSceneBadge"
+  );
+
+
+
+/* =====================================================
+   DAPATKAN EMAIL SESSION
+===================================================== */
+
+function getDashboardSessionEmail() {
+
+  try {
+
+    const sessionText =
+      localStorage.getItem(
+        "paspaGoSession"
+      );
+
+
+    if (!sessionText) {
+      return "";
+    }
+
+
+    const session =
+      JSON.parse(
+        sessionText
+      );
+
+
+    return String(
+      session.googleEmail ||
+      session.email ||
+      ""
+    )
+      .trim()
+      .toLowerCase();
+
+
+  } catch (error) {
+
+    console.error(
+      "GET DASHBOARD SESSION EMAIL ERROR:",
+      error
+    );
+
+
+    return "";
+
+  }
+
+}
+
+/* =====================================================
+   LOAD STATUS ON SCENE
+===================================================== */
+
+async function loadDashboardOnSceneStatus() {
+
+  if (
+    !onSceneButton ||
+    !onSceneBadge
+  ) {
+
+    return;
+
+  }
+
+
+  /* RESET */
+
+  onSceneButton.classList.remove(
+    "active-onscene"
+  );
+
+
+  onSceneButton.classList.remove(
+    "pending-onscene"
+  );
+
+
+  onSceneBadge.hidden =
+    true;
+
+
+  onSceneBadge.textContent =
+    "0";
+
+
+  try {
+
+    const email =
+      getDashboardSessionEmail();
+
+
+    if (!email) {
+      return;
+    }
+
+
+    const result =
+      await apiPost({
+
+        action:
+          "member_active_operations",
+
+        email:
+          email
+
+      });
+
+
+    if (
+      !result ||
+      result.success !== true
+    ) {
+
+      throw new Error(
+        result?.message ||
+        "Status On Scene tidak dapat dimuatkan."
+      );
+
+    }
+
+
+    const operations =
+      Array.isArray(
+        result.operations
+      )
+        ? result.operations
+        : [];
+
+
+    const activeOperations =
+  operations.filter(
+    function (operation) {
+
+      const status =
+        String(
+          operation.statusAturGerak ||
+          ""
+        )
+          .trim()
+          .toUpperCase();
+
+
+      return (
+        status === "DIPANGGIL" ||
+        status === "AKTIF"
+      );
+
+    }
+  );
+
+
+const totalActive =
+  activeOperations.length;
+
+
+    /* =================================================
+       TIADA OPERASI AKTIF
+       = STAND DOWN / SELESAI / TIADA PANGGILAN
+    ================================================= */
+
+    if (
+      totalActive === 0
+    ) {
+
+      onSceneButton.classList.remove(
+        "active-onscene"
+      );
+
+
+      onSceneButton.classList.remove(
+        "pending-onscene"
+      );
+
+
+      onSceneBadge.hidden =
+        true;
+
+
+      return;
+
+    }
+
+
+    /* =================================================
+       ADA OPERASI AKTIF
+       LOREKAN MERAH KEKAL BERKELIP
+    ================================================= */
+
+    onSceneButton.classList.add(
+      "active-onscene"
+    );
+
+
+    /* =================================================
+       KIRA OPERASI YANG BELUM DITERIMA
+    ================================================= */
+
+   const pendingOperations =
+  activeOperations.filter(
+        function (operation) {
+
+          const status =
+            String(
+              operation.statusKehadiran ||
+              ""
+            )
+              .trim()
+              .toUpperCase();
+
+
+          return (
+            status !== "HADIR" &&
+            status !== "ON SCENE"
+          );
+
+        }
+      );
+
+
+    const totalPending =
+      pendingOperations.length;
+
+
+    /* =================================================
+       BELUM RESPON
+       BADGE + KELIP
+    ================================================= */
+
+    if (
+      totalPending > 0
+    ) {
+
+      onSceneButton.classList.add(
+        "pending-onscene"
+      );
+
+
+      onSceneBadge.textContent =
+        totalPending > 99
+          ? "99+"
+          : String(
+              totalPending
+            );
+
+
+      onSceneBadge.hidden =
+        false;
+
+
+      return;
+
+    }
+
+
+    /* =================================================
+       SUDAH RESPON
+       BADGE HILANG
+       TAPI OPERASI MASIH AKTIF
+       LOREKAN MERAH MASIH BERKELIP
+    ================================================= */
+
+    onSceneButton.classList.remove(
+      "pending-onscene"
+    );
+
+
+    onSceneBadge.hidden =
+      true;
+
+
+  } catch (error) {
+
+    console.error(
+      "LOAD DASHBOARD ON SCENE ERROR:",
+      error
+    );
+
+
+    onSceneButton.classList.remove(
+      "active-onscene"
+    );
+
+
+    onSceneButton.classList.remove(
+      "pending-onscene"
+    );
+
+
+    onSceneBadge.hidden =
+      true;
+
+  }
+
+}
+
+/* =====================================================
+   BUTTON ON SCENE
+===================================================== */
+
+if (onSceneButton) {
+
+  onSceneButton.addEventListener(
+    "click",
+    function () {
+
+      window.location.href =
+        "onscene.html";
+
+    }
+  );
+
+}
 /* =====================================================
    SESSION
 ===================================================== */
@@ -751,6 +1081,8 @@ document.addEventListener(
 
       loadUnreadMessageCount();
 
+      loadDashboardOnSceneStatus();
+
     }
 
   }
@@ -764,3 +1096,5 @@ document.addEventListener(
 loadDashboard();
 
 loadUnreadMessageCount();
+
+loadDashboardOnSceneStatus();
