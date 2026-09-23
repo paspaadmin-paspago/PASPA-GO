@@ -193,10 +193,89 @@ function formatOnSceneTime(
 
 }
 
+function getOnSceneMapEmbedUrl(liveLocation) {
+
+  const value = String(
+    liveLocation || ""
+  ).trim();
+
+  if (!value) {
+    return "";
+  }
+
+  // Koordinat terus, contoh: 3.1390,101.6869
+  const coordinates = value.match(
+    /^(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)$/
+  );
+
+  if (coordinates) {
+    return (
+      "https://maps.google.com/maps?q=" +
+      encodeURIComponent(value) +
+      "&output=embed"
+    );
+  }
+
+  let url;
+
+  try {
+    url = new URL(value);
+  } catch (error) {
+    return "";
+  }
+
+  // Hanya pautan Google Maps yang dikenali.
+  const allowedHosts = [
+    "google.com",
+    "www.google.com",
+    "maps.google.com"
+  ];
+
+  if (!allowedHosts.includes(url.hostname)) {
+    return "";
+  }
+
+  // Pautan carian Google Maps yang mempunyai query.
+  const query =
+    url.searchParams.get("query") ||
+    url.searchParams.get("q");
+
+  if (query) {
+    return (
+      "https://maps.google.com/maps?q=" +
+      encodeURIComponent(query) +
+      "&output=embed"
+    );
+  }
+
+  // Pautan yang mengandungi koordinat @lat,lng.
+  const match = url.pathname.match(
+    /@(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/
+  );
+
+  if (match) {
+    return (
+      "https://maps.google.com/maps?q=" +
+      encodeURIComponent(
+        match[1] + "," + match[2]
+      ) +
+      "&output=embed"
+    );
+  }
+
+  return "";
+}
+
 
 function createOnSceneCard(
   operation
 ) {
+
+
+const mapEmbedUrl =
+  getOnSceneMapEmbedUrl(
+    operation.liveLocation
+  );
 
   const card =
     document.createElement(
@@ -330,7 +409,28 @@ if (
       }
 
       <div class="operation-actions">
+${
+  mapEmbedUrl
+    ? `
+      <div class="operation-map-section">
 
+        <div class="operation-map-title">
+          📍 LOKASI OPERASI
+        </div>
+
+        <iframe
+          class="operation-map-frame"
+          src="${mapEmbedUrl}"
+          title="Peta Lokasi Operasi"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+        ></iframe>
+
+      </div>
+    `
+    : ""
+}
         ${
           operation.liveLocation
             ? `

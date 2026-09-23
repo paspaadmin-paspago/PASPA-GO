@@ -1,0 +1,496 @@
+
+/* ==========================================
+   PASPA GO - DIARI PASPA
+========================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+.diari-body {
+  margin: 0;
+  min-height: 100vh;
+  background: #142748;
+  color: #173b76;
+  font-family: Arial, sans-serif;
+}
+
+.diari-shell {
+  width: min(100%, 900px);
+  margin: 0 auto;
+  padding: 0 16px 50px;
+}
+
+/* HEADER */
+
+.diari-nav {
+  height: 62px;
+  background: #244e87;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+  color: #ffffff;
+}
+
+.diari-nav h1 {
+  margin: 0;
+  font-size: 19px;
+}
+
+.diari-nav button {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+/* LOGO */
+
+.diari-logo {
+  text-align: center;
+  padding: 26px 0;
+}
+
+.diari-logo img {
+  width: min(220px, 65%);
+  height: auto;
+}
+
+/* KAD */
+
+.diari-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 22px;
+  margin-bottom: 20px;
+}
+
+.diari-card h2 {
+  font-size: 19px;
+  margin: 0 0 18px;
+}
+
+/* BMI */
+
+.bmi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.bmi-box {
+  background: #edf3fb;
+  border-radius: 12px;
+  min-height: 110px;
+  padding: 15px 5px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.bmi-box span {
+  font-size: 13px;
+  color: #536783;
+}
+
+.bmi-box strong {
+  font-size: 25px;
+  color: #173b76;
+}
+
+.bmi-box small {
+  font-size: 11px;
+  color: #536783;
+}
+
+.bmi-date {
+  font-size: 12px;
+  color: #65758c;
+  margin-bottom: 0;
+}
+
+/* PAPARAN KALENDAR */
+
+.diari-calendar-heading,
+.diari-entry-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.diari-calendar-heading h2,
+.diari-entry-heading h2 {
+  margin: 0;
+}
+
+.diari-today,
+.diari-add {
+  border: none;
+  background: #173b76;
+  color: #ffffff;
+  border-radius: 9px;
+  padding: 10px 13px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.diari-view-tabs {
+  display: flex;
+  gap: 7px;
+  margin: 20px 0;
+}
+
+.diari-view-tabs button {
+  flex: 1;
+  min-width: 0;
+  padding: 11px 5px;
+  background: #edf3fb;
+  border: 1px solid #d4dfef;
+  border-radius: 9px;
+  color: #173b76;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.diari-view-tabs button.active {
+  background: #173b76;
+  color: #ffffff;
+}
+
+.diari-calendar-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.diari-calendar-nav h3 {
+  font-size: 16px;
+  margin: 0;
+  text-align: center;
+}
+
+.diari-calendar-nav button {
+  background: #edf3fb;
+  border: none;
+  border-radius: 8px;
+  width: 38px;
+  height: 38px;
+  font-size: 25px;
+  color: #173b76;
+  cursor: pointer;
+}
+
+/* GRID BULANAN */
+
+.diari-month-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.diari-weekday {
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 8px 0;
+}
+
+.diari-day {
+  min-width: 0;
+  min-height: 72px;
+  border: 1px solid #dce5f2;
+  background: #f7faff;
+  border-radius: 9px;
+  color: #173b76;
+  padding: 8px 3px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 7px;
+}
+
+.diari-day.outside {
+  opacity: 0.38;
+}
+
+.diari-day.today {
+  border: 2px solid #244e87;
+}
+
+.diari-day.selected {
+  background: #244e87;
+  color: #ffffff;
+}
+
+.diari-day-number {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.diari-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #e36c35;
+}
+
+.diari-day.selected .diari-dot {
+  background: #ffffff;
+}
+
+/* MINGGUAN / HARIAN */
+
+.diari-period-list {
+  display: grid;
+  gap: 9px;
+}
+
+.diari-period-day {
+  width: 100%;
+  border: 1px solid #dce5f2;
+  border-radius: 10px;
+  background: #f7faff;
+  color: #173b76;
+  padding: 15px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.diari-period-day.selected {
+  background: #244e87;
+  color: #ffffff;
+}
+
+.diari-period-day strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.diari-period-day span {
+  font-size: 12px;
+}
+
+/* CATATAN */
+
+.diari-entry-heading {
+  margin-bottom: 17px;
+}
+
+.diari-entry-item {
+  background: #f3f7fc;
+  border: 1px solid #dce5f2;
+  border-radius: 11px;
+  padding: 15px;
+  margin-bottom: 10px;
+}
+
+.diari-entry-item h3 {
+  font-size: 16px;
+  margin: 0 0 9px;
+}
+
+.diari-entry-item p {
+  margin: 5px 0;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.diari-empty {
+  text-align: center;
+  padding: 22px;
+  color: #65758c;
+  background: #f7faff;
+  border-radius: 10px;
+}
+
+/* BORANG */
+
+#diariForm label {
+  display: block;
+  margin: 15px 0 7px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+#diariForm input,
+#diariForm select,
+#diariForm textarea {
+  width: 100%;
+  border: 1px solid #cbd8ea;
+  border-radius: 10px;
+  padding: 12px;
+  font: inherit;
+  background: #ffffff;
+  color: #173b76;
+}
+
+#diariForm textarea {
+  resize: vertical;
+}
+
+.diari-form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.diari-form-actions button {
+  flex: 1;
+  padding: 13px 8px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.diari-save {
+  background: #16613c;
+  color: #ffffff;
+}
+
+.diari-cancel {
+  background: #edf3fb;
+  color: #173b76;
+}
+
+.diari-message {
+  padding: 14px;
+  border-radius: 10px;
+  background: #fff5e8;
+  color: #8b4513;
+  margin-bottom: 20px;
+}
+
+.diari-message.success {
+  background: #e7f6ed;
+  color: #16613c;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* TELEFON */
+
+@media (max-width: 480px) {
+
+  .diari-shell {
+    padding: 0 10px 30px;
+  }
+
+  .diari-card {
+    padding: 15px;
+  }
+
+  .diari-day {
+    min-height: 58px;
+    padding: 7px 2px;
+  }
+
+  .diari-month-grid {
+    gap: 3px;
+  }
+
+  .diari-day-number {
+    font-size: 12px;
+  }
+
+  .bmi-box strong {
+    font-size: 21px;
+  }
+
+  .diari-card h2 {
+    font-size: 17px;
+  }
+
+}
+/* TAJUK HEADER DIARI PASPA */
+
+.diari-nav h1 {
+  color: #ffffff !important;
+  font-size: 19px;
+  font-weight: 700;
+  text-align: center;
+  white-space: nowrap;
+  margin: 0;
+}
+
+
+/* ==========================================
+   HEADER DIARI - SERAGAM DENGAN INVENTORI
+========================================== */
+
+.diari-shell .paspa-top-nav {
+  width: 100%;
+  min-height: 62px;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  align-items: center;
+  background: #244e87;
+  padding: 0 15px;
+}
+
+.diari-shell .paspa-nav-title {
+  color: #ffffff !important;
+  font-size: 19px;
+  font-weight: 700;
+  text-align: center;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.diari-shell .paspa-nav-button {
+  color: #ffffff;
+  background: transparent;
+  border: none;
+  font-size: 25px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.diari-shell #diariBack {
+  justify-self: start;
+}
+
+.diari-shell #diariHome {
+  justify-self: end;
+}
+
+/* ==========================================
+   HEADER DIARI - PENUH KIRI DAN KANAN
+========================================== */
+
+.diari-shell .paspa-top-nav {
+  width: calc(100% + 32px);
+  margin-left: -16px;
+  margin-right: -16px;
+
+  background: #244e87;
+  border-radius: 0;
+
+  min-height: 62px;
+  padding: 0 16px;
+}
+
+/* PAPARAN TELEFON */
+
+@media (max-width: 480px) {
+
+  .diari-shell .paspa-top-nav {
+    width: calc(100% + 20px);
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+
+}

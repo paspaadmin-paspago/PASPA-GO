@@ -1,0 +1,734 @@
+
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Tetapan | PASPA GO</title>
+
+  <link
+    rel="stylesheet"
+    href="../css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/setting.css"
+  >
+
+</head>
+
+<body class="setting-body">
+
+  <main class="setting-shell">
+
+    <!-- HEADER -->
+
+    <nav class="paspa-top-nav setting-nav">
+
+      <button
+        type="button"
+        id="settingBack"
+        class="paspa-nav-button"
+        aria-label="Kembali"
+      >←</button>
+
+      <h1
+        class="paspa-nav-title"
+        data-i18n="pageTitle"
+      >
+        Tetapan
+      </h1>
+
+      <button
+        type="button"
+        id="settingHome"
+        class="paspa-nav-button"
+        aria-label="Dashboard"
+      >🏠</button>
+
+    </nav>
+
+
+    <!-- LOGO -->
+
+    <div class="setting-logo">
+
+      <img
+        src="../images/logo paspa go.png"
+        alt="PASPA GO"
+      >
+
+    </div>
+
+
+    <!-- AKAUN SAYA -->
+
+    <section class="setting-card">
+
+      <h2 data-i18n="myAccount">
+        Akaun Saya
+      </h2>
+
+      <div class="setting-profile">
+
+        <div class="setting-avatar">
+          👤
+        </div>
+
+        <div class="setting-profile-info">
+
+          <strong id="settingMemberName">
+            Memuatkan...
+          </strong>
+
+          <span>
+
+            <span data-i18n="paspaId">
+              ID PASPA:
+            </span>
+
+            <b id="settingMemberId">—</b>
+
+          </span>
+
+          <span
+            class="setting-active"
+            data-i18n="activeAccount"
+          >
+            Akaun Aktif
+          </span>
+
+        </div>
+
+      </div>
+
+      <div class="setting-divider"></div>
+
+      <div class="setting-info-row">
+
+        <div class="setting-info-icon">
+          ✉️
+        </div>
+
+        <div class="setting-info-text">
+
+          <strong data-i18n="googleEmail">
+            Email Google
+          </strong>
+
+          <span id="settingEmail">
+            Memuatkan...
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- TETAPAN APLIKASI -->
+
+    <section class="setting-card">
+
+      <h2 data-i18n="appSettings">
+        Tetapan Aplikasi
+      </h2>
+
+
+      <!-- NOTIFIKASI -->
+
+      <button
+        type="button"
+        id="settingNotificationButton"
+        class="setting-menu-button"
+        aria-expanded="false"
+        aria-controls="settingNotificationPanel"
+      >
+
+        <span class="setting-menu-icon">
+          🔔
+        </span>
+
+        <span class="setting-menu-text">
+
+          <strong data-i18n="notificationSettings">
+            Tetapan Notifikasi
+          </strong>
+
+          <small data-i18n="notificationSubtitle">
+            Bunyi dan paparan mesej serta operasi
+          </small>
+
+        </span>
+
+        <span class="setting-chevron">
+          ›
+        </span>
+
+      </button>
+
+
+      <div class="setting-divider"></div>
+
+
+      <!-- BAHASA -->
+
+      <button
+        type="button"
+        id="settingLanguageButton"
+        class="setting-menu-button"
+        aria-expanded="false"
+        aria-controls="settingLanguagePanel"
+      >
+
+        <span class="setting-menu-icon">
+          🌐
+        </span>
+
+        <span class="setting-menu-text">
+
+          <strong data-i18n="language">
+            Bahasa
+          </strong>
+
+          <small id="settingLanguageSummary">
+            Bahasa Melayu
+          </small>
+
+        </span>
+
+        <span class="setting-chevron">
+          ›
+        </span>
+
+      </button>
+
+    </section>
+
+
+    <!-- PANEL NOTIFIKASI -->
+
+    <section
+      id="settingNotificationPanel"
+      class="setting-card setting-expand-panel"
+      hidden
+    >
+
+      <div class="setting-detail-heading">
+
+        <h2 data-i18n="notificationSettings">
+          Tetapan Notifikasi
+        </h2>
+
+        <button
+          type="button"
+          id="settingCloseNotification"
+          class="setting-close-button"
+          aria-label="Tutup"
+        >
+          ✕
+        </button>
+
+      </div>
+
+      <p
+        class="setting-panel-description"
+        data-i18n="notificationDescription"
+      >
+        Tetapkan bunyi dan cara kemunculan
+        pemberitahuan bagi mesej dan operasi.
+      </p>
+
+
+      <!-- MESEJ -->
+
+      <div class="setting-notification-group">
+
+        <h3>
+          ✉️
+          <span data-i18n="messages">
+            Mesej
+          </span>
+        </h3>
+
+
+        <label class="setting-switch-row">
+
+          <span>
+
+            <strong data-i18n="messageSound">
+              Bunyi Mesej
+            </strong>
+
+            <small data-i18n="messageSoundDescription">
+              Mainkan bunyi apabila mesej diterima
+            </small>
+
+          </span>
+
+          <input
+            type="checkbox"
+            id="settingMessageSound"
+            checked
+          >
+
+        </label>
+
+
+        <label
+          for="settingMessageTone"
+          class="setting-field-label"
+          data-i18n="soundType"
+        >
+          Jenis Bunyi
+        </label>
+
+        <div class="setting-sound-row">
+
+          <select
+            id="settingMessageTone"
+            class="setting-select"
+          >
+
+            <option value="tone1">
+              Bunyi 1
+            </option>
+
+            <option value="tone2">
+              Bunyi 2
+            </option>
+
+            <option value="tone3">
+              Bunyi 3
+            </option>
+
+          </select>
+
+          <button
+            type="button"
+            id="settingPreviewMessage"
+            class="setting-preview-button"
+            data-i18n="preview"
+          >
+            Dengar
+          </button>
+
+        </div>
+
+
+        <label
+          for="settingMessageDisplay"
+          class="setting-field-label"
+          data-i18n="displayMethod"
+        >
+          Cara Kemunculan
+        </label>
+
+        <select
+          id="settingMessageDisplay"
+          class="setting-select"
+        >
+
+          <option value="banner">
+            Banner
+          </option>
+
+          <option value="popup">
+            Pop-up
+          </option>
+
+          <option value="badge">
+            Badge sahaja
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- OPERASI -->
+
+      <div class="setting-notification-group">
+
+        <h3>
+          🚨
+          <span data-i18n="operations">
+            Operasi
+          </span>
+        </h3>
+
+
+        <label class="setting-switch-row">
+
+          <span>
+
+            <strong data-i18n="operationSound">
+              Bunyi Operasi
+            </strong>
+
+            <small data-i18n="operationSoundDescription">
+              Mainkan bunyi apabila operasi diterima
+            </small>
+
+          </span>
+
+          <input
+            type="checkbox"
+            id="settingOperationSound"
+            checked
+          >
+
+        </label>
+
+
+        <label
+          for="settingOperationTone"
+          class="setting-field-label"
+          data-i18n="soundType"
+        >
+          Jenis Bunyi
+        </label>
+
+        <div class="setting-sound-row">
+
+          <select
+            id="settingOperationTone"
+            class="setting-select"
+          >
+
+            <option value="tone1">
+              Bunyi 1
+            </option>
+
+            <option value="tone2">
+              Bunyi 2
+            </option>
+
+            <option value="emergency">
+              Bunyi Kecemasan
+            </option>
+
+          </select>
+
+          <button
+            type="button"
+            id="settingPreviewOperation"
+            class="setting-preview-button"
+            data-i18n="preview"
+          >
+            Dengar
+          </button>
+
+        </div>
+
+
+        <label
+          for="settingOperationDisplay"
+          class="setting-field-label"
+          data-i18n="displayMethod"
+        >
+          Cara Kemunculan
+        </label>
+
+        <select
+          id="settingOperationDisplay"
+          class="setting-select"
+        >
+
+          <option value="banner">
+            Banner
+          </option>
+
+          <option value="popup">
+            Pop-up
+          </option>
+
+          <option value="badge">
+            Badge sahaja
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <button
+        type="button"
+        id="settingSaveNotification"
+        class="setting-save-button"
+        data-i18n="saveSettings"
+      >
+        SIMPAN TETAPAN
+      </button>
+
+    </section>
+
+
+    <!-- PANEL BAHASA -->
+
+    <section
+      id="settingLanguagePanel"
+      class="setting-card setting-expand-panel"
+      hidden
+    >
+
+      <div class="setting-detail-heading">
+
+        <h2 data-i18n="language">
+          Bahasa
+        </h2>
+
+        <button
+          type="button"
+          id="settingCloseLanguage"
+          class="setting-close-button"
+          aria-label="Tutup"
+        >
+          ✕
+        </button>
+
+      </div>
+
+      <p
+        class="setting-panel-description"
+        data-i18n="languageDescription"
+      >
+        Pilih bahasa paparan halaman Tetapan.
+      </p>
+
+      <label class="setting-language-choice">
+
+        <input
+          type="radio"
+          name="settingLanguage"
+          value="ms"
+          checked
+        >
+
+        <span>
+          Bahasa Melayu
+        </span>
+
+      </label>
+
+      <label class="setting-language-choice">
+
+        <input
+          type="radio"
+          name="settingLanguage"
+          value="en"
+        >
+
+        <span>
+          English
+        </span>
+
+      </label>
+
+      <button
+        type="button"
+        id="settingSaveLanguage"
+        class="setting-save-button"
+        data-i18n="saveLanguage"
+      >
+        SIMPAN BAHASA
+      </button>
+
+    </section>
+
+
+    <!-- MAKLUMAT DAN BANTUAN -->
+
+    <section class="setting-card">
+
+      <h2 data-i18n="infoHelp">
+        Maklumat & Bantuan
+      </h2>
+
+      <button
+        type="button"
+        id="settingAboutButton"
+        class="setting-menu-button"
+      >
+
+        <span class="setting-menu-icon">
+          ℹ️
+        </span>
+
+        <span data-i18n="about">
+          Mengenai PASPA GO
+        </span>
+
+        <span class="setting-chevron">
+          ›
+        </span>
+
+      </button>
+
+      <div class="setting-divider"></div>
+
+      <button
+        type="button"
+        id="settingHelpButton"
+        class="setting-menu-button"
+      >
+
+        <span class="setting-menu-icon">
+          ❓
+        </span>
+
+        <span data-i18n="help">
+          Bantuan & Sokongan
+        </span>
+
+        <span class="setting-chevron">
+          ›
+        </span>
+
+      </button>
+
+    </section>
+
+
+    <!-- PANEL MAKLUMAT -->
+
+    <section
+      id="settingDetailPanel"
+      class="setting-card"
+      hidden
+    >
+
+      <div class="setting-detail-heading">
+
+        <h2 id="settingDetailTitle">
+          Maklumat
+        </h2>
+
+        <button
+          type="button"
+          id="settingCloseDetail"
+          class="setting-close-button"
+          aria-label="Tutup"
+        >
+          ✕
+        </button>
+
+      </div>
+
+      <div id="settingDetailContent"></div>
+
+    </section>
+
+
+    <!-- LOG KELUAR -->
+
+    <section class="setting-card">
+
+      <button
+        type="button"
+        id="settingLogoutButton"
+        class="setting-logout-button"
+      >
+        ↪
+        <span data-i18n="logout">
+          Log Keluar
+        </span>
+      </button>
+
+    </section>
+
+
+    <!-- MODAL LOG KELUAR -->
+
+    <div
+      id="settingLogoutModal"
+      class="setting-modal"
+      hidden
+    >
+
+      <div
+        class="setting-modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="settingLogoutTitle"
+      >
+
+        <h2
+          id="settingLogoutTitle"
+          data-i18n="logoutTitle"
+        >
+          Log Keluar?
+        </h2>
+
+        <p data-i18n="logoutQuestion">
+          Adakah anda pasti mahu log keluar
+          daripada PASPA GO?
+        </p>
+
+        <div class="setting-modal-actions">
+
+          <button
+            type="button"
+            id="settingCancelLogout"
+            class="setting-cancel-button"
+            data-i18n="cancel"
+          >
+            BATAL
+          </button>
+
+          <button
+            type="button"
+            id="settingConfirmLogout"
+            class="setting-confirm-button"
+            data-i18n="logout"
+          >
+            LOG KELUAR
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- MESEJ SISTEM -->
+
+    <div
+      id="settingMessage"
+      class="setting-message"
+      role="status"
+      aria-live="polite"
+      hidden
+    ></div>
+
+
+    <p class="setting-footer">
+
+      PASPA GO<br>
+
+      Malaysia Civil Defence Special Force
+
+    </p>
+
+  </main>
+
+
+  <script src="../js/config.js"></script>
+
+  <script src="../js/api.js"></script>
+
+  <script src="../js/setting.js"></script>
+
+</body>
+
+</html>

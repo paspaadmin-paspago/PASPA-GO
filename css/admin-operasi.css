@@ -1009,3 +1009,23 @@ body {
   }
 
 }
+
+
+.google-maps-button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  border: 0;
+  border-radius: 10px;
+  background: #174b83;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.google-maps-help {
+  display: block;
+  margin-top: 8px;
+  color: #64748b;
+  line-height: 1.5;
+}

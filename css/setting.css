@@ -1,0 +1,670 @@
+
+/* ==========================================
+   PASPA GO - SETTING
+========================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+.setting-body {
+  margin: 0;
+  min-height: 100vh;
+  background: #172a49;
+  color: #173b76;
+  font-family: Arial, sans-serif;
+}
+
+.setting-shell {
+  width: min(100%, 900px);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 0 16px 35px;
+}
+
+/* HEADER */
+
+.setting-shell .paspa-top-nav {
+  width: calc(100% + 32px);
+  margin-left: -16px;
+  margin-right: -16px;
+
+  min-height: 62px;
+  padding: 0 16px;
+
+  display: grid;
+  grid-template-columns:
+    44px minmax(0, 1fr) 44px;
+
+  align-items: center;
+
+  background: #244e87;
+  border-radius: 0;
+}
+
+.setting-shell .paspa-nav-title {
+  margin: 0;
+  color: #ffffff !important;
+  font-size: 19px;
+  font-weight: 700;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.setting-shell .paspa-nav-button {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 25px;
+  padding: 0;
+  cursor: pointer;
+}
+
+#settingBack {
+  justify-self: start;
+}
+
+#settingHome {
+  justify-self: end;
+}
+
+/* LOGO */
+
+.setting-logo {
+  text-align: center;
+  padding: 27px 0 30px;
+}
+
+.setting-logo img {
+  display: block;
+  width: min(220px, 65%);
+  height: auto;
+  margin: 0 auto;
+}
+
+/* KAD */
+
+.setting-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 22px;
+  margin-bottom: 18px;
+}
+
+.setting-card h2 {
+  margin: 0 0 19px;
+  color: #173b76;
+  font-size: 19px;
+}
+
+/* PROFIL */
+
+.setting-profile {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.setting-avatar {
+  flex-shrink: 0;
+  width: 62px;
+  height: 62px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #edf3fb;
+  border-radius: 50%;
+  font-size: 30px;
+}
+
+.setting-profile-info {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+}
+
+.setting-profile-info strong {
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
+
+.setting-profile-info > span {
+  font-size: 13px;
+}
+
+.setting-active {
+  display: inline-block;
+  padding: 5px 10px;
+
+  background: #e5f5eb;
+  color: #16613c;
+
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 11px !important;
+}
+
+/* PEMISAH */
+
+.setting-divider {
+  height: 1px;
+  background: #e4ebf5;
+  margin: 17px 0;
+}
+
+/* BARIS MAKLUMAT */
+
+.setting-info-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.setting-info-icon {
+  flex-shrink: 0;
+  width: 39px;
+  height: 39px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #edf3fb;
+  border-radius: 10px;
+  font-size: 19px;
+}
+
+.setting-info-text {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.setting-info-text strong {
+  font-size: 14px;
+}
+
+.setting-info-text span {
+  font-size: 12px;
+  color: #61738d;
+  overflow-wrap: anywhere;
+}
+
+/* MENU */
+
+.setting-menu-button {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  gap: 13px;
+
+  background: transparent;
+  border: none;
+
+  color: #173b76;
+  text-align: left;
+  font-size: 14px;
+  font-weight: bold;
+
+  padding: 5px 0;
+  cursor: pointer;
+}
+
+.setting-menu-icon {
+  flex-shrink: 0;
+  width: 39px;
+  height: 39px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #edf3fb;
+  border-radius: 10px;
+  font-size: 19px;
+}
+
+.setting-menu-text {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.setting-menu-text strong {
+  font-size: 14px;
+}
+
+.setting-menu-text small {
+  color: #61738d;
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 1.4;
+}
+
+.setting-chevron {
+  margin-left: auto;
+  font-size: 25px;
+  color: #7c8ba1;
+}
+
+/* PANEL */
+
+.setting-detail-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.setting-detail-heading h2 {
+  margin: 0;
+}
+
+.setting-close-button {
+  flex-shrink: 0;
+
+  background: #edf3fb;
+  color: #173b76;
+
+  border: none;
+  border-radius: 8px;
+
+  width: 35px;
+  height: 35px;
+
+  cursor: pointer;
+}
+
+.setting-expand-panel {
+  border: 1px solid #dce7f5;
+}
+
+.setting-panel-description {
+  margin: 15px 0 20px;
+
+  color: #61738d;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* KUMPULAN NOTIFIKASI */
+
+.setting-notification-group {
+  background: #f5f8fd;
+  border: 1px solid #dce7f5;
+  border-radius: 13px;
+
+  padding: 17px;
+  margin-bottom: 16px;
+}
+
+.setting-notification-group h3 {
+  margin: 0 0 18px;
+
+  color: #173b76;
+  font-size: 17px;
+}
+
+.setting-switch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.setting-switch-row > span {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.setting-switch-row strong {
+  font-size: 14px;
+}
+
+.setting-switch-row small {
+  color: #61738d;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.setting-switch-row input {
+  flex-shrink: 0;
+
+  width: 21px;
+  height: 21px;
+
+  accent-color: #244e87;
+  cursor: pointer;
+}
+
+/* SELECT */
+
+.setting-field-label {
+  display: block;
+
+  margin: 17px 0 8px;
+
+  color: #173b76;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.setting-select {
+  width: 100%;
+  min-width: 0;
+
+  padding: 12px;
+
+  border: 1px solid #cbd9ed;
+  border-radius: 9px;
+
+  background: #ffffff;
+  color: #173b76;
+
+  font-size: 14px;
+}
+
+.setting-sound-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.setting-sound-row .setting-select {
+  flex: 1;
+}
+
+.setting-preview-button {
+  flex-shrink: 0;
+
+  padding: 12px 14px;
+
+  background: #e5edf9;
+  color: #173b76;
+
+  border: none;
+  border-radius: 9px;
+
+  font-size: 13px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+/* PILIHAN BAHASA */
+
+.setting-language-choice {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 15px;
+
+  margin-bottom: 10px;
+
+  background: #f5f8fd;
+  border: 1px solid #dce7f5;
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.setting-language-choice input {
+  width: 18px;
+  height: 18px;
+
+  accent-color: #244e87;
+}
+
+/* SIMPAN */
+
+.setting-save-button {
+  width: 100%;
+
+  padding: 15px;
+
+  margin-top: 9px;
+
+  background: #17613c;
+  color: #ffffff;
+
+  border: none;
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+/* PANEL MAKLUMAT */
+
+#settingDetailContent {
+  margin-top: 17px;
+
+  font-size: 14px;
+  line-height: 1.7;
+  color: #41536f;
+}
+
+#settingDetailContent p {
+  margin: 0 0 10px;
+}
+
+/* LOG KELUAR */
+
+.setting-logout-button {
+  width: 100%;
+
+  padding: 15px;
+
+  background: #fdecec;
+  color: #b42318;
+
+  border: 1px solid #f7c8c4;
+  border-radius: 11px;
+
+  font-size: 15px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+/* MODAL */
+
+.setting-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(0, 0, 0, 0.58);
+}
+
+.setting-modal-card {
+  width: min(100%, 390px);
+
+  padding: 25px;
+
+  background: #ffffff;
+  border-radius: 17px;
+
+  text-align: center;
+}
+
+.setting-modal-card h2 {
+  color: #173b76;
+  margin: 0 0 12px;
+}
+
+.setting-modal-card p {
+  color: #61738d;
+
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.setting-modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.setting-modal-actions button {
+  flex: 1;
+
+  padding: 13px 8px;
+
+  border: none;
+  border-radius: 9px;
+
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.setting-cancel-button {
+  background: #edf3fb;
+  color: #173b76;
+}
+
+.setting-confirm-button {
+  background: #b42318;
+  color: #ffffff;
+}
+
+/* MESEJ SISTEM */
+
+.setting-message {
+  background: #e5f5eb;
+  color: #16613c;
+
+  border-radius: 10px;
+  padding: 14px;
+
+  margin-bottom: 18px;
+
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 1.5;
+}
+
+/* FOOTER */
+
+.setting-footer {
+  text-align: center;
+  color: #c8d5e9;
+
+  font-size: 11px;
+  line-height: 1.7;
+
+  margin-top: 25px;
+}
+
+/* HIDDEN */
+
+[hidden] {
+  display: none !important;
+}
+
+/* MOBILE */
+
+@media (max-width: 480px) {
+
+  .setting-shell {
+    padding: 0 10px 30px;
+  }
+
+  .setting-shell .paspa-top-nav {
+    width: calc(100% + 20px);
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+
+  .setting-card {
+    padding: 17px;
+  }
+
+  .setting-profile-info strong {
+    font-size: 14px;
+  }
+
+  .setting-notification-group {
+    padding: 13px;
+  }
+
+  .setting-sound-row {
+    gap: 6px;
+  }
+
+  .setting-preview-button {
+    padding: 12px 9px;
+  }
+
+}
+
+/* ==========================================
+   FIX DROPDOWN JENIS BUNYI
+========================================== */
+
+.setting-sound-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 85px;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.setting-sound-row .setting-select {
+  width: 100%;
+  min-width: 0;
+  height: 44px;
+  padding: 10px;
+  font-size: 13px;
+}
+
+.setting-sound-row .setting-preview-button {
+  width: 85px;
+  height: 44px;
+  padding: 8px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* Paparan telefon */
+
+@media (max-width: 480px) {
+
+  .setting-sound-row {
+    grid-template-columns: minmax(0, 1fr) 75px;
+    gap: 7px;
+  }
+
+  .setting-sound-row .setting-preview-button {
+    width: 75px;
+  }
+
+}

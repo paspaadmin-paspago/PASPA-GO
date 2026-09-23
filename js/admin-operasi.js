@@ -3183,3 +3183,20 @@ document.addEventListener(
 
   }
 );
+
+
+
+
+
+
+
+
+document
+  .getElementById("openGoogleMapsButton")
+  ?.addEventListener("click", function () {
+    window.open(
+      "https://www.google.com/maps",
+      "_blank",
+      "noopener,noreferrer"
+    );
+  });

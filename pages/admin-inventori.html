@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Inventori | PASPA GO</title>
+
+  <link
+    rel="stylesheet"
+    href="../css/admin-inventori.css"
+  >
+</head>
+
+<body>
+
+  <div class="page">
+
+    <header class="header">
+
+      <button
+        id="backButton"
+        class="header-button"
+        type="button"
+        aria-label="Kembali"
+      >←</button>
+
+      <div>INVENTORI</div>
+
+      <button
+        id="homeButton"
+        class="header-button"
+        type="button"
+        aria-label="Utama"
+      >🏠</button>
+
+    </header>
+
+    <main
+      class="content"
+      id="mainContent"
+      hidden
+    >
+
+      <div
+        id="notice"
+        class="notice"
+        role="status"
+        hidden
+      ></div>
+
+      <!-- MENU INVENTORI -->
+
+      <section class="menu-card">
+
+        <div class="menu-title">
+          PENGURUSAN INVENTORI
+        </div>
+
+        <div class="menu-grid">
+
+          <button
+            id="refreshButton"
+            type="button"
+            class="menu-button"
+          >
+            KEMASKINI
+          </button>
+
+          <button
+            id="requestsButton"
+            type="button"
+            class="menu-button"
+          >
+            SENARAI PERMOHONAN
+          </button>
+
+          <button
+            id="reportButton"
+            type="button"
+            class="menu-button"
+          >
+            LAPORAN PERMOHONAN
+          </button>
+
+          <button
+            type="button"
+            class="menu-button"
+            disabled
+            title="Modul stok terkini belum disambungkan"
+          >
+            STOK TERKINI
+          </button>
+
+        </div>
+
+      </section>
+
+      <!-- RINGKASAN -->
+
+      <section class="summary-card">
+
+        <div class="stats">
+
+          <div>
+            <strong id="pendingCount">0</strong>
+            <span>Menunggu</span>
+          </div>
+
+          <div>
+            <strong id="processedCount">0</strong>
+            <span>Diproses</span>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- PERMOHONAN MASUK -->
+
+      <section
+        class="card"
+        id="pendingSection"
+      >
+
+        <h2>
+          Senarai Permohonan Inventori
+        </h2>
+
+        <p class="hint">
+          Tekan nama ahli untuk melihat
+          permohonan dan membuat keputusan.
+        </p>
+
+        <div
+          id="pendingList"
+          class="list"
+        >
+
+          <p class="empty">
+            Memuatkan permohonan...
+          </p>
+
+        </div>
+
+      </section>
+
+      <!-- REKOD KELULUSAN -->
+
+      <section
+        class="card"
+        id="processedSection"
+      >
+
+        <h2>
+          Rekod Kelulusan
+        </h2>
+
+        <p class="hint">
+          Tekan nama ahli untuk melihat
+          keputusan dan status permohonan.
+        </p>
+
+        <div
+          id="processedList"
+          class="list"
+        >
+
+          <p class="empty">
+            Memuatkan rekod...
+          </p>
+
+        </div>
+
+      </section>
+
+      <!-- SERAHAN INVENTORI -->
+
+      <section
+        class="card"
+        id="handoverSection"
+      >
+
+        <h2>
+          Serahan Inventori
+        </h2>
+
+        <p class="hint">
+          Tekan nama ahli untuk melihat
+          baki serahan dan mengesahkan
+          kuantiti yang diserahkan.
+        </p>
+
+        <div
+          id="handoverList"
+          class="list"
+        >
+
+          <p class="empty">
+            Memuatkan senarai serahan...
+          </p>
+
+        </div>
+
+      </section>
+
+    </main>
+
+    <div
+      id="accessNotice"
+      class="access-notice"
+      role="status"
+    >
+      Menyemak akses admin...
+    </div>
+
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/admin-inventori.js"></script>
+
+</body>
+</html>

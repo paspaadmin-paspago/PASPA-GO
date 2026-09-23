@@ -1,0 +1,389 @@
+
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Diari PASPA | PASPA GO</title>
+
+  <link
+    rel="stylesheet"
+    href="../css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/diari.css"
+  >
+
+</head>
+
+<body class="diari-body">
+
+  <main class="diari-shell">
+
+    <!-- HEADER -->
+
+   
+<!-- HEADER SERAGAM PASPA GO -->
+
+<nav class="paspa-top-nav">
+
+  <button
+    type="button"
+    id="diariBack"
+    class="paspa-nav-button"
+    aria-label="Kembali"
+  >←</button>
+
+  <h1 class="paspa-nav-title">
+    Diari PASPA
+  </h1>
+
+  <button
+    type="button"
+    id="diariHome"
+    class="paspa-nav-button"
+    aria-label="Dashboard"
+  >🏠</button>
+
+</nav>
+
+
+
+    <!-- LOGO -->
+
+    <div class="diari-logo">
+
+      <img
+        src="../images/logo paspa go.png"
+        alt="PASPA GO"
+      >
+
+    </div>
+
+
+    <!-- BMI -->
+
+    <section class="diari-card">
+
+      <h2>Status BMI Terkini</h2>
+
+      <div class="bmi-grid">
+
+        <div class="bmi-box">
+
+          <span>Berat</span>
+
+          <strong id="bmiWeight">—</strong>
+
+          <small>kg</small>
+
+        </div>
+
+        <div class="bmi-box">
+
+          <span>Tinggi</span>
+
+          <strong id="bmiHeight">—</strong>
+
+          <small>cm</small>
+
+        </div>
+
+        <div class="bmi-box">
+
+          <span>BMI</span>
+
+          <strong id="bmiValue">—</strong>
+
+          <small id="bmiStatus">Tiada rekod</small>
+
+        </div>
+
+      </div>
+
+      <p
+        id="bmiDate"
+        class="bmi-date"
+      >
+        Tarikh rekod: —
+      </p>
+
+    </section>
+
+
+    <!-- KALENDAR -->
+
+    <section class="diari-card">
+
+      <div class="diari-calendar-heading">
+
+        <h2>Kalendar Diari</h2>
+
+        <button
+          type="button"
+          id="diariToday"
+          class="diari-today"
+        >
+          Hari Ini
+        </button>
+
+      </div>
+
+
+      <!-- PILIH PAPARAN -->
+
+      <div class="diari-view-tabs">
+
+        <button
+          type="button"
+          data-view="day"
+        >
+          Harian
+        </button>
+
+        <button
+          type="button"
+          data-view="week"
+        >
+          Mingguan
+        </button>
+
+        <button
+          type="button"
+          data-view="month"
+          class="active"
+        >
+          Bulanan
+        </button>
+
+      </div>
+
+
+      <!-- NAVIGASI TARIKH -->
+
+      <div class="diari-calendar-nav">
+
+        <button
+          type="button"
+          id="diariPrevious"
+          aria-label="Sebelumnya"
+        >
+          ‹
+        </button>
+
+        <h3 id="diariPeriodTitle">
+          Memuatkan...
+        </h3>
+
+        <button
+          type="button"
+          id="diariNext"
+          aria-label="Seterusnya"
+        >
+          ›
+        </button>
+
+      </div>
+
+
+      <!-- GRID KALENDAR -->
+
+      <div id="diariCalendar"></div>
+
+    </section>
+
+
+    <!-- CATATAN TARIKH DIPILIH -->
+
+    <section class="diari-card">
+
+      <div class="diari-entry-heading">
+
+        <h2 id="diariSelectedTitle">
+          Catatan Diari
+        </h2>
+
+        <button
+          type="button"
+          id="diariAddButton"
+          class="diari-add"
+        >
+          + Tambah
+        </button>
+
+      </div>
+
+      <div id="diariEntryList">
+
+        <p class="diari-empty">
+          Tiada catatan.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- BORANG CATATAN -->
+
+    <section
+      id="diariFormSection"
+      class="diari-card"
+      hidden
+    >
+
+      <h2>Tambah Catatan Diari</h2>
+
+      <form id="diariForm">
+
+        <label for="diariTarikh">
+          Tarikh
+        </label>
+
+        <input
+          type="date"
+          id="diariTarikh"
+          required
+        >
+
+
+        <label for="diariPerkara">
+          Perkara
+        </label>
+
+        <input
+          type="text"
+          id="diariPerkara"
+          maxlength="200"
+          required
+          placeholder="Masukkan perkara"
+        >
+
+
+        <label for="diariJenis">
+          Jenis
+        </label>
+
+        <select
+          id="diariJenis"
+          required
+        >
+
+          <option value="">
+            Pilih jenis
+          </option>
+
+          <option>Event</option>
+          <option>Larian</option>
+          <option>Renangan</option>
+          <option>Hiking</option>
+          <option>Fitness</option>
+          <option>Pameran</option>
+          <option>Demo</option>
+          <option>Mesyuarat</option>
+
+          <option value="Lain-lain">
+            Lain-lain
+          </option>
+
+        </select>
+
+
+        <div
+          id="diariOtherWrap"
+          hidden
+        >
+
+          <label for="diariOther">
+            Nyatakan Jenis
+          </label>
+
+          <input
+            type="text"
+            id="diariOther"
+            maxlength="100"
+            placeholder="Jenis aktiviti"
+          >
+
+        </div>
+
+
+        <label for="diariMasa">
+          Masa
+        </label>
+
+        <input
+          type="time"
+          id="diariMasa"
+          required
+        >
+
+
+        <label for="diariCatatan">
+          Catatan
+        </label>
+
+        <textarea
+          id="diariCatatan"
+          rows="4"
+          maxlength="5000"
+          placeholder="Masukkan catatan"
+        ></textarea>
+
+
+        <div class="diari-form-actions">
+
+          <button
+            type="submit"
+            id="diariSave"
+            class="diari-save"
+          >
+            SIMPAN
+          </button>
+
+          <button
+            type="button"
+            id="diariCancel"
+            class="diari-cancel"
+          >
+            BATAL
+          </button>
+
+        </div>
+
+      </form>
+
+    </section>
+
+
+    <!-- MESEJ -->
+
+    <div
+      id="diariMessage"
+      class="diari-message"
+      role="status"
+      aria-live="polite"
+      hidden
+    ></div>
+
+  </main>
+
+
+  <script src="../js/config.js"></script>
+
+  <script src="../js/api.js"></script>
+
+  <script src="../js/diari.js"></script>
+
+</body>
+
+</html>

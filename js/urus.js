@@ -3345,6 +3345,28 @@ if (adminOperationButton) {
 
 }
 
+/* =====================================================
+   INVENTORI ADMIN
+===================================================== */
+
+const adminInventoryButton =
+  document.getElementById(
+    "adminInventoryMenu"
+  );
+
+if (adminInventoryButton) {
+
+  adminInventoryButton.addEventListener(
+    "click",
+    function () {
+
+      window.location.href =
+        "admin-inventori.html";
+
+    }
+  );
+
+}
 
 /* =====================================================
    LAPORAN

@@ -1,0 +1,495 @@
+
+/* =========================================
+   PASPA GO - ADMIN INVENTORI
+========================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #edf3fb;
+  color: #17365f;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: .55;
+  cursor: default;
+}
+
+/* =========================================
+   PAGE
+========================================= */
+
+.page {
+  width: 100%;
+  max-width: 760px;
+  min-height: 100vh;
+  margin: auto;
+  background: #102b56;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+
+  min-height: 58px;
+
+  display: grid;
+  grid-template-columns: 48px 1fr 48px;
+  align-items: center;
+
+  padding: 5px 12px;
+
+  background: #194d91;
+  color: white;
+
+  text-align: center;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.header-button {
+  width: 42px;
+  height: 42px;
+
+  border: none;
+  background: transparent;
+  color: white;
+
+  font-size: 27px;
+}
+
+.content {
+  padding: 14px;
+}
+
+/* =========================================
+   MENU
+========================================= */
+
+.menu-card {
+  margin-bottom: 14px;
+  padding: 12px;
+
+  background: #ffffff;
+  border-radius: 15px;
+}
+
+.menu-title {
+  margin-bottom: 10px;
+  padding: 14px 8px;
+
+  background: #dbe5ff;
+  border-radius: 8px;
+
+  color: #17365f;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.menu-button {
+  min-height: 38px;
+  padding: 8px 5px;
+
+  border: none;
+  border-radius: 5px;
+
+  background: #315e9d;
+  color: white;
+
+  font-size: 11px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.menu-button:not(:disabled):active {
+  background: #17365f;
+}
+
+/* =========================================
+   SUMMARY
+========================================= */
+
+.summary-card {
+  padding: 12px;
+  margin-bottom: 14px;
+
+  background: white;
+  border-radius: 15px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.stats > div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  padding: 12px;
+
+  background: #eaf2fc;
+  border-radius: 10px;
+}
+
+.stats strong {
+  font-size: 23px;
+  color: #194d91;
+}
+
+.stats span {
+  font-size: 12px;
+}
+
+/* =========================================
+   SECTION
+========================================= */
+
+.card {
+  padding: 15px;
+  margin-bottom: 14px;
+
+  background: white;
+  border-radius: 15px;
+
+  scroll-margin-top: 75px;
+}
+
+.card h2 {
+  margin: 0 0 8px;
+
+  color: #123f7d;
+  font-size: 18px;
+}
+
+.hint {
+  margin: 0 0 14px;
+
+  color: #627892;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.list {
+  display: grid;
+  gap: 10px;
+}
+
+/* =========================================
+   GROUP BY MEMBER
+========================================= */
+
+.member-group {
+  overflow: hidden;
+
+  border: 1px solid #d3dfed;
+  border-radius: 11px;
+
+  background: #f7f9fc;
+}
+
+.member-group[open] {
+  background: #ffffff;
+}
+
+.member-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  padding: 14px 12px;
+
+  list-style: none;
+  cursor: pointer;
+
+  color: #123f7d;
+}
+
+.member-heading::-webkit-details-marker {
+  display: none;
+}
+
+.member-heading:focus-visible {
+  outline: 2px solid #194d91;
+  outline-offset: -3px;
+}
+
+.member-name {
+  display: block;
+
+  font-size: 14px;
+  font-weight: bold;
+  overflow-wrap: anywhere;
+}
+
+.member-subtitle {
+  display: block;
+  margin-top: 5px;
+
+  color: #607894;
+  font-size: 11px;
+}
+
+.member-chevron {
+  flex: 0 0 auto;
+
+  color: #194d91;
+  font-size: 20px;
+
+  transition: transform .2s;
+}
+
+.member-group[open] .member-chevron {
+  transform: rotate(180deg);
+}
+
+.member-body {
+  padding: 0 12px 12px;
+}
+
+.member-divider {
+  height: 1px;
+  margin-bottom: 12px;
+
+  background: #dce5f0;
+}
+
+/* =========================================
+   ITEM / REQUEST
+========================================= */
+
+.request {
+  padding: 12px 0;
+
+  border-bottom: 1px solid #e2e9f2;
+}
+
+.request:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.request h3 {
+  margin: 0 0 8px;
+
+  color: #123f7d;
+  font-size: 14px;
+}
+
+.request p {
+  margin: 5px 0;
+
+  color: #334e70;
+  font-size: 12px;
+  line-height: 1.5;
+
+  overflow-wrap: anywhere;
+}
+
+.request .meta {
+  color: #71849c;
+  font-size: 11px;
+}
+
+.pill {
+  display: inline-block;
+
+  margin-top: 7px;
+  padding: 5px 9px;
+
+  border-radius: 20px;
+
+  background: #eaf2fc;
+  color: #194d91;
+
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.pill.success {
+  background: #e3f7eb;
+  color: #14713b;
+}
+
+.pill.warning {
+  background: #fff2d8;
+  color: #946000;
+}
+
+.pill.rejected {
+  background: #fdeaea;
+  color: #ad2828;
+}
+
+/* =========================================
+   INPUTS / BUTTONS
+========================================= */
+
+.controls {
+  display: grid;
+  gap: 10px;
+
+  margin-top: 12px;
+}
+
+.controls label {
+  display: block;
+
+  color: #526985;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.controls input,
+.controls textarea {
+  display: block;
+
+  width: 100%;
+  margin-top: 5px;
+  padding: 10px;
+
+  border: 1px solid #c7d5e6;
+  border-radius: 8px;
+
+  background: white;
+  color: #17365f;
+
+  font-size: 14px;
+}
+
+.controls textarea {
+  resize: vertical;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.primary,
+.danger {
+  min-height: 42px;
+
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.primary {
+  background: #0aa66a;
+  color: white;
+}
+
+.danger {
+  background: #ed3838;
+  color: white;
+}
+
+.handover-button {
+  background: #194d91;
+}
+
+/* =========================================
+   MESSAGES
+========================================= */
+
+.notice {
+  margin-bottom: 14px;
+  padding: 12px 14px;
+
+  border-radius: 10px;
+
+  background: #edf5ff;
+  color: #194d91;
+
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.notice.error {
+  background: #fdeaea;
+  color: #b52a2a;
+}
+
+.notice.success {
+  background: #e7f7ed;
+  color: #176c36;
+}
+
+.empty {
+  padding: 16px 8px;
+
+  color: #71849c;
+  text-align: center;
+  font-size: 12px;
+}
+
+.access-notice {
+  padding: 25px;
+
+  color: white;
+  text-align: center;
+  font-size: 13px;
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+  .content {
+    padding: 11px;
+  }
+
+  .card {
+    padding: 12px;
+  }
+
+  .member-heading {
+    padding: 12px 10px;
+  }
+
+  .member-body {
+    padding: 0 10px 10px;
+  }
+
+  .menu-button {
+    font-size: 10px;
+  }
+
+}

@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Inventori | PASPA GO</title>
+
+  <link
+    rel="stylesheet"
+    href="../css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/inventori.css"
+  >
+</head>
+
+<body class="inventori-body">
+
+  <main class="inventori-shell">
+
+    <!-- HEADER -->
+
+    <nav class="paspa-top-nav">
+
+      <button
+        type="button"
+        id="backButton"
+        class="paspa-nav-button"
+        aria-label="Kembali"
+      >←</button>
+
+      <h1 class="paspa-nav-title">
+        Inventori
+      </h1>
+
+      <button
+        type="button"
+        id="homeButton"
+        class="paspa-nav-button"
+        aria-label="Dashboard"
+      >🏠</button>
+
+    </nav>
+
+    <!-- LOGO -->
+
+    <div class="inventori-logo-section">
+
+      <img
+        src="../images/logo paspa go.png"
+        alt="PASPA GO"
+        class="inventori-page-logo"
+      >
+
+    </div>
+
+    <!-- MAKLUMAT AHLI -->
+
+    <section class="inventori-member-card">
+
+      <p class="inventori-member-label">
+        Rekod Inventori
+      </p>
+
+      <h2 id="inventoriMemberName">
+        Memuatkan...
+      </h2>
+
+      <p>
+        ID PASPA:
+        <strong id="inventoriMemberId">
+          -
+        </strong>
+      </p>
+
+    </section>
+
+    <!-- MENU -->
+
+    <section class="inventori-menu-card">
+
+      <h2>Menu Inventori</h2>
+
+      <div
+        class="inventori-tabs"
+        role="group"
+        aria-label="Menu Inventori"
+      >
+
+        <button
+          type="button"
+          class="inventori-tab active"
+          data-tab="mohon"
+          aria-pressed="true"
+        >
+          Mohon
+        </button>
+
+        <button
+          type="button"
+          class="inventori-tab"
+          data-tab="rekod"
+          aria-pressed="false"
+        >
+          Rekod Permohonan
+        </button>
+
+        <button
+          type="button"
+          class="inventori-tab"
+          data-tab="status"
+          aria-pressed="false"
+        >
+          Status Permohonan
+        </button>
+
+      </div>
+
+    </section>
+
+    <!-- PANEL MOHON -->
+
+    <section
+      id="mohonPanel"
+      class="inventori-panel"
+    >
+
+      <h2>Permohonan Inventori</h2>
+
+      <p class="inventori-description">
+        Isi item, saiz dan kuantiti yang ingin
+        dimohon. Lima ruangan disediakan.
+        Ruangan yang tidak digunakan boleh
+        dibiarkan kosong.
+      </p>
+
+      <div id="inventoryRequestList">
+
+        <p class="inventori-empty">
+          Memuatkan senarai inventori...
+        </p>
+
+      </div>
+
+    </section>
+
+    <!-- REKOD PERMOHONAN -->
+
+    <section
+      id="rekodPanel"
+      class="inventori-panel"
+      hidden
+    >
+
+      <h2>Rekod Permohonan</h2>
+
+      <div id="inventoryRequestHistory">
+
+        <p class="inventori-empty">
+          Tiada rekod permohonan dipaparkan.
+        </p>
+
+      </div>
+
+    </section>
+
+    <!-- STATUS PERMOHONAN -->
+
+    <section
+      id="statusPanel"
+      class="inventori-panel"
+      hidden
+    >
+
+      <h2>Status Permohonan</h2>
+
+      <div id="inventoryRequestStatus">
+
+        <p class="inventori-empty">
+          Tiada status permohonan dipaparkan.
+        </p>
+
+      </div>
+
+    </section>
+
+    <!-- MESEJ SISTEM -->
+
+    <div
+      id="inventoriMessage"
+      class="inventori-message hidden"
+      role="alert"
+      aria-live="polite"
+    ></div>
+
+  </main>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/inventori.js"></script>
+
+</body>
+</html>

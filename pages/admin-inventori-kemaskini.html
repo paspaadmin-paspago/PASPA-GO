@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Kemaskini Inventori | PASPA GO</title>
+
+  <link
+    rel="stylesheet"
+    href="../css/admin-inventori.css"
+  >
+
+  <style>
+
+    .stock-page {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    .stock-card {
+      background: #ffffff;
+      border: 1px solid #dbe3ee;
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+
+    .stock-card h2 {
+      margin-top: 0;
+      font-size: 18px;
+      color: #173b70;
+    }
+
+    .stock-field {
+      margin-bottom: 15px;
+    }
+
+    .stock-field label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .stock-field input,
+    .stock-field select,
+    .stock-field textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 11px;
+      border: 1px solid #cbd5e1;
+      border-radius: 9px;
+      background: #ffffff;
+      font: inherit;
+    }
+
+    .stock-field input:focus,
+    .stock-field select:focus {
+      outline: 2px solid #93b4e5;
+      border-color: #244f8e;
+    }
+
+    .stock-button {
+      border: 0;
+      border-radius: 9px;
+      padding: 12px 15px;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .stock-button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    .stock-primary {
+      background: #244f8e;
+      color: white;
+    }
+
+    .stock-add {
+      background: #166534;
+      color: white;
+    }
+
+    .stock-danger {
+      background: #b42318;
+      color: white;
+    }
+
+    .stock-secondary {
+      background: #e8eef7;
+      color: #173b70;
+    }
+
+    .stock-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .stock-actions button {
+      flex: 1;
+    }
+
+    .stock-variation {
+      border: 1px solid #dbe3ee;
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 13px;
+      margin-bottom: 10px;
+    }
+
+    .stock-variation-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      gap: 8px;
+    }
+
+    .stock-variation-heading strong {
+      color: #173b70;
+    }
+
+    .stock-variation-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .stock-variation-grid .stock-field {
+      margin-bottom: 0;
+    }
+
+    .stock-total {
+      padding: 13px;
+      background: #e8eef7;
+      border-radius: 10px;
+      margin: 12px 0;
+      font-weight: 700;
+      color: #173b70;
+    }
+
+    .stock-note {
+      font-size: 13px;
+      color: #64748b;
+      line-height: 1.5;
+    }
+
+    .stock-alert {
+      padding: 12px;
+      border-radius: 9px;
+      margin-bottom: 14px;
+      background: #fff4e5;
+      color: #854d0e;
+    }
+
+    .stock-item {
+      border: 1px solid #dbe3ee;
+      border-radius: 11px;
+      padding: 13px;
+      margin-bottom: 10px;
+    }
+
+    .stock-item h3 {
+      margin: 0 0 5px;
+      color: #173b70;
+      font-size: 16px;
+    }
+
+    .stock-item p {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+
+    .stock-item-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .stock-item-actions button {
+      flex: 1;
+    }
+
+    .stock-hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 420px) {
+
+      .stock-variation-grid {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="page">
+
+    <header class="header">
+
+      <button
+        id="backButton"
+        class="header-button"
+        type="button"
+        aria-label="Kembali"
+      >←</button>
+
+      <div>KEMASKINI INVENTORI</div>
+
+      <button
+        id="homeButton"
+        class="header-button"
+        type="button"
+        aria-label="Utama"
+      >🏠</button>
+
+    </header>
+
+    <main
+      id="mainContent"
+      class="stock-page"
+      hidden
+    >
+
+      <div
+        id="stockNotice"
+        class="stock-alert stock-hidden"
+        role="status"
+      ></div>
+
+      <!-- MENU -->
+
+      <section class="stock-card">
+
+        <h2>PENGURUSAN STOK</h2>
+
+        <div class="stock-actions">
+
+          <button
+            id="newItemButton"
+            type="button"
+            class="stock-button stock-add"
+          >
+            + DAFTAR ITEM
+          </button>
+
+          <button
+            id="showItemsButton"
+            type="button"
+            class="stock-button stock-primary"
+          >
+            SENARAI ITEM
+          </button>
+
+        </div>
+
+      </section>
+
+      <!-- BORANG -->
+
+      <section
+        id="stockFormSection"
+        class="stock-card"
+      >
+
+        <h2 id="stockFormTitle">
+          Daftar Item Baharu
+        </h2>
+
+        <form id="stockForm">
+
+          <div
+            id="inventoryIdField"
+            class="stock-field stock-hidden"
+          >
+
+            <label for="inventoryId">
+              ID Inventori
+            </label>
+
+            <input
+              id="inventoryId"
+              type="text"
+              readonly
+            >
+
+          </div>
+
+          <div class="stock-field">
+
+            <label for="itemName">
+              Nama Item
+            </label>
+
+            <input
+              id="itemName"
+              type="text"
+              maxlength="150"
+              placeholder="Contoh: Tshirt Inner Lengan Pendek"
+              required
+            >
+
+          </div>
+
+          <div class="stock-field">
+
+            <label for="itemCategory">
+              Kategori
+            </label>
+
+            <select
+              id="itemCategory"
+              required
+            >
+
+              <option value="">
+                Pilih kategori
+              </option>
+
+              <option
+                value="Uniform/tshirt/seluar/jaket/T.Pinggang"
+              >
+                Uniform/tshirt/seluar/jaket/T.Pinggang
+              </option>
+
+              <option value="Kasut/boot">
+                Kasut/boot
+              </option>
+
+              <option value="Bere">
+                Bere
+              </option>
+
+              <option value="Eksesori">
+                Eksesori
+              </option>
+
+              <option value="Lain-lain">
+                Lain-lain
+              </option>
+
+            </select>
+
+          </div>
+
+          <div
+            id="otherCategoryField"
+            class="stock-field stock-hidden"
+          >
+
+            <label for="otherCategory">
+              Nyatakan Kategori
+            </label>
+
+            <input
+              id="otherCategory"
+              type="text"
+              maxlength="100"
+            >
+
+          </div>
+
+          <div class="stock-field">
+
+            <label for="itemBrand">
+              Jenama
+            </label>
+
+            <input
+              id="itemBrand"
+              type="text"
+              maxlength="150"
+              placeholder="Contoh: Oren / Nike"
+              required
+            >
+
+          </div>
+
+          <!-- UNIT -->
+
+          <div class="stock-field">
+
+            <label for="itemUnit">
+              UNIT
+            </label>
+
+            <select
+              id="itemUnit"
+              required
+            >
+
+              <option value="">
+                Pilih unit
+              </option>
+
+              <option value="Helai">
+                Helai
+              </option>
+
+              <option value="Pasang">
+                Pasang
+              </option>
+
+              <option value="Set">
+                Set
+              </option>
+
+              <option value="Biji">
+                Biji
+              </option>
+
+              <option value="Buah">
+                Buah
+              </option>
+
+              <option value="Unit">
+                Unit
+              </option>
+
+              <option value="Lain-lain">
+                Lain-lain
+              </option>
+
+            </select>
+
+          </div>
+
+          <div
+            id="otherUnitField"
+            class="stock-field stock-hidden"
+          >
+
+            <label for="otherUnit">
+              Nyatakan Unit
+            </label>
+
+            <input
+              id="otherUnit"
+              type="text"
+              maxlength="60"
+            >
+
+          </div>
+
+          <!-- VARIASI -->
+
+          <h2>Variasi Saiz dan Stok</h2>
+
+          <p class="stock-note">
+            Pilih saiz dan masukkan kuantiti stok
+            bagi setiap variasi.
+          </p>
+
+          <div id="variationList"></div>
+
+          <button
+            id="addVariationButton"
+            type="button"
+            class="stock-button stock-secondary"
+          >
+            + TAMBAH VARIASI
+          </button>
+
+          <div
+            id="totalStock"
+            class="stock-total"
+          >
+            Jumlah Stok: 0
+          </div>
+
+          <div class="stock-actions">
+
+            <button
+              id="saveStockButton"
+              type="submit"
+              class="stock-button stock-add"
+            >
+              SIMPAN ITEM
+            </button>
+
+            <button
+              id="cancelStockButton"
+              type="button"
+              class="stock-button stock-secondary"
+            >
+              BATAL
+            </button>
+
+          </div>
+
+        </form>
+
+      </section>
+
+      <!-- SENARAI ITEM -->
+
+      <section
+        id="stockListSection"
+        class="stock-card"
+      >
+
+        <h2>Senarai Item Inventori</h2>
+
+        <div id="stockItemList">
+
+          <p class="stock-note">
+            Senarai stok akan dipaparkan
+            selepas API pengurusan stok disambungkan.
+          </p>
+
+        </div>
+
+      </section>
+
+    </main>
+
+    <div
+      id="accessNotice"
+      class="access-notice"
+      role="status"
+    >
+      Menyemak akses admin...
+    </div>
+
+  </div>
+
+  <script src="../js/config.js"></script>
+
+  <script src="../js/api.js"></script>
+
+  <script
+    src="../js/admin-inventori-kemaskini.js"
+  ></script>
+
+</body>
+
+</html>

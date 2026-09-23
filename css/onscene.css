@@ -197,3 +197,25 @@ body {
   }
 
 }
+
+
+.operation-map-section {
+  width: 100%;
+  margin-bottom: 14px;
+}
+
+.operation-map-title {
+  margin-bottom: 10px;
+  color: #173b68;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.operation-map-frame {
+  display: block;
+  width: 100%;
+  height: 250px;
+  border: 1px solid #d8e2ee;
+  border-radius: 12px;
+  background: #eef3f8;
+}
