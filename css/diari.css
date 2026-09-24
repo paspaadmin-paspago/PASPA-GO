@@ -1,268 +1,639 @@
 
 /* ==========================================
    PASPA GO - DIARI PASPA
+   CORPORATE PROFESSIONAL UI
+========================================== */
+
+
+/* ==========================================
+   RESET
 ========================================== */
 
 * {
   box-sizing: border-box;
 }
 
+[hidden] {
+  display: none !important;
+}
+
+
+/* ==========================================
+   BODY & SHELL
+========================================== */
+
 .diari-body {
   margin: 0;
   min-height: 100vh;
-  background: #142748;
+
+  background: #192c4b;
   color: #173b76;
+
   font-family: Arial, sans-serif;
 }
 
 .diari-shell {
   width: min(100%, 900px);
+
   margin: 0 auto;
-  padding: 0 16px 50px;
+  padding: 0 12px 30px;
 }
 
-/* HEADER */
 
-.diari-nav {
-  height: 62px;
+/* ==========================================
+   HEADER
+========================================== */
+
+.diari-shell .paspa-top-nav {
+  width: calc(100% + 24px);
+  min-height: 62px;
+
+  margin-left: -12px;
+  margin-right: -12px;
+
+  padding: 0 16px;
+
+  display: grid;
+  grid-template-columns:
+    44px minmax(0, 1fr) 44px;
+
+  align-items: center;
+
   background: #244e87;
+  border-radius: 0;
+}
+
+.diari-shell .paspa-nav-title {
+  margin: 0;
+
+  color: #ffffff !important;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  text-align: center;
+  white-space: nowrap;
+}
+
+.diari-shell .paspa-nav-button {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 15px;
+  justify-content: center;
+
+  width: 36px;
+  height: 36px;
+
+  padding: 0;
+
+  background: transparent;
   color: #ffffff;
-}
 
-.diari-nav h1 {
-  margin: 0;
-  font-size: 19px;
-}
-
-.diari-nav button {
-  background: none;
   border: none;
-  color: #ffffff;
-  font-size: 25px;
+
+  font-size: 23px;
+
   cursor: pointer;
 }
 
-/* LOGO */
+.diari-shell #diariBack {
+  justify-self: start;
+}
+
+.diari-shell #diariHome {
+  justify-self: end;
+}
+
+
+/* ==========================================
+   LOGO
+========================================== */
 
 .diari-logo {
-  text-align: center;
-  padding: 26px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 7px 0 8px;
 }
 
 .diari-logo img {
-  width: min(220px, 65%);
+  display: block;
+
+  width: min(125px, 36%);
   height: auto;
+
+  margin: 0 auto;
 }
 
-/* KAD */
+
+/* ==========================================
+   KAD UTAMA
+========================================== */
 
 .diari-card {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+
+  display: block;
+
+  margin: 0 0 11px;
+  padding: 14px;
+
   background: #ffffff;
-  border-radius: 18px;
-  padding: 22px;
-  margin-bottom: 20px;
+
+  border: 1px solid #e1e8f2;
+  border-top: 3px solid #244e87;
+  border-radius: 13px;
+
+  box-shadow:
+    0 3px 12px rgba(0, 0, 0, 0.10);
 }
 
 .diari-card h2 {
-  font-size: 19px;
-  margin: 0 0 18px;
+  margin: 0 0 10px;
+
+  color: #173b76;
+
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
 }
 
-/* BMI */
+
+/* ==========================================
+   BMI
+========================================== */
+
+.diari-bmi-card {
+  border-top-color: #244e87;
+}
 
 .bmi-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 7px;
 }
 
 .bmi-box {
-  background: #edf3fb;
-  border-radius: 12px;
-  min-height: 110px;
-  padding: 15px 5px;
-  text-align: center;
+  min-width: 0;
+  min-height: 62px;
+
+  padding: 7px 4px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+
+  gap: 2px;
+
+  border-radius: 9px;
+
+  text-align: center;
+}
+
+.bmi-box:nth-child(1) {
+  background: #eaf2ff;
+}
+
+.bmi-box:nth-child(2) {
+  background: #e9f7f1;
+}
+
+.bmi-box:nth-child(3) {
+  background: #fff4e7;
 }
 
 .bmi-box span {
-  font-size: 13px;
   color: #536783;
+  font-size: 10px;
 }
 
 .bmi-box strong {
-  font-size: 25px;
   color: #173b76;
+
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.bmi-box:nth-child(2) strong {
+  color: #16765a;
+}
+
+.bmi-box:nth-child(3) strong {
+  color: #a45a16;
 }
 
 .bmi-box small {
-  font-size: 11px;
   color: #536783;
+
+  font-size: 9px;
+  line-height: 1.25;
+  text-align: center;
 }
 
 .bmi-date {
-  font-size: 12px;
+  margin: 7px 0 0;
+
   color: #65758c;
-  margin-bottom: 0;
+
+  font-size: 10px;
 }
 
-/* PAPARAN KALENDAR */
 
-.diari-calendar-heading,
-.diari-entry-heading {
+/* ==========================================
+   KALENDAR - KAD
+========================================== */
+
+.diari-calendar-card {
+  height: auto;
+  min-height: 0;
+
+  border-top-color: #169b83;
+}
+
+
+/* ==========================================
+   BUTANG HARI INI
+========================================== */
+
+.diari-calendar-heading {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  gap: 10px;
+
+  gap: 8px;
+
+  margin: 0 0 8px;
 }
 
-.diari-calendar-heading h2,
-.diari-entry-heading h2 {
+.diari-today {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 auto;
+
+  width: auto;
+  min-width: 65px;
+  height: 28px;
+
   margin: 0;
-}
+  padding: 5px 10px;
 
-.diari-today,
-.diari-add {
-  border: none;
-  background: #173b76;
-  color: #ffffff;
-  border-radius: 9px;
-  padding: 10px 13px;
-  font-weight: bold;
+  background: #eaf2ff;
+  color: #173b76;
+
+  border: 1px solid #cbdcf4;
+  border-radius: 6px;
+
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+
   cursor: pointer;
 }
 
+
+/* ==========================================
+   PILIHAN HARIAN / MINGGUAN / BULANAN
+========================================== */
+
 .diari-view-tabs {
-  display: flex;
-  gap: 7px;
-  margin: 20px 0;
+  width: 100%;
+
+  display: grid;
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 6px;
+
+  margin: 0 0 12px;
 }
 
 .diari-view-tabs button {
-  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
   min-width: 0;
-  padding: 11px 5px;
-  background: #edf3fb;
-  border: 1px solid #d4dfef;
-  border-radius: 9px;
+  min-height: 31px;
+
+  margin: 0;
+  padding: 6px 4px;
+
+  background: #f0f5fd;
   color: #173b76;
-  font-weight: bold;
+
+  border: 1px solid #d4dfef;
+  border-radius: 7px;
+
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.2;
+
   cursor: pointer;
 }
 
 .diari-view-tabs button.active {
-  background: #173b76;
+  background: #244e87;
   color: #ffffff;
+
+  border-color: #244e87;
 }
 
+
+/* ==========================================
+   NAVIGASI BULAN / MINGGU / HARI
+========================================== */
+
 .diari-calendar-nav {
-  display: flex;
+  width: 100%;
+
+  display: grid;
+  grid-template-columns:
+    31px minmax(0, 1fr) 31px;
+
   align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 15px;
+
+  gap: 7px;
+
+  margin: 0 0 11px;
 }
 
 .diari-calendar-nav h3 {
-  font-size: 16px;
+  min-width: 0;
   margin: 0;
+
+  color: #173b76;
+
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.3;
+
   text-align: center;
+  overflow-wrap: anywhere;
 }
 
 .diari-calendar-nav button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 31px;
+  height: 31px;
+
+  margin: 0;
+  padding: 0;
+
   background: #edf3fb;
-  border: none;
-  border-radius: 8px;
-  width: 38px;
-  height: 38px;
-  font-size: 25px;
   color: #173b76;
+
+  border: 1px solid #dce5f2;
+  border-radius: 7px;
+
+  font-size: 21px;
+  line-height: 1;
+
   cursor: pointer;
 }
 
-/* GRID BULANAN */
+
+/* ==========================================
+   TEMPAT KALENDAR
+========================================== */
+
+#diariCalendar {
+  display: block;
+
+  width: 100%;
+  height: auto;
+  min-height: 0;
+
+  margin: 0;
+  padding: 0;
+}
+
+
+/* ==========================================
+   GRID BULANAN
+========================================== */
 
 .diari-month-grid {
   display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 5px;
+
+  grid-template-columns:
+    repeat(7, minmax(0, 1fr));
+
+  column-gap: 0;
+  row-gap: 5px;
+
+  width: 100%;
 }
 
 .diari-weekday {
+  min-width: 0;
+
+  padding: 6px 0;
+
+  color: #536783;
+
+  font-size: 11px;
+  font-weight: 700;
+
   text-align: center;
-  font-size: 12px;
-  font-weight: bold;
-  padding: 8px 0;
 }
 
+
+/* ==========================================
+   KOTAK TARIKH
+========================================== */
+
 .diari-day {
-  min-width: 0;
-  min-height: 72px;
-  border: 1px solid #dce5f2;
-  background: #f7faff;
-  border-radius: 9px;
-  color: #173b76;
-  padding: 8px 3px;
-  cursor: pointer;
+  position: relative;
+
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   justify-content: flex-start;
-  gap: 7px;
+
+  min-width: 0;
+  min-height: 82px;
+
+  margin: 0;
+  padding: 7px 2px 5px;
+
+  gap: 6px;
+
+  background: #f7faff;
+  color: #173b76;
+
+  border: 1px solid #dce5f2;
+  border-radius: 0;
+
+  overflow: visible;
+
+  cursor: pointer;
 }
 
 .diari-day.outside {
-  opacity: 0.38;
+  opacity: 0.4;
 }
 
 .diari-day.today {
-  border: 2px solid #244e87;
+  outline: 2px solid #244e87;
+  outline-offset: -2px;
 }
 
 .diari-day.selected {
-  background: #244e87;
-  color: #ffffff;
+  background: #e4efff;
+  color: #173b76;
+
+  border-color: #244e87;
 }
 
 .diari-day-number {
-  font-size: 13px;
-  font-weight: bold;
+  position: relative;
+  z-index: 2;
+
+  display: block;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  text-align: center;
 }
 
-.diari-dot {
-  width: 7px;
+
+/* ==========================================
+   BAR PERISTIWA BERBILANG HARI
+========================================== */
+
+.diari-event-area {
+  position: relative;
+
+  display: block;
+
+  width: 100%;
+  min-height: 48px;
+}
+
+.diari-event-bar {
+  position: absolute;
+
+  top: calc(
+    var(--diari-event-lane) * 10px
+  );
+
+  left: 2px;
+  right: 2px;
+
   height: 7px;
+
+  background:
+    var(
+      --diari-event-color,
+      #169b83
+    );
+
+  border-radius: 0;
+
+  z-index: 3;
+
+  pointer-events: none;
+}
+
+.diari-event-bar.bar-continue-left {
+  left: -1px;
+}
+
+.diari-event-bar.bar-continue-right {
+  right: -1px;
+}
+
+.diari-event-bar.bar-start {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+.diari-event-bar.bar-end {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+
+/* ==========================================
+   TITIK CATATAN SATU HARI
+========================================== */
+
+.diari-event-dots {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 3px;
+}
+
+.diari-event-dots .diari-dot {
+  display: block;
+
+  width: 6px;
+  height: 6px;
+
+  flex: 0 0 6px;
+
   border-radius: 50%;
-  background: #e36c35;
 }
 
-.diari-day.selected .diari-dot {
-  background: #ffffff;
+.diari-event-more {
+  position: absolute;
+
+  right: 2px;
+  bottom: 0;
+
+  color: #173b76;
+
+  font-size: 9px;
+  font-weight: 700;
 }
 
-/* MINGGUAN / HARIAN */
+
+/* ==========================================
+   MINGGUAN / HARIAN
+========================================== */
 
 .diari-period-list {
   display: grid;
-  gap: 9px;
+  gap: 8px;
 }
 
 .diari-period-day {
+  display: block;
+
   width: 100%;
-  border: 1px solid #dce5f2;
-  border-radius: 10px;
+  min-height: 0;
+
+  padding: 10px 12px;
+
   background: #f7faff;
   color: #173b76;
-  padding: 15px;
+
+  border: 1px solid #dce5f2;
+  border-radius: 9px;
+
   text-align: left;
+
   cursor: pointer;
 }
 
@@ -273,84 +644,324 @@
 
 .diari-period-day strong {
   display: block;
-  margin-bottom: 5px;
-}
 
-.diari-period-day span {
+  margin-bottom: 4px;
+
   font-size: 12px;
 }
 
-/* CATATAN */
+.diari-period-day span {
+  font-size: 11px;
+}
+
+
+/* ==========================================
+   CATATAN DIARI
+========================================== */
+
+.diari-entry-card {
+  border-top-color: #169b83;
+}
 
 .diari-entry-heading {
-  margin-bottom: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  margin: 0 0 10px;
+}
+
+.diari-entry-heading h2 {
+  margin: 0;
 }
 
 .diari-entry-item {
-  background: #f3f7fc;
+  margin: 0 0 8px;
+  padding: 11px 12px;
+
+  background: #f7faff;
+
   border: 1px solid #dce5f2;
-  border-radius: 11px;
-  padding: 15px;
-  margin-bottom: 10px;
+  border-left: 3px solid #169b83;
+  border-radius: 9px;
 }
 
 .diari-entry-item h3 {
-  font-size: 16px;
-  margin: 0 0 9px;
+  margin: 0 0 6px;
+
+  color: #173b76;
+
+  font-size: 14px;
+  line-height: 1.4;
+
+  overflow-wrap: anywhere;
 }
 
 .diari-entry-item p {
-  margin: 5px 0;
-  font-size: 13px;
+  margin: 3px 0;
+
+  color: #173b76;
+
+  font-size: 12px;
+  line-height: 1.5;
+
   overflow-wrap: anywhere;
   white-space: pre-wrap;
 }
 
 .diari-empty {
-  text-align: center;
-  padding: 22px;
+  margin: 0;
+
+  padding: 13px;
+
+  background: #f3f7fc;
   color: #65758c;
-  background: #f7faff;
-  border-radius: 10px;
+
+  border-radius: 9px;
+
+  font-size: 12px;
+
+  text-align: center;
 }
 
-/* BORANG */
+
+/* ==========================================
+   BUTANG EDIT / PADAM
+========================================== */
+
+.diari-entry-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 7px;
+
+  margin-top: 10px;
+}
+
+.diari-entry-edit,
+.diari-entry-delete {
+  width: auto;
+  min-width: 55px;
+
+  padding: 6px 9px;
+
+  border-radius: 7px;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.diari-entry-edit {
+  background: #e7f0ff;
+  color: #173b76;
+
+  border: 1px solid #b8d0f5;
+}
+
+.diari-entry-delete {
+  background: #fff0f0;
+  color: #b42318;
+
+  border: 1px solid #f3b5b5;
+}
+
+.diari-entry-edit:active,
+.diari-entry-delete:active {
+  transform: scale(0.96);
+}
+
+
+/* ==========================================
+   BUTANG + TAMBAH CATATAN
+========================================== */
+
+.diari-add-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 5px;
+
+  margin-top: 12px;
+  padding-top: 12px;
+
+  border-top: 1px solid #e5ecf5;
+}
+
+.diari-add-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 auto;
+
+  width: 38px;
+  height: 38px;
+
+  margin: 0;
+  padding: 0;
+
+  background: #173b76;
+  color: #ffffff;
+
+  border: 1px solid #315b92;
+  border-radius: 50%;
+
+  box-shadow:
+    0 3px 8px rgba(23, 59, 118, 0.18);
+
+  font-size: 27px;
+  font-weight: 400;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.diari-add-circle:hover {
+  background: #244e87;
+  transform: translateY(-1px);
+}
+
+.diari-add-circle:active {
+  transform: scale(0.95);
+}
+
+.diari-add-circle:focus-visible {
+  outline: 3px solid #c49a45;
+  outline-offset: 3px;
+}
+
+.diari-add-caption {
+  color: #65758c;
+
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+
+/* ==========================================
+   BORANG
+========================================== */
+
+.diari-form-card {
+  border-top-color: #c49a45;
+}
+
+#diariForm {
+  display: block;
+}
 
 #diariForm label {
   display: block;
-  margin: 15px 0 7px;
-  font-weight: bold;
-  font-size: 14px;
+
+  margin: 11px 0 5px;
+
+  color: #173b76;
+
+  font-size: 12px;
+  font-weight: 700;
 }
 
 #diariForm input,
 #diariForm select,
 #diariForm textarea {
+  display: block;
+
   width: 100%;
-  border: 1px solid #cbd8ea;
-  border-radius: 10px;
-  padding: 12px;
-  font: inherit;
+  min-width: 0;
+
+  margin: 0;
+  padding: 10px;
+
   background: #ffffff;
   color: #173b76;
+
+  border: 1px solid #cbd8ea;
+  border-radius: 8px;
+
+  font-family: inherit;
+  font-size: 13px;
 }
 
 #diariForm textarea {
+  min-height: 75px;
   resize: vertical;
 }
 
+#diariForm input:focus,
+#diariForm select:focus,
+#diariForm textarea:focus {
+  outline: 2px solid #b8d0f5;
+  outline-offset: 1px;
+
+  border-color: #244e87;
+}
+
+
+/* ==========================================
+   TARIKH MULA / TAMAT
+========================================== */
+
+.diari-date-range {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 10px;
+}
+
+.diari-date-field {
+  min-width: 0;
+}
+
+.diari-date-field input {
+  width: 100%;
+  min-width: 0;
+}
+
+.diari-date-hint {
+  margin: 5px 0 0;
+
+  color: #65758c;
+
+  font-size: 10px;
+}
+
+
+/* ==========================================
+   BUTANG BORANG
+========================================== */
+
 .diari-form-actions {
   display: flex;
-  gap: 10px;
-  margin-top: 20px;
+  gap: 9px;
+
+  margin-top: 15px;
 }
 
 .diari-form-actions button {
   flex: 1;
-  padding: 13px 8px;
+
+  min-width: 0;
+
+  padding: 10px 7px;
+
   border: none;
-  border-radius: 10px;
-  font-weight: bold;
+  border-radius: 8px;
+
+  font-size: 12px;
+  font-weight: 700;
+
   cursor: pointer;
 }
 
@@ -364,12 +975,26 @@
   color: #173b76;
 }
 
+.diari-save:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+
+/* ==========================================
+   MESEJ
+========================================== */
+
 .diari-message {
-  padding: 14px;
-  border-radius: 10px;
+  margin-bottom: 15px;
+  padding: 12px;
+
   background: #fff5e8;
   color: #8b4513;
-  margin-bottom: 20px;
+
+  border-radius: 9px;
+
+  font-size: 12px;
 }
 
 .diari-message.success {
@@ -377,120 +1002,193 @@
   color: #16613c;
 }
 
-[hidden] {
-  display: none !important;
-}
 
-/* TELEFON */
+/* ==========================================
+   PAPARAN TELEFON
+========================================== */
 
 @media (max-width: 480px) {
 
   .diari-shell {
-    padding: 0 10px 30px;
+    padding:
+      0 8px 25px;
+  }
+
+  .diari-shell .paspa-top-nav {
+    width: calc(100% + 16px);
+
+    margin-left: -8px;
+    margin-right: -8px;
+
+    padding: 0 12px;
+  }
+
+  .diari-logo {
+    padding: 6px 0 7px;
+  }
+
+  .diari-logo img {
+    width: min(115px, 35%);
   }
 
   .diari-card {
-    padding: 15px;
-  }
-
-  .diari-day {
-    min-height: 58px;
-    padding: 7px 2px;
-  }
-
-  .diari-month-grid {
-    gap: 3px;
-  }
-
-  .diari-day-number {
-    font-size: 12px;
-  }
-
-  .bmi-box strong {
-    font-size: 21px;
+    padding: 12px;
+    margin-bottom: 9px;
   }
 
   .diari-card h2 {
-    font-size: 17px;
+    font-size: 14px;
   }
 
-}
-/* TAJUK HEADER DIARI PASPA */
+  .bmi-box {
+    min-height: 58px;
+    padding: 6px 3px;
+  }
 
-.diari-nav h1 {
-  color: #ffffff !important;
-  font-size: 19px;
-  font-weight: 700;
-  text-align: center;
-  white-space: nowrap;
-  margin: 0;
+  .bmi-box strong {
+    font-size: 18px;
+  }
+
+  .diari-view-tabs {
+    gap: 5px;
+  }
+
+  .diari-view-tabs button {
+    min-height: 30px;
+
+    padding: 6px 3px;
+
+    font-size: 10px;
+  }
+
+  .diari-calendar-nav h3 {
+    font-size: 13px;
+  }
+
+  .diari-day {
+    min-height: 76px;
+
+    padding: 6px 1px 4px;
+
+    gap: 5px;
+  }
+
+  .diari-day-number {
+    font-size: 11px;
+  }
+
+  .diari-event-area {
+    min-height: 48px;
+  }
+
+  .diari-event-bar {
+    height: 7px;
+  }
+
+  .diari-add-circle {
+    width: 36px;
+    height: 36px;
+
+    font-size: 25px;
+  }
+
+  .diari-date-range {
+    gap: 7px;
+  }
+
+  #diariForm input,
+  #diariForm select,
+  #diariForm textarea {
+    padding: 9px 7px;
+    font-size: 12px;
+  }
+
 }
 
 
 /* ==========================================
-   HEADER DIARI - SERAGAM DENGAN INVENTORI
+   TELEFON SANGAT KECIL
 ========================================== */
 
-.diari-shell .paspa-top-nav {
-  width: 100%;
-  min-height: 62px;
+@media (max-width: 360px) {
+
+  .diari-shell .paspa-nav-title {
+    font-size: 16px;
+  }
+
+  .diari-card {
+    padding: 10px;
+  }
+
+  .diari-calendar-nav h3 {
+    font-size: 12px;
+  }
+
+  .diari-day {
+    min-height: 72px;
+  }
+
+  .diari-day-number {
+    font-size: 10px;
+  }
+
+}
+
+/* ==========================================
+   HARI INI + 3 BUTANG KALENDAR SEBARIS
+========================================== */
+/* ==========================================
+   4 BUTANG KALENDAR SAMA SAIZ
+========================================== */
+
+.diari-calendar-toolbar {
   display: grid;
-  grid-template-columns: 44px minmax(0, 1fr) 44px;
-  align-items: center;
-  background: #244e87;
-  padding: 0 15px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 6px;
+
+  width: 100%;
+  margin-bottom: 12px;
 }
 
-.diari-shell .paspa-nav-title {
-  color: #ffffff !important;
-  font-size: 19px;
-  font-weight: 700;
-  text-align: center;
-  white-space: nowrap;
+/* Jadikan tiga butang kanan sebahagian
+   daripada grid yang sama */
+
+.diari-calendar-toolbar .diari-view-tabs {
+  display: contents;
+}
+
+/* Samakan semua butang */
+
+.diari-calendar-toolbar .diari-today,
+.diari-calendar-toolbar .diari-view-tabs button {
+  width: 100%;
+  min-width: 0;
+  min-height: 31px;
+  height: 31px;
+
   margin: 0;
+  padding: 5px 3px;
+
+  border-radius: 7px;
+
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+
+  white-space: nowrap;
+  text-align: center;
 }
 
-.diari-shell .paspa-nav-button {
-  color: #ffffff;
-  background: transparent;
-  border: none;
-  font-size: 25px;
-  cursor: pointer;
-  padding: 0;
-}
+/* Telefon kecil */
 
-.diari-shell #diariBack {
-  justify-self: start;
-}
-
-.diari-shell #diariHome {
-  justify-self: end;
-}
-
-/* ==========================================
-   HEADER DIARI - PENUH KIRI DAN KANAN
-========================================== */
-
-.diari-shell .paspa-top-nav {
-  width: calc(100% + 32px);
-  margin-left: -16px;
-  margin-right: -16px;
-
-  background: #244e87;
-  border-radius: 0;
-
-  min-height: 62px;
-  padding: 0 16px;
-}
-
-/* PAPARAN TELEFON */
-
-@media (max-width: 480px) {
-
-  .diari-shell .paspa-top-nav {
-    width: calc(100% + 20px);
-    margin-left: -10px;
-    margin-right: -10px;
+@media (max-width: 360px) {
+  .diari-calendar-toolbar {
+    gap: 4px;
   }
 
+  .diari-calendar-toolbar .diari-today,
+  .diari-calendar-toolbar .diari-view-tabs button {
+    font-size: 9px;
+  }
 }

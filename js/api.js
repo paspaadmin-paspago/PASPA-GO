@@ -1,33 +1,55 @@
 "use strict";
 
+/* =====================================================
+   PASPA GO - API CLIENT
+===================================================== */
+
 async function apiPost(payload) {
 
-  if (!CONFIG.API_URL) {
+  /* ===================================================
+     SEMAK KONFIGURASI
+  =================================================== */
+
+  const apiUrl = String(
+    CONFIG.API_URL || ""
+  ).trim();
+
+  if (!apiUrl) {
+
     throw new Error(
       "API URL belum dikonfigurasi."
     );
+
   }
 
+  /* ===================================================
+     URL REQUEST
+  =================================================== */
 
   const requestUrl =
-    CONFIG.API_URL +
+    apiUrl +
     (
-      CONFIG.API_URL.includes("?")
+      apiUrl.includes("?")
         ? "&"
         : "?"
     ) +
     "_ts=" +
     Date.now();
 
+  /* ===================================================
+     HANTAR REQUEST
+  =================================================== */
 
-  const response =
-    await fetch(
+  let response;
+
+  try {
+
+    response = await fetch(
       requestUrl,
       {
+
         method: "POST",
 
-        // Gunakan text/plain supaya
-        // tidak mencetuskan CORS preflight.
         headers: {
           "Content-Type":
             "text/plain;charset=utf-8"
@@ -41,13 +63,54 @@ async function apiPost(payload) {
         redirect: "follow",
 
         cache: "no-store"
+
       }
     );
 
+  } catch (error) {
 
-  const responseText =
-    await response.text();
+    console.error(
+      "PASPA GO API FETCH ERROR:",
+      error
+    );
 
+    throw new Error(
+      "Sambungan API terganggu atau respons " +
+      "disekat oleh browser. " +
+      "Semak Google Sheets sebelum cuba simpan semula."
+    );
+
+  }
+
+  /* ===================================================
+     BACA RESPONSE
+  =================================================== */
+
+  let responseText;
+
+  try {
+
+    responseText =
+      await response.text();
+
+  } catch (error) {
+
+    console.error(
+      "PASPA GO API RESPONSE ERROR:",
+      error
+    );
+
+    throw new Error(
+      "Respons API tidak dapat dibaca. " +
+      "Semak sama ada rekod telah disimpan " +
+      "sebelum mencuba semula."
+    );
+
+  }
+
+  /* ===================================================
+     SEMAK STATUS HTTP
+  =================================================== */
 
   if (!response.ok) {
 
@@ -62,11 +125,16 @@ async function apiPost(payload) {
     );
 
     throw new Error(
-      `Server memberikan status ${response.status}.`
+      "Server memberikan status " +
+      response.status +
+      "."
     );
 
   }
 
+  /* ===================================================
+     TUKAR RESPONSE KEPADA JSON
+  =================================================== */
 
   try {
 
@@ -77,7 +145,7 @@ async function apiPost(payload) {
   } catch (error) {
 
     console.error(
-      "Respons server:",
+      "RESPONS SERVER:",
       responseText
     );
 

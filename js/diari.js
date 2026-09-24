@@ -9,7 +9,8 @@ const diaryState = {
   view: "month",
   selectedDate: new Date(),
   records: [],
-  loading: false
+  loading: false,
+  editingDiaryId: null
 };
 
 
@@ -357,6 +358,10 @@ async function loadDiaryCalendar() {
    KIRA CATATAN TARIKH
 ===================================================== */
 
+/* =====================================================
+   CATATAN BAGI SETIAP TARIKH DALAM JULAT
+===================================================== */
+
 function diaryRecordsForDate(date) {
 
   const key = diaryDateKey(date);
@@ -364,7 +369,24 @@ function diaryRecordsForDate(date) {
   return diaryState.records.filter(
     function (record) {
 
-      return record.tarikh === key;
+      const mula = String(
+        record.tarikh || ""
+      ).trim();
+
+      const tamat = String(
+        record.tarikhTamat ||
+        record.tarikh ||
+        ""
+      ).trim();
+
+      if (!mula) {
+        return false;
+      }
+
+      return (
+        key >= mula &&
+        key <= tamat
+      );
 
     }
   );
@@ -372,8 +394,146 @@ function diaryRecordsForDate(date) {
 }
 
 
+
+/* =====================================================
+   WARNA BAR PERISTIWA DIARI
+===================================================== */
+
+const DIARY_EVENT_COLORS = [
+  "#169B83",
+  "#E38B32",
+  "#7955C7",
+  "#2774C7",
+  "#D65C83",
+  "#698D2F",
+  "#B65B43",
+  "#168DA5"
+];
+
+
+/* =====================================================
+   WARNA TETAP BERDASARKAN DIARY_ID
+===================================================== */
+
+function diaryEventColor(record) {
+
+  const id = String(
+    record.diaryId ||
+    record.perkara ||
+    ""
+  );
+
+  let hash = 0;
+
+  for (
+    let i = 0;
+    i < id.length;
+    i++
+  ) {
+
+    hash =
+      (
+        hash * 31 +
+        id.charCodeAt(i)
+      ) >>> 0;
+
+  }
+
+  return DIARY_EVENT_COLORS[
+    hash % DIARY_EVENT_COLORS.length
+  ];
+
+}
+
+
+/* =====================================================
+   SEMAK PERISTIWA BERBILANG HARI
+===================================================== */
+
+function diaryIsMultiDay(record) {
+
+  return Boolean(
+    record.tarikh &&
+    record.tarikhTamat &&
+    record.tarikhTamat >
+      record.tarikh
+  );
+
+}
+
+
+/* =====================================================
+   SUSUN BAR SUPAYA TIDAK BERTINDIH
+===================================================== */
+
+function diaryBuildEventLanes() {
+
+  const events =
+    diaryState.records
+      .filter(diaryIsMultiDay)
+      .slice()
+      .sort(function (a, b) {
+
+        return (
+          a.tarikh.localeCompare(
+            b.tarikh
+          ) ||
+
+          b.tarikhTamat.localeCompare(
+            a.tarikhTamat
+          ) ||
+
+          String(
+            a.diaryId || ""
+          ).localeCompare(
+            String(
+              b.diaryId || ""
+            )
+          )
+        );
+
+      });
+
+  const laneEnds = [];
+
+  const eventLanes = new Map();
+
+  events.forEach(
+    function (record) {
+
+      let lane = 0;
+
+      while (
+        lane < laneEnds.length &&
+        laneEnds[lane] >=
+          record.tarikh
+      ) {
+
+        lane++;
+
+      }
+
+      laneEnds[lane] =
+        record.tarikhTamat;
+
+      eventLanes.set(
+        record.diaryId,
+        lane
+      );
+
+    }
+  );
+
+  return eventLanes;
+
+}
+
 /* =====================================================
    PILIH TARIKH
+===================================================== */
+
+/* =====================================================
+   PILIH TARIKH TANPA BUKA BORANG
 ===================================================== */
 
 function selectDiaryDate(date) {
@@ -387,10 +547,6 @@ function selectDiaryDate(date) {
     );
 
   renderDiaryCalendar();
-
-  renderDiaryEntries();
-
-  openDiaryForm();
 
 }
 
@@ -444,6 +600,10 @@ function renderDiaryPeriodTitle() {
 
 /* =====================================================
    BULANAN
+===================================================== */
+
+/* =====================================================
+   KALENDAR BULANAN - BAR BERBILANG HARI
 ===================================================== */
 
 function renderDiaryMonth() {
@@ -507,7 +667,8 @@ function renderDiaryMonth() {
       heading.className =
         "diari-weekday";
 
-      heading.textContent = day;
+      heading.textContent =
+        day;
 
       grid.appendChild(
         heading
@@ -517,10 +678,19 @@ function renderDiaryMonth() {
   );
 
   const todayKey =
-    diaryDateKey(new Date());
+    diaryDateKey(
+      new Date()
+    );
 
   const selectedKey =
-    diaryDateKey(selected);
+    diaryDateKey(
+      selected
+    );
+
+  const eventLanes =
+    diaryBuildEventLanes();
+
+  const MAX_VISIBLE_LANES = 4;
 
   for (
     let index = 0;
@@ -537,13 +707,27 @@ function renderDiaryMonth() {
     const key =
       diaryDateKey(date);
 
-    const button =
-      document.createElement("button");
+    const records =
+      diaryRecordsForDate(date);
 
-    button.type = "button";
+    const button =
+      document.createElement(
+        "button"
+      );
+
+    button.type =
+      "button";
 
     button.className =
       "diari-day";
+
+    button.setAttribute(
+      "aria-label",
+      diaryLongDate(date) +
+      ", " +
+      records.length +
+      " catatan"
+    );
 
     if (
       date.getMonth() !==
@@ -556,7 +740,9 @@ function renderDiaryMonth() {
 
     }
 
-    if (key === todayKey) {
+    if (
+      key === todayKey
+    ) {
 
       button.classList.add(
         "today"
@@ -564,7 +750,9 @@ function renderDiaryMonth() {
 
     }
 
-    if (key === selectedKey) {
+    if (
+      key === selectedKey
+    ) {
 
       button.classList.add(
         "selected"
@@ -572,8 +760,12 @@ function renderDiaryMonth() {
 
     }
 
+    /* NOMBOR TARIKH */
+
     const number =
-      document.createElement("span");
+      document.createElement(
+        "span"
+      );
 
     number.className =
       "diari-day-number";
@@ -585,27 +777,269 @@ function renderDiaryMonth() {
       number
     );
 
+    /* KAWASAN BAR */
+
+    const eventArea =
+      document.createElement(
+        "div"
+      );
+
+    eventArea.className =
+      "diari-event-area";
+
+    const multiDayRecords =
+      records.filter(
+        diaryIsMultiDay
+      );
+
+    const singleDayRecords =
+      records.filter(
+        function (record) {
+
+          return !diaryIsMultiDay(
+            record
+          );
+
+        }
+      );
+
+    /* BAR BERBILANG HARI */
+
+    const visibleEvents =
+      multiDayRecords
+        .map(function (record) {
+
+          return {
+            record: record,
+            lane:
+              eventLanes.get(
+                record.diaryId
+              ) ?? 0
+          };
+
+        })
+        .filter(
+          function (event) {
+
+            return (
+              event.lane <
+              MAX_VISIBLE_LANES
+            );
+
+          }
+        );
+
+    visibleEvents.forEach(
+      function (event) {
+
+        const record =
+          event.record;
+
+        const lane =
+          event.lane;
+
+        const bar =
+          document.createElement(
+            "span"
+          );
+
+        bar.className =
+          "diari-event-bar";
+
+        bar.style.setProperty(
+          "--diari-event-color",
+          diaryEventColor(
+            record
+          )
+        );
+
+        bar.style.setProperty(
+          "--diari-event-lane",
+          lane
+        );
+
+        /* MULA BAR */
+
+        const isStart =
+          key === record.tarikh;
+
+        /* TAMAT BAR */
+
+        const isEnd =
+          key ===
+          record.tarikhTamat;
+
+        /* SEMPADAN MINGGU */
+
+        const weekdayIndex =
+          index % 7;
+
+        const isWeekStart =
+          weekdayIndex === 0;
+
+        const isWeekEnd =
+          weekdayIndex === 6;
+
+        if (
+          isStart ||
+          isWeekStart
+        ) {
+
+          bar.classList.add(
+            "bar-start"
+          );
+
+        }
+
+        if (
+          isEnd ||
+          isWeekEnd
+        ) {
+
+          bar.classList.add(
+            "bar-end"
+          );
+
+        }
+
+        if (
+          !isStart &&
+          !isWeekStart
+        ) {
+
+          bar.classList.add(
+            "bar-continue-left"
+          );
+
+        }
+
+        if (
+          !isEnd &&
+          !isWeekEnd
+        ) {
+
+          bar.classList.add(
+            "bar-continue-right"
+          );
+
+        }
+
+        bar.title =
+          record.perkara +
+          " (" +
+          record.tarikh +
+          " hingga " +
+          record.tarikhTamat +
+          ")";
+
+        eventArea.appendChild(
+          bar
+        );
+
+      }
+    );
+
+    /* TITIK UNTUK CATATAN SATU HARI */
+
     if (
-      diaryRecordsForDate(date).length
+      singleDayRecords.length
     ) {
 
-      const dot =
-        document.createElement("span");
+      const dots =
+        document.createElement(
+          "div"
+        );
 
-      dot.className =
-        "diari-dot";
+      dots.className =
+        "diari-event-dots";
 
-      button.appendChild(
-        dot
+      singleDayRecords
+        .slice(0, 3)
+        .forEach(
+          function (record) {
+
+            const dot =
+              document.createElement(
+                "span"
+              );
+
+            dot.className =
+              "diari-dot";
+
+            dot.style.background =
+              diaryEventColor(
+                record
+              );
+
+            dot.title =
+              record.perkara;
+
+            dots.appendChild(
+              dot
+            );
+
+          }
+        );
+
+      eventArea.appendChild(
+        dots
       );
 
     }
+
+    /* BILANGAN PERISTIWA TERSEMBUNYI */
+
+    const hiddenCount =
+      multiDayRecords.filter(
+        function (record) {
+
+          return (
+            (
+              eventLanes.get(
+                record.diaryId
+              ) ?? 0
+            ) >=
+            MAX_VISIBLE_LANES
+          );
+
+        }
+      ).length;
+
+    if (
+      hiddenCount > 0
+    ) {
+
+      const more =
+        document.createElement(
+          "span"
+        );
+
+      more.className =
+        "diari-event-more";
+
+      more.textContent =
+        "+" +
+        hiddenCount;
+
+      eventArea.appendChild(
+        more
+      );
+
+    }
+
+    button.appendChild(
+      eventArea
+    );
+
+    /* KLIK TARIKH */
 
     button.addEventListener(
       "click",
       function () {
 
-        selectDiaryDate(date);
+        selectDiaryDate(
+          date
+        );
 
       }
     );
@@ -757,6 +1191,10 @@ function renderDiaryCalendar() {
    CATATAN TARIKH DIPILIH
 ===================================================== */
 
+/* =====================================================
+   CATATAN TARIKH DIPILIH
+===================================================== */
+
 function renderDiaryEntries() {
 
   const date =
@@ -816,6 +1254,68 @@ function renderDiaryEntries() {
           ) +
         "</p>";
 
+      /* BUTANG TINDAKAN */
+
+      const actions =
+        document.createElement("div");
+
+      actions.className =
+        "diari-entry-actions";
+
+      const editButton =
+        document.createElement("button");
+
+      editButton.type =
+        "button";
+
+      editButton.className =
+        "diari-entry-edit";
+
+      editButton.textContent =
+        "✏️ Edit";
+
+      const deleteButton =
+        document.createElement("button");
+
+      deleteButton.type =
+        "button";
+
+      deleteButton.className =
+        "diari-entry-delete";
+
+      deleteButton.textContent =
+        "🗑️ Padam";
+
+      editButton.addEventListener(
+        "click",
+        function () {
+
+          editDiaryEntry(record);
+
+        }
+      );
+
+      deleteButton.addEventListener(
+        "click",
+        function () {
+
+          deleteDiaryEntry(record);
+
+        }
+      );
+
+      actions.appendChild(
+        editButton
+      );
+
+      actions.appendChild(
+        deleteButton
+      );
+
+      item.appendChild(
+        actions
+      );
+
       diaryEntryList.appendChild(
         item
       );
@@ -832,6 +1332,9 @@ function renderDiaryEntries() {
 
 function openDiaryForm() {
 
+  diaryState.editingDiaryId =
+    null;
+
   diaryForm.reset();
 
   document.getElementById(
@@ -841,11 +1344,31 @@ function openDiaryForm() {
       diaryState.selectedDate
     );
 
+document.getElementById(
+  "diariTarikhTamat"
+).value = "";
+
+
   document.getElementById(
     "diariOtherWrap"
   ).hidden = true;
 
-  diaryFormSection.hidden = false;
+  document.getElementById(
+    "diariOther"
+  ).required = false;
+
+  diaryFormSection.querySelector(
+    "h2"
+  ).textContent =
+    "Tambah Catatan Diari";
+
+  document.getElementById(
+    "diariSave"
+  ).textContent =
+    "SIMPAN";
+
+  diaryFormSection.hidden =
+    false;
 
   diaryFormSection.scrollIntoView({
     behavior: "smooth",
@@ -861,13 +1384,267 @@ function openDiaryForm() {
 
 function closeDiaryForm() {
 
-  diaryFormSection.hidden = true;
+  diaryState.editingDiaryId =
+    null;
+
+  diaryFormSection.hidden =
+    true;
 
   diaryForm.reset();
+
+  document.getElementById(
+    "diariOtherWrap"
+  ).hidden = true;
+
+  document.getElementById(
+    "diariOther"
+  ).required = false;
+
+  diaryFormSection.querySelector(
+    "h2"
+  ).textContent =
+    "Tambah Catatan Diari";
+
+  document.getElementById(
+    "diariSave"
+  ).textContent =
+    "SIMPAN";
+
+}
+/* =====================================================
+   EDIT CATATAN DIARI
+===================================================== */
+
+function editDiaryEntry(record) {
+
+  if (
+    !record ||
+    !record.diaryId
+  ) {
+
+    showDiaryMessage(
+      "ID catatan tidak ditemui.",
+      false
+    );
+
+    return;
+
+  }
+
+  hideDiaryMessage();
+
+  diaryState.editingDiaryId =
+    record.diaryId;
+
+  diaryForm.reset();
+
+  document.getElementById(
+    "diariTarikh"
+  ).value =
+    record.tarikh || "";
+
+
+    document.getElementById(
+  "diariTarikhTamat"
+).value =
+  record.tarikhTamat ||
+  record.tarikh ||
+  "";
+
+  document.getElementById(
+    "diariPerkara"
+  ).value =
+    record.perkara || "";
+
+  const jenisSelect =
+    document.getElementById(
+      "diariJenis"
+    );
+
+  const otherWrap =
+    document.getElementById(
+      "diariOtherWrap"
+    );
+
+  const otherInput =
+    document.getElementById(
+      "diariOther"
+    );
+
+  const existingOptions =
+    Array.from(
+      jenisSelect.options
+    ).map(
+      function (option) {
+        return option.value;
+      }
+    );
+
+  if (
+    existingOptions.includes(
+      record.jenis
+    )
+  ) {
+
+    jenisSelect.value =
+      record.jenis || "";
+
+    otherWrap.hidden = true;
+
+    otherInput.required = false;
+
+    otherInput.value = "";
+
+  } else {
+
+    jenisSelect.value =
+      "Lain-lain";
+
+    otherWrap.hidden = false;
+
+    otherInput.required = true;
+
+    otherInput.value =
+      record.jenis || "";
+
+  }
+
+  document.getElementById(
+    "diariMasa"
+  ).value =
+    record.masa || "";
+
+  document.getElementById(
+    "diariCatatan"
+  ).value =
+    record.catatan || "";
+
+  diaryFormSection.querySelector(
+    "h2"
+  ).textContent =
+    "Edit Catatan Diari";
+
+  document.getElementById(
+    "diariSave"
+  ).textContent =
+    "SIMPAN PERUBAHAN";
+
+  diaryFormSection.hidden =
+    false;
+
+  diaryFormSection.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
 
 }
 
 
+/* =====================================================
+   PADAM CATATAN DIARI
+===================================================== */
+
+async function deleteDiaryEntry(record) {
+
+  if (
+    !record ||
+    !record.diaryId
+  ) {
+
+    showDiaryMessage(
+      "ID catatan tidak ditemui.",
+      false
+    );
+
+    return;
+
+  }
+
+  const confirmed =
+    window.confirm(
+      'Padam catatan "' +
+      record.perkara +
+      '"?\n\n' +
+      "Tindakan ini tidak boleh dibatalkan."
+    );
+
+  if (!confirmed) {
+    return;
+  }
+
+  const email =
+    diarySessionEmail();
+
+  if (!email) {
+
+    window.location.href =
+      "../index.html";
+
+    return;
+
+  }
+
+  hideDiaryMessage();
+
+  try {
+
+    const result =
+      await apiPost({
+
+        action:
+          "diary_calendar_delete",
+
+        email: email,
+
+        diaryId:
+          record.diaryId
+
+      });
+
+    if (
+      !result ||
+      result.success !== true
+    ) {
+
+      throw new Error(
+        result?.message ||
+        "Catatan gagal dipadam."
+      );
+
+    }
+
+    if (
+      diaryState.editingDiaryId ===
+      record.diaryId
+    ) {
+
+      closeDiaryForm();
+
+    }
+
+    await loadDiaryCalendar();
+
+    showDiaryMessage(
+      "Catatan berjaya dipadam.",
+      true
+    );
+
+  } catch (error) {
+
+    console.error(
+      "DELETE DIARY ERROR:",
+      error
+    );
+
+    showDiaryMessage(
+      error.message ||
+      "Ralat memadam catatan.",
+      false
+    );
+
+  }
+
+}
 /* =====================================================
    SIMPAN CATATAN
 ===================================================== */
@@ -903,9 +1680,26 @@ async function saveDiaryEntry(event) {
   const data = {
 
     tarikh:
+    
       document.getElementById(
         "diariTarikh"
       ).value,
+
+
+
+
+
+
+
+
+
+
+
+tarikhTamat:
+  document.getElementById(
+    "diariTarikhTamat"
+  ).value,
+
 
     perkara:
       document.getElementById(
@@ -951,17 +1745,25 @@ async function saveDiaryEntry(event) {
 
   try {
 
-    const result =
-      await apiPost({
+    const editingDiaryId =
+  diaryState.editingDiaryId;
 
-        action:
-          "diary_calendar_create",
+const result =
+  await apiPost({
 
-        email: email,
+    action:
+      editingDiaryId
+        ? "diary_calendar_update"
+        : "diary_calendar_create",
 
-        data: data
+    email: email,
 
-      });
+    diaryId:
+      editingDiaryId || "",
+
+    data: data
+
+  });
 
     if (
       !result ||
@@ -991,9 +1793,11 @@ async function saveDiaryEntry(event) {
     await loadDiaryCalendar();
 
     showDiaryMessage(
-      "Catatan berjaya disimpan.",
-      true
-    );
+  editingDiaryId
+    ? "Catatan berjaya dikemas kini."
+    : "Catatan berjaya disimpan.",
+  true
+);
 
   } catch (error) {
 
@@ -1010,10 +1814,10 @@ async function saveDiaryEntry(event) {
 
   } finally {
 
-    saveButton.disabled = false;
-
     saveButton.textContent =
-      "SIMPAN";
+  diaryState.editingDiaryId
+    ? "SIMPAN PERUBAHAN"
+    : "SIMPAN";
 
   }
 

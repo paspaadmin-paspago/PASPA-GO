@@ -3,7 +3,6 @@
 <html lang="ms">
 
 <head>
-
   <meta charset="UTF-8">
 
   <meta
@@ -22,7 +21,6 @@
     rel="stylesheet"
     href="../css/diari.css"
   >
-
 </head>
 
 <body class="diari-body">
@@ -31,31 +29,27 @@
 
     <!-- HEADER -->
 
-   
-<!-- HEADER SERAGAM PASPA GO -->
+    <nav class="paspa-top-nav">
 
-<nav class="paspa-top-nav">
+      <button
+        type="button"
+        id="diariBack"
+        class="paspa-nav-button"
+        aria-label="Kembali"
+      >←</button>
 
-  <button
-    type="button"
-    id="diariBack"
-    class="paspa-nav-button"
-    aria-label="Kembali"
-  >←</button>
+      <h1 class="paspa-nav-title">
+        Diari PASPA
+      </h1>
 
-  <h1 class="paspa-nav-title">
-    Diari PASPA
-  </h1>
+      <button
+        type="button"
+        id="diariHome"
+        class="paspa-nav-button"
+        aria-label="Dashboard"
+      >🏠</button>
 
-  <button
-    type="button"
-    id="diariHome"
-    class="paspa-nav-button"
-    aria-label="Dashboard"
-  >🏠</button>
-
-</nav>
-
+    </nav>
 
 
     <!-- LOGO -->
@@ -72,7 +66,7 @@
 
     <!-- BMI -->
 
-    <section class="diari-card">
+    <section class="diari-card diari-bmi-card">
 
       <h2>Status BMI Terkini</h2>
 
@@ -104,7 +98,9 @@
 
           <strong id="bmiValue">—</strong>
 
-          <small id="bmiStatus">Tiada rekod</small>
+          <small id="bmiStatus">
+            Tiada rekod
+          </small>
 
         </div>
 
@@ -122,51 +118,47 @@
 
     <!-- KALENDAR -->
 
-    <section class="diari-card">
+    <section class="diari-card diari-calendar-card">
 
-      <div class="diari-calendar-heading">
+      <!-- BUTANG KALENDAR SEBARIS -->
 
-        <h2>Kalendar Diari</h2>
+<div class="diari-calendar-toolbar">
 
-        <button
-          type="button"
-          id="diariToday"
-          class="diari-today"
-        >
-          Hari Ini
-        </button>
+  <button
+    type="button"
+    id="diariToday"
+    class="diari-today"
+  >
+    Hari Ini
+  </button>
 
-      </div>
+  <div class="diari-view-tabs">
 
+    <button
+      type="button"
+      data-view="day"
+    >
+      Harian
+    </button>
 
-      <!-- PILIH PAPARAN -->
+    <button
+      type="button"
+      data-view="week"
+    >
+      Mingguan
+    </button>
 
-      <div class="diari-view-tabs">
+    <button
+      type="button"
+      data-view="month"
+      class="active"
+    >
+      Bulanan
+    </button>
 
-        <button
-          type="button"
-          data-view="day"
-        >
-          Harian
-        </button>
+  </div>
 
-        <button
-          type="button"
-          data-view="week"
-        >
-          Mingguan
-        </button>
-
-        <button
-          type="button"
-          data-view="month"
-          class="active"
-        >
-          Bulanan
-        </button>
-
-      </div>
-
+</div>
 
       <!-- NAVIGASI TARIKH -->
 
@@ -204,21 +196,13 @@
 
     <!-- CATATAN TARIKH DIPILIH -->
 
-    <section class="diari-card">
+    <section class="diari-card diari-entry-card">
 
       <div class="diari-entry-heading">
 
         <h2 id="diariSelectedTitle">
           Catatan Diari
         </h2>
-
-        <button
-          type="button"
-          id="diariAddButton"
-          class="diari-add"
-        >
-          + Tambah
-        </button>
 
       </div>
 
@@ -230,6 +214,27 @@
 
       </div>
 
+
+      <!-- TAMBAH CATATAN -->
+
+      <div class="diari-add-wrap">
+
+        <button
+          type="button"
+          id="diariAddButton"
+          class="diari-add-circle"
+          aria-label="Tambah catatan diari"
+          title="Tambah catatan diari"
+        >
+          +
+        </button>
+
+        <span class="diari-add-caption">
+          Tambah Catatan
+        </span>
+
+      </div>
+
     </section>
 
 
@@ -237,7 +242,7 @@
 
     <section
       id="diariFormSection"
-      class="diari-card"
+      class="diari-card diari-form-card"
       hidden
     >
 
@@ -245,16 +250,43 @@
 
       <form id="diariForm">
 
-        <label for="diariTarikh">
-          Tarikh
-        </label>
+        <!-- TARIKH -->
 
-        <input
-          type="date"
-          id="diariTarikh"
-          required
-        >
+        <div class="diari-date-range">
 
+          <div class="diari-date-field">
+
+            <label for="diariTarikh">
+              Tarikh Mula
+            </label>
+
+            <input
+              type="date"
+              id="diariTarikh"
+              required
+            >
+
+          </div>
+
+          <div class="diari-date-field">
+
+            <label for="diariTarikhTamat">
+              Tarikh Tamat
+            </label>
+
+            <input
+              type="date"
+              id="diariTarikhTamat"
+            >
+
+          </div>
+
+        </div>
+
+        <p class="diari-date-hint"></p>
+
+
+        <!-- PERKARA -->
 
         <label for="diariPerkara">
           Perkara
@@ -268,6 +300,8 @@
           placeholder="Masukkan perkara"
         >
 
+
+        <!-- JENIS -->
 
         <label for="diariJenis">
           Jenis
@@ -298,6 +332,8 @@
         </select>
 
 
+        <!-- JENIS LAIN-LAIN -->
+
         <div
           id="diariOtherWrap"
           hidden
@@ -317,6 +353,8 @@
         </div>
 
 
+        <!-- MASA -->
+
         <label for="diariMasa">
           Masa
         </label>
@@ -327,6 +365,8 @@
           required
         >
 
+
+        <!-- CATATAN -->
 
         <label for="diariCatatan">
           Catatan
@@ -339,6 +379,8 @@
           placeholder="Masukkan catatan"
         ></textarea>
 
+
+        <!-- TINDAKAN -->
 
         <div class="diari-form-actions">
 
@@ -377,6 +419,8 @@
 
   </main>
 
+
+  <!-- JAVASCRIPT -->
 
   <script src="../js/config.js"></script>
 
