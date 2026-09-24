@@ -502,3 +502,98 @@ button:disabled {
   }
 
 }
+/* ==========================================
+   PASPA GO - LOGO SERAGAM HALAMAN DALAMAN
+========================================== */
+
+/* RUANG KHAS UNTUK LOGO */
+
+.paspa-page-logo,
+.profile-logo-section,
+.program-logo-section,
+.operasi-logo-section,
+.inventori-logo-section,
+.diari-logo {
+
+  position: relative !important;
+
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 64px;
+
+  margin: 12px auto 18px !important;
+  padding: 0 !important;
+
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+
+  transform: none !important;
+
+  z-index: 1;
+}
+
+
+/* SAIZ IMEJ LOGO */
+
+.paspa-page-logo img,
+.profile-logo-section .profile-page-logo,
+.program-logo-section .program-page-logo,
+.operasi-logo-section .operasi-page-logo,
+.inventori-logo-section .inventori-page-logo,
+.diari-logo img {
+
+  display: block !important;
+
+  position: static !important;
+
+  width: 190px !important;
+  max-width: 65% !important;
+
+  height: auto !important;
+  max-height: 64px !important;
+
+  margin: 0 auto !important;
+
+  object-fit: contain;
+
+  transform: none !important;
+}
+
+
+/* ==========================================
+   PAPARAN TELEFON
+========================================== */
+
+@media (max-width: 600px) {
+
+  .paspa-page-logo,
+  .profile-logo-section,
+  .program-logo-section,
+  .operasi-logo-section,
+  .inventori-logo-section,
+  .diari-logo {
+
+    height: 54px;
+
+    margin-top: 10px !important;
+    margin-bottom: 16px !important;
+  }
+
+
+  .paspa-page-logo img,
+  .profile-logo-section .profile-page-logo,
+  .program-logo-section .program-page-logo,
+  .operasi-logo-section .operasi-page-logo,
+  .inventori-logo-section .inventori-page-logo,
+  .diari-logo img {
+
+    width: 165px !important;
+    max-height: 54px !important;
+  }
+
+}

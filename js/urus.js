@@ -3262,41 +3262,47 @@ document
    BOTTOM NAVIGATION
 ===================================================== */
 
-document
-  .getElementById(
-    "dashboardButton"
-  )
-  .addEventListener(
-    "click",
-    function () {
+function setupManageBottomNavigation() {
 
-      window.location.href =
-        "dashboard.html";
+  const navPages = {
+
+    profileNavButton: "profile.html",
+
+    onSceneButton: "onscene.html",
+
+    digitalIdNavButton: "idcard.html",
+
+    messageNavButton: "mesej.html",
+
+    settingsButton: "setting.html"
+
+  };
+
+  Object.entries(navPages).forEach(
+    function ([buttonId, page]) {
+
+      const button =
+        document.getElementById(buttonId);
+
+      if (!button) {
+        return;
+      }
+
+      button.addEventListener(
+        "click",
+        function () {
+
+          window.location.href = page;
+
+        }
+      );
 
     }
   );
 
+}
 
-document
-  .getElementById(
-    "messageButton"
-  )
-  .addEventListener(
-    "click",
-    function () {
-
-      window.location.href =
-        "message.html";
-
-    }
-  );
-
-
-/*
-  On Scene dan Tetapan kita kekalkan
-  sementara sehingga nama page
-  sebenar disahkan.
-*/
+setupManageBottomNavigation();
 /* =====================================================
    ANJUR PROGRAM
 ===================================================== */

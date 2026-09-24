@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Pengimbas QR | PASPA GO</title>
+
+  <link
+    rel="stylesheet"
+    href="../css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/qr-scanner.css"
+  >
+</head>
+
+<body class="qr-body">
+
+  <main class="qr-shell">
+
+    <!-- NAVIGASI -->
+
+    <nav class="paspa-top-nav">
+
+      <button
+        type="button"
+        id="qrBackButton"
+        class="paspa-nav-button"
+        aria-label="Kembali ke Dashboard"
+      >
+        ←
+      </button>
+
+      <h1 class="qr-nav-title">
+        Pengimbas QR
+      </h1>
+
+      <button
+        type="button"
+        id="qrHomeButton"
+        class="paspa-nav-button"
+        aria-label="Dashboard"
+      >
+        🏠
+      </button>
+
+    </nav>
+
+    <!-- LOGO -->
+
+    <div class="paspa-page-logo">
+
+      <img
+        src="../images/logo paspa go.png"
+        alt="PASPA GO"
+      >
+
+    </div>
+
+    <!-- KAD PENGIMBAS -->
+
+    <section class="qr-card">
+
+      <h2>Imbas Kod QR</h2>
+
+      <p class="qr-description">
+        Halakan kamera telefon ke kod QR
+        program atau pengenalan PASPA.
+      </p>
+
+      <!-- KAMERA -->
+
+      <div class="qr-camera-box">
+
+        <video
+          id="qrVideo"
+          autoplay
+          muted
+          playsinline
+        ></video>
+
+        <div
+          id="qrCameraPlaceholder"
+          class="qr-camera-placeholder"
+        >
+          <span class="qr-placeholder-icon">
+            ▣
+          </span>
+
+          <p>
+            Kamera belum diaktifkan
+          </p>
+        </div>
+
+        <div
+          id="qrScanFrame"
+          class="qr-scan-frame"
+          hidden
+        >
+          <span class="qr-corner top-left"></span>
+          <span class="qr-corner top-right"></span>
+          <span class="qr-corner bottom-left"></span>
+          <span class="qr-corner bottom-right"></span>
+
+          <div class="qr-scan-line"></div>
+        </div>
+
+      </div>
+
+      <!-- STATUS -->
+
+      <p
+        id="qrStatus"
+        class="qr-status"
+        role="status"
+        aria-live="polite"
+      >
+        Tekan butang di bawah untuk
+        mengaktifkan kamera.
+      </p>
+
+      <!-- BUTANG -->
+
+      <div class="qr-actions">
+
+        <button
+          type="button"
+          id="qrStartButton"
+          class="qr-primary-button"
+        >
+          Buka Kamera
+        </button>
+
+        <button
+          type="button"
+          id="qrStopButton"
+          class="qr-secondary-button"
+          disabled
+        >
+          Tutup Kamera
+        </button>
+
+      </div>
+
+    </section>
+
+    <!-- HASIL IMBASAN -->
+
+    <section
+      id="qrResultCard"
+      class="qr-result-card"
+      hidden
+    >
+
+      <h2>Hasil Imbasan</h2>
+
+      <p id="qrResultType">
+        Kod QR berjaya dibaca.
+      </p>
+
+      <div class="qr-result-value">
+
+        <span>Maklumat QR</span>
+
+        <strong id="qrResultText">
+          -
+        </strong>
+
+      </div>
+
+      <p class="qr-result-note">
+        Imbasan ini belum merekodkan
+        kehadiran secara automatik.
+      </p>
+
+      <button
+        type="button"
+        id="qrScanAgainButton"
+        class="qr-primary-button"
+      >
+        Imbas Semula
+      </button>
+
+    </section>
+
+  </main>
+
+  <!-- PUSTAKA PEMBACA QR -->
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"
+  ></script>
+
+  <!-- JAVASCRIPT PASPA GO -->
+
+  <script src="../js/config.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/qr-scanner.js"></script>
+
+</body>
+
+</html>

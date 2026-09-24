@@ -613,23 +613,39 @@ function updateSettingSelectLabels(
 
   const toneLabels = {
 
-    tone1: isEnglish
-      ? "Sound 1"
-      : "Bunyi 1",
+  tone1: isEnglish
+    ? "Sound 1"
+    : "Bunyi 1",
 
-    tone2: isEnglish
-      ? "Sound 2"
-      : "Bunyi 2",
+  tone2: isEnglish
+    ? "Sound 2"
+    : "Bunyi 2",
 
-    tone3: isEnglish
-      ? "Sound 3"
-      : "Bunyi 3",
+  tone3: isEnglish
+    ? "Sound 3"
+    : "Bunyi 3",
 
-    emergency: isEnglish
-      ? "Emergency Sound"
-      : "Bunyi Kecemasan"
+  emergency: isEnglish
+    ? "Emergency Sound"
+    : "Bunyi Kecemasan",
 
-  };
+  ambulance: isEnglish
+    ? "Ambulance Siren"
+    : "Sirena Ambulans",
+
+  fire: isEnglish
+    ? "Fire Siren"
+    : "Sirena Bomba",
+
+  alarm: isEnglish
+    ? "Emergency Alarm"
+    : "Alarm Kecemasan",
+
+  critical: "Critical Alert",
+
+  dispatch: "Emergency Dispatch"
+
+};
 
   [
     "settingMessageTone",
@@ -959,19 +975,20 @@ function saveSettingNotifications() {
    Bunyi ringkas dijana dalam pelayar.
 ========================================== */
 
-function playSettingTone(
-  tone
-) {
+/* ==========================================
+   PASPA GO - NOTIFICATION SOUND
+========================================== */
+
+function playSettingTone(tone) {
 
   const AudioContextClass =
-
     window.AudioContext ||
     window.webkitAudioContext;
 
   if (!AudioContextClass) {
 
-    showSettingMessage(
-      "Pelayar tidak menyokong pratonton bunyi."
+    console.warn(
+      "Audio tidak disokong oleh pelayar ini."
     );
 
     return;
@@ -981,102 +998,210 @@ function playSettingTone(
   const audio =
     new AudioContextClass();
 
+  /*
+   * Format setiap nota:
+   *
+   * [frekuensi, masa mula, tempoh]
+   *
+   * Frekuensi dalam Hz.
+   * Masa dalam saat.
+   */
+
   const patterns = {
 
+    /* Bunyi mesej biasa */
+
     tone1: [
-      [660, 0.00, 0.16]
+      [660, 0.00, 0.15],
+      [880, 0.20, 0.20]
     ],
 
     tone2: [
-      [520, 0.00, 0.14],
-      [780, 0.19, 0.18]
+      [880, 0.00, 0.12],
+      [660, 0.16, 0.12],
+      [880, 0.32, 0.20]
     ],
 
     tone3: [
-      [880, 0.00, 0.12],
-      [660, 0.16, 0.12],
-      [880, 0.32, 0.16]
+      [523, 0.00, 0.15],
+      [659, 0.20, 0.15],
+      [784, 0.40, 0.25]
     ],
 
+    /* Bunyi kecemasan asal */
+
     emergency: [
-      [720, 0.00, 0.20],
-      [480, 0.25, 0.20],
-      [720, 0.50, 0.20],
-      [480, 0.75, 0.20]
+      [480, 0.00, 0.20],
+      [720, 0.25, 0.20],
+      [480, 0.50, 0.20],
+      [720, 0.75, 0.20]
+    ],
+
+    /* Sirena ambulans dua nada */
+
+    ambulance: [
+      [780, 0.00, 0.42],
+      [520, 0.44, 0.42],
+      [780, 0.88, 0.42],
+      [520, 1.32, 0.42],
+      [780, 1.76, 0.42],
+      [520, 2.20, 0.42]
+    ],
+
+    /* Sirena bomba */
+
+    fire: [
+      [650, 0.00, 0.65],
+      [850, 0.67, 0.65],
+      [650, 1.34, 0.65],
+      [850, 2.01, 0.65]
+    ],
+
+    /* Alarm kecemasan berulang */
+
+    alarm: [
+      [950, 0.00, 0.22],
+      [950, 0.30, 0.22],
+      [950, 0.60, 0.22],
+      [950, 0.90, 0.22],
+      [950, 1.20, 0.22],
+      [950, 1.50, 0.22]
+    ],
+
+    /* Amaran kritikal */
+
+    critical: [
+      [1100, 0.00, 0.18],
+      [880, 0.22, 0.18],
+      [1100, 0.44, 0.18],
+      [880, 0.66, 0.35]
+    ],
+
+    /* Panggilan pusat kawalan */
+
+    dispatch: [
+      [900, 0.00, 0.10],
+      [900, 0.16, 0.10],
+      [650, 0.36, 0.25],
+      [900, 0.72, 0.10],
+      [900, 0.88, 0.10],
+      [650, 1.08, 0.35]
     ]
 
   };
 
-  const pattern =
+  const selectedPattern =
     patterns[tone] ||
     patterns.tone1;
 
-  const start =
-    audio.currentTime + 0.02;
+  const sirenTones = [
+    "ambulance",
+    "fire",
+    "alarm",
+    "critical",
+    "dispatch"
+  ];
 
-  pattern.forEach(function (note) {
+  const isSiren =
+    sirenTones.includes(tone);
 
-    const frequency = note[0];
+  const startTime =
+    audio.currentTime + 0.05;
 
-    const offset = note[1];
+  let totalDuration = 0;
 
-    const duration = note[2];
+  selectedPattern.forEach(
+    function (note) {
 
-    const oscillator =
-      audio.createOscillator();
+      const frequency =
+        note[0];
 
-    const gain =
-      audio.createGain();
+      const delay =
+        note[1];
 
-    oscillator.type = "sine";
+      const duration =
+        note[2];
 
-    oscillator.frequency.value =
-      frequency;
+      const noteStart =
+        startTime + delay;
 
-    oscillator.connect(gain);
+      const noteEnd =
+        noteStart + duration;
 
-    gain.connect(
-      audio.destination
-    );
+      const oscillator =
+        audio.createOscillator();
 
-    const noteStart =
-      start + offset;
+      const gain =
+        audio.createGain();
 
-    const noteEnd =
-      noteStart + duration;
+      /*
+       * Triangle menghasilkan nada
+       * yang lebih menonjol untuk sirena.
+       */
 
-    gain.gain.setValueAtTime(
-      0.0001,
-      noteStart
-    );
+      oscillator.type =
+        isSiren
+          ? "triangle"
+          : "sine";
 
-    gain.gain.exponentialRampToValueAtTime(
-      0.16,
-      noteStart + 0.02
-    );
+      oscillator.frequency.value =
+        frequency;
 
-    gain.gain.exponentialRampToValueAtTime(
-      0.0001,
-      noteEnd
-    );
+      /*
+       * Elakkan bunyi klik pada
+       * permulaan dan pengakhiran nota.
+       */
 
-    oscillator.start(
-      noteStart
-    );
+      gain.gain.setValueAtTime(
+        0.001,
+        noteStart
+      );
 
-    oscillator.stop(
-      noteEnd + 0.01
-    );
+      gain.gain.exponentialRampToValueAtTime(
+        isSiren ? 0.23 : 0.16,
+        noteStart + 0.02
+      );
 
-  });
+      gain.gain.setValueAtTime(
+        isSiren ? 0.23 : 0.16,
+        Math.max(
+          noteStart + 0.02,
+          noteEnd - 0.04
+        )
+      );
 
-  const lastNote =
-    pattern[pattern.length - 1];
+      gain.gain.exponentialRampToValueAtTime(
+        0.001,
+        noteEnd
+      );
 
-  const totalDuration =
-    lastNote[1] +
-    lastNote[2] +
-    0.2;
+      oscillator.connect(gain);
+
+      gain.connect(
+        audio.destination
+      );
+
+      oscillator.start(
+        noteStart
+      );
+
+      oscillator.stop(
+        noteEnd + 0.01
+      );
+
+      totalDuration =
+        Math.max(
+          totalDuration,
+          delay + duration
+        );
+
+    }
+  );
+
+  /*
+   * Tutup AudioContext selepas
+   * semua bunyi selesai.
+   */
 
   window.setTimeout(
     function () {
@@ -1086,11 +1211,10 @@ function playSettingTone(
       );
 
     },
-    totalDuration * 1000
+    (totalDuration + 0.5) * 1000
   );
 
 }
-
 
 /* ==========================================
    BAHASA

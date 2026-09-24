@@ -2337,3 +2337,23 @@ window.setInterval(
   },
   60000
 );
+
+/* ==========================================
+   PASPA GO - QR SCANNER BUTTON
+========================================== */
+
+const qrScannerButton =
+  document.getElementById("qrScannerButton");
+
+if (qrScannerButton) {
+
+  qrScannerButton.addEventListener(
+    "click",
+    function () {
+
+      window.location.href = "qr-scanner.html";
+
+    }
+  );
+
+}

@@ -319,7 +319,7 @@
   border-radius: 18px;
 
   background:
-    rgba(255,255,255,.96);
+    rgba(245, 243, 243, 0.96);
 
   box-shadow:
     0 8px 28px
@@ -1388,4 +1388,53 @@
 
   }
 
+}
+
+/* ==========================================
+   DASHBOARD - QR SCANNER BUTTON
+========================================== */
+
+.qr-scanner-button {
+  position: absolute;
+
+  top: 10px;
+  left: 10px;
+
+  z-index: 102;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 42px;
+  height: 42px;
+  min-height: 42px;
+
+  margin: 0;
+  padding: 0;
+
+  border: none;
+  border-radius: 0;
+
+  background: transparent !important;
+  box-shadow: none !important;
+
+  color: #ffffff !important;
+
+  cursor: pointer;
+}
+
+.qr-scanner-button:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 650px) {
+  .qr-scanner-button {
+    top: 4px;
+    left: 4px;
+
+    width: 42px;
+    height: 42px;
+    min-height: 42px;
+  }
 }
