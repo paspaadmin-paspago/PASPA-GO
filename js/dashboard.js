@@ -2357,3 +2357,16 @@ if (qrScannerButton) {
   );
 
 }
+
+/* =====================================================
+   EDARAN & HEBAHAN
+===================================================== */
+
+const edaranButton =
+  document.getElementById("edaranButton");
+
+if (edaranButton) {
+  edaranButton.addEventListener("click", function () {
+    window.location.href = "edaran.html";
+  });
+}

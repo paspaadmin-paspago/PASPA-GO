@@ -1,0 +1,1517 @@
+
+/* ==========================================
+   PASPA GO - EDARAN & HEBAHAN
+========================================== */
+
+.edaran-page {
+  min-height: 100vh;
+}
+
+.edaran-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: 52px;
+  padding: 6px 14px;
+
+  background: #103a78;
+  color: #ffffff;
+}
+
+.edaran-header h1 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.edaran-header-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 38px;
+  height: 38px;
+  min-height: 38px;
+
+  margin: 0;
+  padding: 0;
+
+  border: none;
+  background: transparent;
+
+  color: #ffffff;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.edaran-content {
+  width: 100%;
+  max-width: 900px;
+
+  margin: 0 auto;
+  padding: 0 14px 45px;
+}
+
+.edaran-card {
+  margin-bottom: 18px;
+  padding: 22px;
+
+  background: rgba(255,255,255,0.97);
+  border-radius: 18px;
+
+  box-shadow:
+    0 12px 30px rgba(0,0,0,0.18);
+}
+
+.edaran-card[hidden],
+.edaran-message[hidden],
+.edaran-owner-actions[hidden] {
+  display: none;
+}
+
+.edaran-section-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.edaran-card h2 {
+  margin: 0 0 8px;
+  color: #103a78;
+  font-size: 21px;
+}
+
+.edaran-section-heading p {
+  color: #526174;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.edaran-add-button {
+  flex: 0 0 46px;
+
+  width: 46px;
+  height: 46px;
+  min-height: 46px;
+
+  margin: 0;
+  padding: 0;
+
+  border-radius: 50%;
+  background: #103a78;
+
+  color: #ffffff;
+  font-size: 30px;
+  line-height: 1;
+}
+
+
+
+
+
+
+
+.edaran-list-item:hover {
+  background: #eef4fb;
+}
+
+.edaran-list-title {
+  display: block;
+
+  margin: 8px 0;
+
+  color: #0e6dfa;
+  font-size: 10px;
+  font-weight: 100;
+}
+
+.edaran-list-meta {
+  color: #64748b;
+  font-size: 12px;
+}
+
+.edaran-type-badge {
+  display: inline-block;
+
+  padding: 5px 9px;
+
+  border-radius: 20px;
+  background: #eaf2ff;
+
+  color: #103a78;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.edaran-card label {
+  display: block;
+
+  margin: 17px 0 7px;
+
+  color: #24364b;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.edaran-card input[type="text"],
+.edaran-card select {
+  width: 100%;
+  min-height: 46px;
+
+  padding: 10px 12px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+
+  background: #ffffff;
+  color: #24364b;
+
+  font-size: 14px;
+}
+
+.edaran-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  gap: 5px;
+
+  padding: 9px;
+
+  border: 1px solid #cbd5e1;
+  border-bottom: none;
+
+  border-radius: 10px 10px 0 0;
+
+  background: #edf2f8;
+}
+
+.edaran-toolbar button {
+  width: 35px;
+  height: 35px;
+  min-height: 35px;
+
+  margin: 0;
+  padding: 5px;
+
+  border: 1px solid #d6e0eb;
+  border-radius: 6px;
+
+  background: #ffffff;
+  color: #173b69;
+
+  font-size: 14px;
+}
+
+.edaran-toolbar select {
+  width: auto;
+  max-width: 145px;
+  min-height: 35px;
+  padding: 4px;
+}
+
+.edaran-toolbar input[type="color"] {
+  width: 35px;
+  height: 35px;
+
+  padding: 3px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+
+  background: #ffffff;
+}
+
+.edaran-editor {
+  min-height: 220px;
+
+  padding: 15px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 0 0 10px 10px;
+
+  background: #ffffff;
+  color: #24364b;
+
+  font-size: 15px;
+  line-height: 1.6;
+
+  outline: none;
+  overflow-wrap: anywhere;
+}
+
+.edaran-editor:empty::before {
+  content: attr(data-placeholder);
+  color: #94a3b8;
+  pointer-events: none;
+}
+
+.edaran-editor img {
+  max-width: 100%;
+  height: auto;
+}
+
+.edaran-upload-box {
+  padding: 15px;
+
+  border: 1px dashed #9eb5d0;
+  border-radius: 10px;
+
+  background: #f7faff;
+}
+
+.edaran-upload-box input[type="file"] {
+  width: 100%;
+  height: auto;
+
+  padding: 8px 0;
+
+  border: none;
+  background: transparent;
+}
+
+.edaran-upload-box p,
+.edaran-upload-box strong {
+  display: block;
+
+  margin-top: 8px;
+
+  color: #526174;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.edaran-attachment-info {
+  margin-top: 10px;
+
+  color: #103a78;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.edaran-form-actions,
+.edaran-owner-actions {
+  display: flex;
+  gap: 10px;
+
+  margin-top: 22px;
+}
+
+.edaran-primary-button,
+.edaran-secondary-button,
+.edaran-danger-button {
+  flex: 1;
+
+  min-height: 46px;
+  margin: 0;
+  padding: 10px;
+
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.edaran-primary-button {
+  background: #103a78;
+  color: #ffffff;
+}
+
+.edaran-secondary-button {
+  background: #e7edf5;
+  color: #173b69;
+}
+
+.edaran-danger-button {
+  background: #b42318;
+  color: #ffffff;
+}
+
+.edaran-text-button {
+  width: auto;
+  min-height: 35px;
+
+  margin: 0 0 18px;
+  padding: 5px 0;
+
+  background: transparent;
+  color: #103a78;
+
+  font-size: 13px;
+}
+
+.edaran-detail-body {
+  color: #24364b;
+}
+
+.edaran-detail-body h2 {
+  margin: 12px 0;
+}
+
+.edaran-detail-content {
+  margin-top: 18px;
+
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+.edaran-detail-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+.edaran-message {
+  margin-bottom: 15px;
+  padding: 13px;
+
+  border-radius: 10px;
+
+  background: #edf5ff;
+  color: #174f8f;
+
+  font-size: 14px;
+}
+
+.edaran-message.error {
+  background: #fff0f0;
+  color: #a51e1e;
+}
+
+@media (max-width: 600px) {
+
+  .edaran-content {
+    padding: 0 12px 35px;
+  }
+
+  .edaran-card {
+    padding: 16px;
+    border-radius: 15px;
+  }
+
+  .edaran-header h1 {
+    font-size: 16px;
+  }
+
+  .edaran-card h2 {
+    font-size: 19px;
+  }
+
+  .edaran-toolbar {
+    gap: 4px;
+  }
+
+}
+/* ==========================================
+   EDARAN - INSERT NAMA AHLI
+========================================== */
+
+.edaran-member-search-box {
+  margin-top: 10px;
+  padding: 14px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+
+  background: #f7faff;
+}
+
+.edaran-member-search-box[hidden] {
+  display: none;
+}
+
+.edaran-member-search-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 12px;
+
+  color: #103a78;
+  font-size: 14px;
+}
+
+#edaranMemberCloseButton {
+  width: 30px;
+  height: 30px;
+  min-height: 30px;
+
+  margin: 0;
+  padding: 0;
+
+  background: #e7edf5;
+  color: #103a78;
+
+  font-size: 22px;
+}
+
+#edaranMemberSearchInput {
+  width: 100%;
+  height: 44px;
+
+  padding: 0 12px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+
+  background: #ffffff;
+  font-size: 14px;
+}
+
+.edaran-member-search-status {
+  margin: 12px 0;
+
+  color: #64748b;
+  font-size: 13px;
+}
+
+.edaran-member-search-results {
+  display: grid;
+  gap: 7px;
+
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.edaran-member-result {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  width: 100%;
+  min-height: 48px;
+
+  margin: 0;
+  padding: 10px 12px;
+
+  border: 1px solid #dce5f0;
+  border-radius: 8px;
+
+  background: #ffffff;
+  color: #103a78;
+
+  text-align: left;
+  cursor: pointer;
+}
+
+.edaran-member-result:hover {
+  background: #eaf2ff;
+}
+
+.edaran-member-result strong {
+  font-size: 13px;
+}
+
+.edaran-member-result span {
+  color: #64748b;
+  font-size: 12px;
+}
+
+/* ==========================================
+   SENARAI EDARAN & HEBAHAN
+========================================== */
+
+.edaran-list {
+  display: grid;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.edaran-list-item {
+  background: #ffffff;
+  border: 1px solid #d9e1ec;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+}
+
+
+
+
+
+
+
+.edaran-empty {
+  text-align: center;
+  padding: 30px 15px;
+  color: #64748b;
+}
+
+/* ==========================================
+   DETAIL EDARAN & HEBAHAN
+========================================== */
+
+.edaran-detail-body {
+  margin-top: 20px;
+}
+
+.edaran-detail-category {
+  display: inline-block;
+  padding: 6px 11px;
+  margin-bottom: 12px;
+
+  border-radius: 20px;
+
+  background: #e8f0fb;
+  color: #123d78;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.edaran-detail-title {
+  margin: 0 0 10px;
+
+  color: #102f63;
+
+  font-size: 22px;
+  line-height: 1.3;
+}
+
+.edaran-detail-meta {
+  display: grid;
+  gap: 4px;
+
+  font-size: 13px;
+  color: #64748b;
+}
+
+.edaran-detail-meta > div:first-child {
+  font-weight: 600;
+  color: #475569;
+}
+
+.edaran-detail-divider {
+  height: 1px;
+
+  margin: 18px 0;
+
+  background: #d9e1ec;
+}
+
+.edaran-detail-content {
+  color: #26364a;
+
+  font-size: 15px;
+  line-height: 1.7;
+
+  overflow-wrap: anywhere;
+}
+
+.edaran-detail-content img {
+  display: block;
+
+  max-width: 100%;
+  height: auto;
+
+  margin: 14px auto;
+
+  border-radius: 8px;
+}
+
+.edaran-detail-content a {
+  overflow-wrap: anywhere;
+}
+
+.edaran-detail-content p:first-child {
+  margin-top: 0;
+}
+
+/* =====================================================
+   SENARAI EDARAN - COMPACT CORPORATE
+===================================================== */
+
+.edaran-list {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-top: 16px;
+}
+
+
+/* KAD UTAMA */
+
+.edaran-list-item {
+  position: relative;
+
+  background: #ffffff;
+
+  border: 1px solid #dce4ef;
+  border-left: 5px solid #174a8b;
+
+  border-radius: 10px;
+
+  padding: 11px 14px 10px;
+
+  box-shadow:
+    0 2px 6px rgba(15, 45, 85, 0.06);
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+
+.edaran-list-item:hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 4px 10px rgba(15, 45, 85, 0.10);
+}
+
+
+/* =====================================================
+   KATEGORI
+===================================================== */
+
+.edaran-list-category {
+  display: inline-block;
+
+  margin-bottom: 4px;
+
+  padding: 3px 8px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  line-height: 1.3;
+
+  background: #eaf2ff;
+  color: #174a8b;
+}
+
+
+/* =====================================================
+   TAJUK - CLICKABLE
+===================================================== */
+
+.edaran-list-title {
+  display: block;
+
+  width: 100%;
+
+  margin: 0 0 4px;
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+
+  color: #103d78;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.35;
+
+  text-align: left;
+
+  cursor: pointer;
+}
+
+
+.edaran-list-title:hover {
+  text-decoration: underline;
+}
+
+
+.edaran-list-title:focus-visible {
+  outline: 2px solid #174a8b;
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+
+/* =====================================================
+   PENULIS
+===================================================== */
+
+.edaran-list-author {
+  margin-bottom: 1px;
+
+  color: #475569;
+
+  font-size: 11.5px;
+  font-weight: 600;
+
+  line-height: 1.4;
+}
+
+
+/* =====================================================
+   TARIKH
+===================================================== */
+
+.edaran-list-date {
+  color: #7b8798;
+
+  font-size: 10.5px;
+  line-height: 1.4;
+}
+
+
+/* =====================================================
+   WARNA KATEGORI
+===================================================== */
+
+
+/* PENGUMUMAN SEMASA */
+
+.edaran-list-item.kategori-pengumuman {
+  border-left-color: #2563eb;
+}
+
+.kategori-pengumuman
+.edaran-list-category {
+  background: #e8f1ff;
+  color: #174a8b;
+}
+
+
+/* ARAHAN JABATAN */
+
+.edaran-list-item.kategori-arahan {
+  border-left-color: #dc2626;
+}
+
+.kategori-arahan
+.edaran-list-category {
+  background: #feecec;
+  color: #a71919;
+}
+
+
+/* PEKELILING */
+
+.edaran-list-item.kategori-pekeliling {
+  border-left-color: #7c3aed;
+}
+
+.kategori-pekeliling
+.edaran-list-category {
+  background: #f1eafe;
+  color: #6630b5;
+}
+
+
+/* SURAT MENYURAT */
+
+.edaran-list-item.kategori-surat {
+  border-left-color: #ea580c;
+}
+
+.kategori-surat
+.edaran-list-category {
+  background: #fff0e7;
+  color: #b9470b;
+}
+
+
+/* JADUAL */
+
+.edaran-list-item.kategori-jadual {
+  border-left-color: #0891b2;
+}
+
+.kategori-jadual
+.edaran-list-category {
+  background: #e4f7fb;
+  color: #08768e;
+}
+
+
+/* PINGAT / ANUGERAH */
+
+.edaran-list-item.kategori-anugerah {
+  border-left-color: #ca8a04;
+}
+
+.kategori-anugerah
+.edaran-list-category {
+  background: #fff7d6;
+  color: #956500;
+}
+
+
+/* LAIN-LAIN */
+
+.edaran-list-item.kategori-lain {
+  border-left-color: #64748b;
+}
+
+.kategori-lain
+.edaran-list-category {
+  background: #edf1f5;
+  color: #526174;
+}
+
+
+/* =====================================================
+   TIADA EDARAN
+===================================================== */
+
+.edaran-empty {
+  padding: 25px 12px;
+
+  color: #64748b;
+
+  text-align: center;
+  font-size: 13px;
+}
+
+/* =====================================================
+   WARNA LATAR KAD MENGIKUT KATEGORI
+===================================================== */
+
+/* Pengumuman Semasa - Biru lembut */
+.edaran-list-item.kategori-pengumuman {
+  background: #f4f8ff;
+  border-left-color: #2563eb;
+}
+
+/* Arahan Jabatan - Merah lembut */
+.edaran-list-item.kategori-arahan {
+  background: #fff5f5;
+  border-left-color: #dc2626;
+}
+
+/* Pekeliling - Ungu lembut */
+.edaran-list-item.kategori-pekeliling {
+  background: #faf7ff;
+  border-left-color: #7c3aed;
+}
+
+/* Surat Menyurat - Oren lembut */
+.edaran-list-item.kategori-surat {
+  background: #fff8f3;
+  border-left-color: #ea580c;
+}
+
+/* Jadual - Cyan lembut */
+.edaran-list-item.kategori-jadual {
+  background: #f2fbfd;
+  border-left-color: #0891b2;
+}
+
+/* Pingat / Anugerah - Emas lembut */
+.edaran-list-item.kategori-anugerah {
+  background: #fffbed;
+  border-left-color: #ca8a04;
+}
+
+/* Lain-lain - Kelabu lembut */
+.edaran-list-item.kategori-lain {
+  background: #f7f8fa;
+  border-left-color: #64748b;
+}
+
+
+/* ==========================================
+   DETAIL EDARAN - LAMPIRAN
+========================================== */
+
+.edaran-detail-attachments {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.edaran-detail-attachments-title {
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.edaran-detail-attachment-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  margin-bottom: 8px;
+  padding: 10px 12px;
+
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+
+.edaran-detail-attachment-name {
+  min-width: 0;
+  flex: 1;
+
+  font-size: 13px;
+  color: #374151;
+
+  overflow-wrap: anywhere;
+}
+
+.edaran-detail-attachment-button {
+  flex-shrink: 0;
+
+  padding: 7px 12px;
+
+  border-radius: 6px;
+
+  background: #163a63;
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  text-decoration: none;
+}
+
+.edaran-detail-attachment-button:hover {
+  opacity: 0.9;
+}
+
+.edaran-detail-loading {
+  padding: 20px 0;
+
+  text-align: center;
+
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* ==========================================
+   GAMBAR DALAM EDARAN
+========================================== */
+
+.edaran-detail-content img,
+.edaran-inline-image {
+  display: block;
+
+  max-width: 100%;
+  height: auto;
+
+  margin-top: 12px;
+  margin-bottom: 12px;
+
+  border-radius: 8px;
+}
+
+.edaran-inline-image-loading {
+  min-height: 80px;
+  opacity: 0.5;
+}
+
+.edaran-inline-image-error {
+  min-height: 0;
+}
+
+/* =====================================================
+   EDARAN LIST - COMPACT EMAIL INBOX STYLE
+===================================================== */
+
+#edaranList {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+
+  margin-top: 12px;
+
+  background: #ffffff;
+
+  border: 1px solid #e3e8ef;
+  border-radius: 10px;
+
+  overflow: hidden;
+}
+
+
+/* Setiap rekod */
+
+#edaranList .edaran-list-item {
+  position: relative;
+
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+
+  min-height: 64px;
+
+  margin: 0;
+  padding: 9px 12px;
+
+  background: #ffffff !important;
+
+  border: 0 !important;
+  border-bottom: 1px solid #edf0f4 !important;
+  border-radius: 0 !important;
+
+  box-shadow: none !important;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.15s ease;
+}
+
+
+#edaranList .edaran-list-item:last-child {
+  border-bottom: 0 !important;
+}
+
+
+#edaranList .edaran-list-item:hover {
+  background: #f7f9fc !important;
+}
+
+
+/* =====================================================
+   KATEGORI
+===================================================== */
+
+#edaranList .edaran-category,
+#edaranList .edaran-item-category {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: fit-content;
+  max-width: 105px;
+
+  margin: 0;
+
+  padding: 4px 7px;
+
+  border-radius: 5px;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  line-height: 1.15;
+
+  white-space: normal;
+  text-align: center;
+}
+
+
+/* =====================================================
+   TAJUK / PERKARA
+===================================================== */
+
+#edaranList .edaran-title,
+#edaranList .edaran-item-title {
+  margin: 0;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  line-height: 1.3;
+
+  color: #123d78;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* =====================================================
+   PENULIS
+===================================================== */
+
+#edaranList .edaran-meta,
+#edaranList .edaran-item-meta {
+  margin-top: 3px;
+
+  font-size: 10px;
+  font-weight: 500;
+
+  line-height: 1.25;
+
+  color: #64748b;
+}
+
+
+/* =====================================================
+   TARIKH
+===================================================== */
+
+#edaranList .edaran-date,
+#edaranList .edaran-item-date {
+  margin: 0;
+
+  font-size: 10px;
+  font-weight: 500;
+
+  color: #7b8798;
+
+  white-space: nowrap;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+  #edaranList .edaran-list-item {
+    grid-template-columns:
+      82px minmax(0, 1fr);
+
+    gap: 8px;
+
+    min-height: 58px;
+
+    padding:
+      8px 10px;
+  }
+
+
+  #edaranList .edaran-category,
+  #edaranList .edaran-item-category {
+    max-width: 78px;
+
+    padding:
+      3px 5px;
+
+    font-size: 9px;
+  }
+
+
+  #edaranList .edaran-title,
+  #edaranList .edaran-item-title {
+    font-size: 12px;
+  }
+
+
+  #edaranList .edaran-meta,
+  #edaranList .edaran-item-meta {
+    font-size: 9px;
+  }
+
+
+  #edaranList .edaran-date,
+  #edaranList .edaran-item-date {
+    grid-column: 2;
+
+    margin-top: -2px;
+
+    font-size: 9px;
+  }
+
+}
+
+/* =====================================================
+   EDARAN - MOBILE EMAIL INBOX
+===================================================== */
+
+#edaranList {
+  display: block;
+
+  margin-top: 10px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+
+  overflow: hidden;
+}
+
+
+/* =====================================================
+   SATU BARIS EDARAN
+===================================================== */
+
+.edaran-inbox-row {
+  width: 100%;
+  min-height: 48px;
+
+  display: grid;
+
+  grid-template-columns:
+    82px
+    minmax(0, 1fr)
+    92px;
+
+  align-items: center;
+
+  column-gap: 8px;
+
+  margin: 0;
+  padding: 6px 9px;
+
+  border: 0;
+  border-bottom:
+    1px solid #e9edf2;
+
+  border-radius: 0;
+
+  background: #ffffff;
+
+  font-family: inherit;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  box-shadow: none;
+}
+
+
+.edaran-inbox-row:last-child {
+  border-bottom: 0;
+}
+
+
+.edaran-inbox-row:hover {
+  background: #f8fafc;
+}
+
+
+/* =====================================================
+   KATEGORI
+===================================================== */
+
+.edaran-inbox-category {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 78px;
+  min-height: 24px;
+
+  padding: 3px 5px;
+
+  border-radius: 12px;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  line-height: 1.1;
+
+  text-align: center;
+
+  white-space: normal;
+}
+
+
+/* =====================================================
+   TAJUK
+===================================================== */
+
+.edaran-inbox-title {
+  min-width: 0;
+
+  overflow: hidden;
+
+  color: #123d78;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  line-height: 1.2;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+}
+
+
+/* =====================================================
+   TARIKH
+===================================================== */
+
+.edaran-inbox-date {
+  color: #718096;
+
+  font-size: 9px;
+  font-weight: 500;
+
+  line-height: 1.15;
+
+  text-align: right;
+
+  white-space: nowrap;
+}
+
+
+/* =====================================================
+   WARNA KATEGORI
+===================================================== */
+
+.edaran-inbox-row.kategori-pengumuman
+.edaran-inbox-category {
+  background: #e8f1ff;
+  color: #1557a0;
+}
+
+
+.edaran-inbox-row.kategori-arahan
+.edaran-inbox-category {
+  background: #ffe9e9;
+  color: #c62828;
+}
+
+
+.edaran-inbox-row.kategori-pekeliling
+.edaran-inbox-category {
+  background: #e8f7f5;
+  color: #087f8c;
+}
+
+
+.edaran-inbox-row.kategori-surat
+.edaran-inbox-category {
+  background: #fff0e6;
+  color: #c45113;
+}
+
+
+.edaran-inbox-row.kategori-jadual
+.edaran-inbox-category {
+  background: #e6f7fb;
+  color: #087c96;
+}
+
+
+.edaran-inbox-row.kategori-anugerah
+.edaran-inbox-category {
+  background: #fff6d8;
+  color: #946200;
+}
+
+
+/* =====================================================
+   TELEFON KECIL
+===================================================== */
+
+@media (max-width: 480px) {
+
+  .edaran-inbox-row {
+
+    grid-template-columns:
+      72px
+      minmax(0, 1fr)
+      72px;
+
+    min-height: 46px;
+
+    column-gap: 6px;
+
+    padding:
+      5px 7px;
+
+  }
+
+
+  .edaran-inbox-category {
+
+    width: 68px;
+
+    min-height: 22px;
+
+    padding:
+      3px 4px;
+
+    font-size: 8px;
+
+  }
+
+
+  .edaran-inbox-title {
+
+    font-size: 11px;
+
+  }
+
+
+  .edaran-inbox-date {
+
+    font-size: 8px;
+
+  }
+
+}
+
+
+/* =====================================================
+   OWNER ACTIONS - IKON KECIL
+===================================================== */
+
+#edaranOwnerActions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 5px;
+
+  margin-top: 14px;
+  padding-top: 8px;
+
+  border-top: 1px solid #e5e7eb;
+}
+
+
+/* EDIT & PADAM */
+
+#edaranEditButton,
+#edaranDeleteButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 30px;
+  height: 30px;
+
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+  border-radius: 6px;
+
+  background: transparent;
+
+  font-size: 15px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  box-shadow: none;
+
+  transition:
+    background-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+
+/* EDIT */
+
+#edaranEditButton:hover {
+  background: #eaf2ff;
+}
+
+
+/* PADAM */
+
+#edaranDeleteButton:hover {
+  background: #ffeaea;
+}
+
+
+/* KESAN TEKAN */
+
+#edaranEditButton:active,
+#edaranDeleteButton:active {
+  transform: scale(0.92);
+}
+
+
+/* DISABLED */
+
+#edaranEditButton:disabled,
+#edaranDeleteButton:disabled {
+  opacity: 0.4;
+  cursor: default;
+}

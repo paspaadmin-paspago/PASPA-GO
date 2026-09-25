@@ -1,0 +1,2240 @@
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Borang Permohonan Stok - KEW.PS-8
+  </title>
+
+  <style>
+
+    /* ==================================================
+       ASAS
+    ================================================== */
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+
+      background: #e9edf3;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      color: #000;
+    }
+
+
+    /* ==================================================
+       TOOLBAR - TIDAK DICETAK
+    ================================================== */
+
+    .form-toolbar {
+      width: 1120px;
+      max-width: 100%;
+
+      margin:
+        0 auto 15px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      gap: 10px;
+    }
+
+
+    .toolbar-left,
+    .toolbar-right {
+      display: flex;
+      gap: 8px;
+    }
+
+
+    .toolbar-button {
+      border: 0;
+      border-radius: 6px;
+
+      padding:
+        9px 15px;
+
+      background: #174681;
+
+      color: #fff;
+
+      font-size: 13px;
+      font-weight: 700;
+
+      cursor: pointer;
+    }
+
+
+    .toolbar-button.secondary {
+      background: #64748b;
+    }
+
+
+    /* ==================================================
+       KERTAS A4 LANDSCAPE
+    ================================================== */
+
+    .kew-page {
+
+      width: 297mm;
+      min-height: 210mm;
+
+      margin: 0 auto;
+
+      padding:
+        8mm
+        15mm
+        10mm;
+
+      background: #fff;
+
+      box-shadow:
+        0 2px 12px
+        rgba(0,0,0,.15);
+
+      font-size: 11pt;
+    }
+
+/* ==================================================
+   MULTI PAGE KEW.PS-8
+================================================== */
+
+@media screen {
+
+  .kew-page + .kew-page {
+    margin-top: 15px;
+  }
+
+}
+    /* ==================================================
+       HEADER
+    ================================================== */
+
+    .kew-top {
+      position: relative;
+
+      min-height: 28mm;
+    }
+
+
+    .kew-reference-left {
+      position: absolute;
+
+      top: 0;
+      left: 0;
+
+      font-size: 10pt;
+    }
+
+
+    .kew-reference-right {
+      position: absolute;
+
+      top: 0;
+      right: 0;
+
+      text-align: right;
+
+      font-size: 9pt;
+      line-height: 1.15;
+    }
+
+
+    .kew-reference-right strong {
+      font-weight: 700;
+    }
+
+
+    .kew-title {
+      padding-top: 13mm;
+
+      text-align: center;
+
+      font-size: 14pt;
+      font-weight: 700;
+    }
+
+
+    /* ==================================================
+       JADUAL UTAMA
+    ================================================== */
+
+    .stock-form-table {
+
+      width: 100%;
+
+      border-collapse: collapse;
+
+      table-layout: fixed;
+
+      border:
+        2px solid #000;
+    }
+
+
+    .stock-form-table th,
+    .stock-form-table td {
+
+      border:
+        1px solid #000;
+
+      padding:
+        3px 4px;
+
+      vertical-align: middle;
+    }
+
+
+    .stock-form-table th {
+      font-weight: 400;
+      text-align: center;
+    }
+
+
+    /* Garisan kumpulan lebih tebal */
+
+    .stock-form-table .group-end {
+      border-right:
+        2px solid #000;
+    }
+
+
+    .stock-form-table .group-title {
+      border-bottom:
+        2px solid #000;
+
+      font-size: 11pt;
+    }
+
+
+    /* ==================================================
+       LEBAR KOLUM
+    ================================================== */
+
+    .col-no {
+  width: 5%;
+}
+
+.col-description {
+  width: 35%;
+}
+
+.col-request {
+  width: 7%;
+}
+
+.col-request-note {
+  width: 7%;
+}
+
+
+/* PEGAWAI PELULUS = 24% */
+
+.col-balance {
+  width: 8%;
+}
+
+.col-approved {
+  width: 8%;
+}
+
+.col-approved-note {
+  width: 8%;
+}
+
+
+/* PERAKUAN PENERIMAAN = 22% */
+
+.col-received {
+  width: 11%;
+}
+
+.col-received-note {
+  width: 11%;
+}
+
+
+    /* ==================================================
+       HEADER BARIS KEDUA
+    ================================================== */
+
+    .column-header th {
+      height: 18mm;
+
+      font-size: 10pt;
+      line-height: 1.1;
+    }
+
+
+    /* ==================================================
+       BARIS ITEM
+    ================================================== */
+
+    .stock-row td {
+      height: 9mm;
+
+      font-size: 9.5pt;
+    }
+
+
+    .stock-row .center {
+      text-align: center;
+    }
+
+
+    .stock-description {
+      padding-left: 6px !important;
+    }
+
+
+    /* ==================================================
+       BAHAGIAN TANDATANGAN
+    ================================================== */
+
+    .signature-table {
+
+      width: 100%;
+
+      border-collapse: collapse;
+
+      table-layout: fixed;
+
+      border-left:
+        2px solid #000;
+
+      border-right:
+        2px solid #000;
+
+      border-bottom:
+        2px solid #000;
+    }
+
+
+    .signature-table td {
+
+      border-right:
+        2px solid #000;
+
+      vertical-align: top;
+
+      padding:
+        5px 7px;
+
+      height: 54mm;
+
+      font-size: 10pt;
+    }
+
+
+    .signature-table td:last-child {
+      border-right: 0;
+    }
+
+/* ==================================================
+   ALIGNMENT TANDATANGAN DENGAN JADUAL ATAS
+================================================== */
+
+.signature-applicant {
+  width: 54%;
+}
+
+
+.signature-approver {
+  width: 24%;
+}
+
+
+.signature-receiver {
+  width: 22%;
+}
+
+    .signature-title {
+      margin-bottom: 17mm;
+
+      font-size: 10pt;
+    }
+
+
+    .signature-line {
+
+      width: 140px;
+
+      margin-bottom: 2px;
+
+      border-bottom:
+        1px dotted #000;
+    }
+
+
+    .signature-caption {
+      margin-bottom: 4mm;
+    }
+
+
+    .signature-info {
+      display: grid;
+
+      grid-template-columns:
+        55px
+        10px
+        1fr;
+
+      line-height: 1.45;
+    }
+
+
+    /* ==================================================
+       MOBILE PREVIEW
+    ================================================== */
+
+    .page-scroll {
+      width: 100%;
+
+      overflow-x: auto;
+    }
+
+
+    @media (max-width: 800px) {
+
+      body {
+        padding: 8px;
+      }
+
+      .form-toolbar {
+        align-items: stretch;
+      }
+
+      .toolbar-button {
+        padding:
+          8px 10px;
+
+        font-size: 11px;
+      }
+
+    }
+
+
+    /* ==================================================
+   PRINT / PDF
+================================================== */
+
+@page {
+  size: A4 landscape;
+  margin: 0;
+}
+
+@media print {
+
+  html,
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .page-scroll {
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  #formsContainer {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .kew-page {
+    width: 277mm !important;
+    height: 190mm !important;
+    min-height: 190mm !important;
+
+    margin:
+      10mm
+      10mm
+      10mm
+      10mm !important;
+
+    padding:
+      0 !important;
+
+    box-sizing: border-box !important;
+
+    box-shadow: none !important;
+
+   overflow: visible !important;
+
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+
+    page-break-after: always;
+    break-after: page;
+  }
+
+  .kew-page:last-child {
+    page-break-after: auto;
+    break-after: auto;
+  }
+
+}
+
+
+    
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- =================================================
+       TOOLBAR
+  ================================================== -->
+
+  <div class="form-toolbar no-print">
+
+    <div class="toolbar-left">
+
+      <button
+        type="button"
+        class="toolbar-button secondary"
+        id="backButton"
+      >
+        ← Kembali
+      </button>
+
+    </div>
+
+
+<div class="toolbar-right">
+
+  <button
+    type="button"
+    class="toolbar-button"
+    id="downloadButton"
+  >
+    ⬇ Download PDF
+  </button>
+
+  <button
+    type="button"
+    class="toolbar-button"
+    id="shareButton"
+  >
+    📲 Share
+  </button>
+
+  <button
+    type="button"
+    class="toolbar-button"
+    id="printButton"
+  >
+    🖨️ Print / PDF
+  </button>
+
+</div>
+
+  </div>
+
+
+  <div class="page-scroll">
+
+
+    <!-- ===============================================
+         KEW.PS-8
+    ================================================ -->
+
+<div id="formsContainer">
+
+    
+    <main
+      class="kew-page"
+      id="kewPs8Form"
+    >
+
+
+      <!-- =============================================
+           HEADER
+      ============================================== -->
+
+      <header class="kew-top">
+
+        <div class="kew-reference-left">
+          Pekeliling Perbendaharaan Malaysia
+        </div>
+
+
+        <div class="kew-reference-right">
+
+          <div>
+            AM 6.5 Lampiran B
+          </div>
+
+          <strong>
+            KEW.PS-8
+          </strong>
+
+          <div>
+            <strong>No. BPSI:</strong>
+            .....
+          </div>
+
+        </div>
+
+
+        <div class="kew-title">
+          BORANG PERMOHONAN STOK
+        </div>
+
+      </header>
+
+
+      <!-- =============================================
+           JADUAL STOK
+      ============================================== -->
+
+      <table class="stock-form-table">
+
+
+        <colgroup>
+
+          <col class="col-no">
+
+          <col class="col-description">
+
+          <col class="col-request">
+
+          <col class="col-request-note">
+
+          <col class="col-balance">
+
+          <col class="col-approved">
+
+          <col class="col-approved-note">
+
+          <col class="col-received">
+
+          <col class="col-received-note">
+
+        </colgroup>
+
+
+        <thead>
+
+
+          <!-- GROUP HEADER -->
+
+          <tr>
+
+            <th
+              colspan="4"
+              class="group-title group-end"
+            >
+              Permohonan
+            </th>
+
+            <th
+              colspan="3"
+              class="group-title group-end"
+            >
+              Pegawai Pelulus
+            </th>
+
+            <th
+              colspan="2"
+              class="group-title"
+            >
+              Perakuan Penerimaan
+            </th>
+
+          </tr>
+
+
+          <!-- COLUMN HEADER -->
+
+          <tr class="column-header">
+
+            <th>
+              No.<br>
+              kod
+            </th>
+
+            <th>
+              Perihal Stok
+            </th>
+
+            <th>
+              Kuantiti<br>
+              Dipohon
+            </th>
+
+            <th class="group-end">
+              Catatan
+            </th>
+
+            <th>
+              Baki<br>
+              Sedia<br>
+              Ada
+            </th>
+
+            <th>
+              Kuantiti<br>
+              Dilulus
+            </th>
+
+            <th class="group-end">
+              Catatan
+            </th>
+
+            <th>
+              Kuantiti<br>
+              Diterima
+            </th>
+
+            <th>
+              Catatan
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody id="stockRows">
+
+          <!-- 10 baris tetap -->
+
+        </tbody>
+
+      </table>
+
+
+      <!-- =============================================
+           TANDATANGAN
+      ============================================== -->
+
+      <table class="signature-table">
+
+        <tr>
+
+
+          <!-- PEMOHON -->
+
+          <td class="signature-applicant">
+
+            <div class="signature-title">
+              Pemohon:
+            </div>
+
+
+            <div class="signature-line"></div>
+
+            <div class="signature-caption">
+              (Tandatangan)
+            </div>
+
+
+            <div class="signature-info">
+
+              <span>Nama</span>
+              <span>:</span>
+
+              <strong id="applicantName">
+              </strong>
+
+
+              <span>Jawatan</span>
+              <span>:</span>
+
+              <span id="applicantPosition">
+              </span>
+
+
+              <span>Tarikh</span>
+              <span>:</span>
+
+              <span id="applicantDate">
+              </span>
+
+            </div>
+
+          </td>
+
+
+          <!-- PEGAWAI PELULUS -->
+
+          <td class="signature-approver">
+
+            <div class="signature-title">
+              Pegawai Pelulus:
+            </div>
+
+
+            <div class="signature-line"></div>
+
+            <div class="signature-caption">
+              (Tandatangan)
+            </div>
+
+
+            <div class="signature-info">
+
+              <span>Nama</span>
+              <span>:</span>
+              <span></span>
+
+              <span>Jawatan</span>
+              <span>:</span>
+              <span></span>
+
+              <span>Tarikh</span>
+              <span>:</span>
+              <span></span>
+
+            </div>
+
+          </td>
+
+
+          <!-- PENERIMA -->
+
+          <td class="signature-receiver">
+
+            <div class="signature-title">
+              Penerima / Wakil
+            </div>
+
+
+            <div class="signature-line"></div>
+
+            <div class="signature-caption">
+              (Tandatangan)
+            </div>
+
+
+            <div class="signature-info">
+
+              <span>Nama</span>
+              <span>:</span>
+              <span></span>
+
+              <span>Jawatan</span>
+              <span>:</span>
+              <span></span>
+
+              <span>Tarikh</span>
+              <span>:</span>
+              <span></span>
+
+            </div>
+
+          </td>
+
+
+        </tr>
+
+      </table>
+
+</main>
+
+</div>
+
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
+</script>
+
+<script src="../js/config.js"></script>
+
+
+<script>
+
+"use strict";
+
+
+/* =====================================================
+   CONFIG
+===================================================== */
+
+/*
+  PENTING:
+  Gunakan CONFIG.API_URL yang sama seperti page
+  admin-inventori.html.
+
+  Jika project awak sudah mempunyai config.js dan
+  CONFIG.API_URL tersedia secara global, bahagian ini
+  akan terus menggunakannya.
+*/
+
+
+/* =====================================================
+   ELEMENT
+===================================================== */
+
+const stockRows =
+  document.getElementById(
+    "stockRows"
+  );
+
+
+const applicantName =
+  document.getElementById(
+    "applicantName"
+  );
+
+
+const applicantPosition =
+  document.getElementById(
+    "applicantPosition"
+  );
+
+
+const applicantDate =
+  document.getElementById(
+    "applicantDate"
+  );
+
+
+/* =====================================================
+   SESSION
+===================================================== */
+
+function getPaspaSession() {
+
+  try {
+
+    return JSON.parse(
+      localStorage.getItem(
+        "paspaGoSession"
+      ) || "{}"
+    );
+
+  } catch (error) {
+
+    return {};
+
+  }
+
+}
+
+
+/* =====================================================
+   API POST
+===================================================== */
+
+async function apiPost(payload) {
+
+  if (
+    typeof CONFIG === "undefined" ||
+    !CONFIG.API_URL
+  ) {
+
+    throw new Error(
+      "CONFIG.API_URL tidak dijumpai."
+    );
+
+  }
+
+
+  const response =
+    await fetch(
+      CONFIG.API_URL +
+      "?_ts=" +
+      Date.now(),
+      {
+
+        method:
+          "POST",
+
+        headers: {
+
+          "Content-Type":
+            "text/plain;charset=utf-8"
+
+        },
+
+        body:
+          JSON.stringify({
+
+            ...payload,
+
+            apiKey:
+              CONFIG.API_KEY || ""
+
+          }),
+
+        redirect:
+          "follow",
+
+        cache:
+          "no-store"
+
+      }
+    );
+
+
+  if (!response.ok) {
+
+    throw new Error(
+      "Gagal menghubungi server."
+    );
+
+  }
+
+
+  return await response.json();
+
+}
+
+
+/* =====================================================
+   BINA 10 BARIS TETAP
+===================================================== */
+
+function createStockRows() {
+
+  stockRows.innerHTML = "";
+
+
+  for (
+    let i = 1;
+    i <= 10;
+    i++
+  ) {
+
+    const row =
+      document.createElement(
+        "tr"
+      );
+
+
+    row.className =
+      "stock-row";
+
+
+    row.innerHTML = `
+
+      <td
+        class="center"
+        data-field="number"
+      ></td>
+
+      <td
+        class="stock-description"
+        data-field="description"
+      ></td>
+
+      <td
+        class="center"
+        data-field="requested"
+      ></td>
+
+      <td
+        class="group-end"
+        data-field="requestNote"
+      ></td>
+
+      <td
+        class="center"
+        data-field="balance"
+      ></td>
+
+      <td
+        class="center"
+        data-field="approved"
+      ></td>
+
+      <td
+        class="group-end"
+        data-field="approvalNote"
+      ></td>
+
+      <td
+        class="center"
+        data-field="received"
+      ></td>
+
+      <td
+        data-field="receiveNote"
+      ></td>
+
+    `;
+
+
+    stockRows.appendChild(
+      row
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   SET NILAI CELL
+===================================================== */
+
+function setCell(
+  row,
+  field,
+  value
+) {
+
+  const cell =
+    row.querySelector(
+      '[data-field="' +
+      field +
+      '"]'
+    );
+
+
+  if (!cell) {
+    return;
+  }
+
+
+  if (
+    value === null ||
+    value === undefined
+  ) {
+
+    cell.textContent = "";
+
+    return;
+
+  }
+
+
+  cell.textContent =
+    String(value);
+
+}
+
+
+/* =====================================================
+   PAPAR DATA BORANG
+===================================================== */
+
+function renderInventoryForm(data) {
+
+  const pemohon =
+    data.pemohon || {};
+
+
+  const items =
+    Array.isArray(data.items)
+      ? data.items
+      : [];
+
+
+  /* =========================================
+     MAKSIMUM 10 ITEM SATU BORANG
+  ========================================= */
+
+  const ITEMS_PER_PAGE = 10;
+
+
+  /*
+    Walaupun tiada item,
+    sekurang-kurangnya satu page.
+  */
+
+  const totalPages =
+    Math.max(
+      1,
+      Math.ceil(
+        items.length /
+        ITEMS_PER_PAGE
+      )
+    );
+
+
+  const formsContainer =
+    document.getElementById(
+      "formsContainer"
+    );
+
+
+  const originalForm =
+    document.getElementById(
+      "kewPs8Form"
+    );
+
+
+  /*
+    Simpan template asal sebelum
+    kita kosongkan container.
+  */
+
+  const formTemplate =
+    originalForm.cloneNode(true);
+
+
+  formsContainer.innerHTML = "";
+
+
+  /* =========================================
+     BINA SETIAP PAGE
+  ========================================= */
+
+  for (
+    let pageIndex = 0;
+    pageIndex < totalPages;
+    pageIndex++
+  ) {
+
+    const form =
+      formTemplate.cloneNode(true);
+
+
+    /*
+      Elakkan duplicate ID untuk main.
+    */
+
+    form.id =
+      "kewPs8FormPage" +
+      (pageIndex + 1);
+
+
+    /* =======================================
+       PEMOHON
+    ======================================= */
+
+    const nameElement =
+      form.querySelector(
+        "#applicantName"
+      );
+
+
+    const positionElement =
+      form.querySelector(
+        "#applicantPosition"
+      );
+
+
+    const dateElement =
+      form.querySelector(
+        "#applicantDate"
+      );
+
+
+    if (nameElement) {
+
+      nameElement.removeAttribute(
+        "id"
+      );
+
+      nameElement.textContent =
+        pemohon.namaPaparan || "";
+
+    }
+
+
+    if (positionElement) {
+
+      positionElement.removeAttribute(
+        "id"
+      );
+
+      positionElement.textContent =
+        pemohon.gredJawatan || "";
+
+    }
+
+
+    if (dateElement) {
+
+      dateElement.removeAttribute(
+        "id"
+      );
+
+      dateElement.textContent =
+        pemohon.tarikh || "";
+
+    }
+
+
+    /* =======================================
+       BODY ITEM
+    ======================================= */
+
+    const pageStockRows =
+      form.querySelector(
+        "#stockRows"
+      );
+
+
+    pageStockRows.removeAttribute(
+      "id"
+    );
+
+
+    /*
+      Kosongkan rows daripada template.
+    */
+
+    pageStockRows.innerHTML = "";
+
+
+    /*
+      Ambil maksimum 10 item untuk page ini.
+    */
+
+    const startIndex =
+      pageIndex *
+      ITEMS_PER_PAGE;
+
+
+    const pageItems =
+      items.slice(
+        startIndex,
+        startIndex +
+        ITEMS_PER_PAGE
+      );
+
+
+    /* =======================================
+       SENTIASA BINA 10 ROW
+    ======================================= */
+
+    for (
+      let rowIndex = 0;
+      rowIndex < ITEMS_PER_PAGE;
+      rowIndex++
+    ) {
+
+      const item =
+        pageItems[rowIndex];
+
+
+      const row =
+        document.createElement(
+          "tr"
+        );
+
+
+      row.className =
+        "stock-row";
+
+
+      row.innerHTML = `
+
+        <td
+          class="center"
+          data-field="number"
+        ></td>
+
+        <td
+          class="stock-description"
+          data-field="description"
+        ></td>
+
+        <td
+          class="center"
+          data-field="requested"
+        ></td>
+
+        <td
+          class="group-end"
+          data-field="requestNote"
+        ></td>
+
+        <td
+          class="center"
+          data-field="balance"
+        ></td>
+
+        <td
+          class="center"
+          data-field="approved"
+        ></td>
+
+        <td
+          class="group-end"
+          data-field="approvalNote"
+        ></td>
+
+        <td
+          class="center"
+          data-field="received"
+        ></td>
+
+        <td
+          data-field="receiveNote"
+        ></td>
+
+      `;
+
+
+      /*
+        Kalau row kosong,
+        kekalkan sebagai baris kosong.
+      */
+
+      if (item) {
+
+        /*
+          NOMBOR SAMBUNG ANTARA PAGE
+
+          Page 1 = 1 - 10
+          Page 2 = 11 - 20
+          Page 3 = 21 - 30
+        */
+
+        const itemNumber =
+          startIndex +
+          rowIndex +
+          1;
+
+
+        setCell(
+          row,
+          "number",
+          itemNumber
+        );
+
+
+        setCell(
+          row,
+          "description",
+          item.perihal
+        );
+
+
+        setCell(
+          row,
+          "requested",
+          item.kuantitiDipohon
+        );
+
+
+        setCell(
+          row,
+          "requestNote",
+          item.catatanPemohon
+        );
+
+
+        setCell(
+          row,
+          "balance",
+          item.bakiSediaAda
+        );
+
+
+        setCell(
+          row,
+          "approved",
+          item.kuantitiDilulus
+        );
+
+
+        setCell(
+          row,
+          "approvalNote",
+          item.catatanPelulus
+        );
+
+
+        setCell(
+          row,
+          "received",
+          item.kuantitiDiterima
+        );
+
+
+        setCell(
+          row,
+          "receiveNote",
+          item.catatanPenerima
+        );
+
+      }
+
+
+      pageStockRows.appendChild(
+        row
+      );
+
+    }
+
+
+    /* =======================================
+       MASUKKAN PAGE KE CONTAINER
+    ======================================= */
+
+    formsContainer.appendChild(
+      form
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   LOAD BORANG
+===================================================== */
+
+async function loadInventoryForm() {
+
+  try {
+
+    createStockRows();
+
+
+    /* -------------------------------------------------
+       PARAMETER DARIPADA:
+       admin-inventori.html
+    ------------------------------------------------- */
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+
+    const idPaspa =
+      String(
+        params.get(
+          "idPaspa"
+        ) || ""
+      ).trim();
+
+
+    const tarikh =
+      String(
+        params.get(
+          "tarikh"
+        ) || ""
+      ).trim();
+
+
+    if (!idPaspa) {
+
+      throw new Error(
+        "ID PASPA tidak diterima."
+      );
+
+    }
+
+
+    if (!tarikh) {
+
+      throw new Error(
+        "Tarikh permohonan tidak diterima."
+      );
+
+    }
+
+
+    /* -------------------------------------------------
+       SESSION ADMIN
+    ------------------------------------------------- */
+
+    const session =
+      getPaspaSession();
+
+
+    const email =
+      String(
+        session.googleEmail ||
+        ""
+      )
+        .trim()
+        .toLowerCase();
+
+
+    if (!email) {
+
+      throw new Error(
+        "Sesi pengguna tidak dijumpai."
+      );
+
+    }
+
+
+    /* -------------------------------------------------
+       PANGGIL BACKEND
+    ------------------------------------------------- */
+
+    const result =
+      await apiPost({
+
+        action:
+          "inventory_request_form",
+
+        email:
+          email,
+
+        idPaspa:
+          idPaspa,
+
+        tarikh:
+          tarikh
+
+      });
+
+
+    if (
+      !result ||
+      result.success === false
+    ) {
+
+      throw new Error(
+        result?.message ||
+        "Borang tidak dapat dimuatkan."
+      );
+
+    }
+
+
+    renderInventoryForm(
+      result
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "LOAD INVENTORY FORM ERROR:",
+      error
+    );
+
+
+    alert(
+      error.message ||
+      "Borang tidak dapat dimuatkan."
+    );
+
+  }
+
+}
+
+/* =====================================================
+   NAMA FAIL PDF
+===================================================== */
+
+function getInventoryPdfFileName() {
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  const idPaspa =
+    String(
+      params.get("idPaspa") || "PASPA"
+    )
+      .trim()
+      .replace(/[^\w-]/g, "_");
+
+
+  const tarikh =
+    String(
+      params.get("tarikh") || ""
+    )
+      .trim()
+      .replace(/\//g, "-");
+
+
+  return (
+    "KEW-PS8_" +
+    idPaspa +
+    "_" +
+    tarikh +
+    ".pdf"
+  );
+
+}
+
+
+/* =====================================================
+   HASILKAN PDF
+===================================================== */
+/* =====================================================
+   HASILKAN PDF
+===================================================== */
+
+async function createInventoryPdfBlob() {
+
+  const source =
+    document.getElementById(
+      "formsContainer"
+    );
+
+
+  if (!source) {
+
+    throw new Error(
+      "Borang KEW.PS-8 tidak dijumpai."
+    );
+
+  }
+
+
+  /*
+    Clone borang supaya paparan asal
+    tidak disentuh.
+  */
+
+  const pdfContainer =
+    source.cloneNode(true);
+
+
+  /*
+    Container PDF berada dalam viewport
+    tetapi tidak kelihatan kepada pengguna.
+
+    JANGAN guna left:-10000px.
+  */
+
+  const stage =
+    document.createElement(
+      "div"
+    );
+
+
+  stage.style.position =
+    "absolute";
+
+  stage.style.left =
+    "0";
+
+  stage.style.top =
+    "0";
+
+  stage.style.width =
+    "297mm";
+
+  stage.style.background =
+    "#ffffff";
+
+  stage.style.zIndex =
+    "-9999";
+
+  stage.style.opacity =
+    "1";
+
+  stage.style.pointerEvents =
+    "none";
+
+
+  /*
+    Setiap page PDF.
+  */
+
+  const pages =
+    pdfContainer.querySelectorAll(
+      ".kew-page"
+    );
+
+
+  pages.forEach(
+    function (page) {
+
+      page.style.width =
+        "277mm";
+
+      page.style.height =
+  "188mm";
+
+page.style.minHeight =
+  "178mm";
+
+      page.style.margin =
+         "10mm 10mm 12mm";
+
+      page.style.padding =
+        "0";
+
+      page.style.boxSizing =
+        "border-box";
+
+      page.style.boxShadow =
+        "none";
+
+page.style.overflow =
+  "visible";
+
+    }
+  );
+
+
+  stage.appendChild(
+    pdfContainer
+  );
+
+
+  document.body.appendChild(
+    stage
+  );
+
+
+  /*
+    Beri browser satu frame untuk
+    render clone sebelum html2canvas.
+  */
+
+  await new Promise(
+    function (resolve) {
+
+      requestAnimationFrame(
+        function () {
+
+          requestAnimationFrame(
+            resolve
+          );
+
+        }
+      );
+
+    }
+  );
+
+
+  const options = {
+
+    margin:
+      0,
+
+    filename:
+      getInventoryPdfFileName(),
+
+    image: {
+
+      type:
+        "jpeg",
+
+      quality:
+        0.98
+
+    },
+
+    html2canvas: {
+
+      scale:
+        2,
+
+      useCORS:
+        true,
+
+      backgroundColor:
+        "#ffffff",
+
+      logging:
+        false,
+
+      scrollX:
+        0,
+
+      scrollY:
+        0
+
+    },
+
+    jsPDF: {
+
+      unit:
+        "mm",
+
+      format:
+        "a4",
+
+      orientation:
+        "landscape"
+
+    },
+
+    pagebreak: {
+
+      mode:
+        ["css", "legacy"],
+
+      after:
+        ".kew-page:not(:last-child)"
+
+    }
+
+  };
+
+
+  try {
+
+    const blob =
+      await html2pdf()
+        .set(options)
+        .from(pdfContainer)
+        .outputPdf("blob");
+
+
+    return blob;
+
+  } finally {
+
+    stage.remove();
+
+  }
+
+}
+
+/* =====================================================
+   DOWNLOAD PDF
+===================================================== */
+
+async function downloadInventoryPdf() {
+
+  const button =
+    document.getElementById(
+      "downloadButton"
+    );
+
+
+  const originalText =
+    button.innerHTML;
+
+
+  try {
+
+    button.disabled = true;
+    button.innerHTML =
+      "⏳ Menjana PDF...";
+
+
+    const pdfBlob =
+      await createInventoryPdfBlob();
+
+
+    const url =
+      URL.createObjectURL(
+        pdfBlob
+      );
+
+
+    const link =
+      document.createElement(
+        "a"
+      );
+
+
+    link.href =
+      url;
+
+
+    link.download =
+      getInventoryPdfFileName();
+
+
+    document.body.appendChild(
+      link
+    );
+
+
+    link.click();
+
+
+    link.remove();
+
+
+    setTimeout(
+      function () {
+
+        URL.revokeObjectURL(
+          url
+        );
+
+      },
+      1000
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "DOWNLOAD PDF ERROR:",
+      error
+    );
+
+
+    alert(
+      "PDF tidak dapat dijana."
+    );
+
+
+  } finally {
+
+    button.disabled = false;
+
+    button.innerHTML =
+      originalText;
+
+  }
+
+}
+
+document
+  .getElementById(
+    "downloadButton"
+  )
+  .addEventListener(
+    "click",
+    downloadInventoryPdf
+  );
+
+
+/* =====================================================
+   SHARE PDF
+===================================================== */
+
+async function shareInventoryPdf() {
+
+  const button =
+    document.getElementById(
+      "shareButton"
+    );
+
+
+  const originalText =
+    button.innerHTML;
+
+
+  try {
+
+    button.disabled = true;
+
+    button.innerHTML =
+      "⏳ Menjana...";
+
+
+    const pdfBlob =
+      await createInventoryPdfBlob();
+
+
+    const fileName =
+      getInventoryPdfFileName();
+
+
+    const pdfFile =
+      new File(
+        [pdfBlob],
+        fileName,
+        {
+          type: "application/pdf"
+        }
+      );
+
+
+    /*
+      Cuba share fail sebenar.
+
+      Pada telefon, menu Share akan muncul.
+      Pengguna boleh pilih WhatsApp.
+    */
+
+    if (
+      navigator.share &&
+      navigator.canShare &&
+      navigator.canShare({
+        files: [pdfFile]
+      })
+    ) {
+
+      await navigator.share({
+
+        title:
+          "Borang Permohonan Stok KEW.PS-8",
+
+        text:
+          "Borang Permohonan Stok KEW.PS-8 PASPA GO",
+
+        files:
+          [pdfFile]
+
+      });
+
+
+      return;
+
+    }
+
+
+    /*
+      Jika browser tidak menyokong
+      perkongsian fail:
+      download PDF dahulu.
+    */
+
+    alert(
+      "Peranti ini tidak menyokong perkongsian fail secara terus. PDF akan dimuat turun untuk dikongsi melalui WhatsApp."
+    );
+
+
+    const url =
+      URL.createObjectURL(
+        pdfBlob
+      );
+
+
+    const link =
+      document.createElement(
+        "a"
+      );
+
+
+    link.href =
+      url;
+
+    link.download =
+      fileName;
+
+
+    document.body.appendChild(
+      link
+    );
+
+    link.click();
+
+    link.remove();
+
+
+    setTimeout(
+      function () {
+
+        URL.revokeObjectURL(
+          url
+        );
+
+      },
+      1000
+    );
+
+
+  } catch (error) {
+
+    /*
+      Jika pengguna sendiri tutup
+      Share dialog, tak perlu beri error.
+    */
+
+    if (
+      error.name !== "AbortError"
+    ) {
+
+      console.error(
+        "SHARE PDF ERROR:",
+        error
+      );
+
+
+      alert(
+        "Borang tidak dapat dikongsi."
+      );
+
+    }
+
+
+  } finally {
+
+    button.disabled = false;
+
+    button.innerHTML =
+      originalText;
+
+  }
+
+}
+
+
+document
+  .getElementById(
+    "shareButton"
+  )
+  .addEventListener(
+    "click",
+    shareInventoryPdf
+  );
+
+/* =====================================================
+   PRINT / SAVE PDF
+===================================================== */
+
+document
+  .getElementById(
+    "printButton"
+  )
+  .addEventListener(
+    "click",
+    function () {
+
+      window.print();
+
+    }
+  );
+
+
+/* =====================================================
+   KEMBALI
+===================================================== */
+
+document
+  .getElementById(
+    "backButton"
+  )
+  .addEventListener(
+    "click",
+    function () {
+
+      if (window.opener) {
+
+        window.close();
+
+        return;
+
+      }
+
+
+      window.location.href =
+        "admin-inventori.html";
+
+    }
+  );
+
+
+/* =====================================================
+   START
+===================================================== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  loadInventoryForm
+);
+
+</script>
+
+
+</body>
+</html>

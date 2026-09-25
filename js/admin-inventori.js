@@ -277,6 +277,51 @@
   };
 
 
+/* =========================================
+   KUMPULKAN PERMOHONAN MENGIKUT TARIKH
+========================================= */
+
+const groupRequestsByDate = requests => {
+
+  const groups = new Map();
+
+  requests.forEach(r => {
+
+    const tarikh =
+      date(
+        r.tarikhMohon
+      );
+
+    const key =
+      tarikh || "-";
+
+    if (!groups.has(key)) {
+
+      groups.set(
+        key,
+        {
+          tarikh: key,
+          requests: []
+        }
+      );
+
+    }
+
+    groups
+      .get(key)
+      .requests
+      .push(r);
+
+  });
+
+
+  return Array.from(
+    groups.values()
+  );
+
+};
+
+
   /* =========================================
      KAD AHLI - BOLEH BUKA / TUTUP
   ========================================= */
@@ -360,15 +405,43 @@
       "member-divider"
     );
 
-    group.requests.forEach(
-      r => {
+    /* =====================================
+   PAPAR KANDUNGAN AHLI
+===================================== */
 
-        body.appendChild(
-          createItem(r)
-        );
+if (section === "processed") {
 
-      }
+  const dateGroups =
+    groupRequestsByDate(
+      group.requests
     );
+
+
+  dateGroups.forEach(
+    dateGroup => {
+
+      body.appendChild(
+        processedDateGroup(
+          dateGroup
+        )
+      );
+
+    }
+  );
+
+} else {
+
+  group.requests.forEach(
+    r => {
+
+      body.appendChild(
+        createItem(r)
+      );
+
+    }
+  );
+
+}
 
     details.addEventListener(
       "toggle",
@@ -741,6 +814,484 @@
     return card;
 
   };
+
+
+/* =========================================
+   FORMAT KUANTITI INVENTORI
+========================================= */
+
+const formatInventoryQuantity = (
+  quantity,
+  itemName
+) => {
+
+  const qty =
+    Number(quantity) || 0;
+
+
+  const item =
+    String(
+      itemName || ""
+    )
+      .trim()
+      .toLowerCase();
+
+
+  let unit = "unit";
+
+
+  if (
+    item.includes("kasut") ||
+    item.includes("boot")
+  ) {
+
+    unit = "pasang";
+
+  } else if (
+
+    item.includes("baju") ||
+    item.includes("seluar") ||
+    item.includes("jaket")
+
+  ) {
+
+    unit = "helai";
+
+  }
+
+
+  return qty + " " + unit;
+
+};
+
+
+
+/* =========================================
+   REKOD KELULUSAN - KELOMPOK TARIKH
+========================================= */
+
+const processedDateGroup = group => {
+
+  const box =
+    document.createElement(
+      "section"
+    );
+
+  box.className =
+    "approval-date-group";
+
+
+  /* =====================================
+     TARIKH PERMOHONAN
+  ===================================== */
+
+  const dateHeader =
+    add(
+      box,
+      "div",
+      "",
+      "approval-date-header"
+    );
+
+
+  add(
+    dateHeader,
+    "span",
+    "Tarikh:",
+    "approval-date-label"
+  );
+
+
+  add(
+    dateHeader,
+    "strong",
+    group.tarikh,
+    "approval-date-value"
+  );
+
+
+  /* =====================================
+     JADUAL
+  ===================================== */
+
+  const tableWrap =
+    add(
+      box,
+      "div",
+      "",
+      "approval-table-wrap"
+    );
+
+
+  const table =
+    document.createElement(
+      "table"
+    );
+
+  table.className =
+    "approval-table";
+
+
+  /* ---------- HEADER ---------- */
+
+  const thead =
+    document.createElement(
+      "thead"
+    );
+
+  const headerRow =
+    document.createElement(
+      "tr"
+    );
+
+
+  [
+    "Item",
+    "Saiz",
+    "Dipohon",
+    "Diluluskan"
+  ].forEach(text => {
+
+    const th =
+      document.createElement(
+        "th"
+      );
+
+    th.textContent =
+      text;
+
+    headerRow.appendChild(
+      th
+    );
+
+  });
+
+
+  thead.appendChild(
+    headerRow
+  );
+
+  table.appendChild(
+    thead
+  );
+
+
+  /* ---------- BODY ---------- */
+
+  const tbody =
+    document.createElement(
+      "tbody"
+    );
+
+
+  group.requests.forEach(r => {
+
+    const tr =
+      document.createElement(
+        "tr"
+      );
+
+
+    const item =
+      document.createElement(
+        "td"
+      );
+
+    item.textContent =
+      showValue(
+        r.namaItem
+      );
+
+
+    const size =
+      document.createElement(
+        "td"
+      );
+
+    size.textContent =
+      showValue(
+        r.saiz
+      );
+
+
+    const requested =
+      document.createElement(
+        "td"
+      );
+
+    requested.textContent =
+      formatInventoryQuantity(
+        r.kuantitiDipohon,
+        r.namaItem
+      );
+
+
+    const approved =
+      document.createElement(
+        "td"
+      );
+
+    approved.textContent =
+      String(
+        r.statusPermohonan || ""
+      )
+        .trim()
+        .toUpperCase() ===
+        "DITOLAK"
+          ? "-"
+          : formatInventoryQuantity(
+              r.kuantitiDilulus,
+              r.namaItem
+            );
+
+
+    tr.appendChild(item);
+    tr.appendChild(size);
+    tr.appendChild(requested);
+    tr.appendChild(approved);
+
+    tbody.appendChild(tr);
+
+  });
+
+
+  table.appendChild(
+    tbody
+  );
+
+  tableWrap.appendChild(
+    table
+  );
+
+
+  /* =====================================
+     RINGKASAN KEPUTUSAN
+  ===================================== */
+
+  const summary =
+    add(
+      box,
+      "div",
+      "",
+      "approval-summary"
+    );
+
+
+  /*
+    Ambil tarikh keputusan yang tersedia
+    dalam kelompok ini.
+  */
+
+  const decisionRecord =
+    group.requests.find(
+      r => r.tarikhLulus
+    );
+
+
+  add(
+    summary,
+    "div",
+    "Tarikh keputusan: " +
+      (
+        decisionRecord
+          ? date(
+              decisionRecord.tarikhLulus
+            )
+          : "-"
+      ),
+    "approval-decision-date"
+  );
+
+
+  /* =====================================
+     JUMLAH
+  ===================================== */
+
+  let totalApproved = 0;
+  let totalReceived = 0;
+
+
+  group.requests.forEach(r => {
+
+    const status =
+      String(
+        r.statusPermohonan || ""
+      )
+        .trim()
+        .toUpperCase();
+
+
+    if (status === "DITOLAK") {
+      return;
+    }
+
+
+    totalApproved +=
+      Number(
+        r.kuantitiDilulus
+      ) || 0;
+
+
+    totalReceived +=
+      Number(
+        r.kuantitiDiterima
+      ) || 0;
+
+  });
+
+
+  const totalRemaining =
+    Math.max(
+      0,
+      totalApproved -
+      totalReceived
+    );
+
+
+  add(
+    summary,
+    "div",
+    "",
+    "approval-total"
+  );
+
+
+  const total =
+    summary.querySelector(
+      ".approval-total"
+    );
+
+/* =====================================
+   STATUS SERAHAN
+===================================== */
+
+if (
+  totalApproved > 0 &&
+  totalReceived === 0
+) {
+
+  /*
+    Sudah diluluskan tetapi belum ada
+    serahan fizikal dibuat.
+  */
+
+  total.innerHTML =
+    "<strong>Diluluskan:</strong> " +
+    totalApproved +
+    " <span>|</span> " +
+
+    "<strong>Belum Diserahkan:</strong> " +
+    totalRemaining;
+
+} else {
+
+  /*
+    Sudah ada proses serahan,
+    sama ada sebahagian atau selesai.
+  */
+
+  total.innerHTML =
+    "<strong>Diluluskan:</strong> " +
+    totalApproved +
+    " <span>|</span> " +
+
+    "<strong>Telah Diserahkan:</strong> " +
+    totalReceived +
+    " <span>|</span> " +
+
+    "<strong>Baki:</strong> " +
+    totalRemaining;
+
+}
+
+/* =====================================
+   LIHAT BORANG KEW.PS-8
+===================================== */
+
+const formActions =
+  add(
+    box,
+    "div",
+    "",
+    "approval-form-actions"
+  );
+
+
+const formButton =
+  document.createElement(
+    "button"
+  );
+
+formButton.type =
+  "button";
+
+formButton.className =
+  "approval-form-button";
+
+formButton.innerHTML =
+  "📄 Lihat Borang";
+
+
+formButton.addEventListener(
+  "click",
+  function () {
+
+    /*
+      Ambil rekod pertama kerana semua item
+      dalam kelompok ini adalah ahli dan
+      tarikh permohonan yang sama.
+    */
+
+    const firstRequest =
+      group.requests[0];
+
+
+    if (!firstRequest) {
+      return;
+    }
+
+
+    const idPaspa =
+      String(
+        firstRequest.idPaspa || ""
+      ).trim();
+
+
+    /*
+      Tarikh dihantar melalui URL menggunakan
+      encodeURIComponent supaya format dd/mm/yyyy
+      tidak merosakkan query string.
+    */
+
+    const url =
+      "inventori-borang.html" +
+      "?idPaspa=" +
+      encodeURIComponent(
+        idPaspa
+      ) +
+      "&tarikh=" +
+      encodeURIComponent(
+        group.tarikh
+      );
+
+
+    window.open(
+      url,
+      "_blank"
+    );
+
+  }
+);
+
+
+formActions.appendChild(
+  formButton
+);
+
+  return box;
+
+};
+
 
 
   /* =========================================

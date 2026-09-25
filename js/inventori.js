@@ -71,6 +71,26 @@ function escapeInventoryHtml(value) {
     .replace(/'/g, "&#39;");
 }
 
+/* =========================================
+   NAMA ITEM + JENAMA / MODEL
+========================================= */
+
+function getInventoryRequestTitle(request) {
+
+  const namaItem = String(
+    request.namaItem || ""
+  ).trim();
+
+  const jenamaModel = String(
+    request.jenamaModel || ""
+  ).trim();
+
+  if (namaItem && jenamaModel) {
+    return namaItem + " | " + jenamaModel;
+  }
+
+  return namaItem || "-";
+}
 
 /* =========================================
    MESEJ
@@ -1744,11 +1764,10 @@ function renderInventoryRequestHistory() {
           >
 
             <h3>
-              ${escapeInventoryHtml(
-                request.namaItem || "-"
-              )}
-            </h3>
-
+  ${escapeInventoryHtml(
+    getInventoryRequestTitle(request)
+  )}
+</h3>
             <p>
               <strong>
                 Tarikh Mohon:
@@ -1842,10 +1861,10 @@ function renderInventoryRequestStatus() {
           >
 
             <h3>
-              ${escapeInventoryHtml(
-                request.namaItem || "-"
-              )}
-            </h3>
+  ${escapeInventoryHtml(
+    getInventoryRequestTitle(request)
+  )}
+</h3>
 
             <p>
               <strong>

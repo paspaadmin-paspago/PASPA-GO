@@ -1,0 +1,438 @@
+
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Edaran & Hebahan | PASPA GO</title>
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/edaran.css">
+</head>
+
+<body>
+
+  <div class="edaran-page">
+
+    <!-- HEADER -->
+
+    <header class="edaran-header">
+
+      <button
+        type="button"
+        id="edaranBackButton"
+        class="edaran-header-button"
+        aria-label="Kembali"
+      >←</button>
+
+      <h1>Edaran & Hebahan</h1>
+
+      <button
+        type="button"
+        id="edaranHomeButton"
+        class="edaran-header-button"
+        aria-label="Dashboard"
+      >🏠</button>
+
+    </header>
+
+    <!-- LOGO PASPA GO -->
+
+    <div class="paspa-page-logo">
+      <img
+        src="../images/logo paspa go.png"
+        alt="PASPA GO"
+      >
+    </div>
+
+    <main class="edaran-content">
+
+      <!-- MESEJ SISTEM -->
+
+      <div
+        id="edaranMessage"
+        class="edaran-message"
+        role="status"
+        aria-live="polite"
+        hidden
+      ></div>
+
+      <!-- SENARAI EDARAN -->
+
+      <section
+        id="edaranListSection"
+        class="edaran-card"
+      >
+
+        <div class="edaran-section-heading">
+
+          <div>
+            <h2>Senarai Edaran & Hebahan</h2>
+            <p>
+            </p>
+          </div>
+
+          <button
+            type="button"
+            id="edaranAddButton"
+            class="edaran-add-button"
+            aria-label="Tambah edaran"
+            title="Tambah edaran"
+          >+</button>
+
+        </div>
+
+        <div id="edaranList" class="edaran-list">
+
+          <div class="edaran-empty">
+            Tiada edaran dipaparkan.
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- BORANG TAMBAH / EDIT -->
+
+      <section
+        id="edaranFormSection"
+        class="edaran-card"
+        hidden
+      >
+
+        <h2 id="edaranFormTitle">
+          Edaran Baharu
+        </h2>
+
+        <form id="edaranForm">
+
+          <label for="edaranJenis">
+            Jenis Edaran/Hebahan
+          </label>
+
+          <select id="edaranJenis" required>
+
+            <option value="">
+              -- Pilih Jenis --
+            </option>
+
+            <option>Pengumuman Semasa</option>
+            <option>Arahan Jabatan</option>
+            <option>Pekeliling</option>
+            <option>Surat Menyurat</option>
+            <option>Jadual</option>
+            <option>Pingat/Anugerah</option>
+            <option>Lain-lain</option>
+
+          </select>
+
+          <label for="edaranPerkara">
+            Perkara
+          </label>
+
+          <input
+            type="text"
+            id="edaranPerkara"
+            maxlength="200"
+            placeholder=""
+            required
+          >
+
+          <label for="edaranEditor">
+            
+          </label>
+
+          <!-- TOOLBAR EDITOR -->
+
+          <div
+            class="edaran-toolbar"
+            role="toolbar"
+            aria-label="Format kandungan"
+          >
+
+            <select
+              id="edaranFontName"
+              aria-label="Nama font"
+            >
+              <option value="Arial">Arial</option>
+              <option value="Georgia">Georgia</option>
+              <option value="Verdana">Verdana</option>
+              <option value="Tahoma">Tahoma</option>
+              <option value="Times New Roman">
+                Times New Roman
+              </option>
+            </select>
+
+            <button
+              type="button"
+              data-command="bold"
+              title="Bold"
+            ><b>B</b></button>
+
+            <button
+              type="button"
+              data-command="italic"
+              title="Italic"
+            ><i>I</i></button>
+
+            <button
+              type="button"
+              data-command="underline"
+              title="Underline"
+            ><u>U</u></button>
+
+            <button
+              type="button"
+              data-command="removeFormat"
+              title="Tulisan biasa"
+            >Tx</button>
+
+            <input
+              type="color"
+              id="edaranFontColor"
+              value="#173b69"
+              title="Warna tulisan"
+              aria-label="Warna tulisan"
+            >
+
+            <button
+              type="button"
+              data-command="justifyLeft"
+              title="Align kiri"
+            >☰</button>
+
+            <button
+              type="button"
+              data-command="justifyCenter"
+              title="Align tengah"
+            >≡</button>
+
+            <button
+              type="button"
+              data-command="justifyRight"
+              title="Align kanan"
+            >☷</button>
+
+            <button
+              type="button"
+              data-command="justifyFull"
+              title="Justify"
+            >▤</button>
+
+            <button
+              type="button"
+              data-command="insertOrderedList"
+              title="Numbering"
+            >1.</button>
+
+            <button
+              type="button"
+              data-command="insertUnorderedList"
+              title="Bullet"
+            >•</button>
+
+            <button
+              type="button"
+              id="edaranLinkButton"
+              title="Tambah hyperlink"
+            >🔗</button>
+
+            <button
+              type="button"
+              id="edaranImageButton"
+              title="Insert image"
+            >🖼️</button>
+
+            <!-- INSERT NAMA AHLI -->
+
+<button
+  type="button"
+  id="edaranMemberButton"
+  title="Insert Nama Ahli"
+  aria-label="Insert Nama Ahli"
+>👤</button>
+
+          </div>
+
+          <!-- EDITOR -->
+
+          <div
+            id="edaranEditor"
+            class="edaran-editor"
+            contenteditable="true"
+            role="textbox"
+            aria-label="Kandungan edaran"
+            aria-multiline="true"
+            data-placeholder="Tulis maklumat yang ingin dikongsikan..."
+          ></div>
+
+          <!-- CARI DAN INSERT NAMA AHLI -->
+
+<div
+  id="edaranMemberSearchBox"
+  class="edaran-member-search-box"
+  hidden
+>
+
+  <div class="edaran-member-search-heading">
+
+    <strong>Insert Nama Ahli PASPA</strong>
+
+    <button
+      type="button"
+      id="edaranMemberCloseButton"
+      aria-label="Tutup carian"
+    >×</button>
+
+  </div>
+
+  <input
+    type="search"
+    id="edaranMemberSearchInput"
+    placeholder="Cari ID PASPA atau nama ahli..."
+    autocomplete="off"
+  >
+
+  <div
+    id="edaranMemberSearchStatus"
+    class="edaran-member-search-status"
+    role="status"
+  >
+    Masukkan ID PASPA atau nama ahli.
+  </div>
+
+  <div
+    id="edaranMemberSearchResults"
+    class="edaran-member-search-results"
+  ></div>
+
+</div>
+
+          <!-- GAMBAR DALAM EDITOR -->
+
+          <input
+            type="file"
+            id="edaranInlineImage"
+            accept="image/jpeg,image/png,image/webp,image/gif"
+            hidden
+          >
+
+          <!-- LAMPIRAN -->
+
+          <label for="edaranAttachment">
+            Lampiran Dokumen
+          </label>
+
+          <div class="edaran-upload-box">
+
+            <input
+              type="file"
+              id="edaranAttachment"
+              accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png,.txt,.csv,.zip"
+            >
+
+            <p>
+              PDF, Word, Excel, gambar dan
+              dokumen lain yang dibenarkan.
+            </p>
+
+            <strong>
+              Maksimum 3 MB setiap fail.
+            </strong>
+
+            <div
+              id="edaranAttachmentInfo"
+              class="edaran-attachment-info"
+            ></div>
+
+          </div>
+
+          <!-- TINDAKAN -->
+
+          <div class="edaran-form-actions">
+
+            <button
+              type="button"
+              id="edaranCancelButton"
+              class="edaran-secondary-button"
+            >
+              Batal
+            </button>
+
+            <button
+              type="submit"
+              id="edaranSubmitButton"
+              class="edaran-primary-button"
+            >
+              Hantar
+            </button>
+
+          </div>
+
+        </form>
+
+      </section>
+
+      <!-- PAPARAN TERPERINCI -->
+
+      <section
+        id="edaranDetailSection"
+        class="edaran-card"
+        hidden
+      >
+
+        <button
+          type="button"
+          id="edaranDetailBackButton"
+          class="edaran-text-button"
+        >
+          ← Senarai
+        </button>
+
+        <div
+          id="edaranDetailBody"
+          class="edaran-detail-body"
+        ></div>
+
+        <div
+          id="edaranOwnerActions"
+          class="edaran-owner-actions"
+          hidden
+        >
+
+<button
+  type="button"
+  id="edaranEditButton"
+  title="Edit Edaran"
+  aria-label="Edit Edaran"
+>
+  ✏️
+</button>
+
+<button
+  type="button"
+  id="edaranDeleteButton"
+  title="Padam Edaran"
+  aria-label="Padam Edaran"
+>
+  🗑️
+</button>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/edaran.js"></script>
+
+</body>
+</html>

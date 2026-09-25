@@ -493,3 +493,242 @@ button:disabled {
   }
 
 }
+
+/* =====================================================
+   REKOD KELULUSAN - KELOMPOK TARIKH
+===================================================== */
+
+.approval-date-group {
+  margin: 8px 0 14px;
+
+  padding: 10px;
+
+  border: 1px solid #dce4ef;
+  border-radius: 8px;
+
+  background: #ffffff;
+}
+
+
+/* TARIKH */
+
+.approval-date-header {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  margin-bottom: 8px;
+
+  color: #173b6c;
+
+  font-size: 12px;
+}
+
+
+.approval-date-label {
+  font-weight: 500;
+}
+
+
+.approval-date-value {
+  font-weight: 700;
+}
+
+
+/* =====================================================
+   JADUAL
+===================================================== */
+
+.approval-table-wrap {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+
+.approval-table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  table-layout: fixed;
+
+  font-size: 11px;
+}
+
+
+.approval-table th {
+  padding: 6px 5px;
+
+  background: #edf3fb;
+
+  border-bottom: 1px solid #d7e0eb;
+
+  color: #173b6c;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  text-align: left;
+}
+
+
+.approval-table td {
+  padding: 7px 5px;
+
+  border-bottom: 1px solid #edf0f4;
+
+  color: #26384f;
+
+  vertical-align: middle;
+}
+
+
+.approval-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+
+/* ITEM */
+
+.approval-table th:nth-child(1),
+.approval-table td:nth-child(1) {
+  width: 38%;
+}
+
+
+/* SAIZ */
+
+.approval-table th:nth-child(2),
+.approval-table td:nth-child(2) {
+  width: 14%;
+  text-align: center;
+}
+
+
+/* DIPOHON */
+
+.approval-table th:nth-child(3),
+.approval-table td:nth-child(3) {
+  width: 24%;
+  text-align: center;
+}
+
+
+/* DILULUSKAN */
+
+.approval-table th:nth-child(4),
+.approval-table td:nth-child(4) {
+  width: 24%;
+  text-align: center;
+}
+
+
+/* =====================================================
+   RINGKASAN
+===================================================== */
+
+.approval-summary {
+  margin-top: 9px;
+  padding-top: 8px;
+
+  border-top: 1px solid #dce4ef;
+
+  color: #52657c;
+
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+
+.approval-decision-date {
+  margin-bottom: 3px;
+}
+
+
+.approval-total {
+  color: #334e70;
+}
+
+
+.approval-total span {
+  margin: 0 4px;
+
+  color: #a0aec0;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .approval-date-group {
+    padding: 8px;
+  }
+
+
+  .approval-table {
+    font-size: 10px;
+  }
+
+
+  .approval-table th {
+    padding: 5px 3px;
+
+    font-size: 9px;
+  }
+
+
+  .approval-table td {
+    padding: 6px 3px;
+  }
+
+
+  .approval-summary {
+    font-size: 9px;
+  }
+
+}
+
+/* =====================================================
+   LIHAT BORANG KEW.PS-8
+===================================================== */
+
+.approval-form-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  margin-top: 8px;
+}
+
+
+.approval-form-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 30px;
+
+  padding: 5px 10px;
+
+  border: 1px solid #cbd8e8;
+  border-radius: 6px;
+
+  background: #f5f8fc;
+
+  color: #174681;
+
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+.approval-form-button:hover {
+  background: #eaf2fc;
+}
