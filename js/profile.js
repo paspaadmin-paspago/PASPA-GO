@@ -1145,7 +1145,43 @@ updateBmiPreview();
   );
 }
 
+/* =====================================================
+   PROFILE FAST PRELOAD
+===================================================== */
 
+function preloadProfileFromSession() {
+
+  const session = getSession();
+
+  if (
+    !session ||
+    session.isLoggedIn !== true
+  ) {
+    return;
+  }
+
+
+  if (profileName) {
+
+    profileName.textContent =
+      session.namaAhli ||
+      "Ahli PASPA";
+
+  }
+
+
+  if (profilePaspaId) {
+
+    profilePaspaId.textContent =
+      "ID PASPA: " +
+      (
+        session.idPaspa ||
+        "-"
+      );
+
+  }
+
+}
 /* =====================================================
    LOAD PROFILE
 ===================================================== */
@@ -2325,4 +2361,6 @@ document
     });
 
   });
+preloadProfileFromSession();
+
 loadProfile();

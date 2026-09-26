@@ -4,14 +4,23 @@
 
 .dashboard-body {
   min-height: 100vh;
+  margin: 0;
 
   background:
     linear-gradient(
-      rgba(5, 25, 60, 0.76),
-      rgba(5, 25, 60, 0.88)
+      180deg,
+      rgba(3, 18, 43, 0.68) 0%,
+      rgba(7, 35, 78, 0.82) 42%,
+      rgba(4, 22, 52, 0.94) 100%
     ),
     url("../images/background.jpg")
-    center / cover no-repeat fixed;
+    center center / cover no-repeat;
+
+  background-attachment: scroll;
+
+  color: #ffffff;
+
+  overflow-x: hidden;
 }
 
 
@@ -1437,4 +1446,482 @@
     height: 42px;
     min-height: 42px;
   }
+}
+
+/* =====================================================
+   PASPA GO
+   DASHBOARD STABILITY + PERFORMANCE FIX
+===================================================== */
+
+/* Elak perubahan saiz page ketika kandungan dimuatkan */
+html {
+  min-height: 100%;
+  overflow-y: scroll;
+}
+
+body.dashboard-body {
+  min-height: 100vh;
+  margin: 0;
+
+  /* Elak background fixed repaint pada mobile */
+  background-attachment: scroll;
+
+  overflow-x: hidden;
+}
+
+
+/* =====================================================
+   DASHBOARD CONTAINER
+===================================================== */
+
+.dashboard-shell {
+  position: relative;
+
+  width: 100%;
+  max-width: 900px;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  box-sizing: border-box;
+}
+
+
+/* =====================================================
+   HEADER
+   Kekalkan ruang tetap semasa logo sedang load
+===================================================== */
+
+.dashboard-header {
+  box-sizing: border-box;
+
+  height: 125px;
+  min-height: 125px;
+
+  flex-shrink: 0;
+}
+
+
+/* =====================================================
+   LOGO
+   Elak layout berubah ketika imej selesai load
+===================================================== */
+
+.dashboard-logo {
+  width: 250px;
+  height: 100px;
+
+  object-fit: contain;
+}
+
+
+/* =====================================================
+   MEMBER CARD
+   Kunci struktur asas supaya API tidak menolak layout
+===================================================== */
+
+.member-card {
+  box-sizing: border-box;
+
+  min-height: 225px;
+
+  contain: layout;
+}
+
+
+/* =====================================================
+   PHOTO
+   Ruang gambar kekal walaupun Google Drive lambat
+===================================================== */
+
+.photo-wrapper {
+  width: 140px;
+  height: 175px;
+
+  flex: 0 0 140px;
+}
+
+.member-photo {
+  display: block;
+
+  width: 140px;
+  height: 175px;
+
+  aspect-ratio: 4 / 5;
+
+  object-fit: cover;
+
+  box-sizing: border-box;
+}
+
+
+/* =====================================================
+   MEMBER DETAILS
+===================================================== */
+
+.member-details {
+  min-width: 0;
+}
+
+
+/* Nama mempunyai ruang minimum sebelum API selesai */
+#memberName {
+  min-height: 32px;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* ID dan IC mempunyai ruang tetap */
+#memberId,
+#memberIc {
+  min-height: 18px;
+}
+
+
+/* =====================================================
+   MENU
+===================================================== */
+
+.dashboard-menu {
+  align-items: stretch;
+}
+
+.menu-card {
+  box-sizing: border-box;
+
+  contain: layout paint;
+
+  transform: translateZ(0);
+}
+
+
+/* =====================================================
+   BOTTOM NAVIGATION
+===================================================== */
+
+.bottom-nav {
+  box-sizing: border-box;
+
+  will-change: transform;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 650px) {
+
+  html {
+    overflow-y: auto;
+  }
+
+  body.dashboard-body {
+    background-attachment: scroll;
+  }
+
+
+  .dashboard-logo {
+    width: 230px;
+    height: 95px;
+  }
+
+
+  .member-card {
+    min-height: 208px;
+
+    contain: layout;
+  }
+
+
+  .photo-wrapper {
+    width: 82px;
+    height: 103px;
+
+    flex: 0 0 103px;
+  }
+
+
+  .member-photo {
+    width: 82px;
+    height: 103px;
+  }
+
+
+  #memberName {
+    min-height: 18px;
+  }
+
+
+  .menu-card {
+    min-height: 70px;
+  }
+
+}
+
+
+/* =====================================================
+   REDUCE UNNECESSARY PAINT
+===================================================== */
+
+.dashboard-header,
+.member-card,
+.menu-card,
+.bottom-nav {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* =====================================================
+   DASHBOARD FAST LOAD
+===================================================== */
+
+.member-card {
+  transition:
+    opacity 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+#memberName,
+#memberId,
+#memberIc {
+  transition:
+    opacity 0.15s ease;
+}
+
+.member-photo {
+  transition:
+    opacity 0.2s ease;
+}
+
+
+/* Elak flash / resize gambar */
+
+.member-photo {
+  opacity: 1;
+}
+
+.member-photo[src=""] {
+  opacity: 0;
+}
+
+/* =====================================================
+   PASPA GO - CORPORATE HEADER
+===================================================== */
+
+.dashboard-header {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(5, 31, 72, 0.88),
+      rgba(12, 63, 126, 0.72)
+    );
+
+  border:
+    1px solid rgba(255,255,255,0.10);
+
+  border-radius:
+    0 0 24px 24px;
+
+  box-shadow:
+    0 12px 30px rgba(0,0,0,0.18);
+
+  backdrop-filter:
+    blur(8px);
+
+  -webkit-backdrop-filter:
+    blur(8px);
+}
+
+/* =====================================================
+   MEMBER CARD - PREMIUM
+===================================================== */
+
+.member-card {
+  position: relative;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.98),
+      rgba(240,246,255,0.96)
+    );
+
+  border:
+    1px solid rgba(255,255,255,0.75);
+
+  box-shadow:
+    0 14px 38px rgba(0,0,0,0.20);
+
+  backdrop-filter:
+    blur(10px);
+
+  -webkit-backdrop-filter:
+    blur(10px);
+}
+
+
+/* Garisan identiti PASPA */
+
+.member-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 4px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #0c3974,
+      #2372c8,
+      #0c3974
+    );
+}
+
+.member-photo {
+  border:
+    3px solid rgba(255,255,255,0.95);
+
+  box-shadow:
+    0 7px 20px rgba(11,49,96,0.22);
+
+  background:
+    #eef3f9;
+}
+
+/* =====================================================
+   DASHBOARD MENU - MODERN CORPORATE
+===================================================== */
+
+.menu-card {
+  position: relative;
+
+  overflow: hidden;
+
+  border:
+    1px solid rgba(255,255,255,0.75);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,0.98),
+      rgba(238,245,253,0.96)
+    );
+
+  box-shadow:
+    0 7px 20px rgba(0,0,0,0.16);
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease;
+}
+
+
+.menu-card:hover {
+  transform:
+    translateY(-2px);
+
+  background:
+    #ffffff;
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,0.20);
+}
+
+
+.menu-card:active {
+  transform:
+    scale(0.98);
+}
+
+
+
+/* =====================================================
+   BOTTOM NAV - GLASS CORPORATE
+===================================================== */
+
+.bottom-nav {
+  background:
+    rgba(255,255,255,0.94);
+
+  border:
+    1px solid rgba(255,255,255,0.75);
+
+  box-shadow:
+    0 10px 35px rgba(0,0,0,0.24);
+
+  backdrop-filter:
+    blur(14px);
+
+  -webkit-backdrop-filter:
+    blur(14px);
+}
+
+
+.bottom-nav-logo {
+  background:
+    linear-gradient(
+      145deg,
+      #174c91,
+      #082b5e
+    );
+
+  box-shadow:
+    0 6px 18px rgba(4,31,70,0.35);
+}
+
+/* =====================================================
+   MOBILE UI REFINEMENT
+===================================================== */
+
+@media (max-width: 650px) {
+
+  .dashboard-shell {
+    padding-top: 10px;
+  }
+
+
+  .dashboard-header {
+    border-radius:
+      0 0 20px 20px;
+  }
+
+
+  .member-card {
+    box-shadow:
+      0 10px 28px rgba(0,0,0,0.18);
+  }
+
+
+  .dashboard-menu {
+    gap: 10px;
+  }
+
+
+  .menu-card {
+    box-shadow:
+      0 5px 16px rgba(0,0,0,0.14);
+  }
+
+
+  .bottom-nav {
+    box-shadow:
+      0 8px 28px rgba(0,0,0,0.24);
+  }
+
+}
+
+/* HILANGKAN GARISAN ATAS MENU CARD */
+.menu-card::before {
+  display: none !important;
+  content: none !important;
 }

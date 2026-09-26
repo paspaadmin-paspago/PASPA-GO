@@ -1194,16 +1194,232 @@ if (
 }
 
 
+/* =====================================================
+   DASHBOARD CACHE
+===================================================== */
+
+const DASHBOARD_CACHE_KEY =
+  "paspaGoDashboardCache";
+
+const DASHBOARD_CACHE_MAX_AGE =
+  5 * 60 * 1000; // 5 minit
 
 
+function saveDashboardCache(data) {
 
+  try {
+
+    localStorage.setItem(
+      DASHBOARD_CACHE_KEY,
+      JSON.stringify({
+        savedAt: Date.now(),
+        data: data
+      })
+    );
+
+  } catch (error) {
+
+    console.warn(
+      "Dashboard cache tidak dapat disimpan.",
+      error
+    );
+
+  }
+
+}
+
+
+function getDashboardCache() {
+
+  try {
+
+    const raw =
+      localStorage.getItem(
+        DASHBOARD_CACHE_KEY
+      );
+
+
+    if (!raw) {
+      return null;
+    }
+
+
+    const cache =
+      JSON.parse(raw);
+
+
+    if (
+      !cache ||
+      !cache.savedAt ||
+      !cache.data
+    ) {
+      return null;
+    }
+
+
+    /*
+      Cache lama tidak digunakan.
+    */
+
+    if (
+      Date.now() -
+      cache.savedAt >
+      DASHBOARD_CACHE_MAX_AGE
+    ) {
+
+      localStorage.removeItem(
+        DASHBOARD_CACHE_KEY
+      );
+
+      return null;
+
+    }
+
+
+    return cache.data;
+
+
+  } catch (error) {
+
+    return null;
+
+  }
+
+}
+
+/* =====================================================
+   RENDER DASHBOARD DATA
+===================================================== */
+
+function renderDashboardData(data) {
+
+  if (!data) {
+    return;
+  }
+
+
+  if (memberName) {
+
+    memberName.textContent =
+      data.namaPaparan ||
+      data.namaPenuh ||
+      data.nama ||
+      "Ahli PASPA";
+
+  }
+
+
+  if (memberId) {
+
+    memberId.textContent =
+      data.idPaspa || "-";
+
+  }
+
+
+  if (memberIc) {
+
+    memberIc.textContent =
+      data.noKP ||
+      data.noKp ||
+      data.ic ||
+      "-";
+
+  }
+
+
+  /*
+    FOTO
+
+    Gunakan nama property foto yang memang
+    diterima oleh dashboard_v2 sedia ada.
+  */
+
+  const photoUrl =
+    data.photoUrl ||
+    data.fotoUrl ||
+    data.foto ||
+    "";
+
+
+  if (
+    memberPhoto &&
+    photoUrl
+  ) {
+
+    memberPhoto.src =
+      photoUrl;
+
+  }
+
+}
+
+/* =====================================================
+   FAST DASHBOARD PRELOAD
+   Paparkan data session dahulu sementara menunggu API
+===================================================== */
+
+function preloadDashboardFromSession() {
+
+  const session = getSession();
+
+  if (
+    !session ||
+    session.isLoggedIn !== true
+  ) {
+    return;
+  }
+
+
+  /* NAMA */
+
+  if (memberName) {
+
+    const cachedName =
+      String(
+        session.namaAhli || ""
+      ).trim();
+
+    memberName.textContent =
+      cachedName || "Ahli PASPA";
+
+  }
+
+
+  /* ID PASPA */
+
+  if (memberId) {
+
+    memberId.textContent =
+      String(
+        session.idPaspa || "-"
+      ).trim();
+
+  }
+
+
+  /*
+    Gambar kekalkan default-avatar dahulu.
+    Jangan kosongkan ruang gambar.
+  */
+
+  if (
+    memberPhoto &&
+    !memberPhoto.getAttribute("src")
+  ) {
+
+    memberPhoto.src =
+      "../images/default-avatar.png";
+
+  }
+
+}
 
 
 
 /* =====================================================
    LOAD DASHBOARD
 ===================================================== */
-
 async function loadDashboard() {
 
   const session =
@@ -1224,40 +1440,21 @@ async function loadDashboard() {
   }
 
 
-  try {
+  /* =================================================
+     FUNGSI PAPAR DATA AHLI
+     Digunakan oleh CACHE dan API
+  ================================================= */
 
-    const result =
-      await apiPost({
+  function renderMember(member) {
 
-        action:
-          "dashboard_v2",
-
-        email:
-          session.googleEmail
-
-      });
-
-
-    if (
-      !result ||
-      result.success !== true
-    ) {
-
-      throw new Error(
-        result?.message ||
-        "Maklumat dashboard tidak dapat diperoleh."
-      );
-
+    if (!member) {
+      return;
     }
 
 
-    const member =
-      result.member || {};
-
-
-    /* =================================================
+    /* ===============================================
        NAMA + PANGKAT
-    ================================================= */
+    =============================================== */
 
     const pangkat =
       member.pangkat || "";
@@ -1283,9 +1480,9 @@ async function loadDashboard() {
     }
 
 
-    /* =================================================
+    /* ===============================================
        ID PASPA
-    ================================================= */
+    =============================================== */
 
     if (memberId) {
 
@@ -1297,9 +1494,9 @@ async function loadDashboard() {
     }
 
 
-    /* =================================================
+    /* ===============================================
        NO KAD PENGENALAN
-    ================================================= */
+    =============================================== */
 
     const noKP =
       String(
@@ -1339,9 +1536,9 @@ async function loadDashboard() {
     }
 
 
-    /* =================================================
+    /* ===============================================
        GAMBAR AHLI
-    ================================================= */
+    =============================================== */
 
     if (memberPhoto) {
 
@@ -1370,6 +1567,138 @@ async function loadDashboard() {
 
     }
 
+  }
+
+
+  /* =================================================
+     1. PAPAR CACHE DAHULU
+     Hampir serta-merta
+  ================================================= */
+
+  try {
+
+    const cacheText =
+      localStorage.getItem(
+        "paspaGoDashboardCache"
+      );
+
+
+    if (cacheText) {
+
+      const cache =
+        JSON.parse(cacheText);
+
+
+      const cacheAge =
+        Date.now() -
+        Number(
+          cache.savedAt || 0
+        );
+
+
+      /*
+        Cache digunakan maksimum 5 minit.
+      */
+
+      if (
+        cache.member &&
+        cacheAge >= 0 &&
+        cacheAge <= 300000
+      ) {
+
+        renderMember(
+          cache.member
+        );
+
+      }
+
+    }
+
+  } catch (cacheError) {
+
+    console.warn(
+      "DASHBOARD CACHE READ:",
+      cacheError
+    );
+
+  }
+
+
+  /* =================================================
+     2. AMBIL DATA TERKINI DARIPADA SERVER
+  ================================================= */
+
+  try {
+
+    const result =
+      await apiPost({
+
+        action:
+          "dashboard_v2",
+
+        email:
+          session.googleEmail
+
+      });
+
+
+    if (
+      !result ||
+      result.success !== true
+    ) {
+
+      throw new Error(
+        result?.message ||
+        "Maklumat dashboard tidak dapat diperoleh."
+      );
+
+    }
+
+
+    const member =
+      result.member || {};
+
+
+    /* =================================================
+       3. PAPAR DATA TERKINI
+    ================================================= */
+
+    renderMember(
+      member
+    );
+
+
+    /* =================================================
+       4. SIMPAN CACHE TERKINI
+    ================================================= */
+
+    try {
+
+      localStorage.setItem(
+
+        "paspaGoDashboardCache",
+
+        JSON.stringify({
+
+          savedAt:
+            Date.now(),
+
+          member:
+            member
+
+        })
+
+      );
+
+    } catch (cacheError) {
+
+      console.warn(
+        "DASHBOARD CACHE SAVE:",
+        cacheError
+      );
+
+    }
+
 
   } catch (error) {
 
@@ -1379,9 +1708,14 @@ async function loadDashboard() {
     );
 
 
+    /*
+      Jika API gagal tetapi cache telah berjaya dipaparkan,
+      kita tidak kosongkan dashboard.
+    */
+
     showDashboardMessage(
       error.message ||
-      "Dashboard gagal dimuatkan."
+      "Dashboard gagal dikemas kini."
     );
 
   }
@@ -2301,17 +2635,50 @@ document.addEventListener(
 
   }
 );
-
-
 /* =====================================================
    START
+   FAST DASHBOARD LOADING
 ===================================================== */
+
+/*
+  LANGKAH 1
+  Paparkan data yang sudah ada dalam telefon/browser.
+  Tiada API diperlukan.
+*/
+
+preloadDashboardFromSession();
+
+
+/*
+  LANGKAH 2
+  Segerakkan maklumat sebenar daripada server.
+*/
 
 loadDashboard();
 
-loadUnreadMessageCount();
 
-loadDashboardOnSceneStatus();
+/*
+  LANGKAH 3
+  Fungsi sekunder dijalankan selepas paparan utama
+  sudah mula dirender.
+*/
+
+window.requestAnimationFrame(
+  function () {
+
+    window.setTimeout(
+      function () {
+
+        loadUnreadMessageCount();
+
+        loadDashboardOnSceneStatus();
+
+      },
+      150
+    );
+
+  }
+);
 
 
 /* =====================================================
