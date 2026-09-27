@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Senarai Kehadiran | PASPA GO
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="../css/senarai.css"
+  >
+
+</head>
+
+<body>
+
+  <!-- =====================================================
+       HEADER APLIKASI
+  ====================================================== -->
+
+  <header class="app-header">
+
+    <button
+      type="button"
+      id="backButton"
+      class="header-button"
+      aria-label="Kembali"
+    >
+      ←
+    </button>
+
+    <div class="header-title">
+      Senarai Kehadiran
+    </div>
+
+    <button
+      type="button"
+      id="homeButton"
+      class="header-button"
+      aria-label="Utama"
+    >
+      🏠
+    </button>
+
+  </header>
+
+
+  <!-- =====================================================
+       TOOLBAR
+       TIDAK AKAN MASUK DALAM PRINT / PDF
+  ====================================================== -->
+
+  <div class="document-toolbar no-print">
+
+    <button
+      type="button"
+      id="downloadButton"
+    >
+      Download PDF
+    </button>
+
+    <button
+      type="button"
+      id="shareButton"
+    >
+      Share
+    </button>
+
+    <button
+      type="button"
+      id="printButton"
+    >
+      Print
+    </button>
+
+  </div>
+
+
+  <!-- =====================================================
+       STATUS
+  ====================================================== -->
+
+  <div
+    id="pageMessage"
+    class="page-message no-print"
+  >
+    Memuatkan senarai...
+  </div>
+
+
+  <!-- =====================================================
+       DOKUMEN A4
+  ====================================================== -->
+
+  <main
+    id="documentContainer"
+    class="document-container"
+  >
+  </main>
+
+
+  <!-- =====================================================
+       HTML2PDF
+  ====================================================== -->
+
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+  ></script>
+
+
+  <!-- =====================================================
+       FAIL API PASPA GO
+
+       PENTING:
+       Jika nama fail API awak bukan api.js,
+       tukar src ini kepada fail sebenar yang
+       mengandungi function apiPost().
+  ====================================================== -->
+
+<script src="../js/config.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/senarai.js"></script>
+
+</body>
+
+</html>

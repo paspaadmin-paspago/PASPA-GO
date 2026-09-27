@@ -1222,6 +1222,25 @@ function createLatestOperationCard(
     </div>
 
 
+        <!-- =================================================
+         LIHAT SENARAI KEHADIRAN OPERASI
+    ================================================== -->
+
+    <div class="latest-attendance-list-section">
+
+      <button
+        type="button"
+        class="latest-attendance-list-button"
+        data-attendance-type="OPERASI"
+        data-attendance-id="${escapeManageHtml(
+          operation.operasiId || ""
+        )}"
+      >
+        LIHAT SENARAI
+      </button>
+
+    </div>
+
     <!-- =================================================
          OPERASI AKTIF / STAND DOWN
     ================================================== -->
@@ -2560,6 +2579,24 @@ function createLatestProgramCard(
 
     </div>
 
+        <!-- ================================================
+         LIHAT SENARAI KEHADIRAN PROGRAM
+    ================================================= -->
+
+    <div class="latest-attendance-list-section">
+
+      <button
+        type="button"
+        class="latest-attendance-list-button"
+        data-attendance-type="PROGRAM"
+        data-attendance-id="${escapeManageHtml(
+          program.messageId || ""
+        )}"
+      >
+        LIHAT SENARAI
+      </button>
+
+    </div>
 
     <!-- ================================================
          STATISTIK
@@ -3147,6 +3184,186 @@ function setupMemberList(
 
 }
 
+/* =====================================================
+   LIHAT SENARAI KEHADIRAN
+   PROGRAM / OPERASI
+===================================================== */
+
+document.addEventListener(
+  "click",
+  function (event) {
+
+    const button =
+      event.target.closest(
+        ".latest-attendance-list-button"
+      );
+
+
+    if (!button) {
+      return;
+    }
+
+
+    const type =
+      String(
+        button.dataset.attendanceType ||
+        ""
+      )
+        .trim()
+        .toLowerCase();
+
+
+    const recordId =
+      String(
+        button.dataset.attendanceId ||
+        ""
+      ).trim();
+
+
+    if (
+      !type ||
+      !recordId
+    ) {
+
+      showManageMessage(
+        "Maklumat senarai tidak lengkap.",
+        "error"
+      );
+
+      return;
+
+    }
+
+const card =
+  button.closest(
+    ".latest-program-card"
+  );
+
+
+let meta = {
+
+  perkara:
+    "",
+
+  tarikh:
+    "",
+
+  tempat:
+    "",
+
+  lokasi:
+    ""
+
+};
+
+
+if (card) {
+
+  const titleElement =
+    card.querySelector(
+      ".latest-program-title"
+    );
+
+
+  const metaElements =
+    card.querySelectorAll(
+      ".latest-program-meta span"
+    );
+
+
+  meta.perkara =
+    titleElement
+      ? titleElement.textContent
+          .replace(
+            /^(PROGRAM|OPERASI)\s*:/i,
+            ""
+          )
+          .trim()
+      : "";
+
+
+  metaElements.forEach(
+    function (element) {
+
+      const text =
+        String(
+          element.textContent ||
+          ""
+        )
+          .replace(
+            /\s+/g,
+            " "
+          )
+          .trim();
+
+
+      if (
+        /^Tarikh:/i.test(
+          text
+        )
+      ) {
+
+        meta.tarikh =
+          text.replace(
+            /^Tarikh:\s*/i,
+            ""
+          );
+
+      }
+
+
+      if (
+        /^Tempat:/i.test(
+          text
+        )
+      ) {
+
+        meta.tempat =
+          text.replace(
+            /^Tempat:\s*/i,
+            ""
+          );
+
+      }
+
+
+      if (
+        /^(Negeri|Negara):/i.test(
+          text
+        )
+      ) {
+
+        meta.lokasi =
+          text.replace(
+            /^(Negeri|Negara):\s*/i,
+            ""
+          );
+
+      }
+
+    }
+  );
+
+}
+
+
+sessionStorage.setItem(
+  "paspaAttendanceMeta",
+  JSON.stringify(
+    meta
+  )
+);
+
+
+    window.location.href =
+      "senarai.html" +
+      "?type=" +
+      encodeURIComponent(type) +
+      "&recordId=" +
+      encodeURIComponent(recordId);
+
+  }
+);
 
 /* =====================================================
    ESCAPE

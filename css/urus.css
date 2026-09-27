@@ -1025,3 +1025,77 @@ body {
   }
 
 }
+
+/* =====================================================
+   BUTTON LIHAT SENARAI
+===================================================== */
+
+.latest-attendance-list-section {
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+
+.latest-attendance-list-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  min-width: 145px;
+  padding: 9px 16px;
+
+  border: 1px solid #1f5797;
+  border-radius: 8px;
+
+  background: #edf4fc;
+  color: #174b85;
+
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 2px 5px rgba(31, 87, 151, 0.10);
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
+}
+
+
+/* ICON DOKUMEN */
+
+.latest-attendance-list-button::before {
+  content: "☷";
+
+  font-size: 15px;
+  line-height: 1;
+}
+
+
+/* HOVER */
+
+.latest-attendance-list-button:hover {
+  background: #1f5797;
+  color: #ffffff;
+
+  box-shadow:
+    0 4px 10px rgba(31, 87, 151, 0.20);
+
+  transform: translateY(-1px);
+}
+
+
+/* KETIKA DITEKAN */
+
+.latest-attendance-list-button:active {
+  transform: translateY(0);
+
+  box-shadow:
+    0 1px 3px rgba(31, 87, 151, 0.15);
+}
