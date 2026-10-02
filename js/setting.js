@@ -909,8 +909,11 @@ function updateSettingSoundControls() {
 /* ==========================================
    SIMPAN NOTIFIKASI
 ========================================== */
+/* ==========================================
+   SIMPAN NOTIFIKASI
+========================================== */
 
-function saveSettingNotifications() {
+async function saveSettingNotifications() {
 
   const preferences =
     getSettingPreferences();
@@ -934,6 +937,7 @@ function saveSettingNotifications() {
 
   };
 
+
   preferences.notifications.operation = {
 
     sound:
@@ -953,17 +957,63 @@ function saveSettingNotifications() {
 
   };
 
+
+  // ========================================
+  // AKTIFKAN NOTIFIKASI SISTEM PASPA GO
+  // ========================================
+
+  if (
+    "Notification" in window &&
+    Notification.permission !== "granted"
+  ) {
+
+    if (
+      typeof window.enablePaspaNotifications ===
+      "function"
+    ) {
+
+      const notificationEnabled =
+        await window.enablePaspaNotifications();
+
+      if (!notificationEnabled) {
+
+        showSettingMessage(
+          "Tetapan disimpan, tetapi kebenaran notifikasi belum diberikan."
+        );
+
+      }
+
+    }
+
+  }
+
+
+  // ========================================
+  // SIMPAN TETAPAN AHLI
+  // ========================================
+
   if (
     saveSettingPreferences(
       preferences
     )
   ) {
 
-    showSettingMessage(
-      SETTING_TRANSLATIONS[
-        getSettingLanguage()
-      ].saved
-    );
+    if (
+      "Notification" in window &&
+      Notification.permission === "granted"
+    ) {
+
+      showSettingMessage(
+        "Tetapan berjaya disimpan. Notifikasi PASPA GO telah diaktifkan."
+      );
+
+    } else {
+
+      showSettingMessage(
+        "Tetapan berjaya disimpan."
+      );
+
+    }
 
   }
 
