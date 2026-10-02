@@ -123,3 +123,62 @@ async function checkPaspaNotificationStatus() {
 
 window.checkPaspaNotificationStatus =
   checkPaspaNotificationStatus;
+
+  async function testPaspaNotification() {
+
+  try {
+
+    if (!("Notification" in window)) {
+      alert("Notification tidak disokong.");
+      return;
+    }
+
+    if (Notification.permission !== "granted") {
+      alert("Kebenaran notification belum diberikan.");
+      return;
+    }
+
+    const registration =
+      await navigator.serviceWorker.ready;
+
+    await registration.showNotification(
+      "PASPA GO",
+      {
+        body:
+          "Notifikasi PASPA GO berfungsi dengan baik.",
+
+        icon:
+          "/PASPA-GO/images/launchericon-192x192.png",
+
+        badge:
+          "/PASPA-GO/images/launchericon-192x192.png",
+
+        tag:
+          "paspa-go-test",
+
+        renotify:
+          true,
+
+        data: {
+          url:
+            "/PASPA-GO/pages/dashboard.html"
+        }
+      }
+    );
+
+  } catch (error) {
+
+    console.error(
+      "TEST NOTIFICATION ERROR:",
+      error
+    );
+
+    alert(
+      "Ralat notification: " +
+      error.message
+    );
+  }
+}
+
+window.testPaspaNotification =
+  testPaspaNotification;
