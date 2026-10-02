@@ -217,6 +217,60 @@ function showRegistrationForm(
 /* =====================================================
    SESSION
 ===================================================== */
+function checkExistingSession() {
+
+  try {
+
+    const raw =
+      localStorage.getItem("paspaGoSession");
+
+    if (!raw) {
+      return false;
+    }
+
+    const session =
+      JSON.parse(raw);
+
+    if (
+      !session ||
+      session.isLoggedIn !== true ||
+      !session.idPaspa
+    ) {
+
+      localStorage.removeItem(
+        "paspaGoSession"
+      );
+
+      return false;
+    }
+
+    console.log(
+      "Sesi PASPA GO masih aktif:",
+      session.idPaspa
+    );
+
+    window.location.replace(
+      CONFIG.DASHBOARD_URL
+    );
+
+    return true;
+
+  } catch (error) {
+
+    console.error(
+      "SESSION CHECK ERROR:",
+      error
+    );
+
+    localStorage.removeItem(
+      "paspaGoSession"
+    );
+
+    return false;
+  }
+
+}
+
 
 function saveUserSession(result) {
 
@@ -897,8 +951,19 @@ if (backToLoginButton) {
 /* =====================================================
    MULAKAN GOOGLE LOGIN
 ===================================================== */
-
 window.addEventListener(
   "load",
-  initializeGoogleLogin
+  function () {
+
+    // Jika ahli sudah login,
+    // terus masuk ke Dashboard.
+    if (checkExistingSession()) {
+      return;
+    }
+
+    // Jika belum login,
+    // barulah paparkan Google Login.
+    initializeGoogleLogin();
+
+  }
 );
