@@ -263,7 +263,34 @@
 
   <script src="js/login.js"></script>
 
+  <script src="/PASPA-GO/js/notification.js"></script>
 
+<script>
+  // Daftar PASPA GO Service Worker
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", async () => {
+      try {
+        const registration = await navigator.serviceWorker.register(
+          "/PASPA-GO/service-worker.js",
+          { scope: "/PASPA-GO/" }
+        );
+
+        console.log(
+          "PASPA GO Service Worker berjaya didaftarkan:",
+          registration.scope
+        );
+      } catch (error) {
+        console.error(
+          "PASPA GO Service Worker gagal didaftarkan:",
+          error
+        );
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
 
 </body>
 
