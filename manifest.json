@@ -1,6 +1,7 @@
 {
   "name": "PASPA GO",
   "short_name": "PASPA GO",
+  "description": "Aplikasi dalaman PASPA untuk pengurusan ahli, program, operasi dan maklumat PASPA.",
 
   "start_url": "/PASPA-GO/index.html",
   "scope": "/PASPA-GO/",
@@ -12,8 +13,14 @@
 
   "icons": [
     {
-      "src": "/PASPA-GO/images/logo.png",
-      "sizes": "any",
+      "src": "/PASPA-GO/images/launchericon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/PASPA-GO/images/launchericon-512x512.png",
+      "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     }
