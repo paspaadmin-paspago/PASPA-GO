@@ -2745,6 +2745,9 @@ if (edaranButton) {
 window.addEventListener(
   "load",
   async function () {
+    alert(
+  "DEBUG PUSH: Dashboard registration berjalan."
+);
 
     try {
 
