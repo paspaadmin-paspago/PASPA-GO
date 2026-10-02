@@ -54,3 +54,72 @@ async function enablePaspaNotifications() {
 
 // Jadikan fungsi boleh dipanggil dari page lain
 window.enablePaspaNotifications = enablePaspaNotifications;
+
+// ========================================
+// PASPA GO - Notification Diagnostic
+// ========================================
+
+async function checkPaspaNotificationStatus() {
+
+  const result = {
+    notificationSupported:
+      "Notification" in window,
+
+    permission:
+      "Notification" in window
+        ? Notification.permission
+        : "not-supported",
+
+    serviceWorkerSupported:
+      "serviceWorker" in navigator,
+
+    serviceWorkerReady: false,
+
+    serviceWorkerController:
+      !!navigator.serviceWorker?.controller
+  };
+
+  if ("serviceWorker" in navigator) {
+
+    try {
+
+      const registration =
+        await navigator.serviceWorker.ready;
+
+      result.serviceWorkerReady =
+        !!registration.active;
+
+    } catch (error) {
+
+      console.error(
+        "SERVICE WORKER CHECK ERROR:",
+        error
+      );
+
+    }
+
+  }
+
+  alert(
+    "PASPA GO NOTIFICATION STATUS\n\n" +
+    "Permission: " +
+    result.permission +
+    "\n\nService Worker: " +
+    (
+      result.serviceWorkerReady
+        ? "ACTIVE"
+        : "NOT ACTIVE"
+    ) +
+    "\n\nController: " +
+    (
+      result.serviceWorkerController
+        ? "ACTIVE"
+        : "NOT ACTIVE"
+    )
+  );
+
+  return result;
+}
+
+window.checkPaspaNotificationStatus =
+  checkPaspaNotificationStatus;
