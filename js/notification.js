@@ -3,7 +3,7 @@
 // ========================================
 
 const PASPA_VAPID_PUBLIC_KEY =
-  "BKeTwUcx1SZciZRMMiUu4n1HWw_G8LhHdChbTOPOxVTANKWRIm9BkqwRAIIYFsGOx9J4JFeT-zV_WxEyBdmNULk";
+  "BL85IGJvP5IA3IHGtu_23N9Q25-SiYCW5eCnqNlBU2GoVxqUUvbaIgrWwb-_djERbz8ZbYU2msql_Afwzf9LFlk";
 
 // ========================================
 // PASPA GO - Notification Manager
@@ -250,27 +250,75 @@ async function registerPaspaPushSubscription() {
     const registration =
       await navigator.serviceWorker.ready;
 
+// 4. Semak subscription sedia ada
+let subscription =
+  await registration.pushManager
+    .getSubscription();
 
-    // 4. Semak subscription sedia ada
-    let subscription =
-      await registration.pushManager
-        .getSubscription();
+
+// 5. Semak sama ada subscription lama
+//    menggunakan VAPID Public Key yang sama
+if (subscription) {
+
+  const currentKey =
+    subscription.options
+      ?.applicationServerKey;
 
 
-    // 5. Jika belum ada, cipta subscription
-    if (!subscription) {
+  if (currentKey) {
 
-      subscription =
-        await registration.pushManager.subscribe({
-          userVisibleOnly: true,
+    const currentKeyArray =
+      new Uint8Array(currentKey);
 
-          applicationServerKey:
-            urlBase64ToUint8Array(
-              PASPA_VAPID_PUBLIC_KEY
-            )
-        });
+    const newKeyArray =
+      urlBase64ToUint8Array(
+        PASPA_VAPID_PUBLIC_KEY
+      );
+
+
+    const sameKey =
+      currentKeyArray.length ===
+        newKeyArray.length &&
+      currentKeyArray.every(
+        (value, index) =>
+          value === newKeyArray[index]
+      );
+
+
+    // VAPID key telah berubah
+    if (!sameKey) {
+
+      console.log(
+        "VAPID key berubah. Subscription lama akan diganti."
+      );
+
+
+      await subscription.unsubscribe();
+
+
+      subscription = null;
 
     }
+
+  }
+
+}
+
+
+// 6. Cipta subscription jika belum ada
+if (!subscription) {
+
+  subscription =
+    await registration.pushManager.subscribe({
+      userVisibleOnly: true,
+
+      applicationServerKey:
+        urlBase64ToUint8Array(
+          PASPA_VAPID_PUBLIC_KEY
+        )
+    });
+
+}
 
 
     console.log(
@@ -402,9 +450,6 @@ console.log(
 );
 
 
-alert(
-  "Push Notification PASPA GO berjaya didaftarkan."
-);
 
 
 return true;
