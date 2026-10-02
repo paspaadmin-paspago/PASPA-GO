@@ -36,6 +36,96 @@ self.addEventListener("message", (event) => {
   }
 });
 
+// =====================================================
+// TERIMA WEB PUSH DARI SERVER
+// =====================================================
+
+self.addEventListener("push", (event) => {
+
+  console.log(
+    "PASPA GO menerima Web Push."
+  );
+
+
+  let data = {};
+
+
+  try {
+
+    if (event.data) {
+
+      data =
+        event.data.json();
+
+    }
+
+  } catch (error) {
+
+    console.error(
+      "PUSH DATA PARSE ERROR:",
+      error
+    );
+
+
+    data = {
+      body:
+        event.data
+          ? event.data.text()
+          : ""
+    };
+
+  }
+
+
+  const title =
+    data.title ||
+    "PASPA GO";
+
+
+  const options = {
+
+    body:
+      data.body ||
+      "Anda mempunyai notifikasi baharu.",
+
+    icon:
+      "/PASPA-GO/images/launchericon-192x192.png",
+
+    badge:
+      "/PASPA-GO/images/launchericon-192x192.png",
+
+    tag:
+      data.tag ||
+      "paspa-go-notification",
+
+    renotify:
+      true,
+
+    data: {
+
+      url:
+        data.url ||
+        "/PASPA-GO/pages/dashboard.html"
+
+    }
+
+  };
+
+
+  event.waitUntil(
+
+    self.registration.showNotification(
+      title,
+      options
+    )
+
+  );
+
+});
+
+
+
+
 // Apabila pengguna tekan notification
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
