@@ -1,4 +1,11 @@
 // ========================================
+// PASPA GO - WEB PUSH CONFIG
+// ========================================
+
+const PASPA_VAPID_PUBLIC_KEY =
+  "BKeTwUcx1SZciZRMMiUu4n1HWw_G8LhHdChbTOPOxVTANKWRIm9BkqwRAIIYFsGOx9J4JFeT-zV_WxEyBdmNULk";
+
+// ========================================
 // PASPA GO - Notification Manager
 // ========================================
 
@@ -182,3 +189,238 @@ window.checkPaspaNotificationStatus =
 
 window.testPaspaNotification =
   testPaspaNotification;
+
+  // ========================================
+// PASPA GO - WEB PUSH SUBSCRIPTION
+// ========================================
+
+function urlBase64ToUint8Array(base64String) {
+
+  const padding =
+    "=".repeat(
+      (4 - base64String.length % 4) % 4
+    );
+
+  const base64 =
+    (base64String + padding)
+      .replace(/-/g, "+")
+      .replace(/_/g, "/");
+
+  const rawData =
+    window.atob(base64);
+
+  return Uint8Array.from(
+    [...rawData].map(
+      char => char.charCodeAt(0)
+    )
+  );
+}
+
+
+async function registerPaspaPushSubscription() {
+
+  try {
+
+    // 1. Pastikan browser menyokong Web Push
+    if (
+      !("serviceWorker" in navigator) ||
+      !("PushManager" in window)
+    ) {
+
+      console.log(
+        "Web Push tidak disokong pada peranti ini."
+      );
+
+      return null;
+    }
+
+
+    // 2. Pastikan permission notification telah diberi
+    if (Notification.permission !== "granted") {
+
+      console.log(
+        "Notification permission belum diberikan."
+      );
+
+      return null;
+    }
+
+
+    // 3. Tunggu Service Worker aktif
+    const registration =
+      await navigator.serviceWorker.ready;
+
+
+    // 4. Semak subscription sedia ada
+    let subscription =
+      await registration.pushManager
+        .getSubscription();
+
+
+    // 5. Jika belum ada, cipta subscription
+    if (!subscription) {
+
+      subscription =
+        await registration.pushManager.subscribe({
+          userVisibleOnly: true,
+
+          applicationServerKey:
+            urlBase64ToUint8Array(
+              PASPA_VAPID_PUBLIC_KEY
+            )
+        });
+
+    }
+
+
+    console.log(
+      "PASPA PUSH SUBSCRIPTION:",
+      subscription
+    );
+
+
+    return subscription;
+
+  } catch (error) {
+
+    console.error(
+      "PASPA PUSH SUBSCRIPTION ERROR:",
+      error
+    );
+
+    return null;
+  }
+
+}
+
+
+window.registerPaspaPushSubscription =
+  registerPaspaPushSubscription;
+
+  // ========================================
+// PASPA GO - SAVE PUSH SUBSCRIPTION
+// ========================================
+
+async function savePaspaPushSubscription() {
+
+  try {
+
+    // 1. Ambil sesi ahli yang sedang login
+    const sessionText =
+      localStorage.getItem(
+        "paspaGoSession"
+      );
+
+    if (!sessionText) {
+
+      console.log(
+        "Sesi PASPA GO tidak ditemui."
+      );
+
+      return false;
+    }
+
+
+    const session =
+      JSON.parse(sessionText);
+
+
+    const idPaspa =
+      String(
+        session.idPaspa || ""
+      ).trim();
+
+
+    if (!idPaspa) {
+
+      console.log(
+        "ID PASPA tidak ditemui dalam sesi."
+      );
+
+      return false;
+    }
+
+
+    // 2. Dapatkan Push Subscription telefon
+    const subscription =
+      await registerPaspaPushSubscription();
+
+
+    if (!subscription) {
+
+      console.log(
+        "Push Subscription tidak berjaya diperoleh."
+      );
+
+      return false;
+    }
+
+
+    // 3. Tukar subscription kepada data JSON
+    const subscriptionData =
+      subscription.toJSON();
+
+
+    // 4. Hantar subscription ke PASPA GO API
+const result =
+  await apiPost({
+    action: "save_push_subscription",
+
+    idPaspa:
+      idPaspa,
+
+    subscription:
+      subscriptionData
+  });
+
+
+if (
+  !result ||
+  result.success !== true
+) {
+
+  console.error(
+    "SAVE PUSH API ERROR:",
+    result
+  );
+
+  alert(
+    "Push Subscription gagal disimpan.\n\n" +
+    (
+      result?.message ||
+      "Ralat tidak diketahui."
+    )
+  );
+
+  return false;
+}
+
+
+console.log(
+  "PASPA PUSH SUBSCRIPTION SAVED:",
+  idPaspa
+);
+
+
+alert(
+  "Push Notification PASPA GO berjaya didaftarkan."
+);
+
+
+return true;
+
+  } catch (error) {
+
+    console.error(
+      "SAVE PASPA PUSH SUBSCRIPTION ERROR:",
+      error
+    );
+
+    return false;
+  }
+
+}
+
+
+window.savePaspaPushSubscription =
+  savePaspaPushSubscription;

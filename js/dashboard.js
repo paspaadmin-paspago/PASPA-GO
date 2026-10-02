@@ -2737,3 +2737,59 @@ if (edaranButton) {
     window.location.href = "edaran.html";
   });
 }
+
+// ========================================
+// PASPA GO - PUSH NOTIFICATION REGISTRATION
+// ========================================
+
+window.addEventListener(
+  "load",
+  async function () {
+
+    try {
+
+      if (
+        !("Notification" in window) ||
+        Notification.permission !== "granted"
+      ) {
+        return;
+      }
+
+
+      if (
+        typeof savePaspaPushSubscription !==
+        "function"
+      ) {
+
+        console.log(
+          "PASPA Push Notification belum tersedia."
+        );
+
+        return;
+      }
+
+
+      const result =
+        await savePaspaPushSubscription();
+
+
+      if (result === true) {
+
+        console.log(
+          "PASPA GO Push Notification aktif."
+        );
+
+      }
+
+
+    } catch (error) {
+
+      console.error(
+        "PASPA PUSH AUTO REGISTER ERROR:",
+        error
+      );
+
+    }
+
+  }
+);
