@@ -598,3 +598,494 @@ body {
   word-break: normal;
   overflow-wrap: break-word;
 }
+
+/* =====================================================
+   PASPA GO - INBOX MESSAGE UI
+===================================================== */
+
+
+/* =====================================================
+   INBOX CONTAINER
+===================================================== */
+
+.message-list {
+  width: min(
+    760px,
+    calc(100% - 20px)
+  );
+
+  margin:
+    16px auto
+    40px;
+
+  background:
+    #ffffff;
+
+  border-radius:
+    14px;
+
+  overflow:
+    hidden;
+
+  box-shadow:
+    0 6px 20px
+    rgba(0, 0, 0, .18);
+}
+
+
+/* =====================================================
+   INBOX ITEM
+===================================================== */
+
+.inbox-item {
+  appearance:
+    none;
+
+  width:
+    100%;
+
+  display:
+    grid;
+
+  grid-template-columns:
+    18px 1fr auto;
+
+  align-items:
+    center;
+
+  gap:
+    10px;
+
+  padding:
+    15px 16px;
+
+  border:
+    none;
+
+  border-bottom:
+    1px solid #e7e7e7;
+
+  background:
+    #ffffff;
+
+  color:
+    #111111;
+
+  text-align:
+    left;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  cursor:
+    pointer;
+
+  transition:
+    background .15s ease;
+}
+
+
+.inbox-item:last-child {
+  border-bottom:
+    none;
+}
+
+
+.inbox-item:hover {
+  background:
+    #f4f7fb;
+}
+
+
+/* =====================================================
+   BELUM DIBACA
+===================================================== */
+
+.inbox-item.unread {
+  background:
+    #f2f7ff;
+}
+
+
+.inbox-item.unread
+.inbox-title {
+  font-weight:
+    700;
+
+  color:
+    #0b3975;
+}
+
+
+/* =====================================================
+   SUDAH DIBACA
+===================================================== */
+
+.inbox-item.read
+.inbox-title {
+  font-weight:
+    500;
+
+  color:
+    #333333;
+}
+
+
+/* =====================================================
+   BLUE DOT
+===================================================== */
+
+.inbox-indicator {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+}
+
+
+.unread-dot {
+  width:
+    9px;
+
+  height:
+    9px;
+
+  border-radius:
+    50%;
+
+  background:
+    #1767c5;
+}
+
+
+/* =====================================================
+   INBOX TEXT
+===================================================== */
+
+.inbox-content {
+  min-width:
+    0;
+}
+
+
+.inbox-title {
+  margin:
+    0;
+
+  font-size:
+    14px;
+
+  line-height:
+    1.35;
+
+  overflow:
+    hidden;
+
+  text-overflow:
+    ellipsis;
+
+  white-space:
+    nowrap;
+}
+
+
+.inbox-subtitle {
+  margin-top:
+    4px;
+
+  color:
+    #777777;
+
+  font-size:
+    11px;
+}
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+.inbox-date {
+  padding-left:
+    8px;
+
+  color:
+    #666666;
+
+  font-size:
+    11px;
+
+  white-space:
+    nowrap;
+}
+
+
+/* =====================================================
+   MESSAGE DETAIL
+===================================================== */
+
+.message-detail {
+  padding:
+    18px;
+
+  background:
+    #ffffff;
+}
+
+
+.inbox-back-button {
+  appearance:
+    none;
+
+  margin-bottom:
+    20px;
+
+  padding:
+    8px 12px;
+
+  border:
+    1px solid #d4dbe5;
+
+  border-radius:
+    8px;
+
+  background:
+    #f5f7fa;
+
+  color:
+    #174f8f;
+
+  font-size:
+    12px;
+
+  font-weight:
+    700;
+
+  cursor:
+    pointer;
+}
+
+
+/* =====================================================
+   DETAIL HEADER
+===================================================== */
+
+.message-detail-header {
+  padding-bottom:
+    15px;
+
+  border-bottom:
+    1px solid #e5e5e5;
+}
+
+
+.message-detail-type {
+  margin-bottom:
+    6px;
+
+  color:
+    #66758a;
+
+  font-size:
+    10px;
+
+  font-weight:
+    700;
+
+  letter-spacing:
+    .7px;
+}
+
+
+.message-detail-title {
+  margin:
+    0;
+
+  color:
+    #12396f;
+
+  font-size:
+    19px;
+
+  line-height:
+    1.35;
+}
+
+
+/* =====================================================
+   DETAIL INFORMATION
+===================================================== */
+
+.message-detail-info {
+  margin-top:
+    18px;
+}
+
+
+.detail-info-row {
+  display:
+    grid;
+
+  grid-template-columns:
+    90px 1fr;
+
+  gap:
+    10px;
+
+  margin-bottom:
+    8px;
+
+  font-size:
+    13px;
+
+  line-height:
+    1.45;
+}
+
+
+.detail-label {
+  color:
+    #555555;
+
+  font-weight:
+    700;
+}
+
+
+.detail-value {
+  color:
+    #111111;
+}
+
+
+/* =====================================================
+   MESSAGE BODY
+===================================================== */
+
+.message-detail-body {
+  margin-top:
+    20px;
+
+  padding:
+    16px;
+
+  border-radius:
+    10px;
+
+  background:
+    #f7f8fa;
+
+  color:
+    #222222;
+
+  font-size:
+    13px;
+
+  line-height:
+    1.6;
+
+  white-space:
+    pre-wrap;
+}
+
+
+/* =====================================================
+   DETAIL ACTIONS
+===================================================== */
+
+.message-detail-actions {
+  display:
+    flex;
+
+  justify-content:
+    flex-end;
+
+  flex-wrap:
+    wrap;
+
+  gap:
+    8px;
+
+  margin-top:
+    16px;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media screen and (max-width: 600px) {
+
+  .message-list {
+    width:
+      calc(100% - 16px);
+
+    margin-top:
+      10px;
+
+    border-radius:
+      10px;
+  }
+
+
+  .inbox-item {
+    grid-template-columns:
+      14px 1fr auto;
+
+    gap:
+      8px;
+
+    padding:
+      14px 12px;
+  }
+
+
+  .inbox-title {
+    font-size:
+      13px;
+  }
+
+
+  .inbox-subtitle,
+  .inbox-date {
+    font-size:
+      10px;
+  }
+
+
+  .unread-dot {
+    width:
+      8px;
+
+    height:
+      8px;
+  }
+
+
+  .message-detail {
+    padding:
+      15px;
+  }
+
+
+  .message-detail-title {
+    font-size:
+      17px;
+  }
+
+
+  .detail-info-row {
+    grid-template-columns:
+      75px 1fr;
+
+    font-size:
+      12px;
+  }
+
+}
