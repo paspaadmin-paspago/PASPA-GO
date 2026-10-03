@@ -178,6 +178,142 @@ function formatSingleDate(value) {
 
 }
 
+
+/* =====================================================
+   FORMAT TARIKH / MASA INBOX
+
+   Hari ini  → MASA_HANTAR
+   Hari lain → TARIKH_HANTAR
+===================================================== */
+
+function formatInboxDateTime(
+  tarikhHantar,
+  masaHantar
+) {
+
+  if (!tarikhHantar) {
+    return "-";
+  }
+
+
+  const rawDate =
+    String(
+      tarikhHantar
+    ).trim();
+
+
+  /*
+   * Tukar TARIKH_HANTAR kepada format
+   * yang boleh dibandingkan.
+   *
+   * Sokong:
+   * dd/mm/yyyy
+   * yyyy-mm-dd
+   */
+
+  let day;
+  let month;
+  let year;
+
+
+  if (
+    rawDate.includes("/")
+  ) {
+
+    const parts =
+      rawDate.split("/");
+
+    if (parts.length === 3) {
+
+      day =
+        Number(parts[0]);
+
+      month =
+        Number(parts[1]);
+
+      year =
+        Number(parts[2]);
+
+    }
+
+  } else if (
+    rawDate.includes("-")
+  ) {
+
+    const parts =
+      rawDate.split("-");
+
+    if (parts.length === 3) {
+
+      year =
+        Number(parts[0]);
+
+      month =
+        Number(parts[1]);
+
+      day =
+        Number(parts[2]);
+
+    }
+
+  }
+
+
+  const now =
+    new Date();
+
+
+  const isToday =
+    day === now.getDate() &&
+    month ===
+      now.getMonth() + 1 &&
+    year ===
+      now.getFullYear();
+
+
+  /*
+   * Jika mesej dihantar hari ini,
+   * paparkan masa.
+   */
+
+  if (
+    isToday &&
+    masaHantar
+  ) {
+
+    return String(
+      masaHantar
+    ).trim();
+
+  }
+
+
+  /*
+   * Jika bukan hari ini,
+   * paparkan tarikh.
+   */
+
+  if (
+    day &&
+    month &&
+    year
+  ) {
+
+    return (
+      String(day).padStart(2, "0") +
+      "/" +
+      String(month).padStart(2, "0") +
+      "/" +
+      year
+    );
+
+  }
+
+
+  return rawDate;
+
+}
+
 /* =====================================================
    ASINGKAN KETERANGAN DAN PENGANJUR
 ===================================================== */
@@ -323,58 +459,51 @@ function createMessageCard(
    * digunakan sebagai fallback.
    */
 
-  const receivedDate =
-    message.tarikhHantar ||
-    message.tarikhCipta ||
-    message.tarikhMasuk ||
-    message.tarikhAcara ||
-    "";
+const receivedDateTime =
+  formatInboxDateTime(
+    message.tarikhHantar,
+    message.masaHantar
+  );
+
+row.innerHTML = `
+
+  <div class="inbox-type">
+
+    ${
+      alreadyRead
+        ? ""
+        : '<span class="unread-dot"></span>'
+    }
+
+    <span class="inbox-type-text">
+      Jemputan Program
+    </span>
+
+  </div>
 
 
-  row.innerHTML = `
+  <div class="inbox-content">
 
-    <div class="inbox-indicator">
-
-      ${
-        alreadyRead
-          ? ""
-          : '<span class="unread-dot"></span>'
-      }
-
-    </div>
-
-
-    <div class="inbox-content">
-
-      <div class="inbox-title">
-
-        ${escapeHtml(
-          title
-        )}
-
-      </div>
-
-
-      <div class="inbox-subtitle">
-
-        Jemputan Program
-
-      </div>
-
-    </div>
-
-
-    <div class="inbox-date">
+    <div class="inbox-title">
 
       ${escapeHtml(
-        formatMessageDate(
-          receivedDate
-        )
+        title
       )}
 
     </div>
 
-  `;
+  </div>
+
+
+  <div class="inbox-date">
+
+    ${escapeHtml(
+  receivedDateTime
+)}
+
+  </div>
+
+`;
 
 
   row.addEventListener(
@@ -911,9 +1040,25 @@ async function loadMessages() {
     }
 
 
-    messageList.innerHTML =
-      "";
+    messageList.innerHTML = `
 
+  <div class="inbox-table-header">
+
+    <div class="inbox-header-type">
+      JENIS MESEJ
+    </div>
+
+    <div class="inbox-header-title">
+      PERKARA / TAJUK
+    </div>
+
+    <div class="inbox-header-date">
+      MASA / TARIKH
+    </div>
+
+  </div>
+
+`;
 
     messages.forEach(
       function (message) {
