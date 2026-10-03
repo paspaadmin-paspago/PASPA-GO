@@ -848,12 +848,12 @@ async function loadOnSceneOperations() {
 
 
     const operations =
-      Array.isArray(
-        result.operations
-      )
-        ? result.operations
-        : [];
-
+  Array.isArray(
+    result.operations
+  )
+    ? [...result.operations].reverse()
+    : [];
+    
 
     activeOperationList.innerHTML =
       "";
