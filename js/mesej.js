@@ -269,19 +269,22 @@ function getResponseDisplay(status) {
 
 }
 
-
 /* =====================================================
-   RENDER ONE MESSAGE
+   RENDER ONE MESSAGE - INBOX STYLE
 ===================================================== */
 
 function createMessageCard(
   message
 ) {
 
-  const card =
+  const row =
     document.createElement(
-      "article"
+      "button"
     );
+
+
+  row.type =
+    "button";
 
 
   const statusBaca =
@@ -297,14 +300,111 @@ function createMessageCard(
     "sudah dibaca";
 
 
-  card.className =
-    "message-card " +
+  row.className =
+    "inbox-item " +
     (
       alreadyRead
         ? "read"
         : "unread"
     );
 
+
+  const title =
+    message.tajuk ||
+    "Jemputan Program";
+
+
+  /*
+   * Untuk Inbox kita gunakan
+   * tarikh mesej diterima jika API
+   * membekalkannya.
+   *
+   * Jika belum ada, tarikh acara
+   * digunakan sebagai fallback.
+   */
+
+  const receivedDate =
+    message.tarikhHantar ||
+    message.tarikhCipta ||
+    message.tarikhMasuk ||
+    message.tarikhAcara ||
+    "";
+
+
+  row.innerHTML = `
+
+    <div class="inbox-indicator">
+
+      ${
+        alreadyRead
+          ? ""
+          : '<span class="unread-dot"></span>'
+      }
+
+    </div>
+
+
+    <div class="inbox-content">
+
+      <div class="inbox-title">
+
+        ${escapeHtml(
+          title
+        )}
+
+      </div>
+
+
+      <div class="inbox-subtitle">
+
+        Jemputan Program
+
+      </div>
+
+    </div>
+
+
+    <div class="inbox-date">
+
+      ${escapeHtml(
+        formatMessageDate(
+          receivedDate
+        )
+      )}
+
+    </div>
+
+  `;
+
+
+  row.addEventListener(
+    "click",
+    function () {
+
+      openMessageDetail(
+        message,
+        row
+      );
+
+    }
+  );
+
+
+  return row;
+
+}
+
+
+
+
+/* =====================================================
+   OPEN MESSAGE DETAIL
+===================================================== */
+
+function openMessageDetail(
+  message,
+  inboxRow
+) {
 
   const statusRespon =
     getResponseDisplay(
@@ -318,256 +418,20 @@ function createMessageCard(
     );
 
 
-  card.innerHTML = `
-
-    <div class="message-card-header">
-
-      <h2 class="message-title">
-
-        ${escapeHtml(
-          message.tajuk ||
-          "Jemputan Program"
-        )}
-
-      </h2>
-
-
-      <div class="message-card-actions">
-
-  <button
-    type="button"
-    class="view-button"
-    title="Lihat surat jemputan"
-    aria-label="Lihat surat jemputan"
-  >
-    👁 LIHAT
-  </button>
-
-  ${
-    message.pautan
-      ? `
-        <button
-          type="button"
-          class="attachment-button"
-          title="Lihat lampiran PDF"
-          aria-label="Lihat lampiran PDF"
-        >
-          📎 LAMPIRAN
-        </button>
-      `
-      : ""
-  }
-
-</div>
-
-    </div>
-
-
-    <div class="message-meta">
-
-      <span class="message-label">
-        Tarikh:
-      </span>
-
-      ${escapeHtml(
-        formatMessageDate(
-          message.tarikhAcara
-        )
-      )}
-
-    </div>
-
-
-    <div class="message-meta">
-
-      <span class="message-label">
-        Penganjur:
-      </span>
-
-      ${escapeHtml(
-        details.penganjur
-      )}
-
-    </div>
-
-
-    <div class="message-meta">
-
-      <span class="message-label">
-        Tempat:
-      </span>
-
-      ${escapeHtml(
-        message.tempat ||
-        "-"
-      )}
-
-    </div>
-
-
-  <div class="message-description">
-  <p>${escapeHtml(
-    details.keterangan || "-"
-  )}</p>
-</div>
-
-
-
-
-   
-
-
-    <div class="response-status">
-
-      Status Respon:
-      ${escapeHtml(
-        statusRespon
-      )}
-
-    </div>
-
-
-    <div class="response-buttons">
-
-      <button
-        type="button"
-        class="response-button hadir"
-        data-action="hadir"
-      >
-        HADIR
-      </button>
-
-
-      <button
-        type="button"
-        class="response-button tidak-hadir"
-        data-action="tidak hadir"
-      >
-        TIDAK HADIR
-      </button>
-
-    </div>
-
-  `;
-
-
-  /* ===================================================
-     BUTTON LIHAT
-  =================================================== */
-
-  const viewButton =
-    card.querySelector(
-      ".view-button"
-    );
-
-const attachmentButton =
-  card.querySelector(
-    ".attachment-button"
-  );
-
-
-if (
-  attachmentButton &&
-  message.pautan
-) {
-
-  attachmentButton.addEventListener(
-    "click",
-    function () {
-
-      window.open(
-        message.pautan,
-        "_blank",
-        "noopener,noreferrer"
-      );
-
-    }
-  );
-
-}
-
-  viewButton.addEventListener(
-    "click",
-    function () {
-
-      if (!message.messageId) {
-
-        showMessageStatus(
-          "ID jemputan tidak ditemui.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      window.location.href =
-        "admin-program-review.html" +
-        "?messageId=" +
-        encodeURIComponent(
-          message.messageId
-        ) +
-        "&from=mesej";
-
-    }
-  );
-
-
-  /* ===================================================
-     HADIR
-  =================================================== */
-
-  const hadirButton =
-    card.querySelector(
-      '[data-action="hadir"]'
-    );
-
-
-  hadirButton.addEventListener(
-    "click",
-    function () {
-
-      respondInvitation(
-        message,
-        "Hadir",
-        card
-      );
-
-    }
-  );
-
-
-  /* ===================================================
-     TIDAK HADIR
-  =================================================== */
-
-  const tidakHadirButton =
-    card.querySelector(
-      '[data-action="tidak hadir"]'
-    );
-
-
-  tidakHadirButton.addEventListener(
-    "click",
-    function () {
-
-      respondInvitation(
-        message,
-        "Tidak Hadir",
-        card
-      );
-
-    }
-  );
-
-
   /* ===================================================
      MARK AS READ
   =================================================== */
 
+  const statusBaca =
+    String(
+      message.statusBaca || ""
+    )
+      .trim()
+      .toLowerCase();
+
+
   if (
-    !alreadyRead &&
+    statusBaca !== "sudah dibaca" &&
     message.recipientId
   ) {
 
@@ -575,10 +439,388 @@ if (
       message.recipientId
     );
 
+
+    message.statusBaca =
+      "Sudah Dibaca";
+
+
+    if (inboxRow) {
+
+      inboxRow.classList.remove(
+        "unread"
+      );
+
+      inboxRow.classList.add(
+        "read"
+      );
+
+    }
+
   }
 
 
-  return card;
+  /* ===================================================
+     PAPAR DETAIL
+  =================================================== */
+
+  messageList.innerHTML = `
+
+    <div class="message-detail">
+
+      <button
+        type="button"
+        class="inbox-back-button"
+        id="inboxBackButton"
+      >
+        ← Kembali ke Inbox
+      </button>
+
+
+      <div class="message-detail-header">
+
+        <div class="message-detail-type">
+          JEMPUTAN PROGRAM
+        </div>
+
+        <h2 class="message-detail-title">
+
+          ${escapeHtml(
+            message.tajuk ||
+            "Jemputan Program"
+          )}
+
+        </h2>
+
+      </div>
+
+
+      <div class="message-detail-info">
+
+        <div class="detail-info-row">
+
+          <span class="detail-label">
+            Tarikh
+          </span>
+
+          <span class="detail-value">
+            ${escapeHtml(
+              formatMessageDate(
+                message.tarikhAcara
+              )
+            )}
+          </span>
+
+        </div>
+
+
+        ${
+          message.masaMula ||
+          message.masaTamat
+            ? `
+                <div class="detail-info-row">
+
+                  <span class="detail-label">
+                    Masa
+                  </span>
+
+                  <span class="detail-value">
+
+                    ${escapeHtml(
+                      message.masaMula ||
+                      "-"
+                    )}
+
+                    ${
+                      message.masaTamat
+                        ? " - " +
+                          escapeHtml(
+                            message.masaTamat
+                          )
+                        : ""
+                    }
+
+                  </span>
+
+                </div>
+              `
+            : ""
+        }
+
+
+        <div class="detail-info-row">
+
+          <span class="detail-label">
+            Penganjur
+          </span>
+
+          <span class="detail-value">
+
+            ${escapeHtml(
+              details.penganjur
+            )}
+
+          </span>
+
+        </div>
+
+
+        <div class="detail-info-row">
+
+          <span class="detail-label">
+            Tempat
+          </span>
+
+          <span class="detail-value">
+
+            ${escapeHtml(
+              message.tempat ||
+              "-"
+            )}
+
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="message-detail-body">
+
+        ${escapeHtml(
+          details.keterangan ||
+          "-"
+        )}
+
+      </div>
+
+
+      <div class="message-detail-actions">
+
+        <button
+          type="button"
+          class="view-button"
+          id="detailViewButton"
+        >
+          👁 LIHAT
+        </button>
+
+
+        ${
+          message.pautan
+            ? `
+                <button
+                  type="button"
+                  class="attachment-button"
+                  id="detailAttachmentButton"
+                >
+                  📎 LAMPIRAN
+                </button>
+              `
+            : ""
+        }
+
+      </div>
+
+
+      <div class="response-status">
+
+        Status Respon:
+        ${escapeHtml(
+          statusRespon
+        )}
+
+      </div>
+
+
+      <div class="response-buttons">
+
+        <button
+          type="button"
+          class="response-button hadir"
+          data-action="hadir"
+        >
+          HADIR
+        </button>
+
+
+        <button
+          type="button"
+          class="response-button tidak-hadir"
+          data-action="tidak hadir"
+        >
+          TIDAK HADIR
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  /* ===================================================
+     KEMBALI KE INBOX
+  =================================================== */
+
+  const inboxBackButton =
+    document.getElementById(
+      "inboxBackButton"
+    );
+
+
+  if (inboxBackButton) {
+
+    inboxBackButton.addEventListener(
+      "click",
+      function () {
+
+        loadMessages();
+
+      }
+    );
+
+  }
+
+
+  /* ===================================================
+     LIHAT
+  =================================================== */
+
+  const detailViewButton =
+    document.getElementById(
+      "detailViewButton"
+    );
+
+
+  if (detailViewButton) {
+
+    detailViewButton.addEventListener(
+      "click",
+      function () {
+
+        if (!message.messageId) {
+
+          showMessageStatus(
+            "ID jemputan tidak ditemui.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        window.location.href =
+          "admin-program-review.html" +
+          "?messageId=" +
+          encodeURIComponent(
+            message.messageId
+          ) +
+          "&from=mesej";
+
+      }
+    );
+
+  }
+
+
+  /* ===================================================
+     LAMPIRAN
+  =================================================== */
+
+  const attachmentButton =
+    document.getElementById(
+      "detailAttachmentButton"
+    );
+
+
+  if (
+    attachmentButton &&
+    message.pautan
+  ) {
+
+    attachmentButton.addEventListener(
+      "click",
+      function () {
+
+        window.open(
+          message.pautan,
+          "_blank",
+          "noopener,noreferrer"
+        );
+
+      }
+    );
+
+  }
+
+
+  /* ===================================================
+     HADIR
+  =================================================== */
+
+  const hadirButton =
+    messageList.querySelector(
+      '[data-action="hadir"]'
+    );
+
+
+  if (hadirButton) {
+
+    hadirButton.addEventListener(
+      "click",
+      function () {
+
+        const detailCard =
+          messageList.querySelector(
+            ".message-detail"
+          );
+
+
+        respondInvitation(
+          message,
+          "Hadir",
+          detailCard
+        );
+
+      }
+    );
+
+  }
+
+
+  /* ===================================================
+     TIDAK HADIR
+  =================================================== */
+
+  const tidakHadirButton =
+    messageList.querySelector(
+      '[data-action="tidak hadir"]'
+    );
+
+
+  if (tidakHadirButton) {
+
+    tidakHadirButton.addEventListener(
+      "click",
+      function () {
+
+        const detailCard =
+          messageList.querySelector(
+            ".message-detail"
+          );
+
+
+        respondInvitation(
+          message,
+          "Tidak Hadir",
+          detailCard
+        );
+
+      }
+    );
+
+  }
 
 }
 
