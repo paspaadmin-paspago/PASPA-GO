@@ -1089,3 +1089,743 @@ body {
   }
 
 }
+
+/* =====================================================
+   PASPA GO - INBOX 3 COLUMN LAYOUT
+===================================================== */
+
+
+/* =====================================================
+   HEADER KOLOM
+===================================================== */
+
+.inbox-table-header {
+  display: grid;
+
+  grid-template-columns:
+    180px
+    minmax(0, 1fr)
+    110px;
+
+  align-items: center;
+
+  min-height: 42px;
+
+  padding:
+    0 16px;
+
+  background:
+    #194d91;
+
+  color:
+    #ffffff;
+
+  font-size:
+    11px;
+
+  font-weight:
+    700;
+
+  letter-spacing:
+    .3px;
+
+  border-bottom:
+    1px solid
+    rgba(255,255,255,.2);
+}
+
+
+.inbox-header-title {
+  padding-left:
+    14px;
+}
+
+
+.inbox-header-date {
+  text-align:
+    right;
+}
+
+
+/* =====================================================
+   SETIAP BARIS MESEJ
+===================================================== */
+
+.inbox-item {
+  display: grid;
+
+  grid-template-columns:
+    180px
+    minmax(0, 1fr)
+    110px;
+
+  align-items:
+    center;
+
+  gap:
+    0;
+
+  width:
+    100%;
+
+  min-height:
+    58px;
+
+  padding:
+    10px 16px;
+
+  border:
+    none;
+
+  border-bottom:
+    1px solid #e4e7eb;
+
+  background:
+    #ffffff;
+
+  text-align:
+    left;
+}
+
+
+/* =====================================================
+   KOLOM 1 - JENIS MESEJ
+===================================================== */
+
+.inbox-type {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    8px;
+
+  min-width:
+    0;
+
+  padding-right:
+    10px;
+}
+
+
+.inbox-type-text {
+  overflow:
+    hidden;
+
+  text-overflow:
+    ellipsis;
+
+  white-space:
+    nowrap;
+
+  font-size:
+    12px;
+
+  color:
+    #333333;
+}
+
+
+/* =====================================================
+   TITIK BELUM DIBACA
+===================================================== */
+
+.unread-dot {
+  flex:
+    0 0 auto;
+
+  width:
+    8px;
+
+  height:
+    8px;
+
+  border-radius:
+    50%;
+
+  background:
+    #1767c5;
+}
+
+
+/* =====================================================
+   KOLOM 2 - TAJUK
+===================================================== */
+
+.inbox-content {
+  min-width:
+    0;
+
+  padding:
+    0 14px;
+}
+
+
+.inbox-title {
+  overflow:
+    hidden;
+
+  text-overflow:
+    ellipsis;
+
+  white-space:
+    nowrap;
+
+  font-size:
+    13px;
+
+  color:
+    #303030;
+}
+
+
+/* =====================================================
+   KOLOM 3 - MASA / TARIKH
+===================================================== */
+
+.inbox-date {
+  padding-left:
+    8px;
+
+  text-align:
+    right;
+
+  white-space:
+    nowrap;
+
+  font-size:
+    11px;
+
+  color:
+    #666666;
+}
+
+
+/* =====================================================
+   BELUM DIBACA - SEMUA BOLD
+===================================================== */
+
+.inbox-item.unread {
+  background:
+    #f3f7fc;
+}
+
+
+.inbox-item.unread
+.inbox-type-text,
+
+.inbox-item.unread
+.inbox-title,
+
+.inbox-item.unread
+.inbox-date {
+  font-weight:
+    700;
+
+  color:
+    #102f58;
+}
+
+
+/* =====================================================
+   SUDAH DIBACA
+===================================================== */
+
+.inbox-item.read {
+  background:
+    #ffffff;
+}
+
+
+.inbox-item.read
+.inbox-type-text,
+
+.inbox-item.read
+.inbox-title,
+
+.inbox-item.read
+.inbox-date {
+  font-weight:
+    400;
+}
+
+
+/* =====================================================
+   HOVER
+===================================================== */
+
+.inbox-item:hover {
+  background:
+    #eef3f8;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media screen and (max-width: 600px) {
+
+  .inbox-table-header {
+    grid-template-columns:
+      115px
+      minmax(0, 1fr)
+      72px;
+
+    padding:
+      0 10px;
+
+    font-size:
+      9px;
+  }
+
+
+  .inbox-header-title {
+    padding-left:
+      8px;
+  }
+
+
+  .inbox-item {
+    grid-template-columns:
+      115px
+      minmax(0, 1fr)
+      72px;
+
+    min-height:
+      56px;
+
+    padding:
+      9px 10px;
+  }
+
+
+  .inbox-type {
+    gap:
+      5px;
+
+    padding-right:
+      5px;
+  }
+
+
+  .inbox-type-text {
+    font-size:
+      10px;
+  }
+
+
+  .inbox-content {
+    padding:
+      0 8px;
+  }
+
+
+  .inbox-title {
+    font-size:
+      11px;
+  }
+
+
+  .inbox-date {
+    padding-left:
+      4px;
+
+    font-size:
+      9px;
+  }
+
+
+  .unread-dot {
+    width:
+      7px;
+
+    height:
+      7px;
+  }
+
+}
+
+/* =====================================================
+   PASPA GO - MODERN MESSAGE INBOX
+===================================================== */
+
+
+/* =====================================================
+   CONTAINER / HEADER TABLE
+===================================================== */
+
+.inbox-table-header {
+  display: grid;
+  grid-template-columns:
+    125px
+    minmax(0, 1fr)
+    82px;
+
+  align-items: center;
+
+  min-height: 46px;
+
+  padding: 0 12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #1d5da8 0%,
+      #164985 100%
+    );
+
+  color: #ffffff;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: .45px;
+
+  border-radius: 12px 12px 0 0;
+
+  box-shadow:
+    0 4px 12px
+    rgba(0, 31, 73, .12);
+}
+
+
+.inbox-header-title {
+  padding-left: 10px;
+}
+
+
+.inbox-header-date {
+  text-align: right;
+}
+
+
+/* =====================================================
+   SETIAP BARIS MESEJ
+===================================================== */
+
+.inbox-item {
+  position: relative;
+
+  display: grid;
+
+  grid-template-columns:
+    125px
+    minmax(0, 1fr)
+    82px;
+
+  align-items: center;
+
+  width: 100%;
+
+  min-height: 64px;
+
+  padding: 10px 12px;
+
+  border: 0;
+
+  border-bottom:
+    1px solid #e5ebf2;
+
+  background: #ffffff;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background .18s ease,
+    box-shadow .18s ease,
+    transform .18s ease;
+}
+
+
+/* Row terakhir */
+
+.inbox-item:last-child {
+  border-bottom: none;
+
+  border-radius:
+    0 0 12px 12px;
+}
+
+
+/* =====================================================
+   HOVER / TAP
+===================================================== */
+
+.inbox-item:hover {
+  z-index: 2;
+
+  background: #f5f9ff;
+
+  box-shadow:
+    0 3px 12px
+    rgba(17, 65, 119, .10);
+}
+
+
+.inbox-item:active {
+  transform: scale(.995);
+}
+
+
+/* =====================================================
+   KOLOM 1 - JENIS MESEJ
+===================================================== */
+
+.inbox-type {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  min-width: 0;
+
+  padding-right: 8px;
+}
+
+
+.inbox-type-text {
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  font-size: 10px;
+
+  color: #526171;
+}
+
+
+/* =====================================================
+   TITIK UNREAD
+===================================================== */
+
+.unread-dot {
+  flex: 0 0 auto;
+
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #1677e8;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(22, 119, 232, .10);
+}
+
+
+/* =====================================================
+   KOLOM 2 - TAJUK MESEJ
+===================================================== */
+
+.inbox-content {
+  min-width: 0;
+
+  padding: 0 10px;
+}
+
+
+.inbox-title {
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  font-size: 11px;
+
+  line-height: 1.4;
+
+  color: #27384b;
+}
+
+
+/* =====================================================
+   KOLOM 3 - MASA / TARIKH
+===================================================== */
+
+.inbox-date {
+  padding-left: 5px;
+
+  text-align: right;
+
+  white-space: nowrap;
+
+  font-size: 9px;
+
+  color: #6d7b8a;
+}
+
+
+/* =====================================================
+   MESEJ BELUM DIBACA
+===================================================== */
+
+.inbox-item.unread {
+  background:
+    linear-gradient(
+      90deg,
+      #eef6ff 0%,
+      #f7fbff 100%
+    );
+}
+
+
+/* Accent kiri untuk unread */
+
+.inbox-item.unread::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 9px;
+  bottom: 9px;
+
+  width: 3px;
+
+  border-radius:
+    0 4px 4px 0;
+
+  background: #1677e8;
+}
+
+
+.inbox-item.unread
+.inbox-type-text,
+
+.inbox-item.unread
+.inbox-title,
+
+.inbox-item.unread
+.inbox-date {
+  font-weight: 700;
+
+  color: #123e70;
+}
+
+
+/* Tajuk unread lebih jelas */
+
+.inbox-item.unread
+.inbox-title {
+  color: #092f5d;
+}
+
+
+/* =====================================================
+   MESEJ SUDAH DIBACA
+===================================================== */
+
+.inbox-item.read {
+  background: #ffffff;
+}
+
+
+.inbox-item.read
+.inbox-type-text {
+  font-weight: 400;
+
+  color: #667482;
+}
+
+
+.inbox-item.read
+.inbox-title {
+  font-weight: 400;
+
+  color: #354657;
+}
+
+
+.inbox-item.read
+.inbox-date {
+  font-weight: 400;
+
+  color: #788694;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media screen and (max-width: 600px) {
+
+  .inbox-table-header {
+    grid-template-columns:
+      115px
+      minmax(0, 1fr)
+      72px;
+
+    min-height: 44px;
+
+    padding: 0 10px;
+
+    font-size: 8px;
+
+    border-radius:
+      11px 11px 0 0;
+  }
+
+
+  .inbox-header-title {
+    padding-left: 7px;
+  }
+
+
+  .inbox-item {
+    grid-template-columns:
+      115px
+      minmax(0, 1fr)
+      72px;
+
+    min-height: 62px;
+
+    padding: 9px 10px;
+  }
+
+
+  .inbox-type {
+    gap: 6px;
+
+    padding-right: 5px;
+  }
+
+
+  .inbox-type-text {
+    font-size: 9px;
+  }
+
+
+  .inbox-content {
+    padding: 0 7px;
+  }
+
+
+  .inbox-title {
+    font-size: 10px;
+  }
+
+
+  .inbox-date {
+    padding-left: 3px;
+
+    font-size: 8px;
+  }
+
+
+  .unread-dot {
+    width: 7px;
+    height: 7px;
+  }
+
+}
