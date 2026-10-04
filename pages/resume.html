@@ -15,6 +15,18 @@
     rel="stylesheet"
     href="../css/resume.css"
   >
+
+
+
+
+
+
+
+
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+>
 </head>
 
 <body>
@@ -703,7 +715,112 @@
 ></script>
 
 
-<script src="../js/resume.js"></script>
 
+
+<!-- =========================================
+     MYRESUME SHARE BOX
+========================================= -->
+
+<div
+  id="resumeShareOverlay"
+  class="resume-share-overlay"
+  hidden
+>
+  <div class="resume-share-box">
+
+    <div class="resume-share-header">
+      <div>
+        <div class="resume-share-title">
+          Kongsi MyResume
+        </div>
+
+        <div class="resume-share-subtitle">
+          Pilih kaedah perkongsian
+        </div>
+      </div>
+
+      <button
+        type="button"
+        id="closeResumeShare"
+        class="resume-share-close"
+        aria-label="Tutup"
+      >
+        ×
+      </button>
+    </div>
+
+
+    <div class="resume-share-options">
+
+      <button
+        type="button"
+        class="resume-share-option"
+        id="shareResumeWhatsApp"
+      >
+        <span class="resume-share-icon">
+  <i class="fa-brands fa-whatsapp"></i>
+</span>
+
+<span>WhatsApp</span>
+      </button>
+
+
+      <button
+        type="button"
+        class="resume-share-option"
+        id="shareResumeTelegram"
+      >
+       <span class="resume-share-icon">
+  <i class="fa-brands fa-telegram"></i>
+</span>
+
+<span>Telegram</span>
+      </button>
+
+
+      <button
+        type="button"
+        class="resume-share-option"
+        id="shareResumeEmail"
+      >
+        <span class="resume-share-icon">
+          ✉️
+        </span>
+
+        <span>Email</span>
+      </button>
+
+
+      <button
+        type="button"
+        class="resume-share-option"
+        id="shareResumeNative"
+      >
+        <span class="resume-share-icon">
+  <i class="fa-solid fa-file-pdf"></i>
+</span>
+
+<span>Sediakan PDF</span>
+      </button>
+
+
+      <button
+        type="button"
+        class="resume-share-option"
+        id="copyResumeLink"
+      >
+        <span class="resume-share-icon">
+          🔗
+        </span>
+
+        <span>Copy Link</span>
+      </button>
+
+    </div>
+
+  </div>
+</div>
+
+<script src="../js/resume.js"></script>
 </body>
 </html>

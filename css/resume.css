@@ -2040,3 +2040,333 @@ body {
   }
 
 }
+
+/* =====================================================
+   DYNAMIC ACTIVITY PAGES - FIXED A4
+   PAGE 2, PAGE 3, PAGE 4...
+===================================================== */
+
+.resume-page-activities {
+
+  width: 210mm !important;
+
+  height: 297mm !important;
+  min-height: 297mm !important;
+  max-height: 297mm !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+
+  position: relative !important;
+
+  overflow: hidden !important;
+
+  box-sizing: border-box !important;
+}
+
+
+/* HEADER */
+
+.resume-page-activities
+.resume-page2-header {
+
+  flex: 0 0 30mm !important;
+}
+
+
+/* GOLD LINE */
+
+.resume-page-activities
+.resume-page2-gold-line {
+
+  flex: 0 0 1mm !important;
+}
+
+
+/* CONTENT */
+
+.resume-page-activities
+.resume-page2-content {
+
+  flex: 1 1 auto !important;
+
+  min-height: 0 !important;
+
+  overflow: hidden !important;
+
+  box-sizing: border-box !important;
+}
+
+
+/* FOOTER */
+
+.resume-page-activities
+.resume-page2-footer {
+
+  flex: 0 0 13mm !important;
+
+  height: 13mm !important;
+
+  margin-top: auto !important;
+}
+
+/* =====================================================
+   MYRESUME SHARE BOX
+===================================================== */
+
+.resume-share-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(0, 0, 0, 0.48);
+  backdrop-filter: blur(3px);
+}
+
+
+.resume-share-overlay[hidden] {
+  display: none !important;
+}
+
+
+.resume-share-box {
+  width: 100%;
+  max-width: 390px;
+
+  padding: 20px;
+
+  border-radius: 22px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 20px 60px
+    rgba(0, 0, 0, 0.25);
+}
+
+
+.resume-share-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 20px;
+}
+
+
+.resume-share-title {
+  color: #0d3566;
+
+  font-size: 20px;
+  font-weight: 800;
+}
+
+
+.resume-share-subtitle {
+  margin-top: 4px;
+
+  color: #7a8795;
+
+  font-size: 13px;
+}
+
+
+.resume-share-close {
+  width: 34px;
+  height: 34px;
+
+  border: 0;
+  border-radius: 50%;
+
+  background: #eef3f8;
+
+  color: #153b67;
+
+  font-size: 24px;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+
+.resume-share-options {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 12px;
+}
+
+
+.resume-share-option {
+  min-height: 92px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 12px 6px;
+
+  border: 1px solid #e0e8f1;
+  border-radius: 16px;
+
+  background: #f8fbff;
+
+  color: #163c68;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease;
+}
+
+
+.resume-share-option:active {
+  transform: scale(0.96);
+}
+
+
+.resume-share-option:hover {
+  background: #edf5ff;
+}
+
+
+.resume-share-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  font-size: 23px;
+
+  box-shadow:
+    0 3px 10px
+    rgba(0, 0, 0, 0.08);
+}
+
+
+@media (max-width: 480px) {
+
+  .resume-share-overlay {
+    align-items: flex-end;
+
+    padding: 12px;
+  }
+
+
+  .resume-share-box {
+    max-width: none;
+
+    border-radius:
+      22px 22px 18px 18px;
+
+    padding:
+      20px 16px 18px;
+  }
+
+
+  .resume-share-options {
+    grid-template-columns:
+      repeat(3, 1fr);
+  }
+
+}
+
+/* =====================================================
+   QR CODE - COMPACT + CENTERED
+   SCREEN + PDF
+===================================================== */
+
+.resume-qr-box {
+  width: 105px !important;
+  min-width: 105px !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  padding: 7px 5px !important;
+
+  box-sizing: border-box !important;
+}
+
+
+#resumeQrCode {
+  width: 75px !important;
+  height: 75px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  margin: 0 auto !important;
+  padding: 0 !important;
+
+  background: #ffffff !important;
+
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+
+#resumeQrCode canvas {
+  display: block !important;
+
+  width: 75px !important;
+  height: 75px !important;
+
+  max-width: 75px !important;
+  max-height: 75px !important;
+
+  margin: 0 auto !important;
+
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+
+#resumeQrCode img {
+  width: 75px !important;
+  height: 75px !important;
+
+  max-width: 75px !important;
+  max-height: 75px !important;
+
+  margin: 0 auto !important;
+}
+
+
+.resume-qr-id {
+  width: 100% !important;
+
+  margin-top: 4px !important;
+
+  text-align: center !important;
+  white-space: nowrap !important;
+}

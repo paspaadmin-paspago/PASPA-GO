@@ -1562,6 +1562,354 @@ if (bmiMemberSearch) {
 }
 
 /* =====================================================
+   RESUME AHLI
+===================================================== */
+
+const resumeMemberSearch =
+  document.getElementById(
+    "resumeMemberSearch"
+  );
+
+const resumeMemberSearchResults =
+  document.getElementById(
+    "resumeMemberSearchResults"
+  );
+
+const resumeSelectedMember =
+  document.getElementById(
+    "resumeSelectedMember"
+  );
+
+const resumeSelectedRank =
+  document.getElementById(
+    "resumeSelectedRank"
+  );
+
+const resumeSelectedName =
+  document.getElementById(
+    "resumeSelectedName"
+  );
+
+const resumeSelectedId =
+  document.getElementById(
+    "resumeSelectedId"
+  );
+
+const viewMemberResumeButton =
+  document.getElementById(
+    "viewMemberResumeButton"
+  );
+
+
+let selectedResumeMemberId = "";
+
+
+/* =====================================================
+   CARI AHLI
+===================================================== */
+
+if (resumeMemberSearch) {
+
+  resumeMemberSearch.addEventListener(
+    "input",
+    function () {
+
+      const searchText =
+        String(
+          resumeMemberSearch.value || ""
+        )
+          .trim()
+          .toUpperCase();
+
+
+      /*
+       * Reset hasil carian
+       */
+
+      resumeMemberSearchResults.innerHTML =
+        "";
+
+
+      /*
+       * Jika admin ubah carian,
+       * reset pilihan lama.
+       */
+
+      selectedResumeMemberId =
+        "";
+
+      resumeSelectedMember.hidden =
+        true;
+
+      viewMemberResumeButton.disabled =
+        true;
+
+
+      /*
+       * Minimum 2 aksara
+       */
+
+      if (
+        searchText.length < 2
+      ) {
+
+        return;
+
+      }
+
+
+      /*
+       * Cari berdasarkan:
+       * ID PASPA
+       * ATAU
+       * nama ahli
+       */
+
+      const results =
+        reportBmiMembers
+          .filter(
+            function (member) {
+
+              const id =
+                String(
+                  member.idPaspa || ""
+                )
+                  .trim()
+                  .toUpperCase();
+
+
+              const name =
+                String(
+                  member.nama || ""
+                )
+                  .trim()
+                  .toUpperCase();
+
+
+              return (
+                id.includes(
+                  searchText
+                ) ||
+                name.includes(
+                  searchText
+                )
+              );
+
+            }
+          )
+          .slice(
+            0,
+            10
+          );
+
+
+      /*
+       * Tiada keputusan
+       */
+
+      if (!results.length) {
+
+        resumeMemberSearchResults.innerHTML =
+          `
+            <div class="empty-text">
+              Ahli tidak ditemui.
+            </div>
+          `;
+
+        return;
+
+      }
+
+
+      /*
+       * Paparkan keputusan
+       */
+
+      results.forEach(
+        function (member) {
+
+          const button =
+            document.createElement(
+              "button"
+            );
+
+
+          button.type =
+            "button";
+
+
+          button.className =
+            "resume-member-result";
+
+
+          const rank =
+            String(
+              member.pangkat || ""
+            ).trim();
+
+
+          const name =
+            String(
+              member.nama || ""
+            ).trim();
+
+
+          const id =
+            String(
+              member.idPaspa || ""
+            ).trim();
+
+
+          button.innerHTML = `
+
+            <div class="resume-member-result-name">
+
+              ${escapeReportHtml(
+                (
+                  rank +
+                  " " +
+                  name
+                ).trim()
+              )}
+
+            </div>
+
+
+            <div class="resume-member-result-id">
+
+              ID PASPA:
+              <strong>
+                ${escapeReportHtml(
+                  id || "-"
+                )}
+              </strong>
+
+            </div>
+
+          `;
+
+
+          /* =========================================
+             PILIH AHLI
+          ========================================= */
+
+          button.addEventListener(
+            "click",
+            function () {
+
+              selectedResumeMemberId =
+                id;
+
+
+              /*
+               * Isi maklumat ahli dipilih
+               */
+
+              resumeSelectedRank.textContent =
+                rank || "-";
+
+              resumeSelectedName.textContent =
+                name || "-";
+
+              resumeSelectedId.textContent =
+                id || "-";
+
+
+              /*
+               * Paparkan kotak ahli dipilih
+               */
+
+              resumeSelectedMember.hidden =
+                false;
+
+
+              /*
+               * Aktifkan button
+               */
+
+              viewMemberResumeButton.disabled =
+                !id;
+
+
+              /*
+               * Letakkan nama dalam search box
+               */
+
+              resumeMemberSearch.value =
+                name;
+
+
+              /*
+               * Tutup senarai hasil carian
+               */
+
+              resumeMemberSearchResults.innerHTML =
+                "";
+
+            }
+          );
+
+
+          resumeMemberSearchResults.appendChild(
+            button
+          );
+
+        }
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   BUTTON MAKLUMAT AHLI
+===================================================== */
+
+if (viewMemberResumeButton) {
+
+  viewMemberResumeButton.addEventListener(
+    "click",
+    function () {
+
+      if (!selectedResumeMemberId) {
+
+        return;
+
+      }
+
+
+      /*
+       * Buka MyResume berdasarkan ID PASPA
+       */
+
+      const resumeUrl =
+        new URL(
+          "resume.html",
+          window.location.href
+        );
+
+
+      resumeUrl.search =
+        "";
+
+
+      resumeUrl.searchParams.set(
+        "id",
+        selectedResumeMemberId
+      );
+
+
+      window.location.href =
+        resumeUrl.toString();
+
+    }
+  );
+
+}
+
+/* =====================================================
    SIZE REPORT
 ===================================================== */
 

@@ -544,7 +544,93 @@
 
 </section>
 
+<!-- =====================================================
+     RESUME AHLI
+===================================================== -->
 
+<section class="summary-card">
+
+  <div class="section-title">
+    MAKLUMAT AHLI
+  </div>
+
+
+  <div class="resume-member-description">
+    Carian ahli PASPA berdasarkan ID PASPA atau nama ahli.
+  </div>
+
+
+  <!-- CARIAN AHLI -->
+
+  <div class="resume-member-search">
+
+    <input
+      type="search"
+      id="resumeMemberSearch"
+      class="resume-member-search-input"
+      placeholder="Cari ID PASPA / Nama Ahli PASPA..."
+      autocomplete="off"
+    >
+
+  </div>
+
+
+  <!-- HASIL CARIAN -->
+
+  <div
+    id="resumeMemberSearchResults"
+    class="resume-member-search-results"
+  ></div>
+
+
+  <!-- AHLI YANG DIPILIH -->
+
+  <div
+    id="resumeSelectedMember"
+    class="resume-selected-member"
+    hidden
+  >
+
+    <div class="resume-selected-label">
+      AHLI DIPILIH
+    </div>
+
+
+    <div
+      id="resumeSelectedRank"
+      class="resume-selected-rank"
+    ></div>
+
+
+    <div
+      id="resumeSelectedName"
+      class="resume-selected-name"
+    ></div>
+
+
+    <div class="resume-selected-id">
+
+      ID PASPA:
+
+      <strong id="resumeSelectedId">
+        -
+      </strong>
+
+    </div>
+
+
+    <button
+      type="button"
+      id="viewMemberResumeButton"
+      class="report-view-button resume-member-view-button"
+      disabled
+    >
+      MAKLUMAT AHLI
+    </button>
+
+  </div>
+
+</section>
     </main>
 
   </div>

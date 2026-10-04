@@ -1737,3 +1737,72 @@
 .program-page button {
   text-transform: uppercase;
 }
+
+/* =====================================================
+   PROGRAM FILTER BUTTONS - AUTO WRAP
+   Elak scroll kiri / kanan
+===================================================== */
+
+.program-filter-buttons {
+  display: flex !important;
+  flex-wrap: wrap !important;
+
+  gap: 8px !important;
+
+  width: 100% !important;
+  max-width: 100% !important;
+
+  overflow-x: visible !important;
+  overflow-y: visible !important;
+
+  white-space: normal !important;
+
+  box-sizing: border-box !important;
+}
+
+
+/* =====================================================
+   FILTER TAHUN
+===================================================== */
+
+#programYearFilters {
+  display: flex !important;
+  flex-wrap: wrap !important;
+
+  align-items: center !important;
+  justify-content: flex-start !important;
+
+  gap: 7px !important;
+
+  width: 100% !important;
+  max-width: 100% !important;
+
+  overflow-x: visible !important;
+  overflow-y: visible !important;
+
+  white-space: normal !important;
+
+  box-sizing: border-box !important;
+}
+
+
+/* Button tahun tidak mengecil */
+
+#programYearFilters .program-year-button {
+  flex: 0 0 auto !important;
+
+  white-space: nowrap !important;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+  #programYearFilters {
+    gap: 6px !important;
+  }
+
+}

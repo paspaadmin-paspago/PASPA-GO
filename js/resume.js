@@ -912,13 +912,21 @@ function showResumeError(text) {
    GENERATE QR CODE
 ===================================================== */
 
+/* =====================================================
+   GENERATE QR CODE
+   STABLE VERSION
+===================================================== */
+
 function generateResumeQr(idPaspa) {
+
   const normalizedId =
     String(
       idPaspa || ""
     ).trim();
 
+
   if (!normalizedId) {
+
     console.warn(
       "QR tidak dijana: ID PASPA tiada."
     );
@@ -926,17 +934,21 @@ function generateResumeQr(idPaspa) {
     return;
   }
 
+
   const qrContainer =
     document.getElementById(
       "resumeQrCode"
     );
+
 
   const qrId =
     document.getElementById(
       "resumeQrId"
     );
 
+
   if (!qrContainer) {
+
     console.warn(
       "Container resumeQrCode tidak ditemui."
     );
@@ -944,59 +956,1083 @@ function generateResumeQr(idPaspa) {
     return;
   }
 
-  qrContainer.innerHTML = "";
 
-  const publicUrl =
-    new URL(
-      "resume.html",
-      window.location.href
-    );
+  /* =============================================
+     PUBLIC URL
+  ============================================= */
+
+  let publicUrl;
+
+
+  /*
+   * Jika sedang test di localhost,
+   * QR tetap gunakan LIVE PASPA GO URL.
+   */
+
+  if (
+    window.location.hostname ===
+      "127.0.0.1" ||
+    window.location.hostname ===
+      "localhost"
+  ) {
+
+    publicUrl =
+      new URL(
+        "https://paspaadmin-paspago.github.io/PASPA-GO/pages/resume.html"
+      );
+
+  } else {
+
+    publicUrl =
+      new URL(
+        "resume.html",
+        window.location.href
+      );
+
+  }
+
 
   publicUrl.search = "";
+
 
   publicUrl.searchParams.set(
     "id",
     normalizedId
   );
 
+
   console.log(
     "RESUME QR URL:",
     publicUrl.toString()
   );
 
+
+  /* =============================================
+     CHECK QR LIBRARY
+  ============================================= */
+
   if (
     typeof QRCode ===
     "undefined"
   ) {
-    console.error(
-      "QRCode library tidak ditemui."
+
+    console.warn(
+      "QRCode library belum tersedia. Cuba semula..."
     );
+
+
+    setTimeout(
+      function () {
+
+        generateResumeQr(
+          normalizedId
+        );
+
+      },
+      300
+    );
+
 
     return;
   }
 
-  new QRCode(
-    qrContainer,
-    {
-      text:
-        publicUrl.toString(),
 
-      width:
-        176,
+  /* =============================================
+     JIKA QR SUDAH WUJUD
+     JANGAN GENERATE SEMULA
+  ============================================= */
 
-      height:
-        176,
+  const existingQr =
+    qrContainer.querySelector(
+      "canvas, img"
+    );
 
-      correctLevel:
-        QRCode.CorrectLevel.H
+
+  if (existingQr) {
+
+    console.log(
+      "RESUME QR ALREADY EXISTS"
+    );
+
+
+    if (qrId) {
+
+      qrId.textContent =
+        "ID PASPA " +
+        normalizedId;
+
+    }
+
+
+    return;
+  }
+
+
+  /* =============================================
+     GENERATE QR
+  ============================================= */
+
+  qrContainer.innerHTML = "";
+
+
+  try {
+
+    new QRCode(
+      qrContainer,
+      {
+
+        text:
+          publicUrl.toString(),
+
+        width:
+          176,
+
+        height:
+          176,
+
+        correctLevel:
+          QRCode.CorrectLevel.H
+
+      }
+    );
+
+
+    if (qrId) {
+
+      qrId.textContent =
+        "ID PASPA " +
+        normalizedId;
+
+    }
+
+
+    console.log(
+      "RESUME QR GENERATED"
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "RESUME QR ERROR:",
+      error
+    );
+
+  }
+
+}
+
+/* =====================================================
+   LOAD PROGRAM + OPERASI
+   AUTO SORT + AUTO PAGINATION
+===================================================== */
+
+
+/* =====================================================
+   ACTIVITY DATE -> TIMESTAMP
+===================================================== */
+
+function getResumeActivityTimestamp(value) {
+
+  if (!value) {
+    return 0;
+  }
+
+  const text =
+    String(value).trim();
+
+
+  /* YYYY-MM-DD */
+
+  const iso =
+    text.match(
+      /^(\d{4})-(\d{1,2})-(\d{1,2})/
+    );
+
+  if (iso) {
+
+    return new Date(
+      Number(iso[1]),
+      Number(iso[2]) - 1,
+      Number(iso[3])
+    ).getTime();
+
+  }
+
+
+  /* DD/MM/YYYY */
+
+  const local =
+    text.match(
+      /^(\d{1,2})\/(\d{1,2})\/(\d{4})/
+    );
+
+  if (local) {
+
+    return new Date(
+      Number(local[3]),
+      Number(local[2]) - 1,
+      Number(local[1])
+    ).getTime();
+
+  }
+
+
+  const date =
+    new Date(value);
+
+  if (
+    Number.isNaN(
+      date.getTime()
+    )
+  ) {
+    return 0;
+  }
+
+  return date.getTime();
+}
+
+
+/* =====================================================
+   SORT TERBARU -> TERLAMA
+===================================================== */
+
+function sortResumeActivitiesLatestFirst(items) {
+
+  return [...items].sort(
+    function (a, b) {
+
+      return (
+        getResumeActivityTimestamp(
+          b.tarikhMula
+        ) -
+        getResumeActivityTimestamp(
+          a.tarikhMula
+        )
+      );
+
+    }
+  );
+}
+
+
+/* =====================================================
+   CREATE ACTIVITY ROW
+===================================================== */
+
+function createResumeActivityRow(
+  item,
+  index
+) {
+
+  const row =
+    document.createElement(
+      "tr"
+    );
+
+  row.innerHTML = `
+    <td>
+      ${index + 1}
+    </td>
+
+    <td>
+      ${escapeResumeHtml(
+        resumeUpper(
+          item.nama
+        )
+      )}
+    </td>
+
+    <td>
+      ${escapeResumeHtml(
+        resumeUpper(
+          item.tempat
+        )
+      )}
+    </td>
+
+    <td>
+      ${escapeResumeHtml(
+        formatResumeActivityDate(
+          item.tarikhMula
+        )
+      )}
+    </td>
+
+    <td>
+      ${escapeResumeHtml(
+        formatResumeActivityDate(
+          item.tarikhTamat
+        )
+      )}
+    </td>
+  `;
+
+  return row;
+}
+
+
+/* =====================================================
+   REMOVE AUTO GENERATED ACTIVITY PAGES
+===================================================== */
+
+function removeGeneratedResumeActivityPages() {
+
+  document
+    .querySelectorAll(
+      ".resume-generated-activity-page"
+    )
+    .forEach(
+      function (page) {
+        page.remove();
+      }
+    );
+
+}
+
+
+/* =====================================================
+   SET MEMBER INFO ON ACTIVITY PAGE
+===================================================== */
+
+function setActivityPageMemberInfo(
+  page,
+  memberName,
+  memberId
+) {
+
+  const name =
+    page.querySelector(
+      ".activity-member-name"
+    );
+
+  const id =
+    page.querySelector(
+      ".activity-member-id"
+    );
+
+  if (name) {
+    name.textContent =
+      resumeUpper(
+        memberName
+      );
+  }
+
+  if (id) {
+    id.textContent =
+      "ID PASPA: " +
+      (
+        memberId || "-"
+      );
+  }
+
+}
+
+
+/* =====================================================
+   PREPARE ACTIVITY PAGE
+===================================================== */
+
+function prepareActivityPage(
+  page,
+  pageNumber,
+  memberName,
+  memberId
+) {
+
+  page.classList.remove(
+    "hidden"
+  );
+
+function prepareActivityPage(
+  page,
+  pageNumber,
+  memberName,
+  memberId
+) {
+
+  page.classList.remove(
+    "hidden"
+  );
+
+
+  setActivityPageMemberInfo(
+    page,
+    memberName,
+    memberId
+  );
+
+
+  if (pageNumber > 2) {
+
+    page.removeAttribute(
+      "id"
+    );
+
+    page.classList.add(
+      "resume-generated-activity-page"
+    );
+
+
+    page
+      .querySelectorAll("[id]")
+      .forEach(
+        function (element) {
+
+          element.removeAttribute(
+            "id"
+          );
+
+        }
+      );
+
+  }
+
+}
+
+
+  /*
+   * ID hanya dibenarkan pada Page 2 asal.
+   * Page tambahan tidak boleh mempunyai duplicate ID.
+   */
+
+  if (pageNumber > 2) {
+
+    page.removeAttribute(
+      "id"
+    );
+
+    page.classList.add(
+      "resume-generated-activity-page"
+    );
+
+
+    page
+      .querySelectorAll("[id]")
+      .forEach(
+        function (element) {
+          element.removeAttribute(
+            "id"
+          );
+        }
+      );
+
+  }
+
+}
+
+
+/* =====================================================
+   CREATE NEW ACTIVITY PAGE
+===================================================== */
+
+function createNextResumeActivityPage(
+  memberName,
+  memberId
+) {
+
+  const template =
+    document.getElementById(
+      "resumePage2"
+    );
+
+  if (!template) {
+    return null;
+  }
+
+
+  const page =
+    template.cloneNode(
+      true
+    );
+
+
+  const existingPages =
+    document.querySelectorAll(
+      ".resume-page-activities"
+    ).length;
+
+
+  prepareActivityPage(
+    page,
+    existingPages + 2,
+    memberName,
+    memberId
+  );
+
+
+  /*
+   * Kosongkan content.
+   * Header + footer dikekalkan.
+   */
+
+  const content =
+    page.querySelector(
+      ".resume-page2-content"
+    );
+
+  if (content) {
+
+    content.innerHTML = `
+      <div class="activity-heading">
+
+        <h2>
+          REKOD PENGLIBATAN AHLI
+        </h2>
+
+        <div class="activity-member-name">
+          ${escapeResumeHtml(
+            resumeUpper(
+              memberName
+            )
+          )}
+        </div>
+
+        <div class="activity-member-id">
+          ID PASPA:
+          ${escapeResumeHtml(
+            memberId || "-"
+          )}
+        </div>
+
+      </div>
+    `;
+
+  }
+
+
+  /*
+   * Letak selepas activity page terakhir.
+   */
+
+  const pages =
+    document.querySelectorAll(
+      ".resume-page-activities"
+    );
+
+  const lastPage =
+    pages[
+      pages.length - 1
+    ];
+
+  lastPage.insertAdjacentElement(
+    "afterend",
+    page
+  );
+
+
+  return page;
+}
+
+
+/* =====================================================
+   CREATE ACTIVITY SECTION
+===================================================== */
+
+function createResumeActivitySection(
+  type,
+  continuation
+) {
+
+  const isProgram =
+    type === "program";
+
+  const section =
+    document.createElement(
+      "section"
+    );
+
+  section.className =
+    "activity-section";
+
+
+  const title =
+    isProgram
+      ? "1. PROGRAM"
+      : "2. OPERASI";
+
+
+  const continuationText =
+    continuation
+      ? " (SAMBUNGAN)"
+      : "";
+
+
+  section.innerHTML = `
+
+    <div class="activity-section-title">
+      ${title}${continuationText}
+    </div>
+
+    <div class="activity-table-wrap">
+
+      <table class="activity-table">
+
+        <thead>
+
+          <tr>
+
+            <th class="activity-no">
+              BIL.
+            </th>
+
+            <th>
+              ${
+                isProgram
+                  ? "NAMA PROGRAM"
+                  : "NAMA OPERASI"
+              }
+            </th>
+
+            <th class="activity-place">
+              TEMPAT
+            </th>
+
+            <th class="activity-date">
+              TARIKH MULA
+            </th>
+
+            <th class="activity-date">
+              TARIKH TAMAT
+            </th>
+
+          </tr>
+
+        </thead>
+
+        <tbody></tbody>
+
+      </table>
+
+    </div>
+
+  `;
+
+
+  return section;
+}
+
+
+/* =====================================================
+   CHECK CONTENT MASIH MUAT SEBELUM FOOTER
+===================================================== */
+/* =====================================================
+   CHECK CONTENT MASIH MUAT DALAM PAGE
+   FIXED FOR FLEX A4 LAYOUT
+===================================================== */
+/* =====================================================
+   CHECK ACTIVITY PAGE OVERFLOW
+   FIXED A4 + FOOTER BOUNDARY
+===================================================== */
+
+function isResumeActivityPageOverflowing(
+  page
+) {
+
+  const content =
+    page.querySelector(
+      ".resume-page2-content"
+    );
+
+  if (!content) {
+    return false;
+  }
+
+
+  /*
+   * Tinggi ruang sebenar yang diberikan
+   * kepada CONTENT oleh A4 flex layout.
+   */
+
+  const availableHeight =
+    content.clientHeight;
+
+
+  /*
+   * Tinggi sebenar kandungan di dalamnya.
+   */
+
+  const requiredHeight =
+    content.scrollHeight;
+
+
+  /*
+   * Jika kandungan lebih tinggi daripada
+   * ruang tersedia, page sudah penuh.
+   */
+
+  return (
+    requiredHeight >
+    availableHeight
+  );
+
+}
+
+
+/* =====================================================
+   ADD ACTIVITY TYPE WITH AUTO PAGE BREAK
+===================================================== */
+
+function paginateResumeActivityType(
+  type,
+  items,
+  state
+) {
+
+  let currentPage =
+    state.currentPage;
+
+  let section = null;
+
+  let body = null;
+
+  let continuation =
+    false;
+
+
+  /*
+   * TIADA REKOD
+   */
+
+  if (
+    items.length === 0
+  ) {
+
+    section =
+      createResumeActivitySection(
+        type,
+        false
+      );
+
+    body =
+      section.querySelector(
+        "tbody"
+      );
+
+    body.innerHTML = `
+      <tr>
+        <td
+          colspan="5"
+          class="activity-empty"
+        >
+          ${
+            type === "program"
+              ? "TIADA REKOD PROGRAM."
+              : "TIADA REKOD OPERASI."
+          }
+        </td>
+      </tr>
+    `;
+
+
+    currentPage
+      .querySelector(
+        ".resume-page2-content"
+      )
+      .appendChild(
+        section
+      );
+
+
+    /*
+     * Kalau section kosong pun tak muat,
+     * pindahkan ke page baru.
+     */
+
+    if (
+      isResumeActivityPageOverflowing(
+        currentPage
+      )
+    ) {
+
+      section.remove();
+
+      currentPage =
+        createNextResumeActivityPage(
+          state.memberName,
+          state.memberId
+        );
+
+      currentPage
+        .querySelector(
+          ".resume-page2-content"
+        )
+        .appendChild(
+          section
+        );
+
+    }
+
+
+    state.currentPage =
+      currentPage;
+
+    return;
+  }
+
+
+  /*
+   * ADA REKOD
+   */
+
+  items.forEach(
+    function (
+      item,
+      index
+    ) {
+
+      /*
+       * Kalau belum ada section,
+       * cipta section.
+       */
+
+      if (!section) {
+
+        section =
+          createResumeActivitySection(
+            type,
+            continuation
+          );
+
+        body =
+          section.querySelector(
+            "tbody"
+          );
+
+        currentPage
+          .querySelector(
+            ".resume-page2-content"
+          )
+          .appendChild(
+            section
+          );
+
+      }
+
+
+      /*
+       * Masukkan row dahulu.
+       */
+
+      const row =
+        createResumeActivityRow(
+          item,
+          index
+        );
+
+      body.appendChild(
+        row
+      );
+
+
+      /*
+       * Lepas row masuk,
+       * semak sama ada sudah langgar footer.
+       */
+
+      if (
+        isResumeActivityPageOverflowing(
+          currentPage
+        )
+      ) {
+
+        /*
+         * Keluarkan row terakhir.
+         */
+
+        row.remove();
+
+
+        /*
+         * Kalau section kosong,
+         * buang section tersebut.
+         */
+
+        if (
+          body.children.length === 0
+        ) {
+          section.remove();
+        }
+
+
+        /*
+         * Cipta page baru.
+         */
+
+        currentPage =
+          createNextResumeActivityPage(
+            state.memberName,
+            state.memberId
+          );
+
+
+        continuation =
+          true;
+
+
+        /*
+         * Cipta section sambungan.
+         */
+
+        section =
+          createResumeActivitySection(
+            type,
+            true
+          );
+
+        body =
+          section.querySelector(
+            "tbody"
+          );
+
+
+        currentPage
+          .querySelector(
+            ".resume-page2-content"
+          )
+          .appendChild(
+            section
+          );
+
+
+        /*
+         * Masukkan semula row yang tadi
+         * ke page baru.
+         */
+
+        body.appendChild(
+          row
+        );
+
+      }
+
     }
   );
 
-  if (qrId) {
-    qrId.textContent =
-      "ID PASPA " +
-      normalizedId;
+
+  state.currentPage =
+    currentPage;
+}
+
+
+/* =====================================================
+   BUILD ALL ACTIVITY PAGES
+===================================================== */
+
+function buildResumeActivityPages(
+  programs,
+  operations,
+  memberName,
+  memberId
+) {
+
+  const page2 =
+    document.getElementById(
+      "resumePage2"
+    );
+
+  if (!page2) {
+    return;
   }
+
+
+  /*
+   * Buang Page 3+ lama jika reload.
+   */
+
+  removeGeneratedResumeActivityPages();
+
+
+  /*
+   * Pastikan Page 2 kembali kepada
+   * saiz A4 sebenar.
+   */
+
+  prepareActivityPage(
+    page2,
+    2,
+    memberName,
+    memberId
+  );
+
+
+  /*
+   * Kosongkan kandungan Page 2.
+   */
+
+  const content =
+    page2.querySelector(
+      ".resume-page2-content"
+    );
+
+  if (!content) {
+    return;
+  }
+
+
+  content.innerHTML = `
+
+    <div class="activity-heading">
+
+      <h2>
+        REKOD PENGLIBATAN AHLI
+      </h2>
+
+      <div class="activity-member-name">
+        ${escapeResumeHtml(
+          resumeUpper(
+            memberName
+          )
+        )}
+      </div>
+
+      <div class="activity-member-id">
+        ID PASPA:
+        ${escapeResumeHtml(
+          memberId || "-"
+        )}
+      </div>
+
+    </div>
+
+  `;
+
+
+  const state = {
+
+    currentPage:
+      page2,
+
+    memberName:
+      memberName,
+
+    memberId:
+      memberId
+
+  };
+
+
+  /*
+   * PROGRAM dahulu.
+   */
+
+  paginateResumeActivityType(
+    "program",
+    programs,
+    state
+  );
+
+
+  /*
+   * OPERASI selepas Program.
+   */
+
+  paginateResumeActivityType(
+    "operation",
+    operations,
+    state
+  );
+
 }
 
 
@@ -1007,22 +2043,15 @@ function generateResumeQr(idPaspa) {
 async function loadResumeActivities(
   idPaspa
 ) {
+
   const normalizedId =
     String(
       idPaspa || ""
     ).trim();
 
-  const programBody =
-    document.getElementById(
-      "resumeProgramBody"
-    );
-
-  const operationBody =
-    document.getElementById(
-      "resumeOperationBody"
-    );
 
   if (!normalizedId) {
+
     console.warn(
       "Resume activities: ID PASPA tiada."
     );
@@ -1030,243 +2059,188 @@ async function loadResumeActivities(
     return;
   }
 
+
   try {
+
     const result =
       await apiPost({
+
         action:
           "resume_activities",
 
         idPaspa:
           normalizedId
+
       });
+
 
     console.log(
       "RESUME ACTIVITIES RESULT:",
       result
     );
 
+
     if (
       !result ||
       result.success !== true
     ) {
+
       throw new Error(
         result?.message ||
         "Rekod penglibatan tidak dapat diperoleh."
       );
+
     }
 
 
-    /* =================================================
-       PROGRAM
-    ================================================= */
+    /*
+     * PROGRAM
+     */
 
-    const programs =
+    const programsRaw =
       Array.isArray(
         result.programs
       )
         ? result.programs
         : [];
 
-    if (programBody) {
-      programBody.innerHTML = "";
 
-      if (
-        programs.length === 0
-      ) {
-        programBody.innerHTML = `
-          <tr>
-            <td
-              colspan="5"
-              class="activity-empty"
-            >
-              TIADA REKOD PROGRAM.
-            </td>
-          </tr>
-        `;
-      } else {
-        programs.forEach(
-          function (
-            program,
-            index
-          ) {
-            const row =
-              document.createElement(
-                "tr"
-              );
+    /*
+     * OPERASI
+     */
 
-            row.innerHTML = `
-              <td>
-                ${index + 1}
-              </td>
-
-              <td>
-                ${escapeResumeHtml(
-                  resumeUpper(
-                    program.nama
-                  )
-                )}
-              </td>
-
-              <td>
-                ${escapeResumeHtml(
-                  resumeUpper(
-                    program.tempat
-                  )
-                )}
-              </td>
-
-              <td>
-                ${escapeResumeHtml(
-                  formatResumeActivityDate(
-                    program.tarikhMula
-                  )
-                )}
-              </td>
-
-              <td>
-                ${escapeResumeHtml(
-                  formatResumeActivityDate(
-                    program.tarikhTamat
-                  )
-                )}
-              </td>
-            `;
-
-            programBody.appendChild(
-              row
-            );
-          }
-        );
-      }
-    }
-
-
-    /* =================================================
-       OPERASI
-    ================================================= */
-
-    const operations =
+    const operationsRaw =
       Array.isArray(
         result.operations
       )
         ? result.operations
         : [];
 
-    if (operationBody) {
-      operationBody.innerHTML = "";
 
-      if (
-        operations.length === 0
-      ) {
-        operationBody.innerHTML = `
-          <tr>
-            <td
-              colspan="5"
-              class="activity-empty"
-            >
-              TIADA REKOD OPERASI.
-            </td>
-          </tr>
-        `;
-      } else {
-        operations.forEach(
-          function (
-            operation,
-            index
-          ) {
-            const row =
-              document.createElement(
-                "tr"
-              );
+    /*
+     * SORT:
+     * TARIKH TERBARU -> TERLAMA
+     */
 
-            row.innerHTML = `
-              <td>
-                ${index + 1}
-              </td>
+    const programs =
+      sortResumeActivitiesLatestFirst(
+        programsRaw
+      );
 
-              <td>
-                ${escapeResumeHtml(
-                  resumeUpper(
-                    operation.nama
-                  )
-                )}
-              </td>
+    const operations =
+      sortResumeActivitiesLatestFirst(
+        operationsRaw
+      );
 
-              <td>
-                ${escapeResumeHtml(
-                  resumeUpper(
-                    operation.tempat
-                  )
-                )}
-              </td>
 
-              <td>
-                ${escapeResumeHtml(
-                  formatResumeActivityDate(
-                    operation.tarikhMula
-                  )
-                )}
-              </td>
+    /*
+     * IDENTITI
+     */
 
-              <td>
-                ${escapeResumeHtml(
-                  formatResumeActivityDate(
-                    operation.tarikhTamat
-                  )
-                )}
-              </td>
-            `;
+    const memberName =
+      getCurrentResumeName();
 
-            operationBody.appendChild(
-              row
-            );
-          }
-        );
-      }
-    }
+    const memberId =
+      normalizedId;
+
+
+    /*
+     * BUILD PAGE 2, 3, 4...
+     */
+
+    buildResumeActivityPages(
+      programs,
+      operations,
+      memberName,
+      memberId
+    );
+
+
+    console.log(
+      "RESUME ACTIVITY PAGES:",
+      document.querySelectorAll(
+        ".resume-page-activities"
+      ).length
+    );
+
 
   } catch (error) {
+
     console.error(
       "LOAD RESUME ACTIVITIES ERROR:",
       error
     );
 
-    if (programBody) {
-      programBody.innerHTML = `
-        <tr>
-          <td
-            colspan="5"
-            class="activity-empty"
-          >
-            REKOD PROGRAM TIDAK DAPAT DIMUATKAN.
-          </td>
-        </tr>
-      `;
-    }
 
-    if (operationBody) {
-      operationBody.innerHTML = `
-        <tr>
-          <td
-            colspan="5"
-            class="activity-empty"
-          >
-            REKOD OPERASI TIDAK DAPAT DIMUATKAN.
-          </td>
-        </tr>
+    const page2 =
+      document.getElementById(
+        "resumePage2"
+      );
+
+    const content =
+      page2?.querySelector(
+        ".resume-page2-content"
+      );
+
+
+    if (content) {
+
+      content.innerHTML = `
+
+        <div class="activity-heading">
+
+          <h2>
+            REKOD PENGLIBATAN AHLI
+          </h2>
+
+        </div>
+
+        <section class="activity-section">
+
+          <div class="activity-section-title">
+            REKOD PENGLIBATAN
+          </div>
+
+          <div class="activity-table-wrap">
+
+            <table class="activity-table">
+
+              <tbody>
+
+                <tr>
+
+                  <td
+                    colspan="5"
+                    class="activity-empty"
+                  >
+                    REKOD PENGLIBATAN TIDAK DAPAT DIMUATKAN.
+                  </td>
+
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </section>
+
       `;
+
     }
 
   } finally {
+
     window.dispatchEvent(
       new Event(
         "resumeActivitiesLoaded"
       )
     );
+
   }
+
 }
-
-
 /* =====================================================
    GET PHOTO BASE64
    1. PUBLIC ID
@@ -1650,74 +2624,99 @@ function prepareResumePageForPdf(
 
 /* =====================================================
    GENERATE PDF
-   PAGE 1 + PAGE 2
+   AUTO PAGE 1 + PAGE 2 + PAGE 3 + ...
 ===================================================== */
 
 async function generateResumePdfBlob() {
-  const page1 =
-    document.getElementById(
-      "resumePage"
+
+  /* Tunggu Program + Operasi siap dahulu */
+  await waitForResumeActivities();
+
+
+  /* Ambil SEMUA page resume */
+  const pages =
+    Array.from(
+      document.querySelectorAll(
+        ".resume-page"
+      )
+    ).filter(
+      function (page) {
+        return !page.classList.contains(
+          "hidden"
+        );
+      }
     );
 
-  const page2 =
-    document.getElementById(
-      "resumePage2"
-    );
 
-  if (!page1) {
+  if (pages.length === 0) {
+
     throw new Error(
-      "Muka surat pertama Resume tidak ditemui."
+      "Tiada muka surat Resume ditemui."
     );
+
   }
 
-  if (!page2) {
-    throw new Error(
-      "Muka surat kedua Resume tidak ditemui."
-    );
-  }
 
   if (
     typeof html2canvas ===
     "undefined"
   ) {
+
     throw new Error(
       "html2canvas belum dimuatkan."
     );
+
   }
+
 
   if (
     !window.jspdf ||
     !window.jspdf.jsPDF
   ) {
+
     throw new Error(
       "jsPDF belum dimuatkan."
     );
+
   }
 
 
-  /* =================================================
-     SAVE STYLE SEBELUM PDF
-  ================================================= */
+  console.log(
+    "PDF TOTAL PAGES:",
+    pages.length
+  );
 
-  const page1SavedStyle =
-    saveResumePageStyle(
-      page1
+
+  /* Simpan style SEMUA page */
+  const savedStyles =
+    pages.map(
+      function (page) {
+
+        return {
+          page: page,
+          style:
+            saveResumePageStyle(
+              page
+            )
+        };
+
+      }
     );
 
-  const page2SavedStyle =
-    saveResumePageStyle(
-      page2
+
+  /* Gambar ahli Page 1 */
+  const page1 =
+    document.getElementById(
+      "resumePage"
     );
-
-
-  /* =================================================
-     PHOTO
-  ================================================= */
 
   const photo =
-    page1.querySelector(
-      "#resumePhoto"
-    );
+    page1
+      ? page1.querySelector(
+          "#resumePhoto"
+        )
+      : null;
+
 
   const originalPhotoSrc =
     photo
@@ -1727,35 +2726,28 @@ async function generateResumePdfBlob() {
 
   try {
 
-    /* =================================================
-       TUNGGU FONT
-    ================================================= */
-
+    /* Tunggu font */
     if (
       document.fonts &&
       document.fonts.ready
     ) {
+
       await document.fonts.ready;
+
     }
 
 
-    /* =================================================
-       TUNGGU PROGRAM + OPERASI
-    ================================================= */
-
-    await waitForResumeActivities();
-
-
-    /* =================================================
-       GUNA BASE64 UNTUK GAMBAR AHLI
-    ================================================= */
-
+    /* Tukar gambar ahli kepada Base64 */
     if (photo) {
+
       try {
+
         const base64Photo =
           await getResumePhotoBase64();
 
+
         if (base64Photo) {
+
           photo.removeAttribute(
             "crossorigin"
           );
@@ -1763,67 +2755,83 @@ async function generateResumePdfBlob() {
           photo.src =
             base64Photo;
 
+
           await waitForResumeImage(
             photo
           );
+
         }
 
       } catch (photoError) {
+
         console.warn(
           "PDF PHOTO BASE64 ERROR:",
           photoError
         );
 
-        /*
-         * Jangan hentikan PDF jika gambar gagal.
-         * html2canvas akan cuba capture gambar
-         * yang sedang dipaparkan.
-         */
       }
+
     }
 
 
-    /* =================================================
-       PAKSA A4 ASAL
-       PENTING UNTUK MOBILE
-    ================================================= */
+    /* =============================================
+       PAKSA SEMUA PAGE KE SAIZ A4 ASAL
+       Penting untuk mobile
+    ============================================= */
 
-    prepareResumePageForPdf(
-      page1
-    );
+    pages.forEach(
+      function (page) {
 
-    prepareResumePageForPdf(
-      page2
-    );
-
-
-    /* =================================================
-       TUNGGU BROWSER REFLOW
-    ================================================= */
-
-    await new Promise(
-      function (resolve) {
-        requestAnimationFrame(
-          function () {
-            requestAnimationFrame(
-              resolve
-            );
-          }
+        prepareResumePageForPdf(
+          page
         );
+
       }
     );
 
 
-    /* =================================================
-       TUNGGU SEMUA GAMBAR
-    ================================================= */
+    /* Tunggu browser reflow */
+    await new Promise(
+      function (resolve) {
 
-    const allImages =
-      Array.from(
-        document.querySelectorAll(
-          "#resumePage img, #resumePage2 img"
-        )
-      );
+        requestAnimationFrame(
+          function () {
+
+            requestAnimationFrame(
+              resolve
+            );
+
+          }
+        );
+
+      }
+    );
+
+
+    /* =============================================
+       TUNGGU SEMUA GAMBAR PADA SEMUA PAGE
+    ============================================= */
+
+    const allImages = [];
+
+    pages.forEach(
+      function (page) {
+
+        page
+          .querySelectorAll("img")
+          .forEach(
+            function (img) {
+
+              allImages.push(
+                img
+              );
+
+            }
+          );
+
+      }
+    );
+
 
     await Promise.all(
       allImages.map(
@@ -1832,121 +2840,18 @@ async function generateResumePdfBlob() {
     );
 
 
-    /* =================================================
-       CAPTURE PAGE 1
-    ================================================= */
-
-    const canvas1 =
-      await html2canvas(
-        page1,
-        {
-          scale:
-            2,
-
-          useCORS:
-            true,
-
-          allowTaint:
-            false,
-
-          backgroundColor:
-            "#ffffff",
-
-          logging:
-            false,
-
-          width:
-            794,
-
-          height:
-            1123,
-
-          windowWidth:
-            794,
-
-          windowHeight:
-            1123,
-
-          scrollX:
-            0,
-
-          scrollY:
-            0
-        }
-      );
-
-
-    /* =================================================
-       CAPTURE PAGE 2
-    ================================================= */
-
-    const canvas2 =
-      await html2canvas(
-        page2,
-        {
-          scale:
-            2,
-
-          useCORS:
-            true,
-
-          allowTaint:
-            false,
-
-          backgroundColor:
-            "#ffffff",
-
-          logging:
-            false,
-
-          width:
-            794,
-
-          height:
-            1123,
-
-          windowWidth:
-            794,
-
-          windowHeight:
-            1123,
-
-          scrollX:
-            0,
-
-          scrollY:
-            0
-        }
-      );
-
-
-    /* =================================================
-       CANVAS -> JPEG
-    ================================================= */
-
-    const imageData1 =
-      canvas1.toDataURL(
-        "image/jpeg",
-        0.95
-      );
-
-    const imageData2 =
-      canvas2.toDataURL(
-        "image/jpeg",
-        0.95
-      );
-
-
-    /* =================================================
+    /* =============================================
        CREATE PDF
-    ================================================= */
+    ============================================= */
 
     const {
       jsPDF
     } = window.jspdf;
 
+
     const pdf =
       new jsPDF({
+
         orientation:
           "portrait",
 
@@ -1958,96 +2863,163 @@ async function generateResumePdfBlob() {
 
         compress:
           true
+
       });
 
 
-    /* =================================================
-       PAGE 1
-    ================================================= */
+    /* =============================================
+       CAPTURE SEMUA PAGE SATU PERSATU
+    ============================================= */
 
-    pdf.addImage(
-      imageData1,
-      "JPEG",
-      0,
-      0,
-      210,
-      297,
-      undefined,
-      "FAST"
+    for (
+      let i = 0;
+      i < pages.length;
+      i++
+    ) {
+
+      const page =
+        pages[i];
+
+
+      console.log(
+        "GENERATING PDF PAGE:",
+        i + 1,
+        "/",
+        pages.length
+      );
+
+
+      const canvas =
+        await html2canvas(
+          page,
+          {
+
+            scale:
+              2,
+
+            useCORS:
+              true,
+
+            allowTaint:
+              false,
+
+            backgroundColor:
+              "#ffffff",
+
+            logging:
+              false,
+
+            width:
+              794,
+
+            height:
+              1123,
+
+            windowWidth:
+              794,
+
+            windowHeight:
+              1123,
+
+            scrollX:
+              0,
+
+            scrollY:
+              0
+
+          }
+        );
+
+
+      const imageData =
+        canvas.toDataURL(
+          "image/jpeg",
+          0.95
+        );
+
+
+      /* Page pertama sudah tersedia */
+      if (i > 0) {
+
+        pdf.addPage(
+          "a4",
+          "portrait"
+        );
+
+      }
+
+
+      pdf.addImage(
+        imageData,
+        "JPEG",
+        0,
+        0,
+        210,
+        297,
+        undefined,
+        "FAST"
+      );
+
+    }
+
+
+    console.log(
+      "PDF GENERATED:",
+      pages.length,
+      "PAGES"
     );
 
-
-    /* =================================================
-       PAGE 2
-    ================================================= */
-
-    pdf.addPage(
-      "a4",
-      "portrait"
-    );
-
-    pdf.addImage(
-      imageData2,
-      "JPEG",
-      0,
-      0,
-      210,
-      297,
-      undefined,
-      "FAST"
-    );
-
-
-    /* =================================================
-       RETURN BLOB
-    ================================================= */
 
     return pdf.output(
       "blob"
     );
 
+
   } finally {
 
-    /* =================================================
-       RESTORE PHOTO
-    ================================================= */
+    /* =============================================
+       KEMBALIKAN GAMBAR ASAL
+    ============================================= */
 
     if (
       photo &&
       originalPhotoSrc
     ) {
+
       photo.src =
         originalPhotoSrc;
+
     }
 
 
-    /* =================================================
-       RESTORE PAGE STYLES
-       INI GANTI page1OldStyle/page2OldStyle
-    ================================================= */
+    /* =============================================
+       KEMBALIKAN STYLE SEMUA PAGE
+    ============================================= */
 
-    restoreResumePageStyle(
-      page1,
-      page1SavedStyle
+    savedStyles.forEach(
+      function (item) {
+
+        restoreResumePageStyle(
+          item.page,
+          item.style
+        );
+
+      }
     );
 
-    restoreResumePageStyle(
-      page2,
-      page2SavedStyle
-    );
 
-
-    /* =================================================
+    /* =============================================
        KEMBALIKAN PAPARAN MOBILE
-    ================================================= */
+    ============================================= */
 
     setTimeout(
       refreshResumeMobileLayout,
       50
     );
-  }
-}
 
+  }
+
+}
 
 /* =====================================================
    DOWNLOAD BLOB
@@ -2169,6 +3141,7 @@ if (downloadResumeButton) {
 
 /* =====================================================
    SHARE
+   CUSTOM SHARE BOX
 ===================================================== */
 
 const shareResumeButton =
@@ -2176,190 +3149,318 @@ const shareResumeButton =
     "shareResumeButton"
   );
 
+
+/* =====================================================
+   OPEN SHARE BOX
+===================================================== */
+
+function openResumeShareBox() {
+
+  const overlay =
+    document.getElementById(
+      "resumeShareOverlay"
+    );
+
+  if (!overlay) {
+
+    console.error(
+      "resumeShareOverlay tidak ditemui."
+    );
+
+    return;
+  }
+
+  overlay.hidden = false;
+}
+
+
+/* =====================================================
+   CLOSE SHARE BOX
+===================================================== */
+
+function closeResumeShareBox() {
+
+  const overlay =
+    document.getElementById(
+      "resumeShareOverlay"
+    );
+
+  if (overlay) {
+    overlay.hidden = true;
+  }
+
+}
+
+
+/* =====================================================
+   PUBLIC RESUME URL
+===================================================== */
+
+function getResumePublicShareUrl() {
+
+  const idPaspa =
+    getCurrentResumeId();
+
+  const publicUrl =
+    new URL(
+      "resume.html",
+      window.location.href
+    );
+
+  publicUrl.search = "";
+
+  if (idPaspa) {
+
+    publicUrl.searchParams.set(
+      "id",
+      idPaspa
+    );
+
+  }
+
+  return publicUrl.toString();
+}
+
+
+/* =====================================================
+   SHARE BUTTON
+===================================================== */
+
 if (shareResumeButton) {
 
   shareResumeButton.addEventListener(
     "click",
+    function () {
+
+      openResumeShareBox();
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   WHATSAPP
+===================================================== */
+
+document
+  .getElementById(
+    "shareResumeWhatsApp"
+  )
+  ?.addEventListener(
+    "click",
+    function () {
+
+      const memberName =
+        getCurrentResumeName();
+
+      const publicUrl =
+        getResumePublicShareUrl();
+
+      const message =
+        "MyResume PASPA - " +
+        memberName +
+        "\n\n" +
+        publicUrl;
+
+      const whatsappUrl =
+        "https://wa.me/?text=" +
+        encodeURIComponent(
+          message
+        );
+
+      window.open(
+        whatsappUrl,
+        "_blank"
+      );
+
+    }
+  );
+
+
+/* =====================================================
+   TELEGRAM
+===================================================== */
+
+document
+  .getElementById(
+    "shareResumeTelegram"
+  )
+  ?.addEventListener(
+    "click",
+    function () {
+
+      const memberName =
+        getCurrentResumeName();
+
+      const publicUrl =
+        getResumePublicShareUrl();
+
+      const telegramUrl =
+        "https://t.me/share/url?url=" +
+        encodeURIComponent(
+          publicUrl
+        ) +
+        "&text=" +
+        encodeURIComponent(
+          "MyResume PASPA - " +
+          memberName
+        );
+
+      window.open(
+        telegramUrl,
+        "_blank"
+      );
+
+    }
+  );
+
+
+/* =====================================================
+   EMAIL
+===================================================== */
+
+document
+  .getElementById(
+    "shareResumeEmail"
+  )
+  ?.addEventListener(
+    "click",
+    function () {
+
+      const memberName =
+        getCurrentResumeName();
+
+      const publicUrl =
+        getResumePublicShareUrl();
+
+      const subject =
+        "MyResume PASPA - " +
+        memberName;
+
+      const body =
+        "MyResume PASPA\n\n" +
+        memberName +
+        "\n\n" +
+        "Pautan MyResume:\n" +
+        publicUrl;
+
+      window.location.href =
+        "mailto:?subject=" +
+        encodeURIComponent(
+          subject
+        ) +
+        "&body=" +
+        encodeURIComponent(
+          body
+        );
+
+    }
+  );
+
+
+/* =====================================================
+   COPY LINK
+===================================================== */
+
+document
+  .getElementById(
+    "copyResumeLink"
+  )
+  ?.addEventListener(
+    "click",
     async function () {
 
-      const oldText =
-        shareResumeButton.innerHTML;
+      const button = this;
+
+      const oldHtml =
+        button.innerHTML;
 
       try {
 
-        shareResumeButton.disabled = true;
-        shareResumeButton.innerHTML = "…";
+        const publicUrl =
+          getResumePublicShareUrl();
+
+        await navigator.clipboard.writeText(
+          publicUrl
+        );
+
+        button.innerHTML = `
+          <span class="resume-share-icon">
+            ✓
+          </span>
+
+          <span>Disalin</span>
+        `;
+
+        setTimeout(
+          function () {
+
+            button.innerHTML =
+              oldHtml;
+
+          },
+          1500
+        );
+
+      } catch (error) {
+
+        console.error(
+          "COPY LINK ERROR:",
+          error
+        );
+
+      }
+
+    }
+  );
+
+/* =====================================================
+   SHARE PDF
+   STEP 1 = SEDIAKAN PDF
+   STEP 2 = KONGSI PDF
+===================================================== */
+
+let preparedResumePdfFile = null;
 
 
-        /* =============================================
-           GENERATE PDF
-        ============================================= */
+/* =====================================================
+   PREPARE PDF
+===================================================== */
 
-        const pdfBlob =
-          await generateResumePdfBlob();
+document
+  .getElementById(
+    "shareResumeNative"
+  )
+  ?.addEventListener(
+    "click",
+    async function () {
 
-        const filename =
-          getResumePdfFileName();
-
-        const memberName =
-          getCurrentResumeName();
-
-        const idPaspa =
-          getCurrentResumeId();
+      const button = this;
 
 
-        /* =============================================
-           CREATE PDF FILE
-        ============================================= */
+      /* =============================================
+         JIKA PDF SUDAH SIAP
+         KLIK KEDUA = TERUS SHARE
+      ============================================= */
 
-        let pdfFile = null;
+      if (preparedResumePdfFile) {
 
         try {
 
-          pdfFile =
-            new File(
-              [pdfBlob],
-              filename,
-              {
-                type: "application/pdf"
-              }
-            );
-
-        } catch (fileError) {
-
-          console.warn(
-            "CREATE SHARE FILE ERROR:",
-            fileError
-          );
-
-        }
-
-
-        /* =============================================
-           CUBA SHARE PDF FILE
-        ============================================= */
-
-        if (
-          pdfFile &&
-          navigator.share
-        ) {
-
-          let canShareFile = true;
-
-
-          /*
-           * Jika browser mempunyai canShare(),
-           * semak dahulu sama ada PDF boleh dikongsi.
-           */
-
           if (
-            typeof navigator.canShare ===
-            "function"
+            navigator.share &&
+            (
+              typeof navigator.canShare !==
+                "function" ||
+              navigator.canShare({
+                files: [
+                  preparedResumePdfFile
+                ]
+              })
+            )
           ) {
-
-            try {
-
-              canShareFile =
-                navigator.canShare({
-                  files: [pdfFile]
-                });
-
-            } catch (canShareError) {
-
-              console.warn(
-                "navigator.canShare ERROR:",
-                canShareError
-              );
-
-              canShareFile = false;
-            }
-
-          }
-
-
-          if (canShareFile) {
-
-            try {
-
-              await navigator.share({
-                title: "MyResume PASPA",
-
-                text:
-                  "MyResume PASPA - " +
-                  memberName,
-
-                files: [pdfFile]
-              });
-
-              console.log(
-                "PDF SHARE SUCCESS"
-              );
-
-              return;
-
-            } catch (shareFileError) {
-
-              /*
-               * User sendiri tekan Cancel.
-               * Tak perlu tunjuk ralat.
-               */
-
-              if (
-                shareFileError.name ===
-                "AbortError"
-              ) {
-
-                console.log(
-                  "Share dibatalkan oleh pengguna."
-                );
-
-                return;
-              }
-
-
-              /*
-               * Jangan berhenti.
-               * Cuba share URL pula.
-               */
-
-              console.warn(
-                "PDF FILE SHARE FAILED:",
-                shareFileError
-              );
-
-            }
-
-          }
-
-        }
-
-
-        /* =============================================
-           FALLBACK:
-           SHARE PUBLIC MYRESUME URL
-        ============================================= */
-
-        const publicUrl =
-          new URL(
-            "resume.html",
-            window.location.href
-          );
-
-        publicUrl.search = "";
-
-        if (idPaspa) {
-
-          publicUrl.searchParams.set(
-            "id",
-            idPaspa
-          );
-
-        }
-
-
-        if (navigator.share) {
-
-          try {
 
             await navigator.share({
 
@@ -2368,108 +3469,227 @@ if (shareResumeButton) {
 
               text:
                 "MyResume PASPA - " +
-                memberName,
+                getCurrentResumeName(),
 
-              url:
-                publicUrl.toString()
+              files: [
+                preparedResumePdfFile
+              ]
 
             });
 
+
             console.log(
-              "URL SHARE SUCCESS"
+              "PDF SHARE SUCCESS"
+            );
+
+
+            closeResumeShareBox();
+
+
+            /*
+             * Reset selepas berjaya share
+             */
+
+            preparedResumePdfFile =
+              null;
+
+
+            button.innerHTML = `
+              <span class="resume-share-icon">
+                <i class="fa-solid fa-file-pdf"></i>
+              </span>
+
+              <span>Sediakan PDF</span>
+            `;
+
+
+            return;
+
+          }
+
+
+          /* =========================================
+             BROWSER TAK SUPPORT FILE SHARE
+             DOWNLOAD PDF
+          ========================================= */
+
+          downloadResumeBlob(
+            preparedResumePdfFile,
+            preparedResumePdfFile.name
+          );
+
+
+          return;
+
+
+        } catch (error) {
+
+          if (
+            error &&
+            error.name ===
+              "AbortError"
+          ) {
+
+            console.log(
+              "Share PDF dibatalkan."
             );
 
             return;
 
-          } catch (shareUrlError) {
-
-            if (
-              shareUrlError.name ===
-              "AbortError"
-            ) {
-
-              console.log(
-                "Share dibatalkan oleh pengguna."
-              );
-
-              return;
-            }
-
-            console.warn(
-              "URL SHARE FAILED:",
-              shareUrlError
-            );
-
           }
 
-        }
 
-
-        /* =============================================
-           LAST FALLBACK:
-           COPY LINK
-        ============================================= */
-
-        if (
-          navigator.clipboard &&
-          window.isSecureContext
-        ) {
-
-          await navigator.clipboard.writeText(
-            publicUrl.toString()
+          console.error(
+            "PDF SHARE ERROR:",
+            error
           );
 
-          alert(
-            "Link MyResume telah disalin."
-          );
 
           return;
+
         }
 
+      }
 
-        /* =============================================
-           JIKA SEMUA TAK SUPPORT
-        ============================================= */
 
-        alert(
-          "Fungsi Share tidak disokong oleh browser ini. Sila gunakan butang Download."
+      /* =============================================
+         PDF BELUM ADA
+         KLIK PERTAMA = GENERATE PDF
+      ============================================= */
+
+      const originalHtml =
+        button.innerHTML;
+
+
+      try {
+
+        button.disabled =
+          true;
+
+
+        button.innerHTML = `
+          <span class="resume-share-icon">
+            <i class="fa-solid fa-spinner fa-spin"></i>
+          </span>
+
+          <span>Sediakan PDF...</span>
+        `;
+
+
+        console.log(
+          "PREPARING RESUME PDF..."
         );
+
+
+        /*
+         * Generate semua page resume
+         */
+
+        const pdfBlob =
+          await generateResumePdfBlob();
+
+
+        const filename =
+          getResumePdfFileName();
+
+
+        /*
+         * Simpan PDF dalam memory
+         */
+
+        preparedResumePdfFile =
+          new File(
+            [pdfBlob],
+            filename,
+            {
+              type:
+                "application/pdf"
+            }
+          );
+
+
+        console.log(
+          "PDF READY TO SHARE:",
+          filename
+        );
+
+
+        /*
+         * Sekarang tunggu klik kedua
+         */
+
+        button.innerHTML = `
+          <span class="resume-share-icon">
+            <i class="fa-solid fa-share-nodes"></i>
+          </span>
+
+          <span>Kongsi PDF</span>
+        `;
 
 
       } catch (error) {
 
-        if (
-          error &&
-          error.name === "AbortError"
-        ) {
+        preparedResumePdfFile =
+          null;
 
-          return;
-        }
 
         console.error(
-          "SHARE RESUME ERROR:",
+          "PREPARE PDF ERROR:",
           error
         );
 
-        alert(
-          "Resume tidak dapat dikongsi."
-        );
+
+        button.innerHTML =
+          originalHtml;
 
 
       } finally {
 
-        shareResumeButton.disabled =
+        button.disabled =
           false;
-
-        shareResumeButton.innerHTML =
-          oldText;
 
       }
 
     }
   );
 
-}
+
+/* =====================================================
+   CLOSE BUTTON
+===================================================== */
+
+document
+  .getElementById(
+    "closeResumeShare"
+  )
+  ?.addEventListener(
+    "click",
+    closeResumeShareBox
+  );
+
+
+/* =====================================================
+   CLICK BACKDROP TO CLOSE
+===================================================== */
+
+document
+  .getElementById(
+    "resumeShareOverlay"
+  )
+  ?.addEventListener(
+    "click",
+    function (event) {
+
+      if (
+        event.target === this
+      ) {
+
+        closeResumeShareBox();
+
+      }
+
+    }
+  );
 /* =====================================================
    MOBILE A4 AUTO SCALE
 ===================================================== */

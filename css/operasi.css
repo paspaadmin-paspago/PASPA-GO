@@ -2195,3 +2195,62 @@
 .operation-page button {
   text-transform: uppercase;
 }
+
+/* =====================================================
+   FILTER BUTTONS - AUTO WRAP
+   Elak scroll kiri / kanan
+===================================================== */
+
+.operasi-filter-buttons {
+  display: flex !important;
+  flex-wrap: wrap !important;
+
+  gap: 8px !important;
+
+  width: 100% !important;
+  max-width: 100% !important;
+
+  overflow-x: visible !important;
+  overflow-y: visible !important;
+
+  white-space: normal !important;
+
+  box-sizing: border-box !important;
+}
+
+
+/* Tahun */
+
+#operasiYearFilters {
+  display: flex !important;
+  flex-wrap: wrap !important;
+
+  align-items: center !important;
+  justify-content: flex-start !important;
+
+  gap: 7px !important;
+
+  width: 100% !important;
+
+  overflow: visible !important;
+}
+
+
+/* Pastikan setiap button tidak mengecil */
+
+#operasiYearFilters .operasi-year-button {
+  flex: 0 0 auto !important;
+
+  white-space: nowrap !important;
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+  #operasiYearFilters {
+    gap: 6px !important;
+  }
+
+}

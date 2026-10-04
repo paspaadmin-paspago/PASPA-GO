@@ -1394,3 +1394,272 @@ body {
 .report-message {
   font-size: 13px;
 }
+
+/* =====================================================
+   RESUME AHLI
+===================================================== */
+
+.resume-member-description {
+  margin-bottom: 12px;
+
+  color: var(--text-muted);
+
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+.resume-member-search {
+  width: 100%;
+}
+
+
+.resume-member-search-input {
+  width: 100%;
+  min-height: 44px;
+
+  padding: 10px 12px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 9px;
+
+  background: var(--surface);
+  color: var(--navy-800);
+
+  font-family: inherit;
+  font-size: 13px;
+
+  outline: none;
+
+  box-sizing: border-box;
+}
+
+
+.resume-member-search-input::placeholder {
+  color: #8997a9;
+}
+
+
+.resume-member-search-input:focus {
+  border-color: var(--blue-600);
+
+  background: #ffffff;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(39, 103, 170, 0.10);
+}
+
+
+/* =====================================================
+   SEARCH RESULTS
+===================================================== */
+
+.resume-member-search-results {
+  margin-top: 9px;
+}
+
+
+.resume-member-result {
+  width: 100%;
+
+  display: block;
+
+  margin-bottom: 7px;
+  padding: 11px 12px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 9px;
+
+  background: var(--surface);
+  color: var(--navy-800);
+
+  text-align: left;
+
+  font-family: inherit;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+
+.resume-member-result:last-child {
+  margin-bottom: 0;
+}
+
+
+.resume-member-result:hover {
+  border-color: var(--blue-600);
+
+  background: var(--blue-100);
+}
+
+
+.resume-member-result:active {
+  transform: scale(0.99);
+}
+
+
+.resume-member-result-name {
+  font-size: 12px;
+  font-weight: 800;
+
+  line-height: 1.35;
+}
+
+
+.resume-member-result-id {
+  margin-top: 4px;
+
+  color: var(--text-muted);
+
+  font-size: 11px;
+}
+
+
+/* =====================================================
+   SELECTED MEMBER
+===================================================== */
+
+.resume-selected-member {
+  margin-top: 12px;
+
+  padding: 14px;
+
+  border:
+    1px solid #dbe4ef;
+
+  border-radius: 11px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #f7faff 0%,
+      #f1f6fc 100%
+    );
+}
+
+
+.resume-selected-label {
+  margin-bottom: 9px;
+
+  color: var(--text-muted);
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 0.06em;
+}
+
+
+.resume-selected-rank {
+  color: var(--blue-700);
+
+  font-size: 11px;
+  font-weight: 800;
+
+  text-transform: uppercase;
+}
+
+
+.resume-selected-name {
+  margin-top: 2px;
+
+  color: var(--navy-800);
+
+  font-size: 15px;
+  font-weight: 800;
+
+  line-height: 1.3;
+
+  text-transform: uppercase;
+}
+
+
+.resume-selected-id {
+  margin-top: 6px;
+
+  color: var(--text-muted);
+
+  font-size: 11px;
+}
+
+
+.resume-selected-id strong {
+  color: var(--navy-800);
+}
+
+
+/* =====================================================
+   BUTTON MAKLUMAT AHLI
+===================================================== */
+
+.resume-member-view-button {
+  margin-top: 13px;
+}
+
+
+.resume-member-view-button:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 500px) {
+
+  .resume-member-description {
+    font-size: 11px;
+  }
+
+
+  .resume-member-search-input {
+    min-height: 42px;
+
+    font-size: 12px;
+  }
+
+
+  .resume-member-result {
+    padding: 10px;
+  }
+
+
+  .resume-member-result-name {
+    font-size: 11px;
+  }
+
+
+  .resume-member-result-id {
+    font-size: 10px;
+  }
+
+
+  .resume-selected-member {
+    padding: 12px;
+  }
+
+
+  .resume-selected-name {
+    font-size: 13px;
+  }
+
+}
