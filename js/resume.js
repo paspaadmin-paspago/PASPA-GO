@@ -2432,18 +2432,22 @@ document.addEventListener(
 
   }
 );
-
 /* =====================================================
    MOBILE A4 AUTO SCALE
    PAGE 1 + PAGE 2
+   FIX ANDROID / PWA / TWA
 ===================================================== */
 
 function fitResumeToMobile() {
 
-  const pages = [
-    document.getElementById("resumePage"),
-    document.getElementById("resumePage2")
-  ].filter(Boolean);
+  const page1 =
+    document.getElementById("resumePage");
+
+  const page2 =
+    document.getElementById("resumePage2");
+
+  const pages =
+    [page1, page2].filter(Boolean);
 
 
   if (pages.length === 0) {
@@ -2457,12 +2461,18 @@ function fitResumeToMobile() {
 
   if (window.innerWidth > 850) {
 
+    document.documentElement.style.overflowX = "";
+    document.body.style.overflowX = "";
+
     pages.forEach(function (page) {
 
       page.style.transform = "";
       page.style.transformOrigin = "";
-      page.style.left = "";
+
       page.style.position = "";
+      page.style.left = "";
+      page.style.right = "";
+
       page.style.marginLeft = "";
       page.style.marginRight = "";
       page.style.marginBottom = "";
@@ -2477,10 +2487,38 @@ function fitResumeToMobile() {
      MOBILE
   ================================================= */
 
+  /*
+   * Saiz sebenar A4 yang digunakan oleh Resume.
+   * 210mm ≈ 793.7px pada 96dpi.
+   */
+
   const originalWidth = 793.7;
 
+
+  /*
+   * Gunakan lebar viewport sebenar.
+   *
+   * Jangan gunakan document.body.clientWidth kerana
+   * body mungkin sudah menjadi 793px disebabkan A4.
+   */
+
+  const viewportWidth =
+    document.documentElement.clientWidth ||
+    window.innerWidth;
+
+
+  /*
+   * Sedikit ruang kiri + kanan.
+   */
+
+  const sideGap = 8;
+
   const availableWidth =
-    window.innerWidth - 12;
+    Math.max(
+      280,
+      viewportWidth - (sideGap * 2)
+    );
+
 
   const scale =
     Math.min(
@@ -2489,63 +2527,211 @@ function fitResumeToMobile() {
     );
 
 
+  /*
+   * Elakkan keseluruhan website menjadi selebar
+   * A4 pada Android / PWA.
+   */
+
+  document.documentElement.style.overflowX =
+    "hidden";
+
+  document.body.style.overflowX =
+    "hidden";
+
+
   pages.forEach(function (page) {
 
     /*
-     * Jangan gunakan left:50% +
-     * translateX lagi.
+     * Sangat penting:
      *
-     * Kita scale terus dari bahagian
-     * tengah atas.
+     * Scale mesti bermula daripada KIRI ATAS.
+     *
+     * Jika "top center" digunakan, browser masih
+     * meletakkan pusat A4 pada kedudukan asal dan
+     * hasilnya Resume tertolak ke sebelah kanan.
+     */
+
+    page.style.transformOrigin =
+      "top left";
+
+
+    /*
+     * Jangan gunakan:
+     *
+     * left: 50%
+     * translateX(-50%)
+     *
+     * kerana ia menyebabkan masalah pada sesetengah
+     * Android WebView / TWA.
      */
 
     page.style.position =
       "relative";
 
     page.style.left =
+      "0";
+
+    page.style.right =
       "auto";
+
+
+    /*
+     * Letakkan muka surat bermula daripada kiri
+     * viewport.
+     */
 
     page.style.marginLeft =
-      "auto";
+      sideGap + "px";
 
     page.style.marginRight =
-      "auto";
+      "0";
 
-    page.style.transformOrigin =
-      "top center";
+
+    /*
+     * Scale A4.
+     */
 
     page.style.transform =
       "scale(" + scale + ")";
 
 
     /*
-     * Browser masih mengira tinggi
-     * A4 asal walaupun sudah scale.
+     * Transform tidak mengubah ruang layout sebenar.
+     *
+     * Browser masih menganggap page mempunyai tinggi
+     * A4 asal.
+     *
+     * Jadi kita tolak lebihan tinggi supaya Page 2
+     * terus berada selepas Page 1.
      */
 
     const originalHeight =
       page.offsetHeight;
 
+
     const scaledHeight =
       originalHeight * scale;
 
 
+    const unusedHeight =
+      originalHeight -
+      scaledHeight;
+
+
     /*
-     * Buang ruang kosong akibat
-     * transform scale.
-     *
-     * Tinggalkan 12px antara
-     * Page 1 dan Page 2.
+     * 12px = ruang sebenar antara Page 1 dan Page 2.
      */
 
     page.style.marginBottom =
-      -(
-        originalHeight -
-        scaledHeight
-      ) +
-      12 +
-      "px";
+      (-unusedHeight + 12) + "px";
 
   });
 
 }
+
+
+/* =====================================================
+   RUN MOBILE SCALE
+===================================================== */
+
+function refreshResumeMobileLayout() {
+
+  /*
+   * requestAnimationFrame membantu Android menunggu
+   * browser selesai membuat layout sebelum scale.
+   */
+
+  requestAnimationFrame(
+    function () {
+
+      requestAnimationFrame(
+        function () {
+
+          fitResumeToMobile();
+
+        }
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   WINDOW LOAD
+===================================================== */
+
+window.addEventListener(
+  "load",
+  function () {
+
+    setTimeout(
+      refreshResumeMobileLayout,
+      250
+    );
+
+    /*
+     * Jalankan sekali lagi selepas gambar / font
+     * berkemungkinan selesai dimuatkan.
+     */
+
+    setTimeout(
+      refreshResumeMobileLayout,
+      800
+    );
+
+  }
+);
+
+
+/* =====================================================
+   RESIZE / ORIENTATION
+===================================================== */
+
+window.addEventListener(
+  "resize",
+  function () {
+
+    clearTimeout(
+      window.__resumeResizeTimer
+    );
+
+    window.__resumeResizeTimer =
+      setTimeout(
+        refreshResumeMobileLayout,
+        150
+      );
+
+  }
+);
+
+
+window.addEventListener(
+  "orientationchange",
+  function () {
+
+    setTimeout(
+      refreshResumeMobileLayout,
+      300
+    );
+
+  }
+);
+
+
+/* =====================================================
+   REFRESH SELEPAS DATA PROGRAM / OPERASI SIAP
+===================================================== */
+
+window.addEventListener(
+  "resumeActivitiesLoaded",
+  function () {
+
+    setTimeout(
+      refreshResumeMobileLayout,
+      100
+    );
+
+  }
+);
