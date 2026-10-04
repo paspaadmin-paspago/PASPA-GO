@@ -2183,3 +2183,15 @@
   }
 
 }
+
+/* =====================================================
+   OPERASI - PAPARAN HURUF BESAR
+===================================================== */
+
+.operation-page,
+.operation-page input,
+.operation-page select,
+.operation-page textarea,
+.operation-page button {
+  text-transform: uppercase;
+}

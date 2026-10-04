@@ -148,6 +148,12 @@ let currentSession =
 let allOperasiRecords =
   [];
 
+
+  let operationMasterList =
+  [];
+
+
+
 let editingOperasi =
   null;
 
@@ -830,6 +836,325 @@ async function loadOperasiMember() {
   }
 
 }
+
+
+/* =====================================================
+   LOAD MASTER OPERASI
+===================================================== */
+
+async function loadOperationMasterList() {
+
+  try {
+
+    const result =
+      await apiPost({
+
+        action:
+          "operasi_master_list",
+
+        email:
+          currentSession.googleEmail
+
+      });
+
+
+    console.log(
+      "OPERATION MASTER RESULT:",
+      result
+    );
+
+
+    if (
+      !result ||
+      result.success !== true
+    ) {
+
+      throw new Error(
+        result?.message ||
+        "Senarai master Operasi tidak dapat dimuatkan."
+      );
+
+    }
+
+
+    operationMasterList =
+      Array.isArray(
+        result.operations
+      )
+        ? result.operations
+        : [];
+
+
+  } catch (error) {
+
+    console.error(
+      "LOAD OPERATION MASTER ERROR:",
+      error
+    );
+
+
+    operationMasterList =
+      [];
+
+  }
+
+}
+
+
+function getOperationSortTimestamp(value) {
+
+  if (!value) {
+    return 0;
+  }
+
+
+  /* ===============================================
+     JIKA GOOGLE SHEET / API HANTAR DATE OBJECT
+     ATAU ISO DATE
+  =============================================== */
+
+  if (
+    value instanceof Date &&
+    !isNaN(value.getTime())
+  ) {
+
+    return value.getTime();
+
+  }
+
+
+  const text =
+    String(value).trim();
+
+
+  /* ===============================================
+     FORMAT dd/MM/yyyy
+     Contoh: 07/09/2026
+  =============================================== */
+
+  let match =
+    text.match(
+      /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/
+    );
+
+
+  if (match) {
+
+    const day =
+      Number(match[1]);
+
+    const month =
+      Number(match[2]) - 1;
+
+    const year =
+      Number(match[3]);
+
+
+    return new Date(
+      year,
+      month,
+      day
+    ).getTime();
+
+  }
+
+
+  /* ===============================================
+     FORMAT yyyy-MM-dd
+     Contoh: 2026-09-07
+  =============================================== */
+
+  match =
+    text.match(
+      /^(\d{4})-(\d{1,2})-(\d{1,2})$/
+    );
+
+
+  if (match) {
+
+    const year =
+      Number(match[1]);
+
+    const month =
+      Number(match[2]) - 1;
+
+    const day =
+      Number(match[3]);
+
+
+    return new Date(
+      year,
+      month,
+      day
+    ).getTime();
+
+  }
+
+
+  /* ===============================================
+     ISO / GOOGLE APPS SCRIPT DATE
+  =============================================== */
+
+  const parsedDate =
+    new Date(text);
+
+
+  if (
+    !isNaN(
+      parsedDate.getTime()
+    )
+  ) {
+
+    return parsedDate.getTime();
+
+  }
+
+
+  return 0;
+
+}
+
+
+
+/* =====================================================
+   ISI DROPDOWN MASTER OPERASI
+===================================================== */
+
+function populateOperationMasterSelect() {
+
+  const select =
+    document.getElementById(
+      "operasiMasterSelect"
+    );
+
+
+  if (!select) {
+    return;
+  }
+
+
+  select.innerHTML = "";
+
+
+  /* PILIHAN ASAL */
+
+  const defaultOption =
+    document.createElement(
+      "option"
+    );
+
+  defaultOption.value = "";
+
+  defaultOption.textContent =
+    "Sila pilih operasi";
+
+  select.appendChild(
+    defaultOption
+  );
+
+
+  /* SUSUN OPERASI TERBARU DAHULU */
+
+const sortedOperations =
+  [...operationMasterList]
+    .sort(
+      function (a, b) {
+
+        const dateA =
+          getOperationSortTimestamp(
+            a.tarikhMula
+          );
+
+        const dateB =
+          getOperationSortTimestamp(
+            b.tarikhMula
+          );
+
+        return dateB - dateA;
+
+      }
+    );
+
+
+  /* MASUKKAN OPERASI KE DROPDOWN */
+
+  sortedOperations.forEach(
+    function (operation) {
+
+      const option =
+        document.createElement(
+          "option"
+        );
+
+
+      option.value =
+        operation.operasiId;
+
+
+      let label =
+        operation.perkara || "";
+
+
+      const tarikhMula =
+        formatOperasiDate(
+          operation.tarikhMula
+        );
+
+
+      const tarikhTamat =
+        formatOperasiDate(
+          operation.tarikhTamat
+        );
+
+
+      if (
+        tarikhMula !== "-" &&
+        tarikhTamat !== "-"
+      ) {
+
+        label +=
+          " — " +
+          tarikhMula +
+          " hingga " +
+          tarikhTamat;
+
+      }
+
+
+      option.textContent =
+        label;
+
+
+      select.appendChild(
+        option
+      );
+
+    }
+  );
+
+
+  /* PILIHAN CIPTA OPERASI BARU */
+
+  const newOption =
+    document.createElement(
+      "option"
+    );
+
+
+  newOption.value =
+    "__NEW__";
+
+
+  newOption.textContent =
+    "＋ TIADA DALAM SENARAI. CIPTA NAMA OPERASI";
+
+
+  select.appendChild(
+    newOption
+  );
+
+}
+
 
 
 /* =====================================================
@@ -1746,6 +2071,28 @@ function resetOperasiForm() {
 
   }
 
+  if (operasiMasterSelect) {
+
+  operasiMasterSelect.value =
+    "";
+
+}
+
+
+if (newOperasiNameField) {
+
+  newOperasiNameField
+    .classList
+    .add(
+      "hidden"
+    );
+
+}
+
+
+setOperasiSharedFieldsDisabled(
+  false
+);
 
   editingOperasi =
     null;
@@ -1878,6 +2225,29 @@ function openOperasiEditForm(
       ...record
     };
 
+
+    if (operasiMasterSelect) {
+
+  operasiMasterSelect.value =
+    "";
+
+}
+
+
+if (newOperasiNameField) {
+
+  newOperasiNameField
+    .classList
+    .remove(
+      "hidden"
+    );
+
+}
+
+
+setOperasiSharedFieldsDisabled(
+  false
+);
 
   hideOperasiMessage();
 
@@ -2350,46 +2720,84 @@ if (operasiForm) {
       }
 
 
-      const data = {
+const selectedMasterOperasiId =
+  (
+    !editingOperasi &&
+    operasiMasterSelect &&
+    operasiMasterSelect.value &&
+    operasiMasterSelect.value !==
+      "__NEW__"
+  )
+    ? String(
+        operasiMasterSelect.value
+      ).trim()
+    : "";
 
-        kategoriOperasi:
-          operasiKategori.value,
 
-        lokasiOperasi:
-          lokasiOperasi,
+const data = {
 
-        perkara:
-          operasiPerkara.value
-            .trim(),
+  /*
+   * Jika operasi sedia ada dipilih,
+   * backend akan reuse OPERASI_ID ini.
+   *
+   * Jika cipta baru, nilai kosong.
+   */
 
-        tarikhMula:
-          operasiTarikhMula.value,
+  operasiId:
+    selectedMasterOperasiId,
 
-        tarikhTamat:
-          operasiTarikhTamat.value,
 
-        tempat:
-          operasiTempat.value
-            .trim(),
+  kategoriOperasi:
+    operasiKategori.value,
 
-        negeri:
-          lokasiOperasi ===
-            "Dalam Negara"
-            ? operasiNegeri.value
-            : "",
 
-        negara:
-          lokasiOperasi ===
-            "Luar Negara"
-            ? operasiNegara.value
-            : "",
+  lokasiOperasi:
+    lokasiOperasi,
 
-        catatan:
-          operasiCatatan.value
-            .trim()
 
-      };
+  perkara:
+    operasiPerkara.value
+      .trim(),
 
+
+  tarikhMula:
+    operasiTarikhMula.value,
+
+
+  tarikhTamat:
+    operasiTarikhTamat.value,
+
+
+  tempat:
+    operasiTempat.value
+      .trim(),
+
+
+  negeri:
+
+    lokasiOperasi ===
+      "Dalam Negara"
+
+      ? operasiNegeri.value
+
+      : "",
+
+
+  negara:
+
+    lokasiOperasi ===
+      "Luar Negara"
+
+      ? operasiNegara.value
+
+      : "",
+
+
+  catatan:
+    operasiCatatan.value
+      .trim()
+
+};
 
       const originalText =
         saveOperasiButton
@@ -2767,6 +3175,456 @@ if (operasiYearFilters) {
 
 }
 
+/* =====================================================
+   MASTER OPERASI CHANGE
+===================================================== */
+
+const operasiMasterSelect =
+  document.getElementById(
+    "operasiMasterSelect"
+  );
+
+
+const newOperasiNameField =
+  document.getElementById(
+    "newOperasiNameField"
+  );
+
+
+function setOperasiSharedFieldsDisabled(
+  disabled
+) {
+
+  if (operasiKategori) {
+    operasiKategori.disabled =
+      disabled;
+  }
+
+
+  document
+    .querySelectorAll(
+      'input[name="lokasiOperasi"]'
+    )
+    .forEach(
+      function (radio) {
+
+        radio.disabled =
+          disabled;
+
+      }
+    );
+
+
+  if (operasiTarikhMula) {
+    operasiTarikhMula.disabled =
+      disabled;
+  }
+
+
+  if (operasiTarikhTamat) {
+    operasiTarikhTamat.disabled =
+      disabled;
+  }
+
+
+  if (operasiTempat) {
+    operasiTempat.disabled =
+      disabled;
+  }
+
+
+  if (operasiNegeri) {
+    operasiNegeri.disabled =
+      disabled;
+  }
+
+
+  if (operasiNegara) {
+    operasiNegara.disabled =
+      disabled;
+  }
+
+}
+
+
+function clearOperasiSharedFields() {
+
+  if (operasiKategori) {
+
+    operasiKategori.value =
+      "";
+
+  }
+
+
+  const domesticRadio =
+    document.querySelector(
+      'input[name="lokasiOperasi"][value="Dalam Negara"]'
+    );
+
+
+  if (domesticRadio) {
+
+    domesticRadio.checked =
+      true;
+
+  }
+
+
+  if (operasiPerkara) {
+
+    operasiPerkara.value =
+      "";
+
+  }
+
+
+  if (operasiTarikhMula) {
+
+    operasiTarikhMula.value =
+      "";
+
+  }
+
+
+  if (operasiTarikhTamat) {
+
+    operasiTarikhTamat.value =
+      "";
+
+  }
+
+
+  if (operasiTempat) {
+
+    operasiTempat.value =
+      "";
+
+  }
+
+
+  if (operasiNegeri) {
+
+    operasiNegeri.value =
+      "";
+
+  }
+
+
+  if (operasiNegara) {
+
+    operasiNegara.value =
+      "";
+
+  }
+
+
+  updateOperasiLocationFields();
+
+}
+
+
+if (operasiMasterSelect) {
+
+  operasiMasterSelect.addEventListener(
+    "change",
+    function () {
+
+      const selectedValue =
+        String(
+          operasiMasterSelect.value ||
+          ""
+        ).trim();
+
+
+      /* ===============================================
+         BELUM PILIH APA-APA
+      =============================================== */
+
+      if (!selectedValue) {
+
+        if (newOperasiNameField) {
+
+          newOperasiNameField
+            .classList
+            .add(
+              "hidden"
+            );
+
+        }
+
+
+        if (operasiPerkara) {
+
+          operasiPerkara.value =
+            "";
+
+        }
+
+
+        setOperasiSharedFieldsDisabled(
+          false
+        );
+
+
+        return;
+
+      }
+
+
+      /* ===============================================
+         CIPTA OPERASI BARU
+      =============================================== */
+
+      if (
+        selectedValue ===
+        "__NEW__"
+      ) {
+
+        clearOperasiSharedFields();
+
+
+        if (newOperasiNameField) {
+
+          newOperasiNameField
+            .classList
+            .remove(
+              "hidden"
+            );
+
+        }
+
+
+        if (operasiPerkara) {
+
+          operasiPerkara.value =
+            "";
+
+          operasiPerkara.focus();
+
+        }
+
+
+        setOperasiSharedFieldsDisabled(
+          false
+        );
+
+
+        return;
+
+      }
+
+
+      /* ===============================================
+         PILIH OPERASI SEDIA ADA
+      =============================================== */
+
+      const selectedOperation =
+        operationMasterList.find(
+          function (operation) {
+
+            return (
+              String(
+                operation.operasiId ||
+                ""
+              ).trim() ===
+              selectedValue
+            );
+
+          }
+        );
+
+
+      if (!selectedOperation) {
+
+        showOperasiMessage(
+          "Maklumat operasi yang dipilih tidak ditemui.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      /* ===============================================
+         SEMBUNYIKAN INPUT NAMA BARU
+      =============================================== */
+
+      if (newOperasiNameField) {
+
+        newOperasiNameField
+          .classList
+          .add(
+            "hidden"
+          );
+
+      }
+
+
+      /* ===============================================
+         PERKARA
+      =============================================== */
+
+      if (operasiPerkara) {
+
+        operasiPerkara.value =
+          selectedOperation.perkara ||
+          "";
+
+      }
+
+
+      /* ===============================================
+         KATEGORI
+      =============================================== */
+
+      if (operasiKategori) {
+
+        operasiKategori.value =
+          selectedOperation.kategoriOperasi ||
+          "";
+
+      }
+
+
+      /* ===============================================
+         TARIKH
+      =============================================== */
+
+      if (operasiTarikhMula) {
+
+        operasiTarikhMula.value =
+          formatOperasiDateForInput(
+            selectedOperation.tarikhMula
+          );
+
+      }
+
+
+      if (operasiTarikhTamat) {
+
+        operasiTarikhTamat.value =
+          formatOperasiDateForInput(
+            selectedOperation.tarikhTamat
+          );
+
+      }
+
+
+      /* ===============================================
+         TEMPAT
+      =============================================== */
+
+      if (operasiTempat) {
+
+        operasiTempat.value =
+          selectedOperation.tempat ||
+          "";
+
+      }
+
+
+      /* ===============================================
+         TENTUKAN DALAM / LUAR NEGARA
+      =============================================== */
+
+      let selectedLocation =
+        String(
+          selectedOperation.lokasiOperasi ||
+          ""
+        ).trim();
+
+
+      /*
+       * Rekod lama 08_OPERASI tidak mempunyai
+       * LOKASI_OPERASI.
+       *
+       * NEGARA ada = Luar Negara
+       * selainnya = Dalam Negara
+       */
+
+      if (!selectedLocation) {
+
+        selectedLocation =
+          String(
+            selectedOperation.negara ||
+            ""
+          ).trim()
+            ? "Luar Negara"
+            : "Dalam Negara";
+
+      }
+
+
+      const locationRadio =
+        document.querySelector(
+          'input[name="lokasiOperasi"][value="' +
+          selectedLocation +
+          '"]'
+        );
+
+
+      if (locationRadio) {
+
+        locationRadio.checked =
+          true;
+
+      }
+
+
+      updateOperasiLocationFields();
+
+
+      /* ===============================================
+         NEGERI / NEGARA
+      =============================================== */
+
+      if (
+        selectedLocation ===
+        "Dalam Negara"
+      ) {
+
+        if (operasiNegeri) {
+
+          operasiNegeri.value =
+            selectedOperation.negeri ||
+            "";
+
+        }
+
+      }
+
+
+      if (
+        selectedLocation ===
+        "Luar Negara"
+      ) {
+
+        if (operasiNegara) {
+
+          operasiNegara.value =
+            selectedOperation.negara ||
+            "";
+
+        }
+
+      }
+
+
+      /*
+       * Maklumat master tidak patut diubah
+       * oleh ahli kedua/ketiga.
+       */
+
+      setOperasiSharedFieldsDisabled(
+        true
+      );
+
+    }
+  );
+
+}
 
 /* =====================================================
    LOCATION CHANGE
@@ -2890,16 +3748,18 @@ document.addEventListener(
       return;
 
     }
+populateOperasiCountries();
+
+updateOperasiLocationFields();
 
 
-    populateOperasiCountries();
+await loadOperasiMember();
 
-    updateOperasiLocationFields();
+await loadOperationMasterList();
 
+populateOperationMasterSelect();
 
-    await loadOperasiMember();
-
-    await loadOperasiRecords();
+await loadOperasiRecords();
 
   }
 );

@@ -1,0 +1,1844 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #e9edf2;
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  color: #0c315d;
+}
+
+
+/* ==============================================
+   TOOLBAR
+============================================== */
+
+.resume-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  min-height: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  padding: 10px 18px;
+
+  background: #123f78;
+
+  box-shadow:
+    0 2px 10px
+    rgba(0, 0, 0, 0.15);
+}
+
+.toolbar-title {
+  color: white;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.toolbar-button {
+  border: 1px solid
+    rgba(255,255,255,.4);
+
+  border-radius: 8px;
+
+  padding: 8px 14px;
+
+  background: transparent;
+  color: white;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.toolbar-button.primary {
+  background: white;
+  color: #123f78;
+}
+
+
+/* ==============================================
+   LOADING
+============================================== */
+
+.resume-loading,
+.resume-message {
+  width: min(
+    calc(100% - 30px),
+    794px
+  );
+
+  margin: 25px auto;
+
+  padding: 16px;
+
+  border-radius: 10px;
+
+  background: white;
+
+  text-align: center;
+}
+
+.resume-message {
+  color: #a40000;
+}
+
+.hidden {
+  display: none !important;
+}
+
+
+/* ==============================================
+   A4
+============================================== */
+
+.resume-page {
+  width: 210mm;
+  min-height: 297mm;
+
+  margin: 24px auto;
+
+  background: white;
+
+  box-shadow:
+    0 8px 30px
+    rgba(0, 0, 0, 0.16);
+
+  overflow: hidden;
+
+  position: relative;
+}
+
+
+/* ==============================================
+   HEADER
+============================================== */
+
+.resume-header {
+  height: 31mm;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding:
+    8mm
+    10mm;
+
+  border-bottom:
+    4px solid #e7b52f;
+
+  background:
+    linear-gradient(
+      120deg,
+      #ffffff 0%,
+      #ffffff 35%,
+      #174d82 35%,
+      #082d58 100%
+    );
+}
+
+.header-brand {
+  width: 47%;
+}
+
+.paspa-logo {
+  display: block;
+
+  max-width: 45mm;
+  max-height: 22mm;
+
+  object-fit: contain;
+}
+
+.header-title {
+  color: white;
+  text-align: right;
+}
+
+.header-title h1 {
+  margin: 0;
+
+  font-size: 19px;
+  letter-spacing: .3px;
+}
+
+.header-title p {
+  margin: 4px 0 0;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+/* ==============================================
+   IDENTITI
+============================================== */
+
+.identity-section {
+  min-height: 59mm;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10mm;
+
+  padding:
+    7mm
+    10mm;
+
+  background:
+    linear-gradient(
+      90deg,
+      #ffffff,
+      #f2f5f8
+    );
+}
+
+.photo-box {
+  width: 48mm;
+  height: 53mm;
+
+  flex: 0 0 48mm;
+
+  border-radius: 4mm;
+
+  overflow: hidden;
+
+  background: #eef1f4;
+
+  box-shadow:
+    0 2px 8px
+    rgba(0,0,0,.12);
+}
+
+.photo-box img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center top;
+}
+
+.identity-info {
+  flex: 1;
+}
+
+.identity-rank {
+  font-size: 19px;
+  font-weight: 800;
+
+  margin-bottom: 3px;
+}
+
+.identity-info h2 {
+  margin: 0;
+
+  max-width: 115mm;
+
+  color: #062f5d;
+
+  font-size: 26px;
+  line-height: 1.08;
+
+  text-transform: uppercase;
+}
+
+.identity-id {
+  margin-top: 7px;
+
+  font-size: 16px;
+  font-weight: 500;
+}
+
+
+/* ==============================================
+   CONTENT
+============================================== */
+
+.resume-columns {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 4mm;
+
+  padding:
+    0
+    5mm
+    5mm;
+}
+
+.resume-column {
+  display: flex;
+  flex-direction: column;
+
+  gap: 4mm;
+}
+
+
+/* ==============================================
+   CARD
+============================================== */
+
+.info-card,
+.declaration-card {
+  border-radius: 3mm;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff,
+      #f2f5f8
+    );
+
+  border:
+    1px solid #e5e9ee;
+}
+
+.info-card h3,
+.declaration-card h3 {
+  margin: 0;
+
+  padding:
+    3mm
+    4mm;
+
+  background:
+    linear-gradient(
+      90deg,
+      #082f5d,
+      #15558b
+    );
+
+  color: white;
+
+  font-size: 11px;
+  line-height: 1.2;
+}
+
+.info-body {
+  padding:
+    1mm
+    4mm
+    2mm;
+}
+
+.info-row {
+  min-height: 8mm;
+
+  display: grid;
+
+  grid-template-columns:
+    47% 53%;
+
+  align-items: center;
+
+  gap: 2mm;
+
+  border-bottom:
+    1px solid #d7dee6;
+
+  padding:
+    1.4mm 0;
+
+  font-size: 9px;
+}
+
+.info-row:last-child {
+  border-bottom: 0;
+}
+
+.info-row span {
+  color: #29496c;
+}
+
+.info-row strong {
+  color: #082f5d;
+
+  font-size: 9.5px;
+
+  overflow-wrap: anywhere;
+}
+
+.bmi-row strong {
+  display: flex;
+  flex-direction: column;
+}
+
+.bmi-row small {
+  margin-top: 2px;
+
+  font-size: 7.5px;
+  font-weight: 400;
+}
+
+
+/* ==============================================
+   PENGAKUAN
+============================================== */
+
+.declaration-content {
+  padding:
+    4mm
+    4mm
+    3mm;
+
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.declaration-content p {
+  margin:
+    0 0
+    8mm;
+}
+
+.declaration-lines {
+  display: grid;
+
+  grid-template-columns:
+    1.5fr 1fr;
+
+  gap: 7mm;
+
+  text-align: center;
+}
+
+.declaration-lines > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.signature-line,
+.date-line {
+  display: block;
+
+  width: 100%;
+
+  margin-top: 5mm;
+
+  border-bottom:
+    1px dotted #183b61;
+}
+
+.declaration-lines strong {
+  min-height: 4mm;
+
+  font-size: 9px;
+}
+
+.declaration-lines small {
+  margin-top: 2px;
+
+  font-size: 7px;
+}
+
+
+/* ==============================================
+   FOOTER
+============================================== */
+
+.resume-footer {
+  min-height: 13mm;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  padding:
+    2mm
+    7mm;
+
+  border-top:
+    2px solid #e7b52f;
+
+  background:
+    #082f5d;
+}
+
+.resume-footer img {
+  max-height: 8mm;
+  max-width: 30mm;
+
+  object-fit: contain;
+}
+
+
+
+
+/* =====================================================
+   MOBILE - SELURUH A4 MUAT DALAM SKRIN
+===================================================== */
+
+@media screen and (max-width: 850px) {
+
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden !important;
+  }
+
+
+  /* BAR ATAS */
+
+  .resume-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    width: 100%;
+    max-width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 8px 12px;
+  }
+
+
+  /* =========================================
+     KERTAS A4
+     Saiz asal dikekalkan.
+     Seluruh kertas dikecilkan ikut viewport.
+  ========================================= */
+
+  .resume-page {
+    width: 793.7px !important;
+    min-width: 793.7px !important;
+
+    height: auto;
+    min-height: 1122.5px;
+
+    margin: 14px 0 0 0 !important;
+
+    position: relative;
+
+    left: 50%;
+
+    transform-origin: top center;
+
+    transform:
+      translateX(-50%)
+      scale(
+        calc(
+          (100vw - 12px) / 793.7
+        )
+      );
+
+    box-shadow:
+      0 5px 20px
+      rgba(0, 0, 0, 0.12);
+  }
+
+
+  /* Jangan benarkan elemen dalaman
+     mengubah lebar A4 */
+
+  .resume-header,
+  .identity-section,
+  .resume-columns,
+  .resume-footer {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+
+  /* Kekalkan dua kolum seperti resume A4 */
+
+  .resume-columns {
+    display: grid !important;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(0, 1fr) !important;
+  }
+
+
+  .resume-column {
+    min-width: 0;
+  }
+
+
+  .info-card,
+  .declaration-card {
+    min-width: 0;
+  }
+
+}
+
+/* ==============================================
+   PRINT A4
+============================================== */
+
+@page {
+  size: A4 portrait;
+  margin: 0;
+}
+/* =====================================================
+   PRINT / PDF - KEKALKAN DESIGN A4
+===================================================== */
+
+@page {
+  size: A4 portrait;
+  margin: 0;
+}
+
+
+/* =====================================================
+   RESUME ACTION BUTTONS
+===================================================== */
+
+.resume-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 7px;
+}
+
+.resume-actions .toolbar-button {
+  min-width: auto;
+
+  padding: 8px 12px;
+
+  white-space: nowrap;
+}
+
+
+/* MOBILE */
+
+@media screen and (max-width: 600px) {
+
+  .resume-toolbar {
+    gap: 6px;
+  }
+
+  .toolbar-title {
+    font-size: 14px;
+  }
+
+  .resume-actions {
+    gap: 4px;
+  }
+
+  .resume-actions .toolbar-button {
+    padding: 7px 8px;
+
+    font-size: 10px;
+  }
+
+}
+
+
+
+
+@media print {
+
+  html,
+  body {
+    width: 210mm !important;
+    height: 297mm !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    background: #ffffff !important;
+
+    overflow: visible !important;
+
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+
+  /* Jangan cetak toolbar */
+
+  .resume-toolbar,
+  .resume-loading,
+  .resume-message {
+    display: none !important;
+  }
+
+
+  /* =========================================
+     RESET MOBILE SCALE
+  ========================================= */
+
+  .resume-page {
+    display: block !important;
+
+    position: relative !important;
+
+    left: 0 !important;
+    top: 0 !important;
+
+    width: 210mm !important;
+    min-width: 210mm !important;
+    max-width: 210mm !important;
+
+    height: 297mm !important;
+    min-height: 297mm !important;
+    max-height: 297mm !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    transform: none !important;
+    transform-origin: top left !important;
+
+    box-shadow: none !important;
+
+    overflow: hidden !important;
+
+    background: #ffffff !important;
+
+    page-break-before: avoid !important;
+    page-break-after: avoid !important;
+    page-break-inside: avoid !important;
+
+    break-before: avoid !important;
+    break-after: avoid !important;
+    break-inside: avoid !important;
+
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+
+  /* =========================================
+     HEADER
+  ========================================= */
+
+  .resume-header {
+    width: 100% !important;
+    height: 31mm !important;
+
+    display: flex !important;
+
+    padding:
+      8mm
+      10mm !important;
+
+    background:
+      linear-gradient(
+        120deg,
+        #ffffff 0%,
+        #ffffff 35%,
+        #174d82 35%,
+        #082d58 100%
+      ) !important;
+
+    border-bottom:
+      4px solid #e7b52f !important;
+
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+
+  .header-brand {
+    width: 47% !important;
+  }
+
+
+  .paspa-logo {
+    max-width: 45mm !important;
+    max-height: 22mm !important;
+  }
+
+
+  .header-title {
+    display: block !important;
+
+    width: auto !important;
+
+    color: #ffffff !important;
+
+    text-align: right !important;
+  }
+
+
+  .header-title h1 {
+    color: #ffffff !important;
+
+    font-size: 19px !important;
+  }
+
+
+  .header-title p {
+    color: #ffffff !important;
+
+    font-size: 13px !important;
+  }
+
+
+  /* =========================================
+     IDENTITI
+  ========================================= */
+
+  .identity-section {
+    width: 100% !important;
+
+    min-height: 59mm !important;
+
+    display: flex !important;
+
+    align-items: center !important;
+
+    gap: 10mm !important;
+
+    padding:
+      7mm
+      10mm !important;
+
+    background:
+      linear-gradient(
+        90deg,
+        #ffffff,
+        #f2f5f8
+      ) !important;
+
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+
+  .photo-box {
+    width: 48mm !important;
+    height: 53mm !important;
+
+    flex:
+      0 0
+      48mm !important;
+
+    border-radius: 4mm !important;
+  }
+
+
+  .photo-box img {
+    width: 100% !important;
+    height: 100% !important;
+
+    object-fit: cover !important;
+    object-position: center top !important;
+  }
+
+
+  .identity-info {
+    flex: 1 !important;
+  }
+
+
+  .identity-rank {
+    font-size: 19px !important;
+  }
+
+
+  .identity-info h2 {
+    max-width: 115mm !important;
+
+    font-size: 26px !important;
+    line-height: 1.08 !important;
+
+    color: #062f5d !important;
+  }
+
+
+  .identity-id {
+    font-size: 16px !important;
+  }
+
+
+  /* =========================================
+     DUA COLUMN
+  ========================================= */
+
+  .resume-columns {
+    width: 100% !important;
+
+    display: grid !important;
+
+    grid-template-columns:
+      1fr 1fr !important;
+
+    gap: 4mm !important;
+
+    padding:
+      0
+      5mm
+      5mm !important;
+  }
+
+
+  .resume-column {
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    gap: 4mm !important;
+
+    min-width: 0 !important;
+  }
+
+
+  /* =========================================
+     CARDS
+  ========================================= */
+
+  .info-card,
+  .declaration-card {
+    width: 100% !important;
+
+    border-radius: 3mm !important;
+
+    overflow: hidden !important;
+
+    background:
+      linear-gradient(
+        135deg,
+        #ffffff,
+        #f2f5f8
+      ) !important;
+
+    border:
+      1px solid #e5e9ee !important;
+
+    page-break-inside: avoid !important;
+
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+
+  .info-card h3,
+  .declaration-card h3 {
+    margin: 0 !important;
+
+    padding:
+      3mm
+      4mm !important;
+
+    background:
+      linear-gradient(
+        90deg,
+        #082f5d,
+        #15558b
+      ) !important;
+
+    color: #ffffff !important;
+
+    font-size: 11px !important;
+    line-height: 1.2 !important;
+
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+
+  .info-body {
+    padding:
+      1mm
+      4mm
+      2mm !important;
+  }
+
+
+  .info-row {
+    min-height: 8mm !important;
+
+    display: grid !important;
+
+    grid-template-columns:
+      47% 53% !important;
+
+    align-items: center !important;
+
+    gap: 2mm !important;
+
+    padding:
+      1.4mm 0 !important;
+
+    font-size: 9px !important;
+
+    border-bottom:
+      1px solid #d7dee6 !important;
+  }
+
+
+  .info-row span {
+    color: #29496c !important;
+  }
+
+
+  .info-row strong {
+    color: #082f5d !important;
+
+    font-size: 9.5px !important;
+  }
+
+
+  /* =========================================
+     PENGAKUAN
+  ========================================= */
+
+  .declaration-content {
+    padding:
+      4mm
+      4mm
+      3mm !important;
+
+    font-size: 9px !important;
+
+    line-height: 1.5 !important;
+  }
+
+
+  .declaration-lines {
+    display: grid !important;
+
+    grid-template-columns:
+      1.5fr 1fr !important;
+
+    gap: 7mm !important;
+  }
+
+
+  /* =========================================
+     FOOTER
+  ========================================= */
+
+  .resume-footer {
+    width: 100% !important;
+
+    min-height: 13mm !important;
+
+    display: flex !important;
+
+    justify-content: flex-end !important;
+    align-items: center !important;
+
+    padding:
+      2mm
+      7mm !important;
+
+    border-top:
+      2px solid #e7b52f !important;
+
+    background:
+      #082f5d !important;
+
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+
+  .resume-footer img {
+    max-height: 8mm !important;
+    max-width: 30mm !important;
+  }
+
+
+  /* Paksa semua warna dicetak */
+
+  *,
+  *::before,
+  *::after {
+    -webkit-print-color-adjust:
+      exact !important;
+
+    print-color-adjust:
+      exact !important;
+  }
+
+}
+
+/* =====================================================
+   FINAL PDF A4 - FULL PAGE
+===================================================== */
+
+@media print {
+
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  html,
+  body {
+    width: 210mm !important;
+    height: 297mm !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    overflow: hidden !important;
+
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+
+  .resume-page {
+    width: 210mm !important;
+    height: 297mm !important;
+
+    min-width: 210mm !important;
+    min-height: 297mm !important;
+
+    max-width: 210mm !important;
+    max-height: 297mm !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    transform: none !important;
+
+    display: grid !important;
+
+    /*
+       Pecahkan keseluruhan A4:
+       Header       34mm
+       Identiti     65mm
+       Kandungan   183mm
+       Footer       15mm
+       ----------------
+       Jumlah      297mm
+    */
+
+    grid-template-rows:
+      34mm
+      65mm
+      183mm
+      15mm !important;
+
+    overflow: hidden !important;
+
+    background: white !important;
+  }
+
+
+  /* ===============================
+     HEADER
+  =============================== */
+
+  .resume-header {
+    height: 34mm !important;
+    min-height: 34mm !important;
+
+    padding:
+      7mm
+      10mm !important;
+  }
+
+
+  .paspa-logo {
+    max-height: 24mm !important;
+    max-width: 48mm !important;
+  }
+
+
+  .header-title h1 {
+    font-size: 20px !important;
+  }
+
+
+  .header-title p {
+    font-size: 12px !important;
+  }
+
+
+  /* ===============================
+     IDENTITI AHLI
+  =============================== */
+
+  .identity-section {
+    height: 65mm !important;
+    min-height: 65mm !important;
+
+    padding:
+      7mm
+      10mm !important;
+
+    gap: 10mm !important;
+  }
+
+
+  .photo-box {
+    width: 50mm !important;
+    height: 55mm !important;
+
+    flex:
+      0 0
+      50mm !important;
+  }
+
+
+  .identity-rank {
+    font-size: 20px !important;
+  }
+
+
+  .identity-info h2 {
+    font-size: 27px !important;
+
+    line-height: 1.05 !important;
+  }
+
+
+  .identity-id {
+    margin-top: 4mm !important;
+
+    font-size: 15px !important;
+  }
+
+
+  /* ===============================
+     KANDUNGAN UTAMA
+  =============================== */
+
+  .resume-columns {
+    height: 183mm !important;
+
+    display: grid !important;
+
+    grid-template-columns:
+      1fr 1fr !important;
+
+    gap: 4mm !important;
+
+    padding:
+      4mm
+      5mm !important;
+
+    align-items: stretch !important;
+  }
+
+
+  .resume-column {
+    height: 100% !important;
+
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    gap: 4mm !important;
+  }
+
+
+  /*
+     Kad kiri mempunyai 3 bahagian.
+     Sebarkan ruang secara sekata.
+  */
+
+  .resume-column:first-child
+  .info-card {
+    flex: 1 1 0 !important;
+  }
+
+
+  /*
+     Column kanan:
+     kecergasan + pakaian + pengakuan
+  */
+
+  .resume-column:last-child
+  > * {
+    flex: 1 1 0 !important;
+  }
+
+
+  .info-card,
+  .declaration-card {
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    overflow: hidden !important;
+  }
+
+
+  .info-card h3,
+  .declaration-card h3 {
+    flex: 0 0 auto !important;
+
+    padding:
+      3mm
+      4mm !important;
+
+    font-size: 11px !important;
+  }
+
+
+  .info-body {
+    flex: 1 !important;
+
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    justify-content:
+      space-evenly !important;
+
+    padding:
+      1.5mm
+      4mm !important;
+  }
+
+
+  .info-row {
+    flex: 1 !important;
+
+    min-height: 0 !important;
+
+    display: grid !important;
+
+    grid-template-columns:
+      47% 53% !important;
+
+    align-items: center !important;
+
+    padding:
+      1mm 0 !important;
+
+    font-size: 9px !important;
+  }
+
+
+  .info-row strong {
+    font-size: 9.5px !important;
+  }
+
+
+  /* ===============================
+     PENGAKUAN
+  =============================== */
+
+  .declaration-content {
+    flex: 1 !important;
+
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    justify-content:
+      space-between !important;
+
+    padding:
+      4mm !important;
+
+    font-size: 9px !important;
+  }
+
+
+  .declaration-content p {
+    margin:
+      0 0
+      5mm !important;
+  }
+
+
+  /* ===============================
+     FOOTER
+  =============================== */
+
+  .resume-footer {
+    height: 15mm !important;
+    min-height: 15mm !important;
+
+    padding:
+      2mm
+      7mm !important;
+
+    background:
+      #082f5d !important;
+
+    border-top:
+      2px solid
+      #e7b52f !important;
+  }
+
+
+  .resume-footer img {
+    max-height: 10mm !important;
+    max-width: 35mm !important;
+  }
+
+
+  /* ===============================
+     PRINT COLORS
+  =============================== */
+
+  *,
+  *::before,
+  *::after {
+    -webkit-print-color-adjust:
+      exact !important;
+
+    print-color-adjust:
+      exact !important;
+  }
+
+}
+
+/* =====================================================
+   RESUME QR CODE
+===================================================== */
+
+.declaration-content {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.declaration-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.resume-qr-box {
+  width: 105px;
+  flex: 0 0 105px;
+  text-align: center;
+  padding: 7px;
+  background: #ffffff;
+  border: 1px solid #d8dee8;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.resume-qr-code {
+  width: 88px;
+  height: 88px;
+  margin: 0 auto 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* QRCode.js menghasilkan canvas + img.
+   Paparkan IMG sahaja supaya QR tidak bertindih. */
+
+.resume-qr-code canvas {
+  display: none !important;
+}
+
+.resume-qr-code img {
+  display: block !important;
+  width: 88px !important;
+  height: 88px !important;
+  max-width: 88px !important;
+  max-height: 88px !important;
+  margin: 0 auto !important;
+}
+
+.resume-qr-label {
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.7px;
+  color: #16345c;
+  line-height: 1.2;
+}
+
+.resume-qr-id {
+  margin-top: 2px;
+  font-size: 7px;
+  font-weight: 600;
+  color: #667085;
+  line-height: 1.2;
+}
+
+/* Pastikan QR kekal jelas semasa print / PDF */
+@media print {
+
+  .resume-qr-box {
+    background: #ffffff !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .resume-qr-code {
+    background: #ffffff !important;
+  }
+
+}
+
+/* =====================================================
+   RESUME PAGE 2
+   REKOD PENGLIBATAN AHLI
+===================================================== */
+
+.resume-page-activities {
+  position: relative;
+  width: 210mm;
+  min-height: 297mm;
+  margin: 24px auto;
+  background: #ffffff;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* =====================================================
+   HEADER PAGE 2
+===================================================== */
+
+.resume-page2-header {
+  position: relative;
+  height: 30mm;
+  flex: 0 0 30mm;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 10mm;
+  box-sizing: border-box;
+
+  background:
+    linear-gradient(
+      120deg,
+      #ffffff 0%,
+      #ffffff 32%,
+      #1f5687 32%,
+      #1f5687 100%
+    );
+}
+
+
+.resume-page2-logo {
+  width: 24mm;
+  height: 24mm;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.resume-page2-logo img {
+  display: block;
+  max-width: 20mm;
+  max-height: 20mm;
+  object-fit: contain;
+}
+
+
+.resume-page2-title {
+  text-align: right;
+  color: #ffffff;
+}
+
+
+.resume-page2-title h1 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+
+.resume-page2-title p {
+  margin: 3px 0 0;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+
+.resume-page2-gold-line {
+  width: 100%;
+  height: 1mm;
+  flex: 0 0 1mm;
+  background: #e5b522;
+}
+
+
+/* =====================================================
+   CONTENT PAGE 2
+===================================================== */
+
+.resume-page2-content {
+  flex: 1;
+  padding: 10mm 7mm 12mm;
+  box-sizing: border-box;
+}
+
+
+/* =====================================================
+   TAJUK REKOD
+===================================================== */
+
+.activity-heading {
+  text-align: center;
+  margin-bottom: 8mm;
+}
+
+
+.activity-heading h2 {
+  margin: 0 0 3mm;
+  color: #0c3b70;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+
+.activity-member-name {
+  color: #0b315d;
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+
+.activity-member-id {
+  margin-top: 1mm;
+  color: #475467;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+
+/* =====================================================
+   SECTION PROGRAM / OPERASI
+===================================================== */
+
+.activity-section {
+  margin-bottom: 8mm;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+
+.activity-section-title {
+  padding: 3mm 4mm;
+
+  background: #174f82;
+  color: #ffffff;
+
+  border-radius: 3mm 3mm 0 0;
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+
+/* =====================================================
+   TABLE
+===================================================== */
+
+.activity-table-wrap {
+  width: 100%;
+  overflow: hidden;
+
+  border: 1px solid #d7dee8;
+  border-top: 0;
+
+  border-radius: 0 0 3mm 3mm;
+}
+
+
+.activity-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+
+  color: #142b45;
+  font-size: 8.5px;
+}
+
+
+.activity-table thead th {
+  padding: 3mm 2mm;
+
+  background: #eef3f8;
+  color: #123e6b;
+
+  border-bottom: 1px solid #cbd5e1;
+  border-right: 1px solid #d7dee8;
+
+  font-size: 8px;
+  font-weight: 800;
+  text-align: left;
+  vertical-align: middle;
+}
+
+
+.activity-table thead th:last-child {
+  border-right: 0;
+}
+
+
+.activity-table tbody td {
+  padding: 2.5mm 2mm;
+
+  border-bottom: 1px solid #dde3eb;
+  border-right: 1px solid #e3e8ef;
+
+  vertical-align: top;
+  line-height: 1.35;
+
+  word-break: break-word;
+}
+
+
+.activity-table tbody td:last-child {
+  border-right: 0;
+}
+
+
+.activity-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+
+/* COLUMN WIDTH */
+
+.activity-table .activity-no {
+  width: 7%;
+  text-align: center;
+}
+
+
+.activity-table th:nth-child(2) {
+  width: 35%;
+}
+
+
+.activity-table .activity-place {
+  width: 25%;
+}
+
+
+.activity-table .activity-date {
+  width: 16.5%;
+}
+
+
+/* BILANGAN */
+
+.activity-table tbody td:first-child {
+  text-align: center;
+  font-weight: 700;
+}
+
+
+/* TIADA REKOD */
+
+.activity-empty {
+  padding: 8mm !important;
+
+  color: #667085;
+  text-align: center !important;
+  font-style: italic;
+}
+
+
+/* =====================================================
+   FOOTER PAGE 2
+===================================================== */
+
+.resume-page2-footer {
+  width: 100%;
+  height: 13mm;
+  flex: 0 0 13mm;
+
+  padding: 0 8mm;
+
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: #0c3765;
+  border-top: 1mm solid #e5b522;
+}
+
+
+.resume-page2-footer span {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+
+.resume-page2-footer img {
+  display: block;
+  max-width: 25mm;
+  max-height: 8mm;
+  object-fit: contain;
+}
+
+
+/* =====================================================
+   PRINT
+===================================================== */
+
+@media print {
+
+  .resume-page-activities {
+    width: 210mm !important;
+    min-height: 297mm !important;
+    height: 297mm !important;
+
+    margin: 0 !important;
+
+    box-shadow: none !important;
+
+    break-before: page;
+    page-break-before: always;
+
+    break-after: page;
+    page-break-after: always;
+  }
+
+
+  .activity-table thead {
+    display: table-header-group;
+  }
+
+
+  .activity-table tr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+}
+
+/* =====================================================
+   RESUME PAGE 2
+   PROGRAM & OPERASI - HURUF BESAR
+===================================================== */
+
+.resume-page-activities .activity-table tbody td {
+  text-transform: uppercase;
+}

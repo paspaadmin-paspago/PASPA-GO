@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Maklumat Ahli PASPA | PASPA GO</title>
+
+  <link
+    rel="stylesheet"
+    href="../css/resume.css"
+  >
+</head>
+
+<body>
+
+  <!-- TOOLBAR -->
+  <div class="resume-toolbar">
+
+    <button
+      type="button"
+      onclick="window.location.href='profile.html'"
+      class="toolbar-button"
+    >
+      ← Kembali
+    </button>
+
+    <div class="toolbar-title">
+      MyResume
+    </div>
+
+   <div class="resume-actions">
+
+  <button
+    type="button"
+    id="printResumeButton"
+    class="toolbar-button"
+    title="Print Resume"
+  >
+    🖨 Print
+  </button>
+
+  <button
+    type="button"
+    id="downloadResumeButton"
+    class="toolbar-button"
+    title="Download PDF"
+  >
+    ⬇ Download
+  </button>
+
+  <button
+    type="button"
+    id="shareResumeButton"
+    class="toolbar-button primary"
+    title="Share Resume"
+  >
+    ↗ Share
+  </button>
+
+</div>
+
+  </div>
+
+
+  <!-- LOADING -->
+  <div
+    id="resumeLoading"
+    class="resume-loading"
+  >
+    Memuatkan maklumat ahli...
+  </div>
+
+
+  <!-- ERROR -->
+  <div
+    id="resumeMessage"
+    class="resume-message hidden"
+  ></div>
+
+
+  <!-- ==================================================
+       A4 RESUME
+  =================================================== -->
+
+  <main
+    id="resumePage"
+    class="resume-page hidden"
+  >
+
+    <!-- HEADER -->
+
+    <header class="resume-header">
+
+      <div class="header-brand">
+
+        <!--
+          Tukar kepada nama fail logo bulat PASPA sebenar
+          jika nama fail awak berbeza.
+        -->
+        <img
+          src="../images/logo.png"
+          alt="PASPA"
+          class="paspa-logo"
+          onerror="this.style.display='none'"
+        >
+
+      </div>
+
+      <div class="header-title">
+        <h1>MAKLUMAT AHLI PASPA</h1>
+        <p>PASPA Personal Details</p>
+      </div>
+
+    </header>
+
+
+    <!-- IDENTITI -->
+
+    <section class="identity-section">
+
+      <div class="photo-box">
+
+        <img
+          id="resumePhoto"
+          src="../images/default-avatar.png"
+          alt="Gambar Ahli"
+        >
+
+      </div>
+
+
+      <div class="identity-info">
+
+        <div
+          id="resumeRank"
+          class="identity-rank"
+        >
+          -
+        </div>
+
+        <h2 id="resumeName">
+          -
+        </h2>
+
+        <div class="identity-id">
+          <strong id="resumePaspaId">-</strong>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- DUA COLUMN -->
+
+    <div class="resume-columns">
+
+
+      <!-- ===============================
+           COLUMN KIRI
+      ================================ -->
+
+      <div class="resume-column">
+
+
+        <!-- MAKLUMAT PERIBADI -->
+
+        <section class="info-card">
+
+          <h3>
+            1. MAKLUMAT PERIBADI
+          </h3>
+
+          <div class="info-body">
+
+            <div class="info-row">
+              <span>No. Kad Pengenalan</span>
+              <strong id="rIc">-</strong>
+            </div>
+
+            <div class="info-row">
+              <span>Jantina</span>
+              <strong id="rGender">-</strong>
+            </div>
+
+            <div class="info-row">
+              <span>Email</span>
+              <strong id="rEmail">-</strong>
+            </div>
+
+            <div class="info-row">
+              <span>No. Badan (Selain ID PASPA)</span>
+              <strong id="rBodyNumber">-</strong>
+            </div>
+
+            <div class="info-row">
+              <span>Tarikh Lantikan PASPA</span>
+              <strong id="rAppointmentDate">-</strong>
+            </div>
+
+            <div class="info-row">
+              <span>Jawatan PASPA</span>
+              <strong id="rPaspaPosition">-</strong>
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- MAKLUMAT PERKHIDMATAN -->
+
+        <section class="info-card">
+
+          <h3>
+            2. MAKLUMAT PERKHIDMATAN
+          </h3>
+
+          <div class="info-body">
+
+            <div class="info-row">
+              <span>Pangkat</span>
+              <strong id="rServiceRank">-</strong>
+            </div>
+
+            <div class="info-row">
+              <span>Taraf Lantikan</span>
+              <strong id="rAppointmentType">-</strong>
+            </div>
+
+            <div class="info-row">
+              <span>Gred Jawatan</span>
+              <strong id="rGrade">-</strong>
+            </div>
+
+            <div class="info-row">
+              <span>Tarikh Lantikan PASPA</span>
+              <strong id="rServiceDate">-</strong>
+            </div>
+
+            <div class="info-row">
+              <span>Cawangan/PDPA/PUPA</span>
+              <strong id="rBranch">-</strong>
+            </div>
+
+            <div class="info-row">
+              <span>Negeri Berkhidmat (PTJ)</span>
+              <strong id="rServiceState">-</strong>
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- PERHUBUNGAN -->
+
+        <section class="info-card">
+
+          <h3>
+            3. MAKLUMAT PERHUBUNGAN / KELUARGA
+          </h3>
+
+          <div class="info-body">
+
+            <div class="info-row">
+              <span>No. Telefon</span>
+              <strong id="rPhone">-</strong>
+            </div>
+
+            <div class="info-row">
+              <span>No. Tel Waris</span>
+              <strong id="rEmergencyPhone">-</strong>
+            </div>
+
+            <div class="info-row">
+              <span>Alamat Kediaman</span>
+              <strong id="rAddress">-</strong>
+            </div>
+
+            <div class="info-row">
+              <span>Poskod</span>
+              <strong id="rPostcode">-</strong>
+            </div>
+
+            <div class="info-row">
+              <span>Daerah</span>
+              <strong id="rDistrict">-</strong>
+            </div>
+
+            <div class="info-row">
+              <span>Negeri</span>
+              <strong id="rState">-</strong>
+            </div>
+
+            <div class="info-row">
+              <span>Taraf Perkahwinan</span>
+              <strong id="rMaritalStatus">-</strong>
+            </div>
+
+          </div>
+
+        </section>
+
+      </div>
+
+
+      <!-- ===============================
+           COLUMN KANAN
+      ================================ -->
+
+      <div class="resume-column">
+
+
+        <!-- KECERGASAN -->
+
+        <section class="info-card">
+
+          <h3>
+            4. MAKLUMAT KECERGASAN
+          </h3>
+
+          <div class="info-body">
+
+            <div class="info-row">
+              <span>Jenis Darah</span>
+              <strong id="rBlood">-</strong>
+            </div>
+
+            <div class="info-row">
+              <span>Ketinggian</span>
+              <strong id="rHeight">-</strong>
+            </div>
+
+            <div class="info-row">
+              <span>Berat Badan</span>
+              <strong id="rWeight">-</strong>
+            </div>
+
+            <div class="info-row bmi-row">
+              <span>BMI</span>
+
+              <strong>
+                <span id="rBmi">-</span>
+
+                <small id="rBmiCategory">
+                  -
+                </small>
+              </strong>
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- PAKAIAN -->
+
+        <section class="info-card">
+
+          <h3>
+            5. MAKLUMAT PAKAIAN DAN AKSESORI
+          </h3>
+
+          <div class="info-body">
+
+            <div class="info-row">
+              <span>Saiz T-Shirt</span>
+              <strong id="rTshirt">-</strong>
+            </div>
+
+            <div class="info-row">
+              <span>Saiz Seluar Sukan</span>
+              <strong id="rSportPants">-</strong>
+            </div>
+
+            <div class="info-row">
+              <span>Saiz Uniform</span>
+              <strong id="rUniform">-</strong>
+            </div>
+
+            <div class="info-row">
+              <span>Saiz Beret</span>
+              <strong id="rBeret">-</strong>
+            </div>
+
+            <div class="info-row">
+              <span>Saiz Jaket</span>
+              <strong id="rJacket">-</strong>
+            </div>
+
+            <div class="info-row">
+              <span>Saiz Kasut Sukan</span>
+              <strong id="rSportShoes">-</strong>
+            </div>
+
+            <div class="info-row">
+              <span>Saiz Kasut Boot</span>
+              <strong id="rBoot">-</strong>
+            </div>
+
+            <div class="info-row">
+              <span>Saiz Tali Pinggang</span>
+              <strong id="rBelt">-</strong>
+            </div>
+
+          </div>
+
+        </section>
+
+
+       <!-- PENGAKUAN -->
+
+<section class="declaration-card">
+
+  <h3>
+    PENGAKUAN
+  </h3>
+
+  <div class="declaration-content">
+
+    <!-- BAHAGIAN KIRI -->
+    <div class="declaration-main">
+
+      <p>
+        Saya mengesahkan bahawa maklumat yang
+        dipaparkan adalah berdasarkan rekod
+        semasa PASPA GO.
+      </p>
+
+      <div class="declaration-lines">
+
+        <div>
+          <span class="signature-line"></span>
+          <small>Tandatangan Ahli</small>
+        </div>
+
+        <div>
+          <strong id="resumeDate">-</strong>
+          <span class="date-line"></span>
+          <small>Tarikh</small>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- QR RESUME -->
+    <div
+      class="resume-qr-box"
+      id="resumeQrBox"
+    >
+
+      <div
+        id="resumeQrCode"
+        class="resume-qr-code"
+      ></div>
+
+      <div class="resume-qr-label">
+
+      </div>
+
+      <div
+        id="resumeQrId"
+        class="resume-qr-id"
+      >
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+      </div>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <footer class="resume-footer">
+
+      <img
+        src="../images/logo paspa go.png"
+        alt="PASPA GO"
+        onerror="this.style.display='none'"
+      >
+
+    </footer>
+
+  </main>
+
+<!-- =====================================================
+     RESUME PAGE 2
+     REKOD PROGRAM DAN OPERASI
+===================================================== -->
+
+<section
+  class="resume-page resume-page-activities"
+  id="resumePage2"
+>
+
+  <!-- HEADER -->
+  <div class="resume-page2-header">
+
+    <div class="resume-page2-logo">
+   <img
+  src="../images/logo.png"
+  alt="PASPA"
+  id="resumePage2Logo"
+>
+    </div>
+
+    <div class="resume-page2-title">
+      <h1>MAKLUMAT AHLI PASPA</h1>
+      <p>PASPA Personal Details</p>
+    </div>
+
+  </div>
+
+  <div class="resume-page2-gold-line"></div>
+
+
+  <!-- CONTENT -->
+  <div class="resume-page2-content">
+
+    <!-- TAJUK -->
+    <div class="activity-heading">
+
+      <h2>
+        REKOD PENGLIBATAN AHLI
+      </h2>
+
+      <div
+        class="activity-member-name"
+        id="activityMemberName"
+      >
+        -
+      </div>
+
+      <div
+        class="activity-member-id"
+        id="activityMemberId"
+      >
+        ID PASPA: -
+      </div>
+
+    </div>
+
+
+    <!-- ==============================
+         PROGRAM
+    =============================== -->
+
+    <section class="activity-section">
+
+      <div class="activity-section-title">
+        1. PROGRAM
+      </div>
+
+      <div class="activity-table-wrap">
+
+        <table class="activity-table">
+
+          <thead>
+            <tr>
+              <th class="activity-no">
+                BIL.
+              </th>
+
+              <th>
+                NAMA PROGRAM
+              </th>
+
+              <th class="activity-place">
+                TEMPAT
+              </th>
+
+              <th class="activity-date">
+                TARIKH MULA
+              </th>
+
+              <th class="activity-date">
+                TARIKH TAMAT
+              </th>
+            </tr>
+          </thead>
+
+          <tbody id="resumeProgramBody">
+
+            <tr>
+              <td colspan="5" class="activity-empty">
+                Memuatkan rekod program...
+              </td>
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==============================
+         OPERASI
+    =============================== -->
+
+    <section class="activity-section">
+
+      <div class="activity-section-title">
+        2. OPERASI
+      </div>
+
+      <div class="activity-table-wrap">
+
+        <table class="activity-table">
+
+          <thead>
+            <tr>
+              <th class="activity-no">
+                BIL.
+              </th>
+
+              <th>
+                NAMA OPERASI
+              </th>
+
+              <th class="activity-place">
+                TEMPAT
+              </th>
+
+              <th class="activity-date">
+                TARIKH MULA
+              </th>
+
+              <th class="activity-date">
+                TARIKH TAMAT
+              </th>
+            </tr>
+          </thead>
+
+          <tbody id="resumeOperationBody">
+
+            <tr>
+              <td colspan="5" class="activity-empty">
+                Memuatkan rekod operasi...
+              </td>
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+  </div>
+
+
+  <!-- FOOTER -->
+  <div class="resume-page2-footer">
+
+    <span>
+      REKOD PENGLIBATAN AHLI
+    </span>
+
+    <img
+      src="../images/logo paspa go.png"
+      alt="PASPA GO"
+    >
+
+  </div>
+
+</section>
+
+
+<script src="../js/config.js"></script>
+<script src="../js/api.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+></script>
+
+
+<script src="../js/resume.js"></script>
+
+</body>
+</html>

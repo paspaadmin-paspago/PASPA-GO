@@ -1725,3 +1725,15 @@
 
   line-height: 1.25 !important;
 }
+
+/* =====================================================
+   PROGRAM - PAPARAN HURUF BESAR
+===================================================== */
+
+.program-page,
+.program-page input,
+.program-page select,
+.program-page textarea,
+.program-page button {
+  text-transform: uppercase;
+}

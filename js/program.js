@@ -339,6 +339,11 @@ async function loadPrograms() {
 
       });
 
+console.log(
+  "PROGRAM SAVE RESULT:",
+  result
+);
+
 
     if (
       result.success !== true
@@ -2689,3 +2694,1047 @@ function fileToBase64(file) {
 
 }
 
+
+/* =====================================================
+   LOAD MASTER PROGRAM
+   Sumber: 04_COURSES
+===================================================== */
+
+let programMasterList = [];
+
+
+async function loadProgramMasterList() {
+
+  try {
+
+    const email =
+  String(
+    currentSession.googleEmail || ""
+  ).trim();
+
+
+if (!email) {
+
+  console.warn(
+    "PROGRAM MASTER: Email tidak dijumpai."
+  );
+
+  return;
+}
+
+
+    const result =
+  await apiPost({
+
+    action:
+      "program_master_list",
+
+    email:
+      email
+
+  });
+
+
+    console.log(
+      "PROGRAM MASTER RESULT:",
+      result
+    );
+
+
+    if (
+      !result ||
+      result.success !== true
+    ) {
+
+      console.warn(
+        "PROGRAM MASTER:",
+        result
+      );
+
+      return;
+    }
+
+
+    programMasterList =
+      Array.isArray(result.programs)
+        ? result.programs
+        : [];
+
+
+    populateProgramCourseSelect();
+
+
+  } catch (error) {
+
+    console.error(
+      "LOAD PROGRAM MASTER ERROR:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   CONVERT TARIKH PROGRAM UNTUK SORTING
+===================================================== */
+
+function getProgramDateTimestamp(value) {
+
+  if (!value) {
+    return 0;
+  }
+
+
+  /* =========================================
+     JIKA GOOGLE APPS SCRIPT HANTAR DATE/ISO
+  ========================================= */
+
+  const normalDate =
+    new Date(value);
+
+  if (
+    !isNaN(
+      normalDate.getTime()
+    )
+  ) {
+
+    return normalDate.getTime();
+
+  }
+
+
+  /* =========================================
+     FORMAT dd/MM/yyyy
+  ========================================= */
+
+  const text =
+    String(value).trim();
+
+
+  const match =
+    text.match(
+      /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/
+    );
+
+
+  if (match) {
+
+    const day =
+      Number(match[1]);
+
+    const month =
+      Number(match[2]) - 1;
+
+    const year =
+      Number(match[3]);
+
+
+    return new Date(
+      year,
+      month,
+      day
+    ).getTime();
+
+  }
+
+
+  /* TARIKH TAK DAPAT DIBACA */
+
+  return 0;
+
+}
+
+/* =====================================================
+   ISI DROPDOWN PROGRAM
+===================================================== */
+
+function populateProgramCourseSelect() {
+
+  const select =
+    document.getElementById(
+      "programCourseSelect"
+    );
+
+
+  if (!select) {
+    return;
+  }
+
+
+  select.innerHTML = "";
+
+
+  /* PILIHAN DEFAULT */
+
+  const defaultOption =
+    document.createElement("option");
+
+  defaultOption.value = "";
+
+  defaultOption.textContent =
+    "Sila pilih program";
+
+  select.appendChild(
+    defaultOption
+  );
+
+
+  /* PROGRAM DARIPADA 04_COURSES */
+
+ const sortedPrograms =
+  [...programMasterList].sort(
+    function (a, b) {
+
+      const dateA =
+        getProgramDateTimestamp(
+          a.tarikhMula
+        );
+
+      const dateB =
+        getProgramDateTimestamp(
+          b.tarikhMula
+        );
+
+      return dateB - dateA;
+
+    }
+  );
+
+
+sortedPrograms.forEach(
+
+
+
+
+
+
+
+
+
+
+    function (program) {
+
+      const option =
+        document.createElement(
+          "option"
+        );
+
+
+      option.value =
+        program.courseId;
+
+
+      let label =
+        String(
+          program.perkara || ""
+        ).trim();
+
+
+      const tarikhMula =
+        formatProgramMasterDate(
+          program.tarikhMula
+        );
+
+
+      const tarikhTamat =
+        formatProgramMasterDate(
+          program.tarikhTamat
+        );
+
+
+      if (
+        tarikhMula &&
+        tarikhTamat
+      ) {
+
+        label +=
+          " — " +
+          tarikhMula +
+          " hingga " +
+          tarikhTamat;
+
+      } else if (tarikhMula) {
+
+        label +=
+          " — " +
+          tarikhMula;
+
+      }
+
+
+      option.textContent =
+        label;
+
+
+      select.appendChild(
+        option
+      );
+
+    }
+  );
+
+
+  /* PILIHAN CIPTA PROGRAM BARU */
+
+  const newOption =
+    document.createElement(
+      "option"
+    );
+
+  newOption.value =
+    "__NEW__";
+
+  newOption.textContent =
+    "＋ TIADA DALAM SENARAI. CIPTA NAMA PROGRAM";
+
+
+  select.appendChild(
+    newOption
+  );
+
+}
+
+
+/* =====================================================
+   FORMAT TARIKH DROPDOWN
+===================================================== */
+
+function formatProgramMasterDate(value) {
+
+  if (!value) {
+    return "";
+  }
+
+
+  const date =
+    new Date(value);
+
+
+  if (
+    isNaN(
+      date.getTime()
+    )
+  ) {
+
+    return String(value);
+
+  }
+
+
+  const day =
+    String(
+      date.getDate()
+    ).padStart(2, "0");
+
+
+  const month =
+    String(
+      date.getMonth() + 1
+    ).padStart(2, "0");
+
+
+  const year =
+    date.getFullYear();
+
+
+  return (
+    day +
+    "/" +
+    month +
+    "/" +
+    year
+  );
+
+}
+
+/* =====================================================
+   PROGRAM MASTER SELECT
+   Pilih program sedia ada / cipta program baharu
+===================================================== */
+function initializeProgramCourseSelect() {
+
+  const courseSelect =
+    document.getElementById(
+      "programCourseSelect"
+    );
+
+  const newProgramField =
+    document.getElementById(
+      "newProgramNameField"
+    );
+
+  const programPerkara =
+    document.getElementById(
+      "programPerkara"
+    );
+
+
+  if (
+    !courseSelect ||
+    !newProgramField ||
+    !programPerkara
+  ) {
+    return;
+  }
+
+
+  courseSelect.addEventListener(
+    "change",
+    function () {
+
+      const selectedValue =
+        String(
+          courseSelect.value || ""
+        ).trim();
+
+
+      /* =========================================
+         CIPTA PROGRAM BARU
+      ========================================= */
+
+      if (
+        selectedValue === "__NEW__"
+      ) {
+
+        newProgramField
+          .classList
+          .remove("hidden");
+
+        programPerkara.value = "";
+
+        programPerkara.required = true;
+
+        clearProgramMasterFields();
+
+        programPerkara.focus();
+
+        return;
+      }
+
+
+      /* =========================================
+         PILIHAN KOSONG
+      ========================================= */
+
+      if (!selectedValue) {
+
+        newProgramField
+          .classList
+          .add("hidden");
+
+        programPerkara.value = "";
+
+        programPerkara.required = false;
+
+        clearProgramMasterFields();
+
+        return;
+      }
+
+
+      /* =========================================
+         PROGRAM SEDIA ADA
+      ========================================= */
+
+      const selectedProgram =
+        programMasterList.find(
+          function (program) {
+
+            return (
+              String(
+                program.courseId
+              ).trim() ===
+              selectedValue
+            );
+
+          }
+        );
+
+
+      if (!selectedProgram) {
+
+        console.warn(
+          "Program tidak dijumpai:",
+          selectedValue
+        );
+
+        return;
+      }
+
+
+      /* Sembunyikan nama program baru */
+
+      newProgramField
+        .classList
+        .add("hidden");
+
+
+      programPerkara.required =
+        false;
+
+
+      /*
+       * Simpan nama program ke input lama.
+       * Ini penting kerana submit handler asal
+       * masih membaca #programPerkara.
+       */
+
+   programPerkara.value =
+  selectedProgram.perkara || "";
+
+
+/* =====================================================
+   SELEPAS PROGRAM DIPILIH
+   Paparkan nama program sahaja tanpa tarikh
+===================================================== */
+
+const selectedOption =
+  courseSelect.options[
+    courseSelect.selectedIndex
+  ];
+
+if (selectedOption) {
+
+  selectedOption.textContent =
+    selectedProgram.perkara || "";
+
+}
+
+
+/* AUTO FILL MAKLUMAT PROGRAM */
+
+fillProgramMasterFields(
+  selectedProgram
+);
+
+    }
+  );
+
+}
+
+/* =====================================================
+   AUTO FILL MAKLUMAT PROGRAM MASTER
+===================================================== */
+
+function fillProgramMasterFields(program) {
+
+console.log(
+  "SELECTED PROGRAM MASTER:",
+  program
+);
+
+console.log(
+  "TARIKH MASTER:",
+  {
+    tarikhMula: program.tarikhMula,
+    tarikhTamat: program.tarikhTamat
+  }
+);
+
+
+console.log(
+  "LOKASI MASTER:",
+  {
+    lokasiProgram: program.lokasiProgram,
+    negeri: program.negeri,
+    negara: program.negara
+  }
+);
+
+  const tarikhMula =
+    document.getElementById(
+      "programTarikhMula"
+    );
+
+  const tarikhTamat =
+    document.getElementById(
+      "programTarikhTamat"
+    );
+
+  const tempat =
+    document.getElementById(
+      "programTempat"
+    );
+
+
+/* =====================================================
+   AUTO SELECT LOKASI PROGRAM
+===================================================== */
+
+const lokasiValue =
+  String(
+    program.lokasiProgram || ""
+  ).trim();
+
+
+const lokasiRadio =
+  document.querySelector(
+    'input[name="lokasiProgram"][value="' +
+    lokasiValue +
+    '"]'
+  );
+
+
+if (lokasiRadio) {
+
+  lokasiRadio.checked = true;
+
+}
+
+
+/* =====================================================
+   AUTO SELECT KATEGORI PROGRAM
+===================================================== */
+
+const kategoriValue =
+  String(
+    program.kategoriProgram || ""
+  ).trim();
+
+
+const kategoriRadio =
+  document.querySelector(
+    'input[name="kategoriProgram"][value="' +
+    kategoriValue +
+    '"]'
+  );
+
+
+if (kategoriRadio) {
+
+  kategoriRadio.checked = true;
+
+}
+
+
+    /* =====================================================
+   AUTO FILL NEGERI / NEGARA
+===================================================== */
+/* =====================================================
+   AUTO FILL NEGERI / NEGARA
+===================================================== */
+
+const domesticFields =
+  document.getElementById(
+    "domesticProgramFields"
+  );
+
+const internationalFields =
+  document.getElementById(
+    "internationalProgramFields"
+  );
+
+const negeri =
+  document.getElementById(
+    "programNegeri"
+  );
+
+const negara =
+  document.getElementById(
+    "programNegara"
+  );
+
+
+/* =========================================
+   DALAM NEGARA
+========================================= */
+
+if (
+  String(program.lokasiProgram || "")
+    .trim()
+    .toLowerCase() ===
+  "dalam negara"
+) {
+
+  /* Paparkan field Negeri */
+
+  if (domesticFields) {
+
+    domesticFields
+      .classList
+      .remove("hidden");
+
+  }
+
+
+  /* Sembunyikan field Negara */
+
+  if (internationalFields) {
+
+    internationalFields
+      .classList
+      .add("hidden");
+
+  }
+
+
+  /* Pilih Negeri */
+
+  if (negeri) {
+
+    negeri.value =
+      String(
+        program.negeri || ""
+      ).trim();
+
+  }
+
+
+  /* Kosongkan Negara */
+
+  if (negara) {
+
+    negara.value = "";
+
+  }
+
+}
+
+
+/* =========================================
+   LUAR NEGARA
+========================================= */
+
+else if (
+  String(program.lokasiProgram || "")
+    .trim()
+    .toLowerCase() ===
+  "luar negara"
+) {
+
+  /* Sembunyikan field Negeri */
+
+  if (domesticFields) {
+
+    domesticFields
+      .classList
+      .add("hidden");
+
+  }
+
+
+  /* Paparkan field Negara */
+
+  if (internationalFields) {
+
+    internationalFields
+      .classList
+      .remove("hidden");
+
+  }
+
+
+  /* Kosongkan Negeri */
+
+  if (negeri) {
+
+    negeri.value = "";
+
+  }
+
+
+  /* =====================================
+     Pastikan Negara wujud dalam dropdown
+  ===================================== */
+
+  if (
+    negara &&
+    program.negara
+  ) {
+
+    const countryValue =
+      String(
+        program.negara
+      ).trim();
+
+
+    const countryExists =
+      Array.from(
+        negara.options
+      ).some(
+        function (option) {
+
+          return (
+            String(option.value)
+              .trim()
+              .toLowerCase() ===
+            countryValue
+              .toLowerCase()
+          );
+
+        }
+      );
+
+
+    /*
+     * Jika negara daripada rekod lama
+     * belum ada dalam dropdown,
+     * tambah secara automatik.
+     */
+
+    if (!countryExists) {
+
+      const option =
+        document.createElement(
+          "option"
+        );
+
+      option.value =
+        countryValue;
+
+      option.textContent =
+        countryValue;
+
+      negara.appendChild(
+        option
+      );
+
+    }
+
+
+    negara.value =
+      countryValue;
+
+  }
+
+}
+
+
+
+
+
+
+  const penganjur =
+    document.getElementById(
+      "programPenganjur"
+    );
+
+
+  if (tarikhMula) {
+
+    tarikhMula.value =
+      convertProgramDateForInput(
+        program.tarikhMula
+      );
+
+  }
+
+
+  if (tarikhTamat) {
+
+    tarikhTamat.value =
+      convertProgramDateForInput(
+        program.tarikhTamat
+      );
+
+  }
+
+
+  if (tempat) {
+
+    tempat.value =
+      program.tempat || "";
+
+  }
+
+
+  if (penganjur) {
+
+    penganjur.value =
+      program.penganjur || "";
+
+    /*
+     * Trigger change sekiranya kod asal
+     * mempunyai logic Penganjur Lain-lain.
+     */
+
+    penganjur.dispatchEvent(
+      new Event(
+        "change",
+        {
+          bubbles: true
+        }
+      )
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   KOSONGKAN FIELD PROGRAM MASTER
+===================================================== */
+
+function clearProgramMasterFields() {
+
+  const fieldIds = [
+
+    "programTarikhMula",
+
+    "programTarikhTamat",
+
+    "programTempat",
+
+    "programPenganjur"
+
+  ];
+
+
+  fieldIds.forEach(
+    function (id) {
+
+      const element =
+        document.getElementById(id);
+
+
+      if (element) {
+
+        element.value = "";
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   TARIKH API -> INPUT type="date"
+===================================================== */
+function convertProgramDateForInput(value) {
+
+  if (!value) {
+    return "";
+  }
+
+
+  const text =
+    String(value).trim();
+
+
+  /* =====================================
+     FORMAT dd/MM/yyyy
+  ===================================== */
+
+  let match =
+    text.match(
+      /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/
+    );
+
+
+  if (match) {
+
+    const day =
+      String(match[1])
+        .padStart(2, "0");
+
+    const month =
+      String(match[2])
+        .padStart(2, "0");
+
+    const year =
+      match[3];
+
+
+    return (
+      year +
+      "-" +
+      month +
+      "-" +
+      day
+    );
+
+  }
+
+
+  /* =====================================
+     FORMAT yyyy-MM-dd
+     termasuk ISO yyyy-MM-ddT...
+  ===================================== */
+
+  match =
+    text.match(
+      /^(\d{4})-(\d{2})-(\d{2})/
+    );
+
+
+  if (match) {
+
+    return (
+      match[1] +
+      "-" +
+      match[2] +
+      "-" +
+      match[3]
+    );
+
+  }
+
+
+  /* =====================================
+     FORMAT DATE STRING GOOGLE SHEETS
+  ===================================== */
+
+  const date =
+    new Date(text);
+
+
+  if (
+    !isNaN(
+      date.getTime()
+    )
+  ) {
+
+    const year =
+      date.getFullYear();
+
+    const month =
+      String(
+        date.getMonth() + 1
+      ).padStart(2, "0");
+
+    const day =
+      String(
+        date.getDate()
+      ).padStart(2, "0");
+
+
+    return (
+      year +
+      "-" +
+      month +
+      "-" +
+      day
+    );
+
+  }
+
+
+  console.warn(
+    "TARIKH TIDAK DAPAT DIBACA:",
+    value
+  );
+
+
+  return "";
+
+}
+
+/* =====================================================
+   START PROGRAM MASTER SELECT
+===================================================== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function () {
+
+    initializeProgramCourseSelect();
+
+    loadProgramMasterList();
+
+  }
+);

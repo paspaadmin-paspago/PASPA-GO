@@ -335,21 +335,59 @@
 
 
 
-        <!-- PERKARA -->
+        <!-- =====================================================
+     PILIH PROGRAM / PERKARA
+====================================================== -->
 
-        <div class="program-form-row">
+<div class="program-form-row">
 
-          <label for="programPerkara">
-            Perkara
-          </label>
+  <label for="programCourseSelect">
+    Perkara / Nama Program
+  </label>
 
-          <input
-            type="text"
-            id="programPerkara"
-            required
-          >
+  <select
+    id="programCourseSelect"
+  >
 
-        </div>
+    <option value="">
+      Sila pilih program
+    </option>
+
+    <option value="__NEW__">
+      ＋ TIADA DALAM SENARAI. CIPTA NAMA PROGRAM
+    </option>
+
+  </select>
+
+  <small class="program-file-help">
+    Pilih program yang telah wujud. Jika program belum ada,
+    pilih "TIADA DALAM SENARAI. CIPTA NAMA PROGRAM".
+  </small>
+
+</div>
+
+
+<!-- =====================================================
+     NAMA PROGRAM BARU
+     Hanya dipaparkan apabila pengguna pilih CIPTA
+====================================================== -->
+
+<div
+  id="newProgramNameField"
+  class="program-form-row hidden"
+>
+
+  <label for="programPerkara">
+    Nama Program Baru
+  </label>
+
+  <input
+    type="text"
+    id="programPerkara"
+    autocomplete="off"
+  >
+
+</div>
 
 
 

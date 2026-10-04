@@ -404,24 +404,21 @@ function getResponseDisplay(status) {
   return "BELUM RESPON";
 
 }
-
 /* =====================================================
-   RENDER ONE MESSAGE - INBOX STYLE
+   RENDER ONE MESSAGE - MODERN EMAIL CARD
 ===================================================== */
 
-function createMessageCard(
-  message
-) {
+function createMessageCard(message) {
 
   const row =
-    document.createElement(
-      "button"
-    );
+    document.createElement("button");
+
+  row.type = "button";
 
 
-  row.type =
-    "button";
-
+  /* =========================
+     STATUS BACA
+  ========================= */
 
   const statusBaca =
     String(
@@ -437,7 +434,7 @@ function createMessageCard(
 
 
   row.className =
-    "inbox-item " +
+    "message-card " +
     (
       alreadyRead
         ? "read"
@@ -445,66 +442,232 @@ function createMessageCard(
     );
 
 
+  /* =========================
+     DATA MESEJ
+  ========================= */
+
   const title =
     message.tajuk ||
     "Jemputan Program";
 
 
-  /*
-   * Untuk Inbox kita gunakan
-   * tarikh mesej diterima jika API
-   * membekalkannya.
-   *
-   * Jika belum ada, tarikh acara
-   * digunakan sebagai fallback.
-   */
+  const kategori =
+    message.kategoriProgram ||
+    "Program";
 
-const receivedDateTime =
-  formatInboxDateTime(
-    message.tarikhHantar,
-    message.masaHantar
-  );
 
-row.innerHTML = `
+  const tempat =
+    message.tempat ||
+    "";
 
-  <div class="inbox-type">
+
+  const negeri =
+    message.negeri ||
+    "";
+
+
+  const tarikhProgram =
+    message.tarikhAcara ||
+    "";
+
+
+  const receivedDateTime =
+    formatInboxDateTime(
+      message.tarikhHantar,
+      message.masaHantar
+    );
+
+
+  /* =========================
+     LOKASI
+  ========================= */
+
+  let lokasiText = "";
+
+
+  if (
+    tempat &&
+    negeri
+  ) {
+
+    lokasiText =
+      tempat + ", " + negeri;
+
+  } else {
+
+    lokasiText =
+      tempat ||
+      negeri ||
+      "-";
+
+  }
+
+
+  /* =========================
+     JENIS MESEJ
+  ========================= */
+
+  const jenisMesej =
+    "Jemputan Program";
+
+
+  /* =========================
+     IKON MENGIKUT KATEGORI
+  ========================= */
+
+  let iconClass =
+    "message-icon-blue";
+
+
+  let iconSymbol =
+    "▣";
+
+
+  const kategoriLower =
+    String(kategori)
+      .trim()
+      .toLowerCase();
+
+
+  if (
+    kategoriLower === "latihan"
+  ) {
+
+    iconClass =
+      "message-icon-orange";
+
+    iconSymbol =
+      "▤";
+
+  } else if (
+    kategoriLower === "kursus"
+  ) {
+
+    iconClass =
+      "message-icon-blue";
+
+    iconSymbol =
+      "▦";
+
+  }
+
+
+  /* =========================
+     HTML CARD
+  ========================= */
+
+  row.innerHTML = `
 
     ${
       alreadyRead
         ? ""
-        : '<span class="unread-dot"></span>'
+        : '<span class="message-unread-bar"></span>'
     }
 
-    <span class="inbox-type-text">
-      Jemputan Program
-    </span>
 
-  </div>
+    <div class="message-main-icon ${iconClass}">
 
-
-  <div class="inbox-content">
-
-    <div class="inbox-title">
-
-      ${escapeHtml(
-        title
-      )}
+      <span>
+        ${iconSymbol}
+      </span>
 
     </div>
 
-  </div>
+
+    <div class="message-card-content">
 
 
-  <div class="inbox-date">
+      <div class="message-card-title-row">
 
-    ${escapeHtml(
-  receivedDateTime
-)}
+        <div class="message-card-title">
 
-  </div>
+          ${
+            alreadyRead
+              ? ""
+              : '<span class="message-unread-dot"></span>'
+          }
 
-`;
+          <span>
+            ${escapeHtml(title)}
+          </span>
 
+        </div>
+
+      </div>
+
+
+      <div class="message-badges">
+
+        <span class="message-badge message-badge-type">
+
+          ${escapeHtml(jenisMesej)}
+
+        </span>
+
+
+        <span class="message-badge message-badge-category">
+
+          ${escapeHtml(kategori)}
+
+        </span>
+
+      </div>
+
+
+      <div class="message-meta">
+
+        <div class="message-meta-row">
+
+          <span class="message-meta-icon">
+            ●
+          </span>
+
+          <span>
+            ${escapeHtml(lokasiText)}
+          </span>
+
+        </div>
+
+
+        <div class="message-meta-row">
+
+          <span class="message-meta-icon">
+            ▣
+          </span>
+
+          <span>
+            ${escapeHtml(tarikhProgram || "-")}
+          </span>
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+
+    <div class="message-card-right">
+
+      <div class="message-card-time">
+
+        ${escapeHtml(receivedDateTime)}
+
+      </div>
+
+
+      <div class="message-chevron">
+        ›
+      </div>
+
+    </div>
+
+  `;
+
+
+  /* =========================
+     BUKA DETAIL MESEJ
+  ========================= */
 
   row.addEventListener(
     "click",
@@ -522,8 +685,6 @@ row.innerHTML = `
   return row;
 
 }
-
-
 
 
 /* =====================================================
@@ -1040,25 +1201,7 @@ async function loadMessages() {
     }
 
 
-    messageList.innerHTML = `
-
-  <div class="inbox-table-header">
-
-    <div class="inbox-header-type">
-      JENIS MESEJ
-    </div>
-
-    <div class="inbox-header-title">
-      PERKARA / TAJUK
-    </div>
-
-    <div class="inbox-header-date">
-      MASA / TARIKH
-    </div>
-
-  </div>
-
-`;
+messageList.innerHTML = "";
 
     messages.forEach(
       function (message) {

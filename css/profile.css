@@ -2023,3 +2023,62 @@ select:disabled {
   }
 
 }
+
+/* =====================================================
+   MY RESUME - BADGE PENJURU KANAN
+===================================================== */
+
+.profile-summary-card {
+  position: relative;
+}
+
+.my-resume-button {
+  position: absolute;
+
+  top: 12px;
+  right: 12px;
+
+  width: auto !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+
+  margin: 0 !important;
+  padding: 4px 6px !important;
+
+  border: none !important;
+  border-radius: 0 !important;
+
+  background: transparent !important;
+  box-shadow: none !important;
+
+  color: #20579a;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  line-height: 1.2;
+
+  cursor: pointer;
+
+  z-index: 10;
+}
+
+.my-resume-button:hover {
+  background: transparent !important;
+  color: #103a78;
+
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+
+  .my-resume-button {
+    top: 10px;
+    right: 10px;
+
+    padding: 3px 4px !important;
+
+    font-size: 10px;
+  }
+
+}

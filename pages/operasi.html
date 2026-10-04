@@ -350,23 +350,54 @@
 
 
         <!-- ===============================================
-             PERKARA
-        ================================================ -->
+     PILIH OPERASI / PERKARA
+=============================================== -->
 
-        <div class="operasi-form-group">
+<div class="operasi-form-group">
 
-          <label for="operasiPerkara">
-            Perkara
-          </label>
+  <label for="operasiMasterSelect">
+    Perkara / Nama Operasi
+  </label>
 
-          <input
-            type="text"
-            id="operasiPerkara"
-            required
-          >
+  <select id="operasiMasterSelect">
 
-        </div>
+    <option value="">
+      Sila pilih operasi
+    </option>
 
+    <option value="__NEW__">
+      ＋ TIADA DALAM SENARAI. CIPTA NAMA OPERASI
+    </option>
+
+  </select>
+
+  <small class="operasi-file-help">
+    Pilih operasi sedia ada atau cipta nama operasi baharu.
+  </small>
+
+</div>
+
+
+<!-- ===============================================
+     NAMA OPERASI BARU
+=============================================== -->
+
+<div
+  id="newOperasiNameField"
+  class="operasi-form-group hidden"
+>
+
+  <label for="operasiPerkara">
+    Nama Operasi Baru
+  </label>
+
+  <input
+    type="text"
+    id="operasiPerkara"
+    autocomplete="off"
+  >
+
+</div>
 
 
         <!-- ===============================================
