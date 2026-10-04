@@ -1842,3 +1842,201 @@ body {
 .resume-page-activities .activity-table tbody td {
   text-transform: uppercase;
 }
+
+/* =====================================================
+   FINAL MOBILE FIX
+   PASPA GO MYRESUME
+   PAGE 1 + PAGE 2
+===================================================== */
+
+@media screen and (max-width: 850px) {
+
+  html,
+  body {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    overflow-x: hidden !important;
+  }
+
+
+  body {
+    position: relative;
+  }
+
+
+  /* =================================================
+     TOOLBAR
+  ================================================= */
+
+  .resume-toolbar {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    margin: 0 !important;
+
+    box-sizing: border-box !important;
+
+    left: 0 !important;
+    right: 0 !important;
+  }
+
+
+  /* =================================================
+     PAGE 1 + PAGE 2
+
+     PENTING:
+     Scaling dibuat oleh resume.js.
+     CSS TIDAK lagi melakukan translate/scale sendiri.
+  ================================================= */
+
+  #resumePage,
+  #resumePage2,
+  .resume-page,
+  .resume-page-activities {
+
+    width: 793.7px !important;
+    min-width: 793.7px !important;
+    max-width: 793.7px !important;
+
+    min-height: 1122.5px !important;
+
+    position: relative !important;
+
+    left: 0 !important;
+    right: auto !important;
+
+    /*
+      Jangan center menggunakan margin auto.
+      JS akan menentukan kedudukan mobile.
+    */
+
+    margin-left: 8px !important;
+    margin-right: 0 !important;
+
+    /*
+      Sangat penting.
+      Buang transform CSS lama.
+      JS akan memasukkan scale().
+    */
+
+    transform-origin: top left !important;
+
+    box-sizing: border-box !important;
+
+    overflow: hidden !important;
+  }
+
+
+  /* =================================================
+     BATALKAN LEFT 50% DARIPADA CSS LAMA
+  ================================================= */
+
+  .resume-page {
+    left: 0 !important;
+  }
+
+
+  /* =================================================
+     PAGE 1
+  ================================================= */
+
+  #resumePage .resume-header,
+  #resumePage .identity-section,
+  #resumePage .resume-columns,
+  #resumePage .resume-footer {
+
+    width: 100% !important;
+    max-width: 100% !important;
+
+    box-sizing: border-box !important;
+  }
+
+
+  #resumePage .resume-columns {
+
+    display: grid !important;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(0, 1fr) !important;
+  }
+
+
+  #resumePage .resume-column {
+    min-width: 0 !important;
+  }
+
+
+  #resumePage .info-card,
+  #resumePage .declaration-card {
+    min-width: 0 !important;
+  }
+
+
+  /* =================================================
+     PAGE 2
+  ================================================= */
+
+  #resumePage2 .resume-page2-header,
+  #resumePage2 .resume-page2-content,
+  #resumePage2 .resume-page2-footer {
+
+    width: 100% !important;
+    max-width: 100% !important;
+
+    box-sizing: border-box !important;
+  }
+
+
+  #resumePage2 .activity-table-wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    overflow: hidden !important;
+  }
+
+
+  #resumePage2 .activity-table {
+    width: 100% !important;
+
+    table-layout: fixed !important;
+  }
+
+}
+
+/* =====================================================
+   FINAL FIX
+   REMOVE A4 PAGE BREAK ON SCREEN / MOBILE
+===================================================== */
+
+@media screen {
+
+  #resumePage,
+  #resumePage2,
+  .resume-page,
+  .resume-page-activities {
+
+    page-break-before: auto !important;
+    page-break-after: auto !important;
+    page-break-inside: auto !important;
+
+    break-before: auto !important;
+    break-after: auto !important;
+    break-inside: auto !important;
+  }
+
+
+  #resumePage2,
+  .resume-page-activities {
+
+    page-break-before: auto !important;
+    break-before: auto !important;
+
+    margin-top: 0 !important;
+  }
+
+}

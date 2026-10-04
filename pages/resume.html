@@ -20,52 +20,57 @@
 <body>
 
   <!-- TOOLBAR -->
-  <div class="resume-toolbar">
+<div class="resume-toolbar">
+
+  <button
+    type="button"
+    class="toolbar-button toolbar-icon-button"
+    onclick="history.back()"
+    title="Kembali"
+    aria-label="Kembali"
+  >
+    ←
+  </button>
+
+  <div class="toolbar-title">
+    MyResume
+  </div>
+
+  <div class="resume-actions">
 
     <button
       type="button"
-      onclick="window.location.href='profile.html'"
-      class="toolbar-button"
+      class="toolbar-button toolbar-icon-button"
+      id="printResumeButton"
+      title="Print"
+      aria-label="Print"
     >
-      ← Kembali
+      🖨
     </button>
 
-    <div class="toolbar-title">
-      MyResume
-    </div>
+    <button
+      type="button"
+      class="toolbar-button toolbar-icon-button"
+      id="downloadResumeButton"
+      title="Download PDF"
+      aria-label="Download PDF"
+    >
+      ↓
+    </button>
 
-   <div class="resume-actions">
-
-  <button
-    type="button"
-    id="printResumeButton"
-    class="toolbar-button"
-    title="Print Resume"
-  >
-    🖨 Print
-  </button>
-
-  <button
-    type="button"
-    id="downloadResumeButton"
-    class="toolbar-button"
-    title="Download PDF"
-  >
-    ⬇ Download
-  </button>
-
-  <button
-    type="button"
-    id="shareResumeButton"
-    class="toolbar-button primary"
-    title="Share Resume"
-  >
-    ↗ Share
-  </button>
-
-</div>
+    <button
+      type="button"
+      class="toolbar-button toolbar-icon-button"
+      id="shareResumeButton"
+      title="Share"
+      aria-label="Share"
+    >
+      ↗
+    </button>
 
   </div>
+
+</div>
 
 
   <!-- LOADING -->
