@@ -2790,6 +2790,166 @@ async function generateResumePdfBlob() {
     );
 
 
+
+/* =================================================
+   FIX QR KHUSUS UNTUK PDF
+================================================= */
+
+/* =============================================
+   FIX QR KHUSUS UNTUK PDF
+   Gunakan CANVAS QR sahaja
+============================================= */
+
+const qrBox =
+  page1.querySelector(
+    ".resume-qr-box"
+  );
+
+const qrCode =
+  page1.querySelector(
+    ".resume-qr-code"
+  );
+
+const qrCanvas =
+  qrCode
+    ? qrCode.querySelector("canvas")
+    : null;
+
+const qrImage =
+  qrCode
+    ? qrCode.querySelector("img")
+    : null;
+
+
+/*
+ * QRCode library menghasilkan
+ * canvas + img.
+ *
+ * Untuk PDF:
+ * CANVAS digunakan.
+ * IMG disembunyikan.
+ */
+if (qrImage) {
+
+  qrImage.style.setProperty(
+    "display",
+    "none",
+    "important"
+  );
+
+}
+
+
+if (qrBox) {
+
+  qrBox.style.setProperty(
+    "width",
+    "105px",
+    "important"
+  );
+
+  qrBox.style.setProperty(
+    "min-width",
+    "105px",
+    "important"
+  );
+
+  qrBox.style.setProperty(
+    "max-width",
+    "105px",
+    "important"
+  );
+
+  qrBox.style.setProperty(
+    "flex",
+    "0 0 105px",
+    "important"
+  );
+
+}
+
+
+if (qrCode) {
+
+  qrCode.style.setProperty(
+    "width",
+    "88px",
+    "important"
+  );
+
+  qrCode.style.setProperty(
+    "height",
+    "88px",
+    "important"
+  );
+
+  qrCode.style.setProperty(
+    "min-width",
+    "88px",
+    "important"
+  );
+
+  qrCode.style.setProperty(
+    "min-height",
+    "88px",
+    "important"
+  );
+
+  qrCode.style.setProperty(
+    "max-width",
+    "88px",
+    "important"
+  );
+
+  qrCode.style.setProperty(
+    "max-height",
+    "88px",
+    "important"
+  );
+
+  qrCode.style.setProperty(
+    "overflow",
+    "hidden",
+    "important"
+  );
+
+}
+
+
+if (qrCanvas) {
+
+  qrCanvas.style.setProperty(
+    "display",
+    "block",
+    "important"
+  );
+
+  qrCanvas.style.setProperty(
+    "width",
+    "88px",
+    "important"
+  );
+
+  qrCanvas.style.setProperty(
+    "height",
+    "88px",
+    "important"
+  );
+
+  qrCanvas.style.setProperty(
+    "max-width",
+    "88px",
+    "important"
+  );
+
+  qrCanvas.style.setProperty(
+    "max-height",
+    "88px",
+    "important"
+  );
+
+}
+
     /* Tunggu browser reflow */
     await new Promise(
       function (resolve) {

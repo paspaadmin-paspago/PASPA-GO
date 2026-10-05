@@ -2254,3 +2254,24 @@
   }
 
 }
+
+/* =====================================================
+   COMPACT MASTER OPERASI DROPDOWN
+===================================================== */
+
+#operasiMasterSelect {
+  height: 34px !important;
+  min-height: 34px !important;
+
+  padding: 4px 28px 4px 9px !important;
+
+  font-size: 11px !important;
+  line-height: 1.1 !important;
+
+  border-radius: 7px !important;
+}
+
+#operasiMasterSelect option {
+  font-size: 11px !important;
+  padding: 2px 4px !important;
+}

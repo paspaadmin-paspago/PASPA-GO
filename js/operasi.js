@@ -3723,6 +3723,92 @@ if (operasiHomeButton) {
 }
 
 
+
+
+/* =====================================================
+   OPERASI - AUTO UPPERCASE INPUT
+===================================================== */
+
+function initializeOperasiUppercaseInputs() {
+
+  const operasiForm =
+    document.getElementById(
+      "operasiForm"
+    );
+
+  if (!operasiForm) {
+    return;
+  }
+
+  operasiForm.addEventListener(
+    "input",
+    function (event) {
+
+      const field =
+        event.target;
+
+      if (
+        !field ||
+        (
+          field.tagName !== "INPUT" &&
+          field.tagName !== "TEXTAREA"
+        )
+      ) {
+        return;
+      }
+
+      const ignoredTypes = [
+        "file",
+        "date",
+        "radio",
+        "checkbox",
+        "hidden"
+      ];
+
+      if (
+        ignoredTypes.includes(
+          String(
+            field.type || ""
+          ).toLowerCase()
+        )
+      ) {
+        return;
+      }
+
+      const start =
+        field.selectionStart;
+
+      const end =
+        field.selectionEnd;
+
+      field.value =
+        String(
+          field.value || ""
+        ).toUpperCase();
+
+      if (
+        start !== null &&
+        end !== null
+      ) {
+
+        try {
+
+          field.setSelectionRange(
+            start,
+            end
+          );
+
+        } catch (error) {
+          // Abaikan field yang tidak menyokong selection.
+        }
+
+      }
+
+    }
+  );
+
+}
+
 /* =====================================================
    START
 ===================================================== */
@@ -3730,6 +3816,8 @@ if (operasiHomeButton) {
 document.addEventListener(
   "DOMContentLoaded",
   async function () {
+
+    initializeOperasiUppercaseInputs();
 
     currentSession =
       getOperasiSession();

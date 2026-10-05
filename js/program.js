@@ -1775,6 +1775,52 @@ addProgramButton.addEventListener(
 
     }
 
+    editingProgram = null;
+
+    programForm.reset();
+
+    setProgramMasterFieldsLocked(false);
+
+    const courseSelect =
+      document.getElementById(
+        "programCourseSelect"
+      );
+
+    if (courseSelect) {
+      courseSelect.value = "";
+    }
+
+    const newProgramField =
+      document.getElementById(
+        "newProgramNameField"
+      );
+
+    if (newProgramField) {
+      newProgramField
+        .classList
+        .add("hidden");
+    }
+
+    clearProgramMasterFields();
+
+    const formTitle =
+      programFormSection
+        .querySelector(
+          ".program-form-header h2"
+        );
+
+    if (formTitle) {
+      formTitle.textContent =
+        "Tambah Program";
+    }
+
+    saveProgramButton.textContent =
+      "Simpan Program";
+
+
+
+
+
 
     programFormSection
       .classList
@@ -1804,6 +1850,32 @@ closeProgramFormButton
 
       programForm.reset();
 editingProgram = null;
+
+
+
+setProgramMasterFieldsLocked(false);
+
+const courseSelect =
+  document.getElementById(
+    "programCourseSelect"
+  );
+
+if (courseSelect) {
+  courseSelect.value = "";
+}
+
+const newProgramField =
+  document.getElementById(
+    "newProgramNameField"
+  );
+
+if (newProgramField) {
+  newProgramField
+    .classList
+    .add("hidden");
+}
+
+clearProgramMasterFields();
 
 saveProgramButton.textContent =
   "Simpan Program";
@@ -2158,13 +2230,33 @@ if (
        DATA PROGRAM
     ================================================= */
 
-    const data = {
+const programCourseSelect =
+  document.getElementById(
+    "programCourseSelect"
+  );
 
-      kategoriProgram:
-        kategoriProgram.value,
+const selectedCourseId =
+  programCourseSelect
+    ? String(
+        programCourseSelect.value || ""
+      ).trim()
+    : "";
 
-      lokasiProgram:
-        lokasiProgram.value,
+const data = {
+
+  courseId:
+    (
+      selectedCourseId &&
+      selectedCourseId !== "__NEW__"
+    )
+      ? selectedCourseId
+      : "",
+
+  kategoriProgram:
+    kategoriProgram.value,
+
+  lokasiProgram:
+    lokasiProgram.value,
 
       perkara:
         document
@@ -2410,6 +2502,31 @@ editingProgram = null;
 if (programCertificate) {
   programCertificate.disabled = false;
 }
+
+setProgramMasterFieldsLocked(false);
+
+const courseSelect =
+  document.getElementById(
+    "programCourseSelect"
+  );
+
+if (courseSelect) {
+  courseSelect.value = "";
+}
+
+const newProgramField =
+  document.getElementById(
+    "newProgramNameField"
+  );
+
+if (newProgramField) {
+  newProgramField
+    .classList
+    .add("hidden");
+}
+
+
+
 
 const formTitle =
   programFormSection
@@ -2882,9 +2999,125 @@ function populateProgramCourseSelect() {
 
 
   /* PROGRAM DARIPADA 04_COURSES */
+/* =====================================================
+   BUANG DUPLICATE UNTUK PAPARAN DROPDOWN SAHAJA
 
- const sortedPrograms =
-  [...programMasterList].sort(
+   Duplicate ditentukan berdasarkan:
+   NAMA PROGRAM + TARIKH MULA + TARIKH TAMAT
+
+   Database 04_COURSES TIDAK DIUBAH.
+===================================================== */
+/* =====================================================
+   GABUNG PROGRAM BERDASARKAN TARIKH
+
+   Jika TARIKH MULA + TARIKH TAMAT sama:
+   dianggap program yang sama.
+
+   Jika terdapat beberapa nama:
+   pilih nama program yang PALING PANJANG.
+
+   Ini hanya untuk paparan dropdown.
+   Database tidak diubah.
+===================================================== */
+
+const uniqueProgramMap =
+  new Map();
+
+
+programMasterList.forEach(
+  function (program) {
+
+    const tarikhMula =
+      formatProgramMasterDate(
+        program.tarikhMula
+      );
+
+    const tarikhTamat =
+      formatProgramMasterDate(
+        program.tarikhTamat
+      );
+
+
+    /*
+     * Tarikh menjadi kunci utama.
+     */
+    const duplicateKey =
+      tarikhMula +
+      "|" +
+      tarikhTamat;
+
+
+    const existingProgram =
+      uniqueProgramMap.get(
+        duplicateKey
+      );
+
+
+    /*
+     * Belum ada program pada
+     * tarikh tersebut.
+     */
+    if (!existingProgram) {
+
+      uniqueProgramMap.set(
+        duplicateKey,
+        program
+      );
+
+      return;
+
+    }
+
+
+    /*
+     * Sudah ada program dengan
+     * tarikh sama.
+     *
+     * Bandingkan nama dan pilih
+     * nama yang lebih panjang.
+     */
+    const existingName =
+      String(
+        existingProgram.perkara || ""
+      ).trim();
+
+
+    const newName =
+      String(
+        program.perkara || ""
+      ).trim();
+
+
+    if (
+      newName.length >
+      existingName.length
+    ) {
+
+      uniqueProgramMap.set(
+        duplicateKey,
+        program
+      );
+
+    }
+
+  }
+);
+
+
+
+
+
+
+
+
+/*
+ * Tukar semula kepada array
+ * kemudian susun program terbaru dahulu.
+ */
+const sortedPrograms =
+  Array.from(
+    uniqueProgramMap.values()
+  ).sort(
     function (a, b) {
 
       const dateA =
@@ -3049,10 +3282,6 @@ function formatProgramMasterDate(value) {
 
 }
 
-/* =====================================================
-   PROGRAM MASTER SELECT
-   Pilih program sedia ada / cipta program baharu
-===================================================== */
 function initializeProgramCourseSelect() {
 
   const courseSelect =
@@ -3079,10 +3308,102 @@ function initializeProgramCourseSelect() {
     return;
   }
 
+/*
+ * Apabila pengguna buka dropdown,
+ * pulangkan paparan Nama + Tarikh
+ * untuk semua program.
+ */
+courseSelect.addEventListener(
+  "mousedown",
+  function () {
+
+    Array.from(
+      courseSelect.options
+    ).forEach(
+      function (option) {
+
+        const courseId =
+          String(
+            option.value || ""
+          ).trim();
+
+        if (
+          !courseId ||
+          courseId === "__NEW__"
+        ) {
+          return;
+        }
+
+        const program =
+          programMasterList.find(
+            function (item) {
+
+              return (
+                String(
+                  item.courseId || ""
+                ).trim() ===
+                courseId
+              );
+
+            }
+          );
+
+        if (!program) {
+          return;
+        }
+
+        let label =
+          String(
+            program.perkara || ""
+          ).trim();
+
+        const tarikhMula =
+          formatProgramMasterDate(
+            program.tarikhMula
+          );
+
+        const tarikhTamat =
+          formatProgramMasterDate(
+            program.tarikhTamat
+          );
+
+        if (
+          tarikhMula &&
+          tarikhTamat
+        ) {
+
+          label +=
+            " — " +
+            tarikhMula +
+            " hingga " +
+            tarikhTamat;
+
+        } else if (tarikhMula) {
+
+          label +=
+            " — " +
+            tarikhMula;
+
+        }
+
+        option.textContent =
+          label;
+
+      }
+    );
+
+  }
+);
+
+
+
 
   courseSelect.addEventListener(
     "change",
     function () {
+
+      hideProgramMessage();
+
 
       const selectedValue =
         String(
@@ -3090,33 +3411,9 @@ function initializeProgramCourseSelect() {
         ).trim();
 
 
-      /* =========================================
-         CIPTA PROGRAM BARU
-      ========================================= */
-
-      if (
-        selectedValue === "__NEW__"
-      ) {
-
-        newProgramField
-          .classList
-          .remove("hidden");
-
-        programPerkara.value = "";
-
-        programPerkara.required = true;
-
-        clearProgramMasterFields();
-
-        programPerkara.focus();
-
-        return;
-      }
-
-
-      /* =========================================
-         PILIHAN KOSONG
-      ========================================= */
+      /* =================================================
+         1. TIADA PILIHAN
+      ================================================= */
 
       if (!selectedValue) {
 
@@ -3130,13 +3427,57 @@ function initializeProgramCourseSelect() {
 
         clearProgramMasterFields();
 
+        setProgramMasterFieldsLocked(
+          false
+        );
+
         return;
       }
 
 
-      /* =========================================
-         PROGRAM SEDIA ADA
-      ========================================= */
+      /* =================================================
+         2. CIPTA PROGRAM BAHARU
+      ================================================= */
+
+      if (
+        selectedValue === "__NEW__"
+      ) {
+
+        newProgramField
+          .classList
+          .remove("hidden");
+
+
+        /*
+         * Program baharu:
+         * kosongkan semua maklumat master.
+         */
+
+        clearProgramMasterFields();
+
+
+        /*
+         * Semua field boleh diisi.
+         */
+
+        setProgramMasterFieldsLocked(
+          false
+        );
+
+
+        programPerkara.value = "";
+
+        programPerkara.required = true;
+
+        programPerkara.focus();
+
+        return;
+      }
+
+
+      /* =================================================
+         3. PROGRAM SEDIA ADA
+      ================================================= */
 
       const selectedProgram =
         programMasterList.find(
@@ -3144,7 +3485,7 @@ function initializeProgramCourseSelect() {
 
             return (
               String(
-                program.courseId
+                program.courseId || ""
               ).trim() ===
               selectedValue
             );
@@ -3155,41 +3496,41 @@ function initializeProgramCourseSelect() {
 
       if (!selectedProgram) {
 
-        console.warn(
-          "Program tidak dijumpai:",
-          selectedValue
+        showProgramMessage(
+          "Maklumat Program tidak dapat dijumpai.",
+          "error"
         );
 
         return;
       }
 
 
-      /* Sembunyikan nama program baru */
+      /*
+       * Sembunyikan input nama program baharu.
+       */
 
       newProgramField
         .classList
         .add("hidden");
 
 
+      /*
+       * Simpan nama program ke programPerkara.
+       */
+
+      programPerkara.value =
+        selectedProgram.perkara || "";
+
       programPerkara.required =
         false;
 
-
-      /*
-       * Simpan nama program ke input lama.
-       * Ini penting kerana submit handler asal
-       * masih membaca #programPerkara.
-       */
-
-   programPerkara.value =
-  selectedProgram.perkara || "";
-
-
-/* =====================================================
-   SELEPAS PROGRAM DIPILIH
-   Paparkan nama program sahaja tanpa tarikh
-===================================================== */
-
+/*
+ * Selepas program dipilih,
+ * paparkan nama program sahaja
+ * dalam kotak dropdown.
+ * Tarikh masih kekal dalam senarai
+ * apabila dropdown dibuka semula.
+ */
 const selectedOption =
   courseSelect.options[
     courseSelect.selectedIndex
@@ -3198,21 +3539,163 @@ const selectedOption =
 if (selectedOption) {
 
   selectedOption.textContent =
-    selectedProgram.perkara || "";
+    String(
+      selectedProgram.perkara || ""
+    ).trim();
 
 }
+      /*
+       * Auto-fill maklumat daripada
+       * 04_COURSES.
+       */
+
+      fillProgramMasterFields(
+        selectedProgram
+      );
 
 
-/* AUTO FILL MAKLUMAT PROGRAM */
+      /*
+       * Maklumat master tidak boleh
+       * diubah oleh ahli.
+       *
+       * Ahli hanya memilih PERANAN
+       * dan SIJIL untuk penyertaan dirinya.
+       */
 
-fillProgramMasterFields(
-  selectedProgram
-);
+      setProgramMasterFieldsLocked(
+        true
+      );
+
+
+      console.log(
+        "PROGRAM MASTER DIPILIH:",
+        {
+          courseId:
+            selectedProgram.courseId,
+
+          perkara:
+            selectedProgram.perkara,
+
+          tarikhMula:
+            selectedProgram.tarikhMula,
+
+          tarikhTamat:
+            selectedProgram.tarikhTamat
+        }
+      );
 
     }
   );
 
 }
+
+/* =====================================================
+   LOCK / UNLOCK PROGRAM MASTER FIELDS
+
+   Program sedia ada:
+   data daripada 04_COURSES tidak boleh diubah.
+
+   Program baharu:
+   semua field boleh diisi.
+===================================================== */
+
+function setProgramMasterFieldsLocked(
+  locked
+) {
+
+  /*
+   * KATEGORI PROGRAM
+   */
+
+  document
+    .querySelectorAll(
+      'input[name="kategoriProgram"]'
+    )
+    .forEach(
+      function (input) {
+
+        input.disabled =
+          locked;
+
+      }
+    );
+
+
+  /*
+   * LOKASI PROGRAM
+   */
+
+  document
+    .querySelectorAll(
+      'input[name="lokasiProgram"]'
+    )
+    .forEach(
+      function (input) {
+
+        input.disabled =
+          locked;
+
+      }
+    );
+
+
+  /*
+   * FIELD MASTER
+   */
+
+  const fieldIds = [
+
+    "programPerkara",
+
+    "programTarikhMula",
+
+    "programTarikhTamat",
+
+    "programTempat",
+
+    "programNegeri",
+
+    "programNegara",
+
+    "programPenganjur",
+
+    "programPenganjurLain"
+
+  ];
+
+
+  fieldIds.forEach(
+    function (id) {
+
+      const field =
+        document.getElementById(id);
+
+
+      if (field) {
+
+        field.disabled =
+          locked;
+
+      }
+
+    }
+  );
+
+
+  /*
+   * PENTING:
+   *
+   * programPeranan TIDAK dikunci.
+   * programCertificate TIDAK dikunci.
+   *
+   * Kedua-duanya ialah maklumat
+   * penyertaan ahli dalam
+   * 05_MEMBER_COURSES.
+   */
+
+}
+
+
 
 /* =====================================================
    AUTO FILL MAKLUMAT PROGRAM MASTER
@@ -3567,8 +4050,25 @@ else if (
 /* =====================================================
    KOSONGKAN FIELD PROGRAM MASTER
 ===================================================== */
-
 function clearProgramMasterFields() {
+
+  /*
+   * Nama Program
+   */
+
+  const perkara =
+    document.getElementById(
+      "programPerkara"
+    );
+
+  if (perkara) {
+    perkara.value = "";
+  }
+
+
+  /*
+   * Field text / select master
+   */
 
   const fieldIds = [
 
@@ -3578,7 +4078,13 @@ function clearProgramMasterFields() {
 
     "programTempat",
 
-    "programPenganjur"
+    "programNegeri",
+
+    "programNegara",
+
+    "programPenganjur",
+
+    "programPenganjurLain"
 
   ];
 
@@ -3589,7 +4095,6 @@ function clearProgramMasterFields() {
       const element =
         document.getElementById(id);
 
-
       if (element) {
 
         element.value = "";
@@ -3599,8 +4104,63 @@ function clearProgramMasterFields() {
     }
   );
 
-}
 
+  /*
+   * Reset Kategori
+   */
+
+  document
+    .querySelectorAll(
+      'input[name="kategoriProgram"]'
+    )
+    .forEach(
+      function (input) {
+
+        input.checked =
+          false;
+
+      }
+    );
+
+
+  /*
+   * Reset Lokasi
+   */
+
+  document
+    .querySelectorAll(
+      'input[name="lokasiProgram"]'
+    )
+    .forEach(
+      function (input) {
+
+        input.checked =
+          false;
+
+      }
+    );
+
+
+  /*
+   * Tutup Negeri / Negara
+   */
+
+  resetConditionalFields();
+
+
+  /*
+   * Tutup Penganjur Lain-lain
+   */
+
+  if (otherOrganizerField) {
+
+    otherOrganizerField
+      .classList
+      .add("hidden");
+
+  }
+
+}
 
 /* =====================================================
    TARIKH API -> INPUT type="date"
@@ -3724,13 +4284,111 @@ function convertProgramDateForInput(value) {
 
 }
 
+
+/* =====================================================
+   PROGRAM - AUTO UPPERCASE INPUT
+===================================================== */
+
+function initializeProgramUppercaseInputs() {
+
+  const programForm =
+    document.getElementById(
+      "programForm"
+    );
+
+  if (!programForm) {
+    return;
+  }
+
+  programForm.addEventListener(
+    "input",
+    function (event) {
+
+      const field =
+        event.target;
+
+      if (
+        !field ||
+        (
+          field.tagName !== "INPUT" &&
+          field.tagName !== "TEXTAREA"
+        )
+      ) {
+        return;
+      }
+
+      /*
+       * Jangan sentuh input yang bukan teks.
+       */
+      const ignoredTypes = [
+        "file",
+        "date",
+        "radio",
+        "checkbox",
+        "hidden"
+      ];
+
+      if (
+        ignoredTypes.includes(
+          String(
+            field.type || ""
+          ).toLowerCase()
+        )
+      ) {
+        return;
+      }
+
+      const start =
+        field.selectionStart;
+
+      const end =
+        field.selectionEnd;
+
+      field.value =
+        String(
+          field.value || ""
+        ).toUpperCase();
+
+      /*
+       * Kekalkan kedudukan cursor.
+       */
+      if (
+        start !== null &&
+        end !== null
+      ) {
+
+        try {
+
+          field.setSelectionRange(
+            start,
+            end
+          );
+
+        } catch (error) {
+          // Abaikan field yang tidak menyokong selection.
+        }
+
+      }
+
+    }
+  );
+
+}
+
+
+
 /* =====================================================
    START PROGRAM MASTER SELECT
 ===================================================== */
 
+
+
+
 document.addEventListener(
   "DOMContentLoaded",
   function () {
+
+    initializeProgramUppercaseInputs();
 
     initializeProgramCourseSelect();
 
