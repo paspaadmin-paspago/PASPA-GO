@@ -1099,3 +1099,157 @@ body {
   box-shadow:
     0 1px 3px rgba(31, 87, 151, 0.15);
 }
+
+
+
+
+/* RUANG BARIS ATAS UNTUK ▼ DAN DIHANTAR */
+.latest-program-header {
+  padding-top: 32px !important;
+}
+
+/* =====================================================
+   TINDAKAN TERKINI - HEADER FINAL
+   ▼ KIRI | STATUS KANAN
+   TAJUK FULL WIDTH DI BAWAH
+===================================================== */
+
+.latest-program-header {
+  position: relative !important;
+
+  display: grid !important;
+  grid-template-columns: auto 1fr auto !important;
+  grid-template-rows: auto auto !important;
+
+  width: 100% !important;
+  min-width: 0 !important;
+
+  align-items: center !important;
+
+  column-gap: 8px !important;
+  row-gap: 8px !important;
+}
+
+
+/* ▼ - PENJURU KIRI ATAS */
+.latest-action-card-arrow {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+
+  position: static !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  width: auto !important;
+
+  align-self: center !important;
+  justify-self: start !important;
+
+  line-height: 1 !important;
+}
+
+
+/* STATUS - PENJURU KANAN ATAS */
+.latest-program-status {
+  grid-column: 3 !important;
+  grid-row: 1 !important;
+
+  position: static !important;
+
+  margin: 0 !important;
+
+  width: auto !important;
+
+  align-self: center !important;
+  justify-self: end !important;
+
+  white-space: nowrap !important;
+}
+
+
+/* CONTAINER TAJUK + META
+   TURUN KE BARIS KEDUA DAN GUNA FULL WIDTH */
+.latest-program-header > div {
+  grid-column: 1 / -1 !important;
+  grid-row: 2 !important;
+
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+}
+
+
+/* TAJUK FULL WIDTH */
+.latest-program-title {
+  width: 100% !important;
+  max-width: none !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
+
+  white-space: normal !important;
+
+  overflow-wrap: break-word !important;
+  word-break: normal !important;
+}
+
+
+/* MAKLUMAT BAWAH TAJUK FULL WIDTH */
+.latest-program-meta {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+}
+
+
+/* SETIAP BARIS MAKLUMAT */
+.latest-program-meta > span {
+  display: block !important;
+
+  width: 100% !important;
+  max-width: none !important;
+
+  white-space: normal !important;
+  overflow-wrap: break-word !important;
+}
+
+/* =====================================================
+   RAPATKAN HEADER CARD TINDAKAN TERKINI
+===================================================== */
+
+.latest-program-header {
+  row-gap: 2px !important;
+}
+
+/* RAPATKAN TAJUK KE BARIS ▼ / DIHANTAR */
+.latest-program-header > div {
+  margin-top: 0 !important;
+}
+
+/* RAPATKAN ARROW DAN STATUS */
+.latest-action-card-arrow,
+.latest-program-status {
+  margin-bottom: 0 !important;
+}
+
+/* =====================================================
+   BUANG RUANG KOSONG ATAS CARD
+===================================================== */
+
+.latest-program-card {
+  padding-top: 8px !important;
+}
+
+.latest-program-header {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+
+  row-gap: 2px !important;
+}
+
+.latest-action-card-arrow,
+.latest-program-status {
+  margin-top: 0 !important;
+  top: auto !important;
+}

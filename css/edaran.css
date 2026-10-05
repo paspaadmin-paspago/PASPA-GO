@@ -1515,3 +1515,194 @@
   opacity: 0.4;
   cursor: default;
 }
+
+/* =====================================================
+   EDARAN - PLUS MINIMAL TANPA BULATAN
+===================================================== */
+
+.edaran-add-button {
+  flex: 0 0 auto !important;
+
+  width: 42px !important;
+  height: 38px !important;
+  min-height: 38px !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  /* BUANG BULATAN */
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+
+  /* SIMBOL + */
+  color: #103a78 !important;
+
+  font-size: 34px !important;
+  font-weight: 300 !important;
+  line-height: 1 !important;
+
+  cursor: pointer !important;
+
+  transition:
+    transform 0.15s ease,
+    color 0.15s ease !important;
+}
+
+
+/* HOVER */
+.edaran-add-button:hover {
+  background: transparent !important;
+  box-shadow: none !important;
+
+  color: #174a8b !important;
+
+  transform: scale(1.08) !important;
+}
+
+
+/* KETIKA DITEKAN */
+.edaran-add-button:active {
+  background: transparent !important;
+
+  transform: scale(0.92) !important;
+}
+
+
+/* MOBILE */
+@media (max-width: 600px) {
+
+  .edaran-add-button {
+    width: 38px !important;
+    height: 34px !important;
+    min-height: 34px !important;
+
+    font-size: 34px !important;
+  }
+
+}
+
+/* =====================================================
+   PENERANGAN SENARAI EDARAN
+===================================================== */
+
+.edaran-list-description {
+  margin: 4px 0 0 !important;
+
+  max-width: 620px;
+
+  color: #64748b !important;
+
+  font-size: 11px !important;
+  font-weight: 400 !important;
+  line-height: 1.4 !important;
+}
+
+
+/* MOBILE */
+@media (max-width: 600px) {
+
+  .edaran-list-description {
+    margin-top: 3px !important;
+
+    padding-right: 5px;
+
+    font-size: 10px !important;
+    line-height: 1.35 !important;
+  }
+
+}
+
+@media (max-width: 600px) {
+.edaran-inbox-title {
+  display: -webkit-box !important;
+
+  white-space: normal !important;
+
+ -webkit-box-orient: vertical !important;
+-webkit-line-clamp: 2 !important;
+line-clamp: 2 !important;
+
+
+
+  overflow: hidden !important;
+
+  line-height: 1.25 !important;
+  max-height: 2.5em !important;
+
+  word-break: normal !important;
+  overflow-wrap: break-word !important;
+}
+
+  /* Benarkan row meninggi jika tajuk jadi 2 baris */
+  .edaran-inbox-row {
+    min-height: 54px !important;
+    height: auto !important;
+
+    align-items: center !important;
+  }
+}
+
+
+
+/* =====================================================
+   MOBILE - LUASKAN RUANG TAJUK EDARAN
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .edaran-inbox-row {
+    grid-template-columns:
+      68px
+      minmax(0, 1fr)
+      auto !important;
+
+    column-gap: 6px !important;
+  }
+
+
+  /* KATEGORI LEBIH COMPACT */
+  .edaran-inbox-category {
+    width: 66px !important;
+    max-width: 66px !important;
+  }
+
+
+  /* TAJUK AMBIL SEMUA BAKI RUANG */
+  .edaran-inbox-title {
+    width: 100% !important;
+    min-width: 0 !important;
+
+    display: -webkit-box !important;
+
+    white-space: normal !important;
+
+    -webkit-box-orient: vertical !important;
+    -webkit-line-clamp: 2 !important;
+    line-clamp: 2 !important;
+
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+
+    line-height: 1.25 !important;
+    max-height: 2.5em !important;
+  }
+
+
+  /* TARIKH HANYA AMBIL RUANG YANG DIPERLUKAN */
+  .edaran-inbox-date {
+    width: auto !important;
+    min-width: 0 !important;
+
+    white-space: nowrap !important;
+
+    font-size: 8px !important;
+    text-align: right !important;
+  }
+
+}

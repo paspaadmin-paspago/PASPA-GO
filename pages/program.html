@@ -345,19 +345,56 @@
     Perkara / Nama Program
   </label>
 
-  <select
-    id="programCourseSelect"
+  <!-- CUSTOM DROPDOWN PROGRAM -->
+<div
+  id="programCourseDropdown"
+  class="program-custom-dropdown"
+>
+
+  <!-- Kotak yang pengguna tekan -->
+  <button
+    type="button"
+    id="programCourseDropdownButton"
+    class="program-custom-dropdown-button"
   >
-
-    <option value="">
+    <span id="programCourseSelectedText">
       Sila pilih program
-    </option>
+    </span>
 
-    <option value="__NEW__">
-      ＋ TIADA DALAM SENARAI. CIPTA NAMA PROGRAM
-    </option>
+    <span class="program-dropdown-arrow">
+      ▼
+    </span>
+  </button>
 
-  </select>
+
+  <!-- Senarai program -->
+  <div
+    id="programCourseDropdownList"
+    class="program-custom-dropdown-list hidden"
+  >
+  </div>
+
+</div>
+
+
+<!--
+  Simpan COURSE_ID sebenar.
+  JS/backend masih akan menggunakan value ini.
+-->
+<select
+  id="programCourseSelect"
+  class="program-hidden-select"
+  aria-hidden="true"
+  tabindex="-1"
+>
+  <option value="">
+    Sila pilih program
+  </option>
+
+  <option value="__NEW__">
+    ＋ TIADA DALAM SENARAI. CIPTA NAMA PROGRAM
+  </option>
+</select>
 
   <small class="program-file-help">
     Pilih program yang telah wujud. Jika program belum ada,

@@ -1192,3 +1192,78 @@
     font-size: 9px;
   }
 }
+
+/* =====================================================
+   TAMBAH CATATAN - PLUS MINIMAL
+===================================================== */
+
+.diari-add-circle {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  /* kawasan sentuh masih selesa */
+  width: 42px !important;
+  height: 34px !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  /* BUANG BULATAN / SHADING */
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+
+  /* SIMBOL + */
+  color: #173b76 !important;
+
+  font-size: 34px !important;
+  font-weight: 300 !important;
+  line-height: 1 !important;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.15s ease,
+    color 0.15s ease;
+}
+
+
+/* HOVER - TIADA BACKGROUND */
+.diari-add-circle:hover {
+  background: transparent !important;
+  box-shadow: none !important;
+
+  color: #244e87 !important;
+
+  transform: scale(1.08) !important;
+}
+
+
+/* APABILA DITEKAN */
+.diari-add-circle:active {
+  background: transparent !important;
+
+  transform: scale(0.92) !important;
+}
+
+
+/* FOCUS */
+.diari-add-circle:focus-visible {
+  outline: 2px solid #244e87 !important;
+  outline-offset: 3px !important;
+}
+
+
+/* MOBILE - KEKALKAN RUPA YANG SAMA */
+@media (max-width: 480px) {
+
+  .diari-add-circle {
+    width: 42px !important;
+    height: 34px !important;
+
+    font-size: 34px !important;
+  }
+
+}

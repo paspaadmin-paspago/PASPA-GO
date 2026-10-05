@@ -867,30 +867,27 @@ function setupLatestActionCardDropdown(
 
 
   const arrow =
-    document.createElement(
-      "span"
-    );
-
-
-  arrow.className =
-    "latest-action-card-arrow";
-
-
-  arrow.textContent =
-    "▼";
-
-
-  arrow.style.marginLeft =
-    "10px";
-
-
-  arrow.style.flexShrink =
-    "0";
-
-
-  header.appendChild(
-    arrow
+  document.createElement(
+    "span"
   );
+
+
+arrow.className =
+  "latest-action-card-arrow";
+
+
+arrow.textContent =
+  "▼";
+
+
+/*
+  Letakkan arrow sebagai elemen
+  pertama dalam header.
+*/
+header.insertBefore(
+  arrow,
+  header.firstChild
+);
 
 
   function toggleCard() {

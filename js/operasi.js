@@ -267,7 +267,6 @@ function hideOperasiMessage() {
 /* =====================================================
    TARIKH
 ===================================================== */
-
 function formatOperasiDate(
   value
 ) {
@@ -278,10 +277,56 @@ function formatOperasiDate(
 
 
   const text =
-    String(
-      value
-    ).trim();
+    String(value).trim();
 
+
+  /* =========================================
+     FORMAT GOOGLE SHEET:
+     dd/MM/yyyy
+
+     Contoh:
+     01/10/2026
+
+     Kekalkan terus.
+  ========================================= */
+
+  const localMatch =
+    text.match(
+      /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/
+    );
+
+
+  if (localMatch) {
+
+    const day =
+      localMatch[1]
+        .padStart(2, "0");
+
+    const month =
+      localMatch[2]
+        .padStart(2, "0");
+
+    const year =
+      localMatch[3];
+
+
+    return (
+      day +
+      "/" +
+      month +
+      "/" +
+      year
+    );
+
+  }
+
+
+  /* =========================================
+     FORMAT ISO:
+     yyyy-MM-dd
+     atau
+     yyyy-MM-ddTHH:mm:ss...
+  ========================================= */
 
   const isoMatch =
     text.match(
@@ -302,10 +347,12 @@ function formatOperasiDate(
   }
 
 
+  /* =========================================
+     FALLBACK DATE OBJECT
+  ========================================= */
+
   const date =
-    new Date(
-      value
-    );
+    new Date(value);
 
 
   if (
@@ -319,12 +366,13 @@ function formatOperasiDate(
   }
 
 
-  return String(
-    date.getUTCDate()
-  ).padStart(
-    2,
-    "0"
-  ) +
+  return (
+    String(
+      date.getUTCDate()
+    ).padStart(
+      2,
+      "0"
+    ) +
     "/" +
     String(
       date.getUTCMonth() + 1
@@ -333,7 +381,8 @@ function formatOperasiDate(
       "0"
     ) +
     "/" +
-    date.getUTCFullYear();
+    date.getUTCFullYear()
+  );
 
 }
 
@@ -1155,7 +1204,647 @@ const sortedOperations =
 
 }
 
+/* =====================================================
+   CUSTOM DROPDOWN MASTER OPERASI
+===================================================== */
 
+function renderOperasiCustomDropdown() {
+
+  const select =
+    document.getElementById(
+      "operasiMasterSelect"
+    );
+
+  const list =
+    document.getElementById(
+      "operasiMasterDropdownList"
+    );
+
+  const selectedText =
+    document.getElementById(
+      "operasiMasterSelectedText"
+    );
+
+
+  if (
+    !select ||
+    !list ||
+    !selectedText
+  ) {
+    return;
+  }
+
+
+  list.innerHTML = "";
+
+
+  /* =========================================
+     PILIH TAJUK PENTING UNTUK PERBANDINGAN
+  ========================================= */
+
+  function getImportantWords(title) {
+
+    return String(title || "")
+      .toUpperCase()
+      .replace(/[^A-Z0-9\s]/g, " ")
+      .split(/\s+/)
+      .filter(
+        function (word) {
+
+          return (
+            word.length >= 3 &&
+            ![
+              "DAN",
+              "DENGAN",
+              "UNTUK",
+              "PADA",
+              "DALAM",
+              "BERSAMA",
+              "OPERASI",
+              "MISI",
+              "PROGRAM",
+              "LATIHAN"
+            ].includes(word)
+          );
+
+        }
+      );
+
+  }
+
+
+  /* =========================================
+     SEMAK TAJUK SERUPA
+  ========================================= */
+
+  function isSimilarTitle(
+    titleA,
+    titleB
+  ) {
+
+    const cleanA =
+      String(titleA || "")
+        .toUpperCase()
+        .replace(/[\u200B-\u200D\uFEFF]/g, "")
+        .replace(/\u00A0/g, " ")
+        .replace(/[^A-Z0-9\s]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+
+    const cleanB =
+      String(titleB || "")
+        .toUpperCase()
+        .replace(/[\u200B-\u200D\uFEFF]/g, "")
+        .replace(/\u00A0/g, " ")
+        .replace(/[^A-Z0-9\s]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+
+
+    if (
+      !cleanA ||
+      !cleanB
+    ) {
+      return false;
+    }
+
+
+    if (cleanA === cleanB) {
+      return true;
+    }
+
+
+    if (
+      cleanA.includes(cleanB) ||
+      cleanB.includes(cleanA)
+    ) {
+      return true;
+    }
+
+
+    const wordsA =
+      getImportantWords(cleanA);
+
+    const wordsB =
+      getImportantWords(cleanB);
+
+
+    if (
+      !wordsA.length ||
+      !wordsB.length
+    ) {
+      return false;
+    }
+
+
+    const commonWords =
+      wordsA.filter(
+        function (word) {
+          return wordsB.includes(word);
+        }
+      );
+
+
+    if (commonWords.length < 3) {
+      return false;
+    }
+
+
+    const shorterLength =
+      Math.min(
+        wordsA.length,
+        wordsB.length
+      );
+
+
+    return (
+      commonWords.length /
+      shorterLength
+    ) >= 0.75;
+
+  }
+
+
+  /* =========================================
+     TUKAR TARIKH KEPADA DATE OBJECT
+  ========================================= */
+
+  function getDropdownDate(value) {
+
+    if (!value) {
+      return null;
+    }
+
+
+    const formatted =
+      formatOperasiDate(
+        value
+      );
+
+
+    const match =
+      formatted.match(
+        /^(\d{2})\/(\d{2})\/(\d{4})$/
+      );
+
+
+    if (!match) {
+      return null;
+    }
+
+
+    return new Date(
+      Number(match[3]),
+      Number(match[2]) - 1,
+      Number(match[1])
+    );
+
+  }
+
+
+  /* =========================================
+     SEMAK TARIKH BERTINDIH
+  ========================================= */
+
+  function datesOverlap(
+    operationA,
+    operationB
+  ) {
+
+    const startA =
+      getDropdownDate(
+        operationA.tarikhMula
+      );
+
+    const endA =
+      getDropdownDate(
+        operationA.tarikhTamat ||
+        operationA.tarikhMula
+      );
+
+    const startB =
+      getDropdownDate(
+        operationB.tarikhMula
+      );
+
+    const endB =
+      getDropdownDate(
+        operationB.tarikhTamat ||
+        operationB.tarikhMula
+      );
+
+
+    if (
+      !startA ||
+      !endA ||
+      !startB ||
+      !endB
+    ) {
+      return false;
+    }
+
+
+    return (
+      startA <= endB &&
+      startB <= endA
+    );
+
+  }
+
+
+  /* =========================================
+     GABUNG OPERASI BERTINDIH
+     + TAJUK YANG SERUPA
+  ========================================= */
+
+  const groupedOperations = [];
+
+
+  operationMasterList.forEach(
+    function (operation) {
+
+      let matchedOperation =
+        null;
+
+
+      for (
+        let i = 0;
+        i < groupedOperations.length;
+        i++
+      ) {
+
+        const existing =
+          groupedOperations[i];
+
+
+        if (
+          datesOverlap(
+            existing,
+            operation
+          ) &&
+          isSimilarTitle(
+            existing.perkara,
+            operation.perkara
+          )
+        ) {
+
+          matchedOperation =
+            existing;
+
+          break;
+
+        }
+
+      }
+
+
+      if (!matchedOperation) {
+
+        groupedOperations.push({
+          ...operation
+        });
+
+        return;
+
+      }
+
+
+      const currentTitle =
+        String(
+          matchedOperation.perkara || ""
+        ).trim();
+
+      const newTitle =
+        String(
+          operation.perkara || ""
+        ).trim();
+
+
+      /*
+       * Gunakan tajuk paling lengkap.
+       */
+      if (
+        newTitle.length >
+        currentTitle.length
+      ) {
+
+        matchedOperation.perkara =
+          newTitle;
+
+      }
+
+
+      /*
+       * Ambil tarikh mula paling awal.
+       */
+      const currentStart =
+        getDropdownDate(
+          matchedOperation.tarikhMula
+        );
+
+      const newStart =
+        getDropdownDate(
+          operation.tarikhMula
+        );
+
+
+      if (
+        newStart &&
+        (
+          !currentStart ||
+          newStart < currentStart
+        )
+      ) {
+
+        matchedOperation.tarikhMula =
+          operation.tarikhMula;
+
+      }
+
+
+      /*
+       * Ambil tarikh tamat paling lewat.
+       */
+      const currentEnd =
+        getDropdownDate(
+          matchedOperation.tarikhTamat ||
+          matchedOperation.tarikhMula
+        );
+
+      const newEnd =
+        getDropdownDate(
+          operation.tarikhTamat ||
+          operation.tarikhMula
+        );
+
+
+      if (
+        newEnd &&
+        (
+          !currentEnd ||
+          newEnd > currentEnd
+        )
+      ) {
+
+        matchedOperation.tarikhTamat =
+          operation.tarikhTamat ||
+          operation.tarikhMula;
+
+      }
+
+    }
+  );
+
+
+  /* =========================================
+     SUSUN TARIKH PALING BARU DI ATAS
+  ========================================= */
+
+  const sortedOperations =
+    groupedOperations.sort(
+      function (a, b) {
+
+        const dateA =
+          getDropdownDate(
+            a.tarikhMula
+          );
+
+        const dateB =
+          getDropdownDate(
+            b.tarikhMula
+          );
+
+
+        const timeA =
+          dateA
+            ? dateA.getTime()
+            : 0;
+
+        const timeB =
+          dateB
+            ? dateB.getTime()
+            : 0;
+
+
+        if (timeB !== timeA) {
+          return timeB - timeA;
+        }
+
+
+        const endA =
+          getDropdownDate(
+            a.tarikhTamat ||
+            a.tarikhMula
+          );
+
+        const endB =
+          getDropdownDate(
+            b.tarikhTamat ||
+            b.tarikhMula
+          );
+
+
+        const endTimeA =
+          endA
+            ? endA.getTime()
+            : 0;
+
+        const endTimeB =
+          endB
+            ? endB.getTime()
+            : 0;
+
+
+        if (endTimeB !== endTimeA) {
+          return endTimeB - endTimeA;
+        }
+
+
+        return String(
+          a.perkara || ""
+        ).localeCompare(
+          String(
+            b.perkara || ""
+          ),
+          "ms"
+        );
+
+      }
+    );
+
+
+  /* =========================================
+     BINA ITEM DROPDOWN
+  ========================================= */
+
+  sortedOperations.forEach(
+    function (operation) {
+
+      const item =
+        document.createElement(
+          "button"
+        );
+
+
+      item.type =
+        "button";
+
+      item.className =
+        "operasi-dropdown-item";
+
+
+      const name =
+        String(
+          operation.perkara || ""
+        )
+          .trim()
+          .toUpperCase();
+
+
+      const tarikhMula =
+        formatOperasiDate(
+          operation.tarikhMula
+        );
+
+      const tarikhTamat =
+        formatOperasiDate(
+          operation.tarikhTamat
+        );
+
+
+      let dateText = "";
+
+
+      if (
+        tarikhMula !== "-" &&
+        tarikhTamat !== "-"
+      ) {
+
+        dateText =
+          tarikhMula +
+          " hingga " +
+          tarikhTamat;
+
+      } else if (
+        tarikhMula !== "-"
+      ) {
+
+        dateText =
+          tarikhMula;
+
+      }
+
+
+      item.innerHTML =
+        '<span class="operasi-dropdown-name">' +
+        escapeOperasiHtml(name) +
+        '</span>' +
+        (
+          dateText
+            ? ' <span class="operasi-dropdown-date"> — ' +
+              escapeOperasiHtml(dateText) +
+              '</span>'
+            : ""
+        );
+
+
+      item.addEventListener(
+        "click",
+        function () {
+
+          select.value =
+            String(
+              operation.operasiId || ""
+            );
+
+
+          select.dispatchEvent(
+            new Event(
+              "change",
+              {
+                bubbles: true
+              }
+            )
+          );
+
+
+          selectedText.innerHTML =
+            '<span class="operasi-dropdown-name">' +
+            escapeOperasiHtml(name) +
+            '</span>';
+
+
+          list.classList.add(
+            "hidden"
+          );
+
+        }
+      );
+
+
+      list.appendChild(
+        item
+      );
+
+    }
+  );
+
+
+  /* =========================================
+     CIPTA OPERASI BARU
+  ========================================= */
+
+  const newItem =
+    document.createElement(
+      "button"
+    );
+
+
+  newItem.type =
+    "button";
+
+  newItem.className =
+    "operasi-dropdown-item operasi-dropdown-new";
+
+  newItem.textContent =
+    "＋ TIADA DALAM SENARAI. CIPTA NAMA OPERASI";
+
+
+  newItem.addEventListener(
+    "click",
+    function () {
+
+      select.value =
+        "__NEW__";
+
+
+      select.dispatchEvent(
+        new Event(
+          "change",
+          {
+            bubbles: true
+          }
+        )
+      );
+
+
+      selectedText.textContent =
+        "＋ TIADA DALAM SENARAI. CIPTA NAMA OPERASI";
+
+
+      list.classList.add(
+        "hidden"
+      );
+
+    }
+  );
+
+
+  list.appendChild(
+    newItem
+  );
+
+}
 
 /* =====================================================
    LOAD OPERASI
@@ -1435,8 +2124,60 @@ function renderOperasiRecords() {
 
 
   const records =
-    getFilteredOperasiRecords();
+  getFilteredOperasiRecords()
+    .sort(
+      function (a, b) {
 
+        /* TARIKH MULA - TERBARU DAHULU */
+        const startA =
+          getOperationSortTimestamp(
+            a.tarikhMula
+          );
+
+        const startB =
+          getOperationSortTimestamp(
+            b.tarikhMula
+          );
+
+
+        if (startB !== startA) {
+          return startB - startA;
+        }
+
+
+        /* JIKA TARIKH MULA SAMA,
+           TARIKH TAMAT TERBARU DAHULU */
+
+        const endA =
+          getOperationSortTimestamp(
+            a.tarikhTamat
+          );
+
+        const endB =
+          getOperationSortTimestamp(
+            b.tarikhTamat
+          );
+
+
+        if (endB !== endA) {
+          return endB - endA;
+        }
+
+
+        /* JIKA TARIKH SAMA,
+           SUSUN NAMA OPERASI A-Z */
+
+        return String(
+          a.perkara || ""
+        ).localeCompare(
+          String(
+            b.perkara || ""
+          ),
+          "ms"
+        );
+
+      }
+    );
 
   operasiList.innerHTML =
     "";
@@ -3809,6 +4550,79 @@ function initializeOperasiUppercaseInputs() {
 
 }
 
+
+/* =====================================================
+   CUSTOM DROPDOWN OPERASI - OPEN / CLOSE
+===================================================== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function () {
+
+    const dropdown =
+      document.getElementById(
+        "operasiMasterDropdown"
+      );
+
+    const button =
+      document.getElementById(
+        "operasiMasterDropdownButton"
+      );
+
+    const list =
+      document.getElementById(
+        "operasiMasterDropdownList"
+      );
+
+
+    if (
+      !dropdown ||
+      !button ||
+      !list
+    ) {
+      return;
+    }
+
+
+    /* BUKA / TUTUP DROPDOWN */
+    button.addEventListener(
+      "click",
+      function (event) {
+
+        event.stopPropagation();
+
+        list.classList.toggle(
+          "hidden"
+        );
+
+      }
+    );
+
+
+    /* KLIK DI LUAR = TUTUP */
+    document.addEventListener(
+      "click",
+      function (event) {
+
+        if (
+          !dropdown.contains(
+            event.target
+          )
+        ) {
+
+          list.classList.add(
+            "hidden"
+          );
+
+        }
+
+      }
+    );
+
+  }
+);
+
+
 /* =====================================================
    START
 ===================================================== */
@@ -3846,6 +4660,8 @@ await loadOperasiMember();
 await loadOperationMasterList();
 
 populateOperationMasterSelect();
+
+renderOperasiCustomDropdown();
 
 await loadOperasiRecords();
 

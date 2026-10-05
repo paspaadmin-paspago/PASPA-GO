@@ -1827,3 +1827,191 @@
   font-size: 11px !important;
   padding: 2px 4px !important;
 }
+
+/* =====================================================
+   CUSTOM DROPDOWN PROGRAM
+===================================================== */
+
+.program-hidden-select {
+  display: none !important;
+}
+
+.program-custom-dropdown {
+  position: relative;
+  width: 100%;
+}
+
+
+/* KOTAK UTAMA DROPDOWN */
+.program-custom-dropdown-button {
+  width: 100%;
+  min-height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 7px 10px;
+
+  background: #ffffff;
+  border: 1px solid #d5d9df;
+  border-radius: 7px;
+
+  font-family: inherit;
+  font-size: 12px;
+  text-align: left;
+
+  cursor: pointer;
+}
+
+
+/* ANAK PANAH */
+.program-dropdown-arrow {
+  margin-left: 10px;
+  font-size: 9px;
+  flex-shrink: 0;
+}
+
+
+/* SENARAI DROPDOWN */
+.program-custom-dropdown-list {
+  position: absolute;
+
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+
+  max-height: 280px;
+  overflow-y: auto;
+
+  background: #ffffff;
+
+  border: 1px solid #d5d9df;
+  border-radius: 8px;
+
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.12);
+
+  z-index: 1000;
+}
+
+
+/* SETIAP PILIHAN */
+.program-dropdown-item {
+  width: 100%;
+
+  padding: 9px 11px;
+
+  border: 0;
+  border-bottom: 1px solid #eeeeee;
+
+  background: #ffffff;
+
+  text-align: left;
+  font-family: inherit;
+  font-size: 12px;
+
+  cursor: pointer;
+}
+
+
+/* NAMA PROGRAM */
+.program-dropdown-name {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+
+/* TARIKH PROGRAM */
+.program-dropdown-date {
+  font-weight: 400;
+}
+
+
+/* HOVER */
+.program-dropdown-item:hover {
+  background: #f5f6f8;
+}
+
+
+/* PILIHAN CIPTA PROGRAM */
+.program-dropdown-new {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+
+/* HIDDEN */
+.program-custom-dropdown-list.hidden {
+  display: none;
+}
+
+
+/* MOBILE */
+@media (max-width: 600px) {
+
+  .program-custom-dropdown-button,
+  .program-dropdown-item {
+    font-size: 11px;
+  }
+
+  .program-custom-dropdown-list {
+    max-height: 240px;
+  }
+
+}
+
+/* =====================================================
+   FIX WARNA TEKS CUSTOM DROPDOWN PROGRAM
+===================================================== */
+
+.program-custom-dropdown-button,
+.program-custom-dropdown-button span {
+  color: #111827 !important;
+}
+
+.program-dropdown-item,
+.program-dropdown-item span {
+  color: #111827 !important;
+}
+
+
+/* NAMA PROGRAM */
+.program-dropdown-name {
+  color: #111827 !important;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+}
+
+
+/* TARIKH */
+.program-dropdown-date {
+  color: #4b5563 !important;
+  font-weight: 400 !important;
+}
+
+
+/* PILIHAN CIPTA PROGRAM */
+.program-dropdown-new {
+  color: #111827 !important;
+  font-weight: 700 !important;
+}
+
+/* =====================================================
+   COMPACT LIST PROGRAM
+===================================================== */
+
+.program-dropdown-item {
+  padding: 5px 9px !important;
+  min-height: 0 !important;
+  line-height: 1.15 !important;
+}
+
+.program-dropdown-name,
+.program-dropdown-date {
+  line-height: 1.15 !important;
+}
+
+.program-dropdown-item + .program-dropdown-item {
+  margin-top: 0 !important;
+}

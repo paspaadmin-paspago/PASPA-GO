@@ -359,17 +359,59 @@
     Perkara / Nama Operasi
   </label>
 
-  <select id="operasiMasterSelect">
+  <!-- CUSTOM DROPDOWN OPERASI -->
+<div
+  id="operasiMasterDropdown"
+  class="operasi-custom-dropdown"
+>
 
-    <option value="">
+  <!-- Kotak yang pengguna tekan -->
+  <button
+    type="button"
+    id="operasiMasterDropdownButton"
+    class="operasi-custom-dropdown-button"
+  >
+    <span id="operasiMasterSelectedText">
       Sila pilih operasi
-    </option>
+    </span>
 
-    <option value="__NEW__">
-      ＋ TIADA DALAM SENARAI. CIPTA NAMA OPERASI
-    </option>
+    <span class="operasi-dropdown-arrow">
+      ▼
+    </span>
+  </button>
 
-  </select>
+
+  <!-- Senarai operasi -->
+  <div
+    id="operasiMasterDropdownList"
+    class="operasi-custom-dropdown-list hidden"
+  >
+  </div>
+
+</div>
+
+
+<!--
+  Select asal dikekalkan secara hidden.
+  Semua logic operasi.js dan backend masih
+  menggunakan value ini.
+-->
+<select
+  id="operasiMasterSelect"
+  class="operasi-hidden-select"
+  aria-hidden="true"
+  tabindex="-1"
+>
+
+  <option value="">
+    Sila pilih operasi
+  </option>
+
+  <option value="__NEW__">
+    ＋ TIADA DALAM SENARAI. CIPTA NAMA OPERASI
+  </option>
+
+</select>
 
   <small class="operasi-file-help">
     Pilih operasi sedia ada atau cipta nama operasi baharu.

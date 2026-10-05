@@ -2879,6 +2879,7 @@ if (!email) {
 
 
     populateProgramCourseSelect();
+    renderProgramCustomDropdown();
 
 
   } catch (error) {
@@ -3229,7 +3230,692 @@ sortedPrograms.forEach(
 
 }
 
+/* =====================================================
+   CUSTOM DROPDOWN PROGRAM
+===================================================== */
 
+function renderProgramCustomDropdown() {
+
+  const list =
+    document.getElementById(
+      "programCourseDropdownList"
+    );
+
+  const select =
+    document.getElementById(
+      "programCourseSelect"
+    );
+
+  const selectedText =
+    document.getElementById(
+      "programCourseSelectedText"
+    );
+
+
+  if (
+    !list ||
+    !select ||
+    !selectedText
+  ) {
+    return;
+  }
+
+
+  list.innerHTML = "";
+
+
+  /* =========================================
+     SUSUN PROGRAM IKUT TARIKH TERBARU
+  ========================================= */
+
+  /* =========================================
+   GABUNG PROGRAM BERTINDIH
+   + TAJUK YANG SERUPA
+========================================= */
+
+
+/* Ambil perkataan penting daripada tajuk */
+function getImportantWords(title) {
+
+  return String(title || "")
+    .toUpperCase()
+    .replace(/[^A-Z0-9\s]/g, " ")
+    .split(/\s+/)
+    .filter(
+      function (word) {
+
+        return (
+          word.length >= 3 &&
+          ![
+            "DAN",
+            "DENGAN",
+            "UNTUK",
+            "PADA",
+            "DALAM",
+            "BERSAMA",
+            "KURSUS",
+            "LATIHAN",
+            "PROGRAM"
+          ].includes(word)
+        );
+
+      }
+    );
+
+}
+
+
+function isSimilarTitle(
+  titleA,
+  titleB
+) {
+
+  const cleanA =
+    String(titleA || "")
+      .toUpperCase()
+      .replace(/[\u200B-\u200D\uFEFF]/g, "")
+      .replace(/\u00A0/g, " ")
+      .replace(/[^A-Z0-9\s]/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+
+
+  const cleanB =
+    String(titleB || "")
+      .toUpperCase()
+      .replace(/[\u200B-\u200D\uFEFF]/g, "")
+      .replace(/\u00A0/g, " ")
+      .replace(/[^A-Z0-9\s]/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+
+
+  if (
+    !cleanA ||
+    !cleanB
+  ) {
+    return false;
+  }
+
+
+  /*
+   * 1. Tajuk sama tepat
+   */
+  if (cleanA === cleanB) {
+    return true;
+  }
+
+
+  /*
+   * 2. Salah satu tajuk terkandung
+   * sepenuhnya dalam tajuk yang lain.
+   *
+   * Contoh:
+   * SWIFT WATER RESCUE
+   * LATIHAN SWIFT WATER RESCUE BERSAMA BASARNAS
+   */
+  if (
+    cleanA.includes(cleanB) ||
+    cleanB.includes(cleanA)
+  ) {
+    return true;
+  }
+
+
+  /*
+   * 3. Semak perkataan penting.
+   */
+  const wordsA =
+    getImportantWords(cleanA);
+
+  const wordsB =
+    getImportantWords(cleanB);
+
+
+  if (
+    !wordsA.length ||
+    !wordsB.length
+  ) {
+    return false;
+  }
+
+
+  const commonWords =
+    wordsA.filter(
+      function (word) {
+
+        return wordsB.includes(word);
+
+      }
+    );
+
+
+  /*
+   * Mesti ada sekurang-kurangnya
+   * 3 perkataan penting yang sama.
+   *
+   * Ini mengelakkan:
+   *
+   * PROGRAM UJIAN B
+   * PROGRAM UJIAN C
+   *
+   * daripada digabungkan.
+   */
+  if (commonWords.length < 3) {
+    return false;
+  }
+
+
+  const shorterLength =
+    Math.min(
+      wordsA.length,
+      wordsB.length
+    );
+
+
+  return (
+    commonWords.length /
+    shorterLength
+  ) >= 0.75;
+
+}
+
+
+/* Tukar tarikh kepada timestamp */
+function getDropdownDate(value) {
+
+  if (!value) {
+    return null;
+  }
+
+
+  const formatted =
+    formatProgramMasterDate(
+      value
+    );
+
+
+  const match =
+    formatted.match(
+      /^(\d{2})\/(\d{2})\/(\d{4})$/
+    );
+
+
+  if (!match) {
+    return null;
+  }
+
+
+  return new Date(
+    Number(match[3]),
+    Number(match[2]) - 1,
+    Number(match[1])
+  );
+
+}
+
+
+/* Semak dua julat tarikh bertindih */
+function datesOverlap(
+  programA,
+  programB
+) {
+
+  const startA =
+    getDropdownDate(
+      programA.tarikhMula
+    );
+
+  const endA =
+    getDropdownDate(
+      programA.tarikhTamat ||
+      programA.tarikhMula
+    );
+
+  const startB =
+    getDropdownDate(
+      programB.tarikhMula
+    );
+
+  const endB =
+    getDropdownDate(
+      programB.tarikhTamat ||
+      programB.tarikhMula
+    );
+
+
+  if (
+    !startA ||
+    !endA ||
+    !startB ||
+    !endB
+  ) {
+    return false;
+  }
+
+
+  return (
+    startA <= endB &&
+    startB <= endA
+  );
+
+}
+
+
+/* =========================================
+   BINA GROUP PROGRAM
+========================================= */
+
+const groupedPrograms = [];
+
+
+programMasterList.forEach(
+  function (program) {
+
+    let matchedProgram =
+      null;
+
+
+    for (
+      let i = 0;
+      i < groupedPrograms.length;
+      i++
+    ) {
+
+      const existing =
+        groupedPrograms[i];
+
+
+      if (
+        datesOverlap(
+          existing,
+          program
+        ) &&
+        isSimilarTitle(
+          existing.perkara,
+          program.perkara
+        )
+      ) {
+
+        matchedProgram =
+          existing;
+
+        break;
+
+      }
+
+    }
+
+
+    /* Tiada program serupa */
+    if (!matchedProgram) {
+
+      groupedPrograms.push({
+        ...program
+      });
+
+      return;
+
+    }
+
+
+    /* =====================================
+       PILIH TAJUK PALING PANJANG
+    ===================================== */
+
+    const currentTitle =
+      String(
+        matchedProgram.perkara || ""
+      ).trim();
+
+
+    const newTitle =
+      String(
+        program.perkara || ""
+      ).trim();
+
+
+    if (
+      newTitle.length >
+      currentTitle.length
+    ) {
+
+      matchedProgram.perkara =
+        newTitle;
+
+    }
+
+
+    /* =====================================
+       AMBIL TARIKH MULA PALING AWAL
+    ===================================== */
+
+    const currentStart =
+      getDropdownDate(
+        matchedProgram.tarikhMula
+      );
+
+    const newStart =
+      getDropdownDate(
+        program.tarikhMula
+      );
+
+
+    if (
+      newStart &&
+      (
+        !currentStart ||
+        newStart < currentStart
+      )
+    ) {
+
+      matchedProgram.tarikhMula =
+        program.tarikhMula;
+
+    }
+
+
+    /* =====================================
+       AMBIL TARIKH TAMAT PALING AKHIR
+    ===================================== */
+
+    const currentEnd =
+      getDropdownDate(
+        matchedProgram.tarikhTamat ||
+        matchedProgram.tarikhMula
+      );
+
+    const newEnd =
+      getDropdownDate(
+        program.tarikhTamat ||
+        program.tarikhMula
+      );
+
+
+    if (
+      newEnd &&
+      (
+        !currentEnd ||
+        newEnd > currentEnd
+      )
+    ) {
+
+      matchedProgram.tarikhTamat =
+        program.tarikhTamat ||
+        program.tarikhMula;
+
+    }
+
+  }
+);
+
+
+/* =========================================
+   SUSUN PROGRAM
+   TARIKH PALING BARU DI ATAS
+========================================= */
+
+const sortedPrograms =
+  groupedPrograms.sort(
+    function (a, b) {
+
+      const dateA =
+        getDropdownDate(
+          a.tarikhMula
+        );
+
+      const dateB =
+        getDropdownDate(
+          b.tarikhMula
+        );
+
+
+      const timeA =
+        dateA
+          ? dateA.getTime()
+          : 0;
+
+      const timeB =
+        dateB
+          ? dateB.getTime()
+          : 0;
+
+
+      /*
+       * Tarikh mula paling baru
+       * berada paling atas.
+       */
+      if (timeB !== timeA) {
+
+        return timeB - timeA;
+
+      }
+
+
+      /*
+       * Jika tarikh mula sama,
+       * susun ikut tarikh tamat
+       * paling baru.
+       */
+      const endA =
+        getDropdownDate(
+          a.tarikhTamat ||
+          a.tarikhMula
+        );
+
+      const endB =
+        getDropdownDate(
+          b.tarikhTamat ||
+          b.tarikhMula
+        );
+
+
+      const endTimeA =
+        endA
+          ? endA.getTime()
+          : 0;
+
+      const endTimeB =
+        endB
+          ? endB.getTime()
+          : 0;
+
+
+      if (endTimeB !== endTimeA) {
+
+        return endTimeB - endTimeA;
+
+      }
+
+
+      /*
+       * Jika kedua-dua tarikh sama,
+       * susun nama A-Z.
+       */
+      return String(
+        a.perkara || ""
+      ).localeCompare(
+        String(
+          b.perkara || ""
+        ),
+        "ms"
+      );
+
+    }
+  );
+
+
+  /* =========================================
+     SENARAI PROGRAM
+  ========================================= */
+
+  sortedPrograms.forEach(
+    function (program) {
+
+      const item =
+        document.createElement(
+          "button"
+        );
+
+      item.type = "button";
+
+      item.className =
+        "program-dropdown-item";
+
+
+      const name =
+        String(
+          program.perkara || ""
+        )
+          .trim()
+          .toUpperCase();
+
+
+      const tarikhMula =
+        formatProgramMasterDate(
+          program.tarikhMula
+        );
+
+      const tarikhTamat =
+        formatProgramMasterDate(
+          program.tarikhTamat
+        );
+
+
+      let dateText = "";
+
+      if (
+        tarikhMula &&
+        tarikhTamat
+      ) {
+
+        dateText =
+          tarikhMula +
+          " hingga " +
+          tarikhTamat;
+
+      } else if (tarikhMula) {
+
+        dateText =
+          tarikhMula;
+
+      }
+
+
+      item.innerHTML =
+        '<span class="program-dropdown-name">' +
+        name +
+        '</span>' +
+        (
+          dateText
+            ? ' <span class="program-dropdown-date"> — ' +
+              dateText +
+              '</span>'
+            : ""
+        );
+
+
+      item.addEventListener(
+        "click",
+        function () {
+
+          select.value =
+            String(
+              program.courseId || ""
+            );
+
+
+          /*
+           * Trigger change asal.
+           * Semua logic lama program.js
+           * masih digunakan.
+           */
+
+          select.dispatchEvent(
+            new Event(
+              "change",
+              {
+                bubbles: true
+              }
+            )
+          );
+
+
+          selectedText.innerHTML =
+            '<span class="program-dropdown-name">' +
+            name +
+            '</span>';
+
+
+          list.classList.add(
+            "hidden"
+          );
+
+        }
+      );
+
+
+      list.appendChild(
+        item
+      );
+
+    }
+  );
+
+
+  /* =========================================
+     PILIHAN CIPTA PROGRAM BARU
+  ========================================= */
+
+  const newItem =
+    document.createElement(
+      "button"
+    );
+
+  newItem.type = "button";
+
+  newItem.className =
+    "program-dropdown-item program-dropdown-new";
+
+  newItem.textContent =
+    "＋ TIADA DALAM SENARAI. CIPTA NAMA PROGRAM";
+
+
+  newItem.addEventListener(
+    "click",
+    function () {
+
+      select.value =
+        "__NEW__";
+
+
+      select.dispatchEvent(
+        new Event(
+          "change",
+          {
+            bubbles: true
+          }
+        )
+      );
+
+
+      selectedText.textContent =
+        "＋ TIADA DALAM SENARAI. CIPTA NAMA PROGRAM";
+
+
+      list.classList.add(
+        "hidden"
+      );
+
+    }
+  );
+
+
+  list.appendChild(
+    newItem
+  );
+
+}
 /* =====================================================
    FORMAT TARIKH DROPDOWN
 ===================================================== */
@@ -3241,44 +3927,119 @@ function formatProgramMasterDate(value) {
   }
 
 
+  const text =
+    String(value).trim();
+
+
+  /* =========================================
+     FORMAT yyyy-MM-dd
+  ========================================= */
+
+  let match =
+    text.match(
+      /^(\d{4})-(\d{1,2})-(\d{1,2})/
+    );
+
+  if (match) {
+
+    const year =
+      match[1];
+
+    const month =
+      String(match[2])
+        .padStart(2, "0");
+
+    const day =
+      String(match[3])
+        .padStart(2, "0");
+
+
+    return (
+      day +
+      "/" +
+      month +
+      "/" +
+      year
+    );
+
+  }
+
+
+  /* =========================================
+     FORMAT dd/MM/yyyy
+     Jika sudah betul, kekalkan
+  ========================================= */
+
+  match =
+    text.match(
+      /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/
+    );
+
+  if (match) {
+
+    const day =
+      String(match[1])
+        .padStart(2, "0");
+
+    const month =
+      String(match[2])
+        .padStart(2, "0");
+
+    const year =
+      match[3];
+
+
+    return (
+      day +
+      "/" +
+      month +
+      "/" +
+      year
+    );
+
+  }
+
+
+  /* =========================================
+     GOOGLE SHEETS / APPS SCRIPT DATE
+  ========================================= */
+
   const date =
     new Date(value);
 
 
   if (
-    isNaN(
+    !isNaN(
       date.getTime()
     )
   ) {
 
-    return String(value);
+    const day =
+      String(
+        date.getDate()
+      ).padStart(2, "0");
+
+    const month =
+      String(
+        date.getMonth() + 1
+      ).padStart(2, "0");
+
+    const year =
+      date.getFullYear();
+
+
+    return (
+      day +
+      "/" +
+      month +
+      "/" +
+      year
+    );
 
   }
 
 
-  const day =
-    String(
-      date.getDate()
-    ).padStart(2, "0");
-
-
-  const month =
-    String(
-      date.getMonth() + 1
-    ).padStart(2, "0");
-
-
-  const year =
-    date.getFullYear();
-
-
-  return (
-    day +
-    "/" +
-    month +
-    "/" +
-    year
-  );
+  return text;
 
 }
 
@@ -4393,6 +5154,77 @@ document.addEventListener(
     initializeProgramCourseSelect();
 
     loadProgramMasterList();
+
+  }
+);
+
+/* =====================================================
+   OPEN / CLOSE CUSTOM DROPDOWN PROGRAM
+===================================================== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function () {
+
+    const dropdown =
+      document.getElementById(
+        "programCourseDropdown"
+      );
+
+    const button =
+      document.getElementById(
+        "programCourseDropdownButton"
+      );
+
+    const list =
+      document.getElementById(
+        "programCourseDropdownList"
+      );
+
+
+    if (
+      !dropdown ||
+      !button ||
+      !list
+    ) {
+      return;
+    }
+
+
+    /* BUKA / TUTUP DROPDOWN */
+    button.addEventListener(
+      "click",
+      function (event) {
+
+        event.stopPropagation();
+
+        list.classList.toggle(
+          "hidden"
+        );
+
+      }
+    );
+
+
+    /* TUTUP JIKA TEKAN DI LUAR */
+    document.addEventListener(
+      "click",
+      function (event) {
+
+        if (
+          !dropdown.contains(
+            event.target
+          )
+        ) {
+
+          list.classList.add(
+            "hidden"
+          );
+
+        }
+
+      }
+    );
 
   }
 );

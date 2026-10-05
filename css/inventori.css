@@ -637,3 +637,196 @@
 
 }
 
+
+/* =====================================================
+   INVENTORI - ITEM CARD COMPACT & MODERN
+===================================================== */
+
+/* RAPATKAN JARAK ANTARA CARD */
+.inventory-items-container {
+  gap: 8px !important;
+}
+
+
+/* CARD ASAS */
+.inventory-item-block {
+  padding: 10px !important;
+
+  border-radius: 10px !important;
+
+  box-shadow: none !important;
+}
+
+
+/* ITEM 1 - BIRU LEMBUT */
+.inventory-item-block:nth-child(1) {
+  background: #f3f7fd !important;
+  border-color: #c9daf2 !important;
+}
+
+
+/* ITEM 2 - HIJAU LEMBUT */
+.inventory-item-block:nth-child(2) {
+  background: #f3faf6 !important;
+  border-color: #c9e5d4 !important;
+}
+
+
+/* ITEM 3 - KRIM LEMBUT */
+.inventory-item-block:nth-child(3) {
+  background: #fffaf0 !important;
+  border-color: #eadcb8 !important;
+}
+
+
+/* ITEM 4 - UNGU LEMBUT */
+.inventory-item-block:nth-child(4) {
+  background: #f8f5fc !important;
+  border-color: #ddd0ed !important;
+}
+
+
+/* ITEM 5 - ROSE LEMBUT */
+.inventory-item-block:nth-child(5) {
+  background: #fff6f7 !important;
+  border-color: #eccfd4 !important;
+}
+
+
+/* TAJUK ITEM */
+.inventory-item-heading {
+  margin: 0 0 8px !important;
+
+  font-size: 14px !important;
+  line-height: 1.2 !important;
+}
+
+
+/* RAPATKAN RUANG DALAM CARD */
+.inventory-item-fields {
+  gap: 8px !important;
+}
+
+
+.inventory-size-quantity {
+  gap: 8px !important;
+}
+
+
+/* LABEL LEBIH COMPACT */
+.inventory-form-group label {
+  margin-bottom: 4px !important;
+
+  font-size: 11px !important;
+}
+
+
+/* SELECT + INPUT LEBIH RENDAH */
+.inventory-form-group select,
+.inventory-form-group input {
+  min-height: 38px !important;
+  height: 38px !important;
+
+  padding: 6px 9px !important;
+
+  border-radius: 8px !important;
+
+  font-size: 12px !important;
+}
+
+
+/* MOBILE */
+@media (max-width: 600px) {
+
+  .inventory-item-block {
+    padding: 9px !important;
+  }
+
+  .inventory-item-heading {
+    margin-bottom: 7px !important;
+  }
+
+  .inventory-form-group select,
+  .inventory-form-group input {
+    min-height: 38px !important;
+    height: 38px !important;
+
+    padding: 6px 8px !important;
+  }
+
+}
+
+/* =====================================================
+   INVENTORI - EXTRA COMPACT
+===================================================== */
+
+.inventory-items-container {
+  gap: 6px !important;
+}
+
+.inventory-item-block {
+  padding: 7px 9px !important;
+}
+
+
+/* TAJUK ITEM */
+.inventory-item-heading {
+  margin-bottom: 5px !important;
+
+  font-size: 13px !important;
+  line-height: 1.15 !important;
+}
+
+
+/* JARAK ANTARA ITEM INVENTORI
+   DENGAN SAIZ + KUANTITI */
+.inventory-item-fields {
+  gap: 6px !important;
+}
+
+.inventory-size-quantity {
+  gap: 7px !important;
+}
+
+
+/* LABEL */
+.inventory-form-group label {
+  margin-bottom: 3px !important;
+
+  font-size: 11px !important;
+  line-height: 1.15 !important;
+}
+
+
+/* SELECT + INPUT */
+.inventory-form-group select,
+.inventory-form-group input {
+  min-height: 34px !important;
+  height: 34px !important;
+
+  padding: 4px 8px !important;
+
+  font-size: 11px !important;
+
+  border-radius: 7px !important;
+}
+
+
+/* MOBILE */
+@media (max-width: 600px) {
+
+  .inventory-item-block {
+    padding: 7px 8px !important;
+  }
+
+  .inventory-item-heading {
+    margin-bottom: 5px !important;
+  }
+
+  .inventory-form-group select,
+  .inventory-form-group input {
+    min-height: 34px !important;
+    height: 34px !important;
+  }
+
+}

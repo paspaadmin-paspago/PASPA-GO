@@ -2275,3 +2275,185 @@
   font-size: 11px !important;
   padding: 2px 4px !important;
 }
+
+/* =====================================================
+   CUSTOM DROPDOWN OPERASI
+===================================================== */
+
+.operasi-hidden-select {
+  display: none !important;
+}
+
+.operasi-custom-dropdown {
+  position: relative;
+  width: 100%;
+}
+
+
+/* KOTAK UTAMA DROPDOWN */
+.operasi-custom-dropdown-button {
+  width: 100%;
+  min-height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 7px 10px;
+
+  background: #ffffff;
+  border: 1px solid #d5d9df;
+  border-radius: 7px;
+
+  color: #111827 !important;
+
+  font-family: inherit;
+  font-size: 12px;
+  text-align: left;
+
+  cursor: pointer;
+}
+
+
+/* PASTIKAN TEKS BUTTON NAMPAK */
+.operasi-custom-dropdown-button span {
+  color: #111827 !important;
+}
+
+
+/* ANAK PANAH */
+.operasi-dropdown-arrow {
+  margin-left: 10px;
+  font-size: 9px;
+  flex-shrink: 0;
+}
+
+
+/* SENARAI DROPDOWN */
+.operasi-custom-dropdown-list {
+  position: absolute;
+
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+
+  max-height: 280px;
+  overflow-y: auto;
+
+  background: #ffffff;
+
+  border: 1px solid #d5d9df;
+  border-radius: 8px;
+
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.12);
+
+  z-index: 1000;
+}
+
+
+/* SETIAP OPERASI */
+.operasi-dropdown-item {
+  width: 100%;
+
+  padding: 5px 9px !important;
+
+  border: 0;
+  border-bottom: 1px solid #eeeeee;
+
+  background: #ffffff;
+  color: #111827 !important;
+
+  text-align: left;
+  font-family: inherit;
+  font-size: 12px;
+
+  line-height: 1.15 !important;
+
+  cursor: pointer;
+}
+
+
+/* NAMA OPERASI */
+.operasi-dropdown-name {
+  color: #111827 !important;
+
+  font-weight: 700 !important;
+  text-transform: uppercase;
+
+  line-height: 1.15 !important;
+}
+
+
+/* TARIKH OPERASI */
+.operasi-dropdown-date {
+  color: #4b5563 !important;
+
+  font-weight: 400 !important;
+  text-transform: none !important;
+
+  line-height: 1.15 !important;
+}
+
+
+/* HOVER */
+.operasi-dropdown-item:hover {
+  background: #f5f6f8;
+}
+
+
+/* CIPTA OPERASI BARU */
+.operasi-dropdown-new {
+  color: #111827 !important;
+
+  font-weight: 700 !important;
+  text-transform: uppercase;
+}
+
+
+/* HIDDEN */
+.operasi-custom-dropdown-list.hidden {
+  display: none !important;
+}
+
+
+/* ELAK JARAK ANTARA ITEM */
+.operasi-dropdown-item +
+.operasi-dropdown-item {
+  margin-top: 0 !important;
+}
+
+
+/* MOBILE */
+@media (max-width: 600px) {
+
+  .operasi-custom-dropdown-button,
+  .operasi-dropdown-item {
+    font-size: 11px;
+  }
+
+  .operasi-custom-dropdown-list {
+    max-height: 240px;
+  }
+
+}
+
+/* =====================================================
+   RAPATKAN ITEM CUSTOM DROPDOWN OPERASI
+===================================================== */
+
+.operasi-dropdown-item {
+  padding: 3px 8px !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  line-height: 1.05 !important;
+}
+
+.operasi-dropdown-name,
+.operasi-dropdown-date {
+  line-height: 1.05 !important;
+}
+
+.operasi-dropdown-item + .operasi-dropdown-item {
+  margin-top: 0 !important;
+}
