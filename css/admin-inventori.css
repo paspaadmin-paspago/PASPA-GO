@@ -732,3 +732,151 @@ button:disabled {
 .approval-form-button:hover {
   background: #eaf2fc;
 }
+
+/* =====================================================
+   SERAHAN INVENTORI - STATUS + LIHAT BORANG
+===================================================== */
+
+.handover-form-actions {
+  display: inline-flex !important;
+  align-items: center !important;
+
+  margin: 0 0 0 8px !important;
+  padding: 0 !important;
+
+  width: auto !important;
+
+  position: relative !important;
+  z-index: 10 !important;
+
+  vertical-align: middle !important;
+}
+
+
+/* BUTTON LIHAT BORANG */
+
+.handover-form-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: auto !important;
+  min-width: 0 !important;
+
+  margin: 0 !important;
+  padding: 4px 8px !important;
+
+  border: 1px solid #c9d8eb !important;
+  border-radius: 6px !important;
+
+  background: #f4f7fb !important;
+  color: #123f76 !important;
+
+  font-family: inherit !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+
+  line-height: 1.2 !important;
+
+  white-space: nowrap !important;
+
+  cursor: pointer !important;
+  pointer-events: auto !important;
+
+  position: relative !important;
+  z-index: 20 !important;
+}
+
+
+.handover-form-button:hover {
+  background: #e4edf8 !important;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+  .handover-form-actions {
+    margin-left: 6px !important;
+  }
+
+  .handover-form-button {
+    padding: 3px 7px !important;
+    font-size: 9px !important;
+  }
+
+}
+
+/* =====================================================
+   SERAHAN INVENTORI
+   DILULUSKAN + LIHAT BORANG
+===================================================== */
+
+.handover-status-row {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+
+  width: auto !important;
+
+  margin: 0 0 8px 6px !important;
+  padding: 0 !important;
+
+  vertical-align: middle !important;
+}
+
+
+/* BUTTON LIHAT BORANG */
+
+.handover-form-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: auto !important;
+  min-width: auto !important;
+
+  padding: 4px 9px !important;
+  margin: 0 !important;
+
+  border: 1px solid #b8cbe2 !important;
+  border-radius: 6px !important;
+
+  background: #ffffff !important;
+  color: #174f8d !important;
+
+  font-size: 10px !important;
+  font-weight: 700 !important;
+
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+
+  cursor: pointer !important;
+  pointer-events: auto !important;
+
+  position: relative !important;
+  z-index: 20 !important;
+}
+
+.handover-form-button:hover {
+  background: #edf4fc !important;
+  border-color: #1f5797 !important;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+  .handover-status-row {
+    margin-left: 5px !important;
+    gap: 5px !important;
+  }
+
+  .handover-form-button {
+    padding: 3px 7px !important;
+    font-size: 9px !important;
+  }
+
+}

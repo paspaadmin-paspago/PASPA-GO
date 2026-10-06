@@ -944,9 +944,146 @@ function renderPages(
     }
   );
 
+/* Fit selepas semua A4 siap dibina */
+requestAnimationFrame(
+  function () {
+
+    requestAnimationFrame(
+      fitAttendancePreview
+    );
+
+  }
+);
+
+
+
+}
+
+/* =====================================================
+   AUTO FIT A4 PREVIEW
+   MOBILE + DESKTOP
+===================================================== */
+
+function fitAttendancePreview() {
+
+  const container =
+    document.getElementById(
+      "documentContainer"
+    );
+
+  if (!container) {
+    return;
+  }
+
+
+  const pages =
+    container.querySelectorAll(
+      ".a4-page"
+    );
+
+  if (!pages.length) {
+    return;
+  }
+
+
+  /*
+    Reset dahulu supaya kita dapat
+    saiz A4 sebenar.
+  */
+  pages.forEach(
+    function (page) {
+
+      page.style.transform =
+        "none";
+
+      page.style.marginBottom =
+        "";
+
+    }
+  );
+
+
+  const firstPage =
+    pages[0];
+
+  const originalWidth =
+    firstPage.offsetWidth;
+
+  if (!originalWidth) {
+    return;
+  }
+
+
+  /*
+    Ruang sebenar yang tersedia.
+    Tolak sedikit supaya tidak rapat
+    dengan tepi skrin.
+  */
+  const availableWidth =
+    Math.max(
+      container.clientWidth - 16,
+      1
+    );
+
+
+  let scale =
+    availableWidth /
+    originalWidth;
+
+
+  /*
+    Jangan besarkan melebihi
+    saiz A4 asal.
+  */
+  scale =
+    Math.min(
+      scale,
+      1
+    );
+
+
+  pages.forEach(
+    function (page) {
+
+      const originalHeight =
+        page.offsetHeight;
+
+      page.style.transformOrigin =
+        "top center";
+
+      page.style.transform =
+        "scale(" +
+        scale +
+        ")";
+
+
+      /*
+        Transform mengecilkan visual sahaja.
+        Margin negatif ini membuang ruang
+        kosong di bawah page.
+      */
+      page.style.marginBottom =
+        (
+          originalHeight *
+          (scale - 1)
+        ) +
+        "px";
+
+    }
+  );
+
 }
 
 
+
+window.addEventListener(
+  "resize",
+  function () {
+
+    fitAttendancePreview();
+
+  }
+);
 /* =====================================================
    METADATA
 
@@ -1204,6 +1341,95 @@ async function downloadAttendancePdf() {
 
     if (pages.length === 1) {
 
+      /* ==============================================
+   CLONE A4 KHAS UNTUK PDF
+   BUANG SCALE PREVIEW MOBILE
+============================================== */
+
+const pdfPage =
+  pages[0].cloneNode(true);
+
+pdfPage.style.transform =
+  "none";
+
+pdfPage.style.transformOrigin =
+  "initial";
+
+pdfPage.style.margin =
+  "0";
+
+pdfPage.style.marginBottom =
+  "0";
+
+pdfPage.style.width =
+  "210mm";
+
+pdfPage.style.height =
+  "297mm";
+
+pdfPage.style.minHeight =
+  "297mm";
+
+pdfPage.style.boxShadow =
+  "none";
+
+
+const pdfStage =
+  document.createElement(
+    "div"
+  );
+
+pdfStage.style.position =
+  "absolute";
+
+pdfStage.style.left =
+  "0";
+
+pdfStage.style.top =
+  "0";
+
+pdfStage.style.width =
+  "210mm";
+
+pdfStage.style.background =
+  "#ffffff";
+
+pdfStage.style.zIndex =
+  "-9999";
+
+pdfStage.style.pointerEvents =
+  "none";
+
+
+pdfStage.appendChild(
+  pdfPage
+);
+
+document.body.appendChild(
+  pdfStage
+);
+
+
+/*
+  Tunggu browser render A4
+  pada saiz sebenar.
+*/
+await new Promise(
+  function (resolve) {
+
+    requestAnimationFrame(
+      function () {
+
+        requestAnimationFrame(
+          resolve
+        );
+
+      }
+    );
+
+  }
+);
+
       const options = {
 
         margin: 0,
@@ -1212,13 +1438,13 @@ async function downloadAttendancePdf() {
           filename,
 
         image: {
-          type: "jpeg",
-          quality: 0.98
+          type: "png",
+          quality: 1
         },
 
         html2canvas: {
 
-          scale: 2,
+          scale: 3,
 
           useCORS: true,
 
@@ -1245,9 +1471,11 @@ async function downloadAttendancePdf() {
 
 
       await html2pdf()
-        .set(options)
-        .from(pages[0])
-        .save();
+  .set(options)
+  .from(pdfPage)
+  .save();
+
+pdfStage.remove();
 
 
       showAttendanceMessage(

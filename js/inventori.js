@@ -1818,6 +1818,46 @@ function renderInventoryRequestHistory() {
               </span>
             </p>
 
+
+            ${
+
+  (
+    String(
+      request.statusPermohonan || ""
+    )
+      .trim()
+      .toUpperCase()
+      .includes("LULUS") ||
+
+    String(
+      request.statusPermohonan || ""
+    )
+      .trim()
+      .toUpperCase()
+      .includes("SERAHAN")
+  )
+
+    ? `
+
+      <button
+        type="button"
+        class="inventory-view-form-button"
+        onclick="openInventoryForm(
+          '${escapeInventoryHtml(
+            request.tarikhMohon || ""
+          )}'
+        )"
+      >
+        📄 Lihat Borang
+      </button>
+
+    `
+
+    : ""
+}
+
+
+
           </article>
 
         `;
@@ -2010,6 +2050,43 @@ function renderInventoryRequestStatus() {
                 : ""
             }
 
+${
+
+  (
+    String(
+      request.statusPermohonan || ""
+    )
+      .trim()
+      .toUpperCase()
+      .includes("LULUS") ||
+
+    String(
+      request.statusPermohonan || ""
+    )
+      .trim()
+      .toUpperCase()
+      .includes("SERAHAN")
+  )
+
+    ? `
+
+      <button
+        type="button"
+        class="inventory-view-form-button"
+        onclick="openInventoryForm(
+          '${escapeInventoryHtml(
+            request.tarikhMohon || ""
+          )}'
+        )"
+      >
+        📄 Lihat Borang
+      </button>
+
+    `
+
+    : ""
+}
+
           </article>
 
         `;
@@ -2019,7 +2096,55 @@ function renderInventoryRequestStatus() {
 
 }
 
+/* =========================================
+   LIHAT BORANG INVENTORI
+========================================= */
 
+function openInventoryForm(tarikhMohon) {
+
+  const session =
+    getInventoriSession();
+
+  const idPaspa =
+    String(
+      session?.idPaspa || ""
+    ).trim();
+
+  const tarikh =
+    String(
+      tarikhMohon || ""
+    ).trim();
+
+
+  if (
+    !idPaspa ||
+    !tarikh
+  ) {
+
+    alert(
+      "Maklumat borang tidak lengkap."
+    );
+
+    return;
+  }
+
+
+  const url =
+    "inventori-borang.html" +
+    "?idPaspa=" +
+    encodeURIComponent(
+      idPaspa
+    ) +
+    "&tarikh=" +
+    encodeURIComponent(
+      tarikh
+    );
+
+
+  window.location.href =
+    url;
+
+}
 /* =========================================
    BUTTON KEMBALI
 ========================================= */

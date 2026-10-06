@@ -1263,17 +1263,13 @@ formButton.addEventListener(
       tidak merosakkan query string.
     */
 
-    const url =
-      "inventori-borang.html" +
-      "?idPaspa=" +
-      encodeURIComponent(
-        idPaspa
-      ) +
-      "&tarikh=" +
-      encodeURIComponent(
-        group.tarikh
-      );
-
+ const url =
+  "inventori-borang.html" +
+  "?idPaspa=" +
+  encodeURIComponent(idPaspa) +
+  "&tarikh=" +
+ encodeURIComponent(group.tarikh) +
+  "&from=admin";
 
     window.open(
       url,
@@ -1315,6 +1311,83 @@ formActions.appendChild(
 
     const card =
       itemInfo(r);
+
+/* =====================================
+   STATUS + LIHAT BORANG
+===================================== */
+
+const handoverStatusRow =
+  document.createElement("div");
+
+handoverStatusRow.className =
+  "handover-status-row";
+
+
+/* BUTTON LIHAT BORANG */
+
+const handoverFormButton =
+  document.createElement("button");
+
+handoverFormButton.type =
+  "button";
+
+handoverFormButton.className =
+  "handover-form-button";
+
+handoverFormButton.innerHTML =
+  "📄 Lihat Borang";
+
+
+handoverFormButton.addEventListener(
+  "click",
+  function (event) {
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    const idPaspa =
+      String(
+        r.idPaspa || ""
+      ).trim();
+
+   const tarikh =
+  date(
+    r.tarikhMohon
+  );
+
+    if (
+      !idPaspa ||
+      !tarikh ||
+      tarikh === "-"
+    ) {
+
+      alert(
+        "Maklumat borang tidak lengkap."
+      );
+
+      return;
+    }
+
+    window.location.href =
+      "inventori-borang.html" +
+      "?idPaspa=" +
+      encodeURIComponent(idPaspa) +
+      "&tarikh=" +
+      encodeURIComponent(tarikh);
+
+  }
+);
+
+
+handoverStatusRow.appendChild(
+  handoverFormButton
+);
+
+card.appendChild(
+  handoverStatusRow
+);
+
+
 
     add(
       card,
@@ -1586,22 +1659,48 @@ formActions.appendChild(
         );
 
 
-      /* =====================================
-         SUDAH DIPROSES
-      ===================================== */
+     /* =====================================
+     REKOD KELULUSAN
+     HANYA YANG TELAH SELESAI DISERAHKAN
+===================================== */
 
-      const processed =
-        requests.filter(
-          r =>
+const processed =
+  requests.filter(
+    r => {
 
-            String(
-              r.statusPermohonan || ""
-            )
-              .trim()
-              .toUpperCase() !==
-            "MENUNGGU KELULUSAN"
+      const status =
+        String(
+          r.statusPermohonan || ""
+        )
+          .trim()
+          .toUpperCase();
 
-        );
+      const approved =
+        Number(
+          r.kuantitiDilulus
+        ) || 0;
+
+      const received =
+        Number(
+          r.kuantitiDiterima
+        ) || 0;
+
+
+      /*
+        REKOD KELULUSAN hanya untuk
+        inventori yang telah selesai
+        diserahkan sepenuhnya.
+      */
+
+      return (
+        status !== "MENUNGGU KELULUSAN" &&
+        status !== "DITOLAK" &&
+        approved > 0 &&
+        received >= approved
+      );
+
+    }
+  );
 
 
       /* =====================================

@@ -431,6 +431,43 @@
 
     }
 
+/* ==================================================
+   FIT BORANG KE DALAM SKRIN
+   PREVIEW SAHAJA - TIDAK GANGGU PRINT / PDF
+================================================== */
+
+@media screen {
+
+  .page-scroll {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  #formsContainer {
+    width: 100%;
+  }
+
+  .kew-page {
+    transform-origin: top center;
+  }
+
+}
+
+
+/* MOBILE */
+@media screen and (max-width: 800px) {
+
+  body {
+    padding: 8px;
+  }
+
+  .page-scroll {
+    width: 100%;
+    overflow: hidden;
+  }
+
+}
+
 
     /* ==================================================
    PRINT / PDF
@@ -875,6 +912,7 @@
 
 "use strict";
 
+let isLeavingInventoryForm = false;
 
 /* =====================================================
    CONFIG
@@ -1620,18 +1658,21 @@ async function loadInventoryForm() {
 
   } catch (error) {
 
-    console.error(
-      "LOAD INVENTORY FORM ERROR:",
-      error
-    );
-
-
-    alert(
-      error.message ||
-      "Borang tidak dapat dimuatkan."
-    );
-
+  if (isLeavingInventoryForm) {
+    return;
   }
+
+  console.error(
+    "LOAD INVENTORY FORM ERROR:",
+    error
+  );
+
+  alert(
+    error.message ||
+    "Borang tidak dapat dimuatkan."
+  );
+
+}
 
 }
 
@@ -1754,35 +1795,71 @@ async function createInventoryPdfBlob() {
     );
 
 
-  pages.forEach(
-    function (page) {
+pages.forEach(
+  function (page) {
 
-      page.style.width =
-        "277mm";
+    /*
+      PENTING:
+      Buang scale preview mobile daripada clone PDF.
+    */
+    page.style.transform =
+      "none";
 
-      page.style.height =
-  "188mm";
+    page.style.transformOrigin =
+      "initial";
 
-page.style.minHeight =
-  "178mm";
+    /*
+      Buang margin-bottom inline yang digunakan
+      oleh fungsi fitInventoryPreview().
+    */
+    page.style.marginBottom =
+      "";
 
-      page.style.margin =
-         "10mm 10mm 12mm";
+    /*
+      Saiz sebenar untuk PDF A4 landscape.
+    */
+    page.style.width =
+      "277mm";
 
-      page.style.padding =
-        "0";
+    page.style.height =
+      "188mm";
 
-      page.style.boxSizing =
-        "border-box";
+    page.style.minHeight =
+      "178mm";
 
-      page.style.boxShadow =
-        "none";
+    page.style.margin =
+      "10mm 10mm 12mm";
 
-page.style.overflow =
-  "visible";
+    page.style.padding =
+      "0";
 
-    }
-  );
+    page.style.boxSizing =
+      "border-box";
+
+    page.style.boxShadow =
+      "none";
+
+    page.style.overflow =
+      "visible";
+
+  }
+);
+
+
+/*
+  Reset saiz container yang mungkin
+  diwarisi daripada preview mobile.
+*/
+pdfContainer.style.width =
+  "297mm";
+
+pdfContainer.style.margin =
+  "0";
+
+pdfContainer.style.transform =
+  "none";
+
+
 
 
   stage.appendChild(
@@ -1828,17 +1905,17 @@ page.style.overflow =
     image: {
 
       type:
-        "jpeg",
+        "png",
 
       quality:
-        0.98
+        1
 
     },
 
     html2canvas: {
 
       scale:
-        2,
+        3,
 
       useCORS:
         true,
@@ -2194,8 +2271,6 @@ document
 
     }
   );
-
-
 /* =====================================================
    KEMBALI
 ===================================================== */
@@ -2208,20 +2283,164 @@ document
     "click",
     function () {
 
-      if (window.opener) {
+      const params =
+        new URLSearchParams(
+          window.location.search
+        );
 
-        window.close();
+      const from =
+        String(
+          params.get("from") || ""
+        )
+          .trim()
+          .toLowerCase();
+
+
+      /* =====================================
+         DIBUKA DARIPADA ADMIN
+      ===================================== */
+
+      if (from === "admin") {
+
+        if (window.opener) {
+
+
+isLeavingInventoryForm = true;
+
+
+          window.close();
+
+          return;
+        }
+
+        window.location.href =
+          "admin-inventori.html";
 
         return;
-
       }
 
 
+      /* =====================================
+         DIBUKA DARIPADA AHLI
+      ===================================== */
+
       window.location.href =
-        "admin-inventori.html";
+        "inventori.html";
 
     }
   );
+
+
+/* =====================================================
+   AUTO FIT PREVIEW
+===================================================== */
+
+function fitInventoryPreview() {
+
+  const pageScroll =
+    document.querySelector(
+      ".page-scroll"
+    );
+
+  const container =
+    document.getElementById(
+      "formsContainer"
+    );
+
+  if (
+    !pageScroll ||
+    !container
+  ) {
+    return;
+  }
+
+
+  const pages =
+    container.querySelectorAll(
+      ".kew-page"
+    );
+
+  if (!pages.length) {
+    return;
+  }
+
+
+  /* Reset dahulu untuk dapat saiz asal */
+  pages.forEach(
+    function (page) {
+
+      page.style.transform =
+        "none";
+
+    }
+  );
+
+
+  const firstPage =
+    pages[0];
+
+  const originalWidth =
+    firstPage.offsetWidth;
+
+  if (!originalWidth) {
+    return;
+  }
+
+
+  const availableWidth =
+    pageScroll.clientWidth;
+
+
+  let scale =
+    availableWidth /
+    originalWidth;
+
+
+  /* Jangan besarkan melebihi saiz asal */
+  scale =
+    Math.min(
+      scale,
+      1
+    );
+
+
+  pages.forEach(
+    function (page) {
+
+      page.style.transformOrigin =
+        "top left";
+
+      page.style.transform =
+        "scale(" +
+        scale +
+        ")";
+
+      /*
+        Buang ruang kosong yang terhasil
+        selepas transform.
+      */
+      page.style.marginBottom =
+        (
+          page.offsetHeight *
+          (scale - 1)
+        ) +
+        "px";
+
+    }
+  );
+
+
+  container.style.width =
+    (
+      originalWidth *
+      scale
+    ) +
+    "px";
+
+  container.style.margin =
+    "0 auto";
+
+}
 
 
 /* =====================================================
@@ -2230,9 +2449,33 @@ document
 
 document.addEventListener(
   "DOMContentLoaded",
-  loadInventoryForm
+  async function () {
+
+    await loadInventoryForm();
+
+    requestAnimationFrame(
+      function () {
+
+        requestAnimationFrame(
+          fitInventoryPreview
+        );
+
+      }
+    );
+
+  }
 );
 
+
+/* AUTO FIT SEMULA JIKA SAIZ SKRIN BERUBAH */
+window.addEventListener(
+  "resize",
+  function () {
+
+    fitInventoryPreview();
+
+  }
+);
 </script>
 
 

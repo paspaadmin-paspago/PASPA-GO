@@ -386,15 +386,20 @@ body {
 
 
 /* =====================================================
-   RESPONSIVE SCREEN
+   RESPONSIVE SCREEN - FIT A4 DALAM SKRIN
 ===================================================== */
 
 @media screen and (max-width: 850px) {
 
   .document-container {
-    align-items: flex-start;
+    width: 100%;
 
-    overflow-x: auto;
+    padding-left: 8px;
+    padding-right: 8px;
+
+    align-items: center;
+
+    overflow-x: hidden;
   }
 
   .a4-page {
@@ -510,3 +515,19 @@ body {
   box-shadow: none;
 }
 
+/* =====================================================
+   PREVIEW FIT TO SCREEN
+   TIDAK DIGUNAKAN UNTUK PRINT
+===================================================== */
+
+@media screen {
+
+  .document-container {
+    overflow-x: hidden;
+  }
+
+  .a4-page {
+    transform-origin: top left;
+  }
+
+}

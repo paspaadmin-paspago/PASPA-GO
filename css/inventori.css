@@ -830,3 +830,56 @@
   }
 
 }
+
+/* =====================================================
+   BUTTON LIHAT BORANG INVENTORI
+===================================================== */
+
+.inventory-view-form-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: auto;
+  min-height: 30px;
+
+  margin-top: 8px;
+  padding: 6px 11px;
+
+  border: 1px solid #b9cbe2;
+  border-radius: 7px;
+
+  background: #f3f7fc;
+  color: #103a78;
+
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+
+  line-height: 1.2;
+  white-space: nowrap;
+
+  cursor: pointer;
+}
+
+.inventory-view-form-button:hover {
+  background: #e4edf8;
+  border-color: #20579a;
+}
+
+.inventory-view-form-button:active {
+  transform: translateY(1px);
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+  .inventory-view-form-button {
+    min-height: 28px;
+    padding: 5px 9px;
+    font-size: 10px;
+  }
+
+}
