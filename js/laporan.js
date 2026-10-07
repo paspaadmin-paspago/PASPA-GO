@@ -1118,7 +1118,7 @@ document
 ===================================================== */
 
 let reportBmiMembers = [];
-
+let reportMembers = [];
 
 async function loadBmiReport() {
 
@@ -1206,6 +1206,61 @@ async function loadBmiReport() {
       "Laporan BMI tidak dapat dimuatkan.",
       "error"
     );
+
+  }
+
+}
+
+/* =====================================================
+   LOAD ALL MEMBERS FOR MEMBER SEARCH
+===================================================== */
+
+async function loadReportMembers() {
+
+  try {
+
+    const result = await apiPost({
+
+      action: "admin_report_members",
+
+      idPaspa: currentSession.idPaspa
+
+    });
+
+
+    if (
+      !result ||
+      result.success !== true
+    ) {
+
+      throw new Error(
+        result?.message ||
+        "Senarai ahli tidak dapat dimuatkan."
+      );
+
+    }
+
+
+    reportMembers =
+      Array.isArray(result.members)
+        ? result.members
+        : [];
+
+
+    console.log(
+      "REPORT MEMBERS LOADED:",
+      reportMembers.length
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "REPORT MEMBERS ERROR:",
+      error
+    );
+
+    reportMembers = [];
 
   }
 
@@ -1666,7 +1721,7 @@ if (resumeMemberSearch) {
        */
 
       const results =
-        reportBmiMembers
+         reportMembers
           .filter(
             function (member) {
 
@@ -2261,6 +2316,8 @@ document.addEventListener(
     await loadMemberSummary();
 
     await loadBmiReport();
+
+    await loadReportMembers();
 
     await loadProgramReport();
 
