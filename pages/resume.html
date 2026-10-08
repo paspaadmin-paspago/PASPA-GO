@@ -126,6 +126,13 @@
           class="paspa-logo"
           onerror="this.style.display='none'"
         >
+<div class="resume-team-name">
+  <strong>PASUKAN KHAS PERTAHANAN AWAM</strong>
+  <span>Civil Defence Special Team</span>
+  <span>(Malaysia Civil Defence Force)</span>
+</div>
+
+
 
       </div>
 
@@ -537,6 +544,14 @@
 >
     </div>
 
+    <div class="resume-team-name">
+  <strong>PASUKAN KHAS PERTAHANAN AWAM</strong>
+  <span>Civil Defence Special Team</span>
+  <span>(Malaysia Civil Defence Force)</span>
+</div>
+
+
+
     <div class="resume-page2-title">
       <h1>MAKLUMAT AHLI PASPA</h1>
       <p>PASPA Personal Details</p>
@@ -553,9 +568,10 @@
     <!-- TAJUK -->
     <div class="activity-heading">
 
-      <h2>
-        REKOD PENGLIBATAN AHLI
-      </h2>
+      <h2 class="resume-bilingual-heading">
+  REKOD PENGLIBATAN AHLI
+  <small>Member Participation Records</small>
+</h2>
 
       <div
         class="activity-member-name"
@@ -582,6 +598,7 @@
 
       <div class="activity-section-title">
         1. PROGRAM
+        <small class="resume-title-en">Programmes</small>
       </div>
 
       <div class="activity-table-wrap">
@@ -637,6 +654,7 @@
 
       <div class="activity-section-title">
         2. OPERASI
+        <small class="resume-title-en">Operations</small>
       </div>
 
       <div class="activity-table-wrap">
@@ -820,7 +838,106 @@
 
   </div>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
+  const translations = {
+    "No. Kad Pengenalan": "Identity Card No.",
+    "Jantina": "Gender",
+    "Email": "Email Address",
+    "No. Badan (Selain ID PASPA)": "Service Number (Other than PASPA ID)",
+    "Tarikh Lantikan PASPA": "PASPA Appointment Date",
+    "Jawatan PASPA": "PASPA Position",
+
+    "Pangkat": "Rank",
+    "Taraf Lantikan": "Appointment Type",
+    "Gred Jawatan": "Job Grade",
+    "Cawangan/PDPA/PUPA": "Branch/PDPA/PUPA",
+    "Negeri Berkhidmat (PTJ)": "State of Service (Responsibility Centre)",
+
+    "No. Telefon": "Phone Number",
+    "No. Tel Waris": "Next of Kin's Phone Number",
+    "Alamat Kediaman": "Residential Address",
+    "Poskod": "Postcode",
+    "Daerah": "District",
+    "Negeri": "State",
+    "Taraf Perkahwinan": "Marital Status",
+
+    "Jenis Darah": "Blood Type",
+    "Ketinggian": "Height",
+    "Berat Badan": "Body Weight",
+    "BMI": "Body Mass Index",
+
+    "Saiz T-Shirt": "T-Shirt Size",
+    "Saiz Seluar Sukan": "Sports Pants Size",
+    "Saiz Uniform": "Uniform Size",
+    "Saiz Beret": "Beret Size",
+    "Saiz Jaket": "Jacket Size",
+    "Saiz Kasut Sukan": "Sports Shoe Size",
+    "Saiz Kasut Boot": "Boot Size",
+    "Saiz Tali Pinggang": "Belt Size"
+  };
+
+  document.querySelectorAll(
+    "#resumePage .info-row > span"
+  ).forEach(function(label) {
+
+    const malay = label.textContent.trim();
+    const english = translations[malay];
+
+    if (!english) return;
+
+    label.classList.add("resume-bilingual-label");
+
+    const translation = document.createElement("small");
+    translation.className = "resume-english-label";
+    translation.textContent = english;
+
+    label.appendChild(translation);
+
+
+    // ==========================================
+// TERJEMAHAN TAJUK SEKSYEN MYRESUME
+// ==========================================
+
+const sectionTranslations = {
+  "MAKLUMAT PERIBADI": "Personal Information",
+  "MAKLUMAT PERKHIDMATAN": "Service Information",
+  "MAKLUMAT PERHUBUNGAN / KELUARGA": "Contact / Family Information",
+  "MAKLUMAT KECERGASAN": "Fitness Information",
+  "MAKLUMAT PAKAIAN DAN AKSESORI": "Clothing Information",
+  "PENGAKUAN": "Declaration"
+};
+
+document.querySelectorAll(
+  "#resumePage .info-card h3, #resumePage .declaration-card h3"
+).forEach(function (heading) {
+
+  const malay = heading.textContent
+    .trim()
+    .replace(/^\d+\.\s*/, "")
+    .replace(/\s+/g, " ")
+    .toUpperCase();
+
+  const english = sectionTranslations[malay];
+
+  if (!english) return;
+
+  if (heading.querySelector(".resume-section-en")) return;
+
+  const translation = document.createElement("small");
+
+  translation.className = "resume-section-en";
+  translation.textContent = english;
+
+  heading.appendChild(translation);
+
+});
+
+  });
+
+});
+</script>
 <script src="../js/resume.js"></script>
 </body>
 </html>

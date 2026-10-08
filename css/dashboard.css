@@ -1925,3 +1925,228 @@ body.dashboard-body {
   display: none !important;
   content: none !important;
 }
+
+/* ==========================================
+   PASPA GO DASHBOARD
+   STICKY HEADER + LOGO + LOGOUT
+========================================== */
+
+/* HEADER KEKAL KETIKA SCROLL */
+.dashboard-header {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 9999 !important;
+
+  width: 100%;
+  min-height: 125px;
+
+  display: grid !important;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  align-items: start;
+
+  padding: 10px 12px 6px;
+
+  background: #102b55;
+  border: 1px solid rgba(255,255,255,0.12);
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+}
+
+/* LOGO PASPA GO - NAIK SEDIKIT */
+.dashboard-header .dashboard-logo {
+  display: block;
+
+  width: 100%;
+  max-width: 230px;
+  height: auto;
+
+  margin: 0 auto;
+
+  transform: translateY(-9px);
+
+  object-fit: contain;
+  align-self: center;
+}
+
+/* QR SCANNER */
+.dashboard-header .qr-scanner-button {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+
+  cursor: pointer;
+}
+
+/* LOGOUT */
+.dashboard-header .logout-button {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+
+  cursor: pointer;
+}
+
+/* IKON HOVER */
+.dashboard-header .qr-scanner-button:hover,
+.dashboard-header .logout-button:hover {
+  background: rgba(255,255,255,0.12);
+  border-radius: 8px;
+}
+
+/* MOBILE */
+@media (max-width: 480px) {
+
+  .dashboard-header {
+    min-height: 125px;
+    grid-template-columns: 38px minmax(0, 1fr) 38px;
+    padding: 8px 10px 5px;
+  }
+
+  .dashboard-header .dashboard-logo {
+    max-width: 215px;
+    transform: translateY(-10px);
+  }
+
+  .dashboard-header .qr-scanner-button,
+  .dashboard-header .logout-button {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* ==========================================
+   STICKY HEADER SCROLL SUPPORT
+========================================== */
+
+.dashboard-body {
+  overflow-x: clip;
+}
+
+.dashboard-shell {
+  overflow: visible !important;
+}
+
+/* ==========================================
+   FIX SAIZ DAN KEDUDUKAN LOGO PASPA GO
+========================================== */
+
+.dashboard-header {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 9999 !important;
+
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+
+  min-height: 125px;
+  padding: 10px 12px 6px;
+}
+
+/* LOGO BESAR SEPERTI ASAL */
+.dashboard-header .dashboard-logo {
+  position: absolute !important;
+
+  width: 180px !important;
+  max-width: 75% !important;
+  height: auto !important;
+
+  left: 50% !important;
+  top: 25px !important;
+
+  margin: 0 !important;
+  transform: translateX(-50%) !important;
+
+  object-fit: contain !important;
+}
+
+/* QR DI KIRI */
+.dashboard-header .qr-scanner-button {
+  position: relative;
+  z-index: 2;
+}
+
+/* LOGOUT DI KANAN */
+.dashboard-header .logout-button {
+  position: relative;
+  z-index: 2;
+}
+
+/* ==========================================
+   PASPA GO - FIXED DASHBOARD HEADER
+========================================== */
+
+/* HEADER KEKAL SEMASA SCROLL */
+.dashboard-header {
+  position: fixed !important;
+  top: 0 !important;
+  left: 50% !important;
+
+  transform: translateX(-50%) !important;
+
+  width: calc(100% - 28px) !important;
+  max-width: 332px !important;
+
+  height: 100px !important;
+  min-height: 100px !important;
+
+  z-index: 99999 !important;
+
+  background: #102b55 !important;
+}
+
+/* LOGO KEKAL SAIZ 180PX */
+.dashboard-header .dashboard-logo {
+  width: 180px !important;
+  max-width: 75% !important;
+}
+
+/* RUANG UNTUK HEADER SUPAYA KAD AHLI
+   TIDAK TERLINDUNG */
+.dashboard-shell {
+  padding-top: 140px !important;
+}
+
+/* PAPARAN SKRIN LEBIH BESAR */
+@media (min-width: 481px) {
+  .dashboard-header {
+    max-width: 360px !important;
+  }
+}
+
+/* ==========================================
+   DASHBOARD - QR & LOGOUT ICON ADJUSTMENT
+========================================== */
+
+/* Kecilkan kedua-dua ikon */
+.dashboard-header .qr-scanner-button svg,
+.dashboard-header .logout-button svg {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+/* Naikkan ikon QR */
+.dashboard-header .qr-scanner-button {
+  transform: translateY(-9px) !important;
+}
+
+/* Naikkan ikon Logout */
+.dashboard-header .logout-button {
+  transform: translateY(-9px) !important;
+}

@@ -2370,3 +2370,242 @@ body {
   text-align: center !important;
   white-space: nowrap !important;
 }
+
+/* ==========================================
+   MYRESUME - BILINGUAL LABELS
+========================================== */
+
+#resumePage .info-row > .resume-bilingual-label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+  line-height: 1.25;
+  min-width: 0;
+}
+
+#resumePage .resume-english-label {
+  display: block;
+  font-family: Arial, sans-serif;
+  font-size: 7px;
+  font-style: italic;
+  font-weight: 400;
+  color: #718096;
+  line-height: 1.2;
+}
+
+/* Pastikan terjemahan kekal dalam PDF */
+@media print {
+  #resumePage .resume-english-label {
+    font-size: 7px !important;
+    font-style: italic !important;
+    color: #718096 !important;
+  }
+}
+
+/* ==========================================
+   MYRESUME - BILINGUAL SECTION TITLES
+========================================== */
+
+#resumePage .info-card h3,
+#resumePage .declaration-card h3 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+#resumePage .resume-section-en {
+  display: block;
+  font-size: 8px;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.2;
+  text-transform: none;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Kekalkan terjemahan semasa cetakan */
+@media print {
+  #resumePage .resume-section-en {
+    display: block !important;
+    font-size: 8px !important;
+    font-style: italic !important;
+    font-weight: 400 !important;
+    color: #ffffff !important;
+  }
+}
+
+
+
+
+/* ==========================================
+   MYRESUME - NAMA PASUKAN DWIBAHASA
+========================================== */
+
+.resume-team-name {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  color: #102f58;
+  line-height: 1.15;
+  min-width: 0;
+}
+
+.resume-team-name strong {
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.12;
+}
+
+.resume-team-name span {
+  font-size: 9px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+/* Muka surat pertama */
+#resumePage .header-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Muka surat kedua */
+#resumePage2 .resume-page2-header {
+  display: flex;
+  align-items: center;
+}
+
+#resumePage2 .resume-team-name {
+  margin-left: 12px;
+  margin-right: auto;
+}
+
+/* Terjemahan tajuk */
+.resume-bilingual-heading small,
+.resume-title-en {
+  display: block;
+  font-size: 8px;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.2;
+  text-transform: none;
+}
+
+.resume-bilingual-heading small {
+  margin-top: 3px;
+}
+
+#resumePage2 th .resume-title-en {
+  font-size: 7px;
+  margin-top: 2px;
+}
+
+/* ==========================================
+   MYRESUME - ANJAK SHADING BIRU KE KANAN
+   MUKA SURAT 1 DAN 2
+========================================== */
+
+/* MUKA SURAT 1 */
+#resumePage .resume-header {
+  background: linear-gradient(
+    120deg,
+    #ffffff 0%,
+    #ffffff 55%,
+    #174d7f 55.2%,
+    #103d70 100%
+  ) !important;
+}
+
+/* MUKA SURAT 2 */
+#resumePage2 .resume-page2-header {
+  background: linear-gradient(
+    120deg,
+    #ffffff 0%,
+    #ffffff 55%,
+    #174d7f 55.2%,
+    #103d70 100%
+  ) !important;
+}
+
+/* PASTIKAN NAMA PASUKAN JELAS */
+.resume-team-name {
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+}
+
+.resume-team-name strong {
+  color: #102f58;
+}
+
+.resume-team-name span {
+  color: #174d7f;
+}
+
+/* ==========================================
+   MYRESUME - HEADER SEMUA MUKA SURAT
+   PAGE 2, PAGE 3 DAN SETERUSNYA
+========================================== */
+
+.resume-page-activities .resume-page2-header {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+
+  background: linear-gradient(
+    120deg,
+    #ffffff 0%,
+    #ffffff 60%,
+    #174d7f 60.2%,
+    #103d70 100%
+  ) !important;
+}
+
+/* Logo dan nama pasukan */
+.resume-page-activities .resume-page2-logo {
+  position: relative;
+  z-index: 3;
+  flex-shrink: 0;
+}
+
+.resume-page-activities .resume-team-name {
+  position: relative;
+  z-index: 3;
+  margin-left: 12px;
+  margin-right: auto;
+  flex-shrink: 0;
+}
+
+.resume-page-activities .resume-team-name strong {
+  color: #102f58 !important;
+  font-size: 12px !important;
+  line-height: 1.15;
+}
+
+.resume-page-activities .resume-team-name span {
+  color: #174d7f !important;
+  font-size: 8px !important;
+  font-style: italic;
+}
+
+/* Tajuk kanan */
+.resume-page-activities .resume-page2-title {
+  position: relative;
+  z-index: 4;
+  margin-left: auto;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.resume-page-activities .resume-page2-title h1 {
+  font-size: 16px !important;
+}
+
+.resume-page-activities .resume-page2-title p {
+  font-size: 9px !important;
+}
