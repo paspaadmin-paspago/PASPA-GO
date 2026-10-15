@@ -111,19 +111,42 @@ body {
 
 .resume-page {
   width: 210mm;
+  height: 297mm;
   min-height: 297mm;
+  max-height: 297mm;
 
   margin: 24px auto;
+  padding: 0;
 
   background: white;
 
-  box-shadow:
-    0 8px 30px
-    rgba(0, 0, 0, 0.16);
-
-  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.16);
 
   position: relative;
+  overflow: hidden;
+
+  box-sizing: border-box;
+}
+
+/* SUSUN ATUR KHUSUS MUKA SURAT PERTAMA */
+#resumePage {
+  display: grid;
+  grid-template-rows:
+    31mm
+    59mm
+    minmax(0, 1fr)
+    15mm;
+}
+
+#resumePage .resume-columns {
+  min-height: 0;
+  height: auto;
+}
+
+#resumePage .resume-footer {
+  height: 15mm;
+  min-height: 15mm;
+  box-sizing: border-box;
 }
 
 
@@ -1130,11 +1153,11 @@ body {
        Jumlah      297mm
     */
 
-    grid-template-rows:
-      34mm
-      65mm
-      183mm
-      15mm !important;
+  grid-template-rows:
+  31mm
+  59mm
+  192mm
+  15mm !important;
 
     overflow: hidden !important;
 
@@ -1147,8 +1170,8 @@ body {
   =============================== */
 
   .resume-header {
-    height: 34mm !important;
-    min-height: 34mm !important;
+ height: 31mm !important;
+  min-height: 31mm !important;
 
     padding:
       7mm
@@ -1177,8 +1200,8 @@ body {
   =============================== */
 
   .identity-section {
-    height: 65mm !important;
-    min-height: 65mm !important;
+  height: 59mm !important;
+  min-height: 59mm !important;
 
     padding:
       7mm
@@ -1221,8 +1244,8 @@ body {
      KANDUNGAN UTAMA
   =============================== */
 
-  .resume-columns {
-    height: 183mm !important;
+.resume-columns {
+  height: 192mm !important;
 
     display: grid !important;
 
@@ -1255,11 +1278,13 @@ body {
      Sebarkan ruang secara sekata.
   */
 
-  .resume-column:first-child
-  .info-card {
-    flex: 1 1 0 !important;
-  }
+/* KAD KIRI MENGIKUT KETINGGIAN KANDUNGAN */
 
+.resume-column:first-child .info-card {
+  flex: 0 0 auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+}
 
   /*
      Column kanan:
@@ -1273,14 +1298,15 @@ body {
 
 
   .info-card,
-  .declaration-card {
-    display: flex !important;
+.declaration-card {
+  display: flex !important;
 
-    flex-direction: column !important;
+  flex-direction: column !important;
 
-    overflow: hidden !important;
-  }
+  overflow: visible !important;
 
+  min-height: 0 !important;
+}
 
   .info-card h3,
   .declaration-card h3 {
@@ -2608,4 +2634,214 @@ body {
 
 .resume-page-activities .resume-page2-title p {
   font-size: 9px !important;
+}
+
+/* ==========================================
+   MYRESUME - DISPLAY SETTINGS
+========================================== */
+
+.resume-display-settings {
+  width: min(95%, 794px);
+  margin: 16px auto;
+  padding: 14px 18px;
+  background: #ffffff;
+  border: 1px solid #dce4ef;
+  border-radius: 10px;
+  box-sizing: border-box;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+}
+
+.resume-settings-title {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  color: #123d70;
+}
+
+.resume-settings-title strong {
+  font-size: 13px;
+}
+
+.resume-settings-title small {
+  font-size: 10px;
+  font-style: italic;
+  color: #64748b;
+}
+
+.resume-settings-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  margin-top: 12px;
+}
+
+.resume-settings-options label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #173b69;
+  cursor: pointer;
+}
+
+.resume-settings-options input {
+  accent-color: #174f82;
+}
+
+.resume-settings-note {
+  margin-top: 12px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #16704a;
+}
+
+/* Tetapan tidak dimasukkan dalam PDF */
+@media print {
+  .resume-display-settings {
+    display: none !important;
+  }
+}
+
+/* ==========================================
+   MYRESUME - SETTINGS DI LUAR KERTAS A4
+========================================== */
+
+.resume-display-settings {
+  position: relative !important;
+  display: block;
+  width: min(95%, 794px);
+  margin: 16px auto 20px !important;
+  box-sizing: border-box;
+}
+
+/* SEMBUNYIKAN KETIKA PRINT */
+@media print {
+
+  .resume-display-settings {
+    display: none !important;
+  }
+
+}
+
+
+/* ==========================================
+   PASPA GO - FIX MAKLUMAT TERPOTONG
+   MYRESUME PDF A4
+========================================== */
+
+#resumePage .resume-column {
+  min-height: 0 !important;
+}
+
+#resumePage .resume-column:first-child .info-card {
+  flex: 0 0 auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+#resumePage .info-body {
+  flex: 0 0 auto !important;
+  display: block !important;
+  padding: 1mm 4mm 2mm !important;
+}
+
+#resumePage .info-row {
+  flex: none !important;
+  min-height: 0 !important;
+  padding: 1mm 0 !important;
+}
+
+#resumePage .resume-columns {
+  align-items: start !important;
+}
+
+@media print {
+  #resumePage .resume-column:first-child .info-card {
+    flex: 0 0 auto !important;
+    height: auto !important;
+  }
+
+  #resumePage .info-body {
+    flex: 0 0 auto !important;
+    display: block !important;
+  }
+
+  #resumePage .info-row {
+    flex: none !important;
+    min-height: 0 !important;
+    padding: 1mm 0 !important;
+  }
+}
+
+
+/* ==========================================
+   FIX A4 PAGE 1 - RUANG UNTUK MAKLUMAT KELUARGA
+========================================== */
+
+@media print {
+
+  #resumePage {
+    grid-template-rows:
+      31mm
+      49mm
+      202mm
+      15mm !important;
+  }
+
+  #resumePage .identity-section {
+    height: 49mm !important;
+    min-height: 49mm !important;
+    padding: 3mm 10mm !important;
+  }
+
+  #resumePage .photo-box {
+    width: 42mm !important;
+    height: 45mm !important;
+    flex: 0 0 42mm !important;
+  }
+
+  #resumePage .resume-columns {
+    height: 202mm !important;
+    padding: 2mm 5mm !important;
+  }
+
+}
+
+
+/* ==========================================
+   MYRESUME PAGE 1 - CONTENT FIT
+========================================== */
+
+#resumePage .resume-columns {
+  box-sizing: border-box !important;
+  padding: 2mm 5mm !important;
+  align-items: start !important;
+}
+
+#resumePage .resume-column {
+  min-height: 0 !important;
+  gap: 2mm !important;
+}
+
+#resumePage .info-card h3,
+#resumePage .declaration-card h3 {
+  padding: 2mm 3mm !important;
+}
+
+#resumePage .info-body {
+  display: block !important;
+  padding: 1mm 3mm !important;
+}
+
+#resumePage .info-row {
+  min-height: 0 !important;
+  padding: 0.7mm 0 !important;
+  line-height: 1.2 !important;
+}
+
+#resumePage .resume-footer {
+  width: 100% !important;
+  height: 15mm !important;
+  min-height: 15mm !important;
+  box-sizing: border-box !important;
 }

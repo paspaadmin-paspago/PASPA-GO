@@ -463,12 +463,16 @@ function displayResume(result, session) {
      MAKLUMAT PERIBADI
   ================================================= */
 
-  setResumeText(
-    "rIc",
-    formatResumeIc(
-      profile.noKadPengenalan
-    )
-  );
+window.__resumeFullIc = formatResumeIc(
+  profile.noKadPengenalan
+);
+
+setResumeText(
+  "rIc",
+  window.__resumeFullIc
+);
+
+applyResumeDisplayOptions();
 
   setResumeText(
     "rGender",
@@ -1340,21 +1344,7 @@ function prepareActivityPage(
   memberId
 ) {
 
-  page.classList.remove(
-    "hidden"
-  );
-
-function prepareActivityPage(
-  page,
-  pageNumber,
-  memberName,
-  memberId
-) {
-
-  page.classList.remove(
-    "hidden"
-  );
-
+  page.classList.remove("hidden");
 
   setActivityPageMemberInfo(
     page,
@@ -1362,60 +1352,19 @@ function prepareActivityPage(
     memberId
   );
 
-
   if (pageNumber > 2) {
 
-    page.removeAttribute(
-      "id"
-    );
+    page.removeAttribute("id");
 
     page.classList.add(
       "resume-generated-activity-page"
     );
 
-
-    page
-      .querySelectorAll("[id]")
-      .forEach(
-        function (element) {
-
-          element.removeAttribute(
-            "id"
-          );
-
-        }
-      );
-
-  }
-
-}
-
-
-  /*
-   * ID hanya dibenarkan pada Page 2 asal.
-   * Page tambahan tidak boleh mempunyai duplicate ID.
-   */
-
-  if (pageNumber > 2) {
-
-    page.removeAttribute(
-      "id"
+    page.querySelectorAll("[id]").forEach(
+      function (element) {
+        element.removeAttribute("id");
+      }
     );
-
-    page.classList.add(
-      "resume-generated-activity-page"
-    );
-
-
-    page
-      .querySelectorAll("[id]")
-      .forEach(
-        function (element) {
-          element.removeAttribute(
-            "id"
-          );
-        }
-      );
 
   }
 
@@ -2012,9 +1961,13 @@ function buildResumeActivityPages(
   };
 
 
-  /*
-   * PROGRAM dahulu.
-   */
+/* =====================================================
+   PILIHAN PAPARAN PROGRAM DAN OPERASI
+===================================================== */
+
+/* PROGRAM */
+
+if (getResumeOption("program")) {
 
   paginateResumeActivityType(
     "program",
@@ -2022,16 +1975,26 @@ function buildResumeActivityPages(
     state
   );
 
+}
 
-  /*
-   * OPERASI selepas Program.
-   */
+
+/* OPERASI */
+
+if (getResumeOption("operation")) {
 
   paginateResumeActivityType(
     "operation",
     operations,
     state
   );
+
+}
+
+
+/* SEMBUNYIKAN PAGE 2 DAN SETERUSNYA
+   JIKA KEDUA-DUANYA TIDAK DIPILIH */
+
+applyResumeDisplayOptions();
 
 }
 
@@ -2142,6 +2105,19 @@ async function loadResumeActivities(
 
     const memberId =
       normalizedId;
+
+
+
+/* SIMPAN DATA PROGRAM DAN OPERASI */
+
+window.__resumeActivityData = {
+  programs: programs,
+  operations: operations,
+  memberName: memberName,
+  memberId: memberId
+};
+
+
 
 
     /*
@@ -3855,16 +3831,11 @@ document
 ===================================================== */
 
 function fitResumeToMobile() {
-  const pages = [
-    document.getElementById(
-      "resumePage"
-    ),
-
-    document.getElementById(
-      "resumePage2"
-    )
-  ].filter(Boolean);
-
+  const pages = Array.from(
+  document.querySelectorAll(
+    ".resume-page"
+  )
+);
   if (!pages.length) {
     return;
   }
@@ -4112,6 +4083,192 @@ function refreshResumeMobileLayout() {
   );
 }
 
+
+/* =====================================================
+   PASPA GO - MYRESUME DISPLAY OPTIONS
+===================================================== */
+
+const RESUME_OPTION_IDS = {
+  ic: "resumeShowFullIc",
+  clothing: "resumeShowClothing",
+  declaration: "resumeShowDeclaration",
+  program: "resumeShowProgram",
+  operation: "resumeShowOperation"
+};
+
+const RESUME_DEFAULT_OPTIONS = {
+  ic: true,
+  clothing: true,
+  declaration: true,
+  program: false,
+  operation: false
+};
+
+function getResumeOption(key) {
+
+  const checkbox = document.getElementById(
+    RESUME_OPTION_IDS[key]
+  );
+
+  return checkbox
+    ? checkbox.checked
+    : RESUME_DEFAULT_OPTIONS[key];
+
+}
+
+function setResumeSectionVisibility(
+  selector,
+  visible
+) {
+
+  document.querySelectorAll(selector).forEach(
+    function (element) {
+      element.style.display = visible ? "" : "none";
+    }
+  );
+
+}
+
+function applyResumeDisplayOptions() {
+
+  /* NO KAD PENGENALAN */
+
+  const fullIc = window.__resumeFullIc || "-";
+
+  const digits = fullIc.replace(/\D/g, "");
+
+  const displayIc =
+    getResumeOption("ic") || digits.length !== 12
+      ? fullIc
+      : "******-**-" + digits.slice(-4);
+
+  setResumeText("rIc", displayIc);
+
+
+  /* MAKLUMAT PAKAIAN */
+
+  setResumeSectionVisibility(
+    "#resumeClothingSection",
+    getResumeOption("clothing")
+  );
+
+
+  /* PENGAKUAN */
+
+  setResumeSectionVisibility(
+    "#resumeDeclarationSection",
+    getResumeOption("declaration")
+  );
+
+  setResumeSectionVisibility("#resumeDeclarationTitle", getResumeOption("declaration"));
+
+  /* PROGRAM DAN OPERASI */
+
+/* SEMAK PILIHAN PROGRAM DAN OPERASI */
+
+const showProgram = getResumeOption("program");
+const showOperation = getResumeOption("operation");
+
+const showActivities = showProgram || showOperation;
+
+/* SEMBUNYIKAN SEMUA MUKA SURAT AKTIVITI
+   JIKA KEDUA-DUANYA TIDAK DIPILIH */
+
+document.querySelectorAll(
+  "#resumePage2, .resume-generated-activity-page"
+).forEach(function(page) {
+
+  if (!showActivities) {
+
+    page.classList.add("hidden");
+    page.style.setProperty(
+      "display",
+      "none",
+      "important"
+    );
+
+  } else {
+
+    page.classList.remove("hidden");
+    page.style.removeProperty("display");
+
+  }
+
+});
+
+
+  /* QR DIKEKALKAN */
+
+  refreshResumeMobileLayout();
+
+}
+
+function onResumeOptionChanged() {
+
+  const data = window.__resumeActivityData;
+
+  const showProgram = getResumeOption("program");
+  const showOperation = getResumeOption("operation");
+
+  const showActivities = showProgram || showOperation;
+
+  if (data) {
+
+    if (showActivities) {
+
+      // Bina semula rekod berdasarkan checkbox
+      buildResumeActivityPages(
+        data.programs,
+        data.operations,
+        data.memberName,
+        data.memberId
+      );
+
+    } else {
+
+      // Buang semua muka surat tambahan
+      removeGeneratedResumeActivityPages();
+
+      // Kosongkan rekod pada muka surat kedua
+      const page2Content = document.querySelector(
+        "#resumePage2 .resume-page2-content"
+      );
+
+      if (page2Content) {
+        page2Content.innerHTML = "";
+      }
+
+    }
+
+  }
+
+  // Kemas kini paparan semua seksyen
+  applyResumeDisplayOptions();
+
+  // Batalkan PDF lama supaya PDF baharu
+  // mengikut pilihan checkbox terkini
+  preparedResumePdfFile = null;
+
+}
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function () {
+
+    Object.values(RESUME_OPTION_IDS).forEach(
+      function (id) {
+
+        document.getElementById(id)
+          ?.addEventListener(
+            "change",
+            onResumeOptionChanged
+          );
+
+      }
+    );
+
+  }
+);
 
 /* =====================================================
    START

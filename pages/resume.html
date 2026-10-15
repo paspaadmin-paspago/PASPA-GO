@@ -101,6 +101,78 @@
   ></div>
 
 
+
+<!-- ==========================================
+     MYRESUME - PILIHAN PAPARAN
+========================================== -->
+
+<div class="resume-display-settings">
+
+  <div class="resume-settings-title">
+    <strong>PAPARKAN</strong>
+    <small>
+      Pilih maklumat untuk dipaparkan dalam resume
+    </small>
+  </div>
+
+  <div class="resume-settings-options">
+
+    <label>
+      <input
+        type="checkbox"
+        id="resumeShowFullIc"
+      >
+      No. Kad Pengenalan Penuh
+    </label>
+
+    <label>
+      <input
+        type="checkbox"
+        id="resumeShowClothing"
+        checked
+      >
+      Maklumat Pakaian dan Eksesori
+    </label>
+
+    <label>
+      <input
+        type="checkbox"
+        id="resumeShowDeclaration"
+        checked
+      >
+      Pengakuan
+    </label>
+
+    <label>
+      <input
+        type="checkbox"
+        id="resumeShowProgram"
+        checked
+      >
+      Program
+    </label>
+
+    <label>
+      <input
+        type="checkbox"
+        id="resumeShowOperation"
+        checked
+      >
+      Operasi
+    </label>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
   <!-- ==================================================
        A4 RESUME
   =================================================== -->
@@ -142,6 +214,10 @@
       </div>
 
     </header>
+
+
+
+
 
 
     <!-- IDENTITI -->
@@ -386,7 +462,10 @@
 
         <!-- PAKAIAN -->
 
-        <section class="info-card">
+        <section
+  class="info-card"
+  id="resumeClothingSection"
+>
 
           <h3>
             5. MAKLUMAT PAKAIAN DAN AKSESORI
@@ -443,14 +522,17 @@
 
 <section class="declaration-card">
 
-  <h3>
-    PENGAKUAN
-  </h3>
+  <h3 id="resumeDeclarationTitle">
+  PENGAKUAN
+</h3>
 
   <div class="declaration-content">
 
-    <!-- BAHAGIAN KIRI -->
-    <div class="declaration-main">
+ <!-- BAHAGIAN KIRI -->
+<div
+  class="declaration-main"
+  id="resumeDeclarationSection"
+>
 
       <p>
         Saya mengesahkan bahawa maklumat yang

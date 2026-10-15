@@ -531,3 +531,51 @@ body {
   }
 
 }
+
+
+/* ==========================================
+   PASPA GO - QR KEHADIRAN
+   SENARAI PROGRAM / OPERASI
+========================================== */
+
+.document-info-area {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 12px;
+}
+
+.document-info-logo {
+  flex: 0 0 auto;
+}
+
+.document-info {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.attendance-qr-box {
+  flex: 0 0 95px;
+  width: 95px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-left: auto;
+}
+
+.attendance-qr-code {
+  width: 85px;
+  height: 85px;
+  background: #ffffff;
+}
+
+.attendance-qr-label {
+  font-family: Arial, sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  color: #123d70;
+  text-align: center;
+  white-space: nowrap;
+}

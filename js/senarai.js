@@ -353,9 +353,25 @@ function buildOfficialHeader(
 
       </tr>
 
+    
     </table>
 
+    <!-- QR CODE KEHADIRAN -->
+    <div class="attendance-qr-box">
+
+      <div
+        class="attendance-qr-code"
+        id="attendanceQrPage${pageNumber}"
+      ></div>
+
+      <div class="attendance-qr-label">
+        IMBAS KEHADIRAN
+      </div>
+
+    </div>
+
   </div>
+
 
 `;
 }
@@ -944,16 +960,17 @@ function renderPages(
     }
   );
 
-/* Fit selepas semua A4 siap dibina */
-requestAnimationFrame(
-  function () {
 
-    requestAnimationFrame(
-      fitAttendancePreview
-    );
+requestAnimationFrame(function () {
 
-  }
-);
+  generateAttendanceQrCodes();
+
+  requestAnimationFrame(function () {
+    fitAttendancePreview();
+  });
+
+});
+
 
 
 
@@ -1819,3 +1836,57 @@ document.addEventListener(
 
   }
 );
+
+
+/* ==========================================
+   PASPA GO - QR CODE KEHADIRAN
+========================================== */
+
+function generateAttendanceQrCodes() {
+
+  if (typeof QRCode === "undefined") {
+    console.error("QR Code library belum dimuatkan.");
+    return;
+  }
+
+  const qrContainers = document.querySelectorAll(
+    ".attendance-qr-code"
+  );
+
+  if (!qrContainers.length) {
+    return;
+  }
+
+  // Alamat halaman imbasan PASPA GO.
+  // Gunakan URL HTTPS sebenar apabila diterbitkan.
+  const checkinUrl = new URL(
+    "kehadiran-scan.html",
+    window.location.href
+  );
+
+  checkinUrl.searchParams.set(
+    "type",
+    attendanceType
+  );
+
+  checkinUrl.searchParams.set(
+    "recordId",
+    attendanceRecordId
+  );
+
+  qrContainers.forEach(function (container) {
+
+    container.innerHTML = "";
+
+    new QRCode(container, {
+      text: checkinUrl.href,
+      width: 85,
+      height: 85,
+      colorDark: "#000000",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.M
+    });
+
+  });
+
+}
