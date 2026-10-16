@@ -2150,3 +2150,78 @@ body.dashboard-body {
 .dashboard-header .logout-button {
   transform: translateY(-9px) !important;
 }
+
+
+/* ==========================================
+   PASPA GO - FULL WIDTH DESKTOP HEADER
+   MOBILE TIDAK BERUBAH
+========================================== */
+
+@media screen and (min-width: 651px) {
+
+  .dashboard-header {
+    position: fixed !important;
+
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+
+    transform: none !important;
+
+    width: 100% !important;
+    max-width: none !important;
+
+    box-sizing: border-box !important;
+
+    border-radius: 0 0 24px 24px !important;
+  }
+
+  .dashboard-header .qr-scanner-button {
+    position: absolute !important;
+    left: 24px !important;
+  }
+
+  .dashboard-header .logout-button {
+    position: absolute !important;
+    right: 24px !important;
+  }
+
+}
+
+
+/* ==========================================
+   PASPA GO - MOBILE ICON EDGE FIX
+========================================== */
+
+@media screen and (max-width: 650px) {
+
+  .dashboard-header {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* QR CODE - KIRI */
+  .dashboard-header .qr-scanner-button {
+    position: absolute !important;
+    left: 0 !important;
+    right: auto !important;
+    top: 10px !important;
+
+    width: 30px !important;
+    height: 36px !important;
+    min-height: 36px !important;
+  }
+
+  /* LOGOUT - KANAN */
+  .dashboard-header .logout-button {
+    position: absolute !important;
+    right: 0 !important;
+    left: auto !important;
+    top: 10px !important;
+
+    width: 30px !important;
+    height: 36px !important;
+    min-height: 36px !important;
+  }
+
+}

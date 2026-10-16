@@ -189,7 +189,60 @@ function getLatestActionSortTime(
 }
 
 
+
+/* ==========================================
+   BADGE TINDAKAN BELUM SELESAI
+========================================== */
+
+function updateLatestActionBadge() {
+
+  const badge = document.getElementById(
+    "latestActionBadge"
+  );
+
+  if (!badge) return;
+
+  const pendingCount = latestActionItems.filter(
+    function (entry) {
+
+      const data = entry.data || {};
+
+      let status = "";
+
+      if (entry.type === "program") {
+        status = String(
+          data.statusMesej || ""
+        ).trim().toUpperCase();
+      }
+
+      if (entry.type === "operation") {
+        status = String(
+          data.statusAturGerak ||
+          data.statusOperasi ||
+          ""
+        ).trim().toUpperCase();
+      }
+
+      return (
+        status !== "SELESAI" &&
+        status !== "BATAL" &&
+        status !== "DIBATALKAN" &&
+        status !== "CANCELLED"
+      );
+
+    }
+  ).length;
+
+  badge.textContent =
+    pendingCount > 99 ? "99+" : String(pendingCount);
+
+  badge.hidden = pendingCount === 0;
+}
+
+
 function renderLatestActions() {
+
+updateLatestActionBadge();
 
   if (!latestActionContent) {
     return;

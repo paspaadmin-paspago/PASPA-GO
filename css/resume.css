@@ -2845,3 +2845,65 @@ body {
   min-height: 15mm !important;
   box-sizing: border-box !important;
 }
+
+
+/* ==========================================
+   PASPA GO - RESUME QR DISPLAY FIX
+========================================== */
+
+@media screen {
+
+  .resume-qr-code canvas,
+  .resume-qr-code img {
+    image-rendering: pixelated !important;
+    image-rendering: crisp-edges !important;
+  }
+
+}
+
+
+
+
+
+/* ==========================================
+   PASPA GO - FINAL QR CODE FIX
+   MYRESUME SCREEN + PDF
+========================================== */
+
+#resumePage #resumeQrCode {
+  width: 88px !important;
+  height: 88px !important;
+  min-width: 88px !important;
+  min-height: 88px !important;
+
+  display: block !important;
+  position: relative !important;
+
+  margin: 0 auto !important;
+  padding: 0 !important;
+
+  overflow: hidden !important;
+  background: #ffffff !important;
+}
+
+/* Paparkan imej QR sahaja */
+#resumePage #resumeQrCode canvas {
+  display: none !important;
+}
+
+/* Gunakan imej QR beresolusi tinggi */
+#resumePage #resumeQrCode img {
+  display: block !important;
+
+  width: 88px !important;
+  height: 88px !important;
+
+  max-width: 88px !important;
+  max-height: 88px !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  object-fit: contain !important;
+  image-rendering: auto !important;
+}

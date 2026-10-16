@@ -1253,3 +1253,249 @@ body {
   margin-top: 0 !important;
   top: auto !important;
 }
+
+
+/* ==========================================
+   PASPA GO - ADMIN COLOUR GRID
+========================================== */
+
+.menu-card {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px !important;
+  padding: 14px !important;
+  background: #ffffff !important;
+  border-radius: 18px !important;
+  align-items: stretch;
+}
+
+/* SEMUA KOTAK MENU */
+.menu-card > .orange-menu-button,
+.menu-card > .latest-action {
+  min-width: 0;
+  width: 100%;
+}
+
+/* REKA BENTUK KAD */
+.menu-card > .orange-menu-button,
+.latest-action > .orange-menu-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 112px;
+  margin: 0 !important;
+  padding: 15px 9px;
+
+  border: none !important;
+  border-radius: 15px !important;
+
+  color: #ffffff !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  text-align: center;
+  line-height: 1.4;
+
+  box-shadow: 0 5px 12px rgba(0,0,0,0.13);
+  cursor: pointer;
+
+  transition: transform .2s, filter .2s;
+}
+
+/* IKON SETIAP MENU */
+.menu-card > .orange-menu-button::before,
+.latest-action > .orange-menu-button::before {
+  display: block;
+  margin-bottom: 9px;
+  font-size: 29px;
+  line-height: 1;
+}
+
+/* WARNA MENU */
+#latestActionButton {
+  background: #e67e22 !important;
+}
+#latestActionButton::before {
+  content: "📋";
+}
+
+#adminProgramMenu {
+  background: #1976d2 !important;
+}
+#adminProgramMenu::before {
+  content: "📅";
+}
+
+#adminOperationMenu {
+  background: #c03942 !important;
+}
+#adminOperationMenu::before {
+  content: "🚨";
+}
+
+#adminInventoryMenu {
+  background: #168c79 !important;
+}
+#adminInventoryMenu::before {
+  content: "📦";
+}
+
+#adminRecognitionMenu {
+  background: #6554b5 !important;
+}
+#adminRecognitionMenu::before {
+  content: "🏅";
+}
+
+#adminAnnouncementMenu {
+  background: #884ab0 !important;
+}
+#adminAnnouncementMenu::before {
+  content: "📢";
+}
+
+#adminAppointmentMenu {
+  background: #32628e !important;
+}
+#adminAppointmentMenu::before {
+  content: "👥";
+}
+
+#adminMessageMenu {
+  background: #bb861b !important;
+}
+#adminMessageMenu::before {
+  content: "✉️";
+}
+
+#adminTemplateMenu {
+  background: #667085 !important;
+}
+#adminTemplateMenu::before {
+  content: "📄";
+}
+
+#adminReportMenu {
+  background: #287b9b !important;
+}
+#adminReportMenu::before {
+  content: "📊";
+}
+
+/* DROPDOWN TINDAKAN TERKINI */
+.latest-action {
+  position: relative;
+  min-width: 0;
+}
+
+#latestActionButton {
+  width: 100%;
+  position: relative;
+}
+
+#latestActionArrow {
+  position: absolute;
+  right: 10px;
+  bottom: 8px;
+  font-size: 12px;
+}
+
+/* KANDUNGAN DROPDOWN BUKA
+   DI BAWAH KESELURUHAN GRID */
+.latest-action:has(
+  .latest-action-content:not([hidden])
+) {
+  grid-column: 1 / -1;
+}
+
+.latest-action-content {
+  margin: 12px 0 0 !important;
+  border-radius: 12px !important;
+}
+
+/* KOTAK TIADA AKSES */
+.no-access-box {
+  grid-column: 1 / -1;
+}
+
+/* INTERAKSI */
+.menu-card .orange-menu-button:hover {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+}
+
+/* DESKTOP */
+@media (min-width: 701px) {
+  .menu-card {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .menu-card {
+    gap: 10px !important;
+    padding: 12px !important;
+  }
+
+  .menu-card > .orange-menu-button,
+  .latest-action > .orange-menu-button {
+    min-height: 105px;
+    font-size: 11px !important;
+  }
+}
+
+
+
+/* ==========================================
+   BADGE TINDAKAN TERKINI
+========================================== */
+
+#latestActionButton {
+  position: relative !important;
+}
+
+.latest-action-badge {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 25px;
+  height: 25px;
+  padding: 0 5px;
+
+  border-radius: 50px;
+  background: #e00018;
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 8px rgba(224, 0, 24, .5);
+
+  animation: paspaBadgeBlink 1.3s infinite;
+}
+
+@keyframes paspaBadgeBlink {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: .55;
+    transform: scale(1.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .latest-action-badge {
+    animation: none;
+  }
+}

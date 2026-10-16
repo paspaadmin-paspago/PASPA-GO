@@ -1081,24 +1081,24 @@ function generateResumeQr(idPaspa) {
 
   try {
 
-    new QRCode(
-      qrContainer,
-      {
+   
 
-        text:
-          publicUrl.toString(),
+new QRCode(
+  qrContainer,
+  {
+    text: publicUrl.toString(),
 
-        width:
-          176,
+    width: 360,
+    height: 360,
 
-        height:
-          176,
+    colorDark: "#000000",
+    colorLight: "#ffffff",
 
-        correctLevel:
-          QRCode.CorrectLevel.H
+    correctLevel: QRCode.CorrectLevel.M
+  }
+);
 
-      }
-    );
+
 
 
     if (qrId) {
