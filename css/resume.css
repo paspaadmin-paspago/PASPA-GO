@@ -2888,7 +2888,18 @@ body {
 
 /* Paparkan imej QR sahaja */
 #resumePage #resumeQrCode canvas {
-  display: none !important;
+  display: block !important;
+
+  width: 88px !important;
+  height: 88px !important;
+
+  max-width: 88px !important;
+  max-height: 88px !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  image-rendering: pixelated !important;
 }
 
 /* Gunakan imej QR beresolusi tinggi */
