@@ -329,3 +329,246 @@ body {
 .topbar-btn:hover {
   background: rgba(255,255,255,0.18);
 }
+
+
+/* =========================================
+   PASPA AI - RICH TEXT RESPONSE
+========================================= */
+
+.message.bot {
+  line-height: 1.75;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+/* TAJUK */
+.message.bot h1,
+.message.bot h2,
+.message.bot h3 {
+  color: #ffffff;
+  line-height: 1.35;
+  margin: 18px 0 10px;
+  font-weight: 700;
+}
+
+.message.bot h1 {
+  font-size: 21px;
+}
+
+.message.bot h2 {
+  font-size: 18px;
+}
+
+.message.bot h3 {
+  font-size: 16px;
+}
+
+/* PERENGGAN */
+.message.bot p {
+  margin: 0 0 12px;
+}
+
+.message.bot p:last-child {
+  margin-bottom: 0;
+}
+
+/* BOLD DAN ITALIC */
+.message.bot strong {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.message.bot em {
+  font-style: italic;
+}
+
+/* BULLET DAN NOMBOR */
+.message.bot ul,
+.message.bot ol {
+  margin: 10px 0 15px;
+  padding-left: 24px;
+}
+
+.message.bot li {
+  margin-bottom: 8px;
+  padding-left: 3px;
+}
+
+.message.bot li::marker {
+  color: #ff9b35;
+}
+
+/* PAUTAN */
+.message.bot a {
+  color: #63c7ff;
+  text-decoration: underline;
+  overflow-wrap: anywhere;
+}
+
+/* JADUAL */
+.message.bot table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 15px 0;
+  font-size: 13px;
+  display: block;
+  overflow-x: auto;
+}
+
+.message.bot th,
+.message.bot td {
+  border: 1px solid #42658b;
+  padding: 10px;
+  text-align: left;
+}
+
+.message.bot th {
+  background: #24548a;
+  color: white;
+}
+
+/* PETIKAN */
+.message.bot blockquote {
+  margin: 14px 0;
+  padding: 10px 14px;
+  border-left: 4px solid #ff9138;
+  background: rgba(255,255,255,0.06);
+  border-radius: 6px;
+}
+
+/* BLOK KOD */
+.message.bot pre {
+  background: #071426;
+  padding: 12px;
+  border-radius: 10px;
+  overflow-x: auto;
+  margin: 12px 0;
+}
+
+.message.bot code {
+  font-family: Consolas, monospace;
+  font-size: 12px;
+}
+
+/* GAMBAR DALAM JAWAPAN */
+.message.bot img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin: 12px 0;
+}
+
+/* GARIS PEMISAH */
+.message.bot hr {
+  border: 0;
+  border-top: 1px solid #42658b;
+  margin: 18px 0;
+}
+
+/* PAPARAN MOBILE */
+@media (max-width: 600px) {
+  .message.bot {
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .message.bot h1 {
+    font-size: 19px;
+  }
+
+  .message.bot h2 {
+    font-size: 17px;
+  }
+
+  .message.bot table {
+    font-size: 12px;
+  }
+}
+
+
+/* PASPA AI - ANIMASI SEDANG MENJAWAB */
+
+.ai-loading {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 40px;
+  padding: 12px 18px;
+}
+
+.typing-dots {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.typing-dots span {
+  width: 9px;
+  height: 9px;
+  background: #65b9ff;
+  border-radius: 50%;
+  animation: paspaTyping 1.2s infinite ease-in-out;
+}
+
+.typing-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes paspaTyping {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.35;
+  }
+
+  30% {
+    transform: translateY(-7px);
+    opacity: 1;
+  }
+}
+
+/* RAPATKAN BANNER DENGAN HEADER */
+
+.chat-header-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  margin-top: -33px;
+}
+
+
+
+
+
+
+
+/* KAWASAN BANNER */
+.chat-banner-wrap {
+  position: relative;
+  overflow: visible;
+}
+
+/* BANNER ASAL */
+.chat-header-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 0;
+}
+
+/* HELMET TIMBUL DI ATAS HEADER */
+.chat-helmet-overlay {
+  position: absolute;
+  width: 95px;
+  height: auto;
+  left: 55px;
+  top: -22px;
+  z-index: 100;
+  pointer-events: none;
+}

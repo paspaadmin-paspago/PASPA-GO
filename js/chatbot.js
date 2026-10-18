@@ -26,20 +26,50 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Paparkan mesej dalam ruangan chatbot
-  function addMessage(text, sender) {
-    const message = document.createElement("div");
+ 
+function addMessage(text, sender) {
 
-    message.className = "message " + sender;
+  const message = document.createElement("div");
 
-    // textContent menghalang HTML daripada
-    // dilaksanakan sebagai kod berbahaya.
-    message.textContent = String(text || "");
+  message.className = "message " + sender;
 
-    chatMessages.appendChild(message);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
+  const content = String(text || "");
 
-    return message;
+  // Jawapan AI dipaparkan sebagai Markdown
+  if (
+    sender === "bot" &&
+    typeof marked !== "undefined" &&
+    typeof DOMPurify !== "undefined"
+  ) {
+
+    const html = marked.parse(content, {
+      gfm: true,
+      breaks: true
+    });
+
+    // Bersihkan HTML sebelum dipaparkan
+    message.innerHTML = DOMPurify.sanitize(html);
+
+    // Pautan dibuka dalam tab baharu
+    message.querySelectorAll("a").forEach(function(link) {
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+    });
+
+  } else {
+
+    // Mesej pengguna kekal sebagai teks biasa
+    message.textContent = content;
+
   }
+
+  chatMessages.appendChild(message);
+
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+
+  return message;
+}
+
 
   // Semak sesi sebelum pengguna menghantar soalan
   if (!getSessionToken()) {
@@ -78,10 +108,20 @@ document.addEventListener("DOMContentLoaded", function () {
     sendBtn.disabled = true;
     sendBtn.textContent = "Tunggu...";
 
-    const loadingMessage = addMessage(
-      "PASPA GO AI sedang menyediakan jawapan...",
-      "bot"
-    );
+   const loadingMessage = addMessage("", "bot");
+
+loadingMessage.classList.add("ai-loading");
+
+const dots = document.createElement("div");
+dots.className = "typing-dots";
+
+for (let i = 0; i < 3; i++) {
+  const dot = document.createElement("span");
+  dots.appendChild(dot);
+}
+
+loadingMessage.appendChild(dots);
+loadingMessage.setAttribute("aria-label", "PASPA GO AI sedang mencari jawapan");
 
     try {
 

@@ -48,11 +48,23 @@
 
 
 <header class="chat-header">
+  
+<div class="chat-banner-wrap">
+
   <img
     src="../images/paspa-ai-header.png"
-    alt="PASPA AI"
     class="chat-header-image"
+    alt="PASPA AI"
   >
+
+  <img
+    src="../images/paspa-helmet.png"
+    class="chat-helmet-overlay"
+    alt=""
+  >
+
+</div>
+
 </header>
 
 
@@ -60,16 +72,13 @@
              aria-live="polite">
 
       <div class="message bot">
-        Salam sejahtera! Saya PASPA Ai.
-        Ada pertanyaan berkaitan 
-        PASPA atau Pertahanan Awam?
+        Salam sejahtera! Saya PASPA Ai. Ada apa-apa soalan?
       </div>
 
     </section>
 
     <div class="chat-notice">
-      Jangan masukkan maklumat peribadi atau sulit.
-      Jawapan AI perlu disemak dengan sumber rasmi.
+    
     </div>
 
     <form class="chat-input" id="chatForm">
@@ -94,6 +103,13 @@
   
 <script src="../js/config.js"></script>
 <script src="../js/api.js"></script>
+
+<!-- MARKDOWN RENDERER -->
+<script src="https://cdn.jsdelivr.net/npm/marked@15.0.12/marked.min.js"></script>
+
+<!-- HTML SANITIZER -->
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
+
 <script src="../js/chatbot.js"></script>
 
 
