@@ -1,0 +1,331 @@
+
+/* =========================================
+   PASPA AI - MODERN CHAT INTERFACE
+   THEME: NAVY / ELECTRIC BLUE / ORANGE
+========================================= */
+
+:root {
+  --navy: #091a33;
+  --navy-light: #102847;
+  --blue: #173d6b;
+  --electric: #36bdfb;
+  --orange: #ff8737;
+  --text: #eaf3ff;
+  --muted: #9db5d1;
+  --border: #294768;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: linear-gradient(
+    135deg,
+    #08162c 0%,
+    #143b63 55%,
+    #0b1b33 100%
+  );
+}
+
+/* =========================================
+   MAIN CHAT CONTAINER
+========================================= */
+
+.chat-container {
+  width: 100%;
+  max-width: 900px;
+  height: 100vh;
+  height: 100dvh;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  background: var(--navy);
+  overflow: hidden;
+  box-shadow: 0 0 45px rgba(0, 0, 0, .3);
+}
+
+/* =========================================
+   PASPA AI BANNER
+========================================= */
+
+.chat-header {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  background: #071b35;
+  overflow: hidden;
+  flex-shrink: 0;
+  border-bottom: none;
+}
+
+.chat-header-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* =========================================
+   CHAT MESSAGE AREA
+========================================= */
+
+#chatMessages {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 24px;
+  background:
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(38, 110, 190, .14),
+      transparent 45%
+    ),
+    linear-gradient(
+      180deg,
+      #0b1e39 0%,
+      #09182e 100%
+    );
+  scrollbar-width: thin;
+  scrollbar-color: #345b84 transparent;
+}
+
+/* =========================================
+   MESSAGE BUBBLES
+========================================= */
+
+.message {
+  max-width: 82%;
+  padding: 15px 18px;
+  margin-bottom: 16px;
+  border-radius: 18px;
+  line-height: 1.65;
+  font-size: 14px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  animation: messageIn .25s ease-out;
+}
+
+.bot {
+  background: linear-gradient(
+    135deg,
+    #173657,
+    #132b49
+  );
+  color: var(--text);
+  margin-right: auto;
+  border: 1px solid #2a4a70;
+  border-bottom-left-radius: 5px;
+  box-shadow: 0 5px 16px rgba(0,0,0,.12);
+}
+
+.user {
+  background: linear-gradient(
+    135deg,
+    #2166a6,
+    #154679
+  );
+  color: rgb(241, 236, 236);
+  margin-left: auto;
+  border: 1px solid #3280bd;
+  border-bottom-right-radius: 5px;
+  box-shadow: 0 5px 16px rgba(0,0,0,.12);
+}
+
+/* =========================================
+   PRIVACY NOTICE
+========================================= */
+
+.chat-notice {
+  padding: 10px 15px;
+  background: #0c213d;
+  color: var(--muted);
+  font-size: 11px;
+  text-align: center;
+  line-height: 1.5;
+  border-top: 1px solid #1e3b5b;
+  flex-shrink: 0;
+}
+
+/* =========================================
+   INPUT AREA
+========================================= */
+
+.chat-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  background: #0c213d;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+#questionInput {
+  flex: 1;
+  min-width: 0;
+  padding: 15px 17px;
+  background: #142e4e;
+  border: 1px solid #315475;
+  border-radius: 14px;
+  color: white;
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+  transition: .2s ease;
+}
+
+#questionInput::placeholder {
+  color: #90a8c5;
+}
+
+#questionInput:focus {
+  border-color: var(--electric);
+  box-shadow: 0 0 0 3px rgba(54,189,251,.12);
+}
+
+#sendBtn {
+  background: linear-gradient(
+    135deg,
+    #ff9a48,
+    #ee7024
+  );
+  color: #101d2e;
+  border: none;
+  border-radius: 14px;
+  padding: 15px 22px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: .2s ease;
+  box-shadow: 0 4px 14px rgba(255,135,55,.2);
+}
+
+#sendBtn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+#sendBtn:disabled {
+  opacity: .55;
+  cursor: wait;
+  transform: none;
+}
+
+/* =========================================
+   ANIMATION
+========================================= */
+
+@keyframes messageIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================
+   DESKTOP
+========================================= */
+
+@media (min-width: 901px) {
+  .chat-container {
+    border-left: 1px solid #2c4c6e;
+    border-right: 1px solid #2c4c6e;
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+  .chat-container {
+    max-width: 100%;
+  }
+
+  #chatMessages {
+    padding: 15px 12px;
+  }
+
+  .message {
+    max-width: 88%;
+    padding: 13px 15px;
+    font-size: 14px;
+    border-radius: 15px;
+  }
+
+  .chat-input {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  #questionInput {
+    padding: 13px 12px;
+    font-size: 16px;
+  }
+
+  #sendBtn {
+    padding: 13px 16px;
+    font-size: 13px;
+  }
+
+  .chat-notice {
+    font-size: 10px;
+    padding: 8px 12px;
+  }
+}
+
+
+/* =========================================
+   TOP NAVIGATION BAR
+========================================= */
+
+.chat-topbar {
+  width: 100%;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  background: linear-gradient(
+    90deg,
+    #07182e 0%,
+    #164477 55%,
+    #0b2748 100%
+  );
+  border-bottom: 1px solid #38618b;
+  flex-shrink: 0;
+}
+
+.topbar-title {
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.topbar-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #466d94;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.08);
+  color: #ffffff;
+  font-size: 23px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.topbar-btn:hover {
+  background: rgba(255,255,255,0.18);
+}

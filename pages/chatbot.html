@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>PASPA GO AI Chatbot</title>
+  
+<link rel="stylesheet" href="../css/chatbot.css">
+
+
+</head>
+
+<body>
+
+  <main class="chat-container">
+
+   
+<!-- NAVIGASI ATAS PASPA AI -->
+<nav class="chat-topbar" aria-label="Navigasi chatbot">
+
+ 
+<button
+  type="button"
+  class="topbar-btn"
+  id="chatBackBtn"
+  onclick="window.location.href='dashboard.html'"
+  aria-label="Kembali ke Dashboard"
+  title="Kembali">
+  &#8592;
+</button>
+
+
+  <span class="topbar-title">PASPA Ai</span>
+
+  <a
+    href="dashboard.html"
+    class="topbar-btn"
+    aria-label="Halaman utama"
+    title="Dashboard">
+    &#8962;
+  </a>
+
+</nav>
+
+
+
+<header class="chat-header">
+  <img
+    src="../images/paspa-ai-header.png"
+    alt="PASPA AI"
+    class="chat-header-image"
+  >
+</header>
+
+
+    <section id="chatMessages"
+             aria-live="polite">
+
+      <div class="message bot">
+        Salam sejahtera! Saya PASPA Ai.
+        Ada pertanyaan berkaitan 
+        PASPA atau Pertahanan Awam?
+      </div>
+
+    </section>
+
+    <div class="chat-notice">
+      Jangan masukkan maklumat peribadi atau sulit.
+      Jawapan AI perlu disemak dengan sumber rasmi.
+    </div>
+
+    <form class="chat-input" id="chatForm">
+
+      <input
+        id="questionInput"
+        type="text"
+        placeholder="Taip pertanyaan anda..."
+        maxlength="2000"
+        autocomplete="off"
+        required
+      >
+
+      <button id="sendBtn" type="submit">
+        Hantar
+      </button>
+
+    </form>
+
+  </main>
+
+  
+<script src="../js/config.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/chatbot.js"></script>
+
+
+</body>
+</html>

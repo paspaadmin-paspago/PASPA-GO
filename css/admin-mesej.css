@@ -1,0 +1,181 @@
+
+/* ============================================
+   PASPA GO - ADMIN JANA MESEJ
+   PEMILIHAN PENERIMA
+============================================ */
+
+.recipient-selection {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px;
+  margin: 12px 0 22px;
+  background: #f8fafc;
+  border: 1px solid #dbe4ee;
+  border-radius: 16px;
+}
+
+.recipient-selection .field {
+  display: block;
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #253b57;
+}
+
+#messageZoneFilter,
+#messageMemberSearch {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 46px;
+  padding: 11px 14px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  color: #172b4d;
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+#messageZoneFilter:focus,
+#messageMemberSearch:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.recipient-selection .recipient {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  background: #eaf2ff;
+  border: 1px solid #c8dcff;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e3a5f;
+  cursor: pointer;
+}
+
+#selectAllMessageMembers {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  accent-color: #1d4ed8;
+  cursor: pointer;
+}
+
+/* SENARAI ANGGOTA */
+
+.message-member-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+  color: #1e293b;
+  font-size: 14px;
+}
+
+#messageMemberCount {
+  padding: 6px 11px;
+  background: #dbeafe;
+  color: #1d4ed8;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.message-member-list {
+  max-height: 350px;
+  overflow-y: auto;
+  padding: 10px;
+  background: #ffffff;
+  border: 1px solid #dbe4ee;
+  border-radius: 12px;
+}
+
+.message-member-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 7px;
+  padding: 12px;
+  background: #ffffff;
+  border: 1px solid #d9e4f0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.message-member-item:hover {
+  background: #eff6ff;
+  border-color: #93c5fd;
+}
+
+.message-member-item:has(input:checked) {
+  background: #eaf2ff !important;
+  border-color: #3b82f6 !important;
+}
+
+.message-member-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  accent-color: #2563eb;
+}
+
+/* PENERIMA DIPILIH */
+
+.selected-members-box {
+  padding: 16px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 12px;
+  color: #166534;
+  font-size: 13px;
+}
+
+.selected-members-box > strong {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+#selectedMessageMemberList {
+  max-height: 280px;
+  overflow-y: auto;
+  color: #334155;
+}
+
+#selectedMessageMemberList > div {
+  border: 1px solid #dcfce7;
+}
+
+#selectedMessageMemberList button:hover {
+  filter: brightness(0.95);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 600px) {
+  .recipient-selection {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .message-member-list {
+    max-height: 300px;
+  }
+
+  .message-member-heading {
+    flex-wrap: wrap;
+  }
+
+  #selectedMessageMemberList > div {
+    flex-wrap: wrap;
+  }
+}

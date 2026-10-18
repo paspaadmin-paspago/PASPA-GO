@@ -1,0 +1,789 @@
+
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1">
+
+  <title>Jana Mesej | PASPA GO</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0b2046;
+      color: #102c55;
+    }
+
+    .app {
+      max-width: 850px;
+      min-height: 100vh;
+      margin: auto;
+      background: #f3f6fb;
+    }
+
+    header {
+      background: #194b8c;
+      color: white;
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    header a {
+      color: white;
+      text-decoration: none;
+      font-size: 25px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 19px;
+      flex: 1;
+      text-align: center;
+    }
+
+    main { padding: 18px; }
+
+    .panel {
+      background: white;
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      margin: 0 0 8px;
+      font-size: 21px;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: #61758f;
+      margin-bottom: 22px;
+    }
+
+    label.field {
+      display: block;
+      font-weight: bold;
+      font-size: 14px;
+      margin: 17px 0 8px;
+    }
+
+    input[type="text"],
+    select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #c8d5e6;
+      border-radius: 10px;
+      font-size: 14px;
+      background: white;
+    }
+
+    .recipient {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      font-size: 14px;
+    }
+
+    .recipient input {
+      accent-color: #194b8c;
+    }
+
+    .hidden { display: none !important; }
+
+    .zones {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      padding: 12px 0;
+    }
+
+    .zones label {
+      background: #eef4fb;
+      padding: 11px;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 10px;
+      background: #edf3fa;
+      border: 1px solid #c8d5e6;
+      border-radius: 10px 10px 0 0;
+    }
+
+    .toolbar button {
+      border: 1px solid #ccd8e8;
+      background: white;
+      border-radius: 6px;
+      padding: 8px 11px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .editor {
+      min-height: 240px;
+      border: 1px solid #c8d5e6;
+      border-top: 0;
+      border-radius: 0 0 10px 10px;
+      padding: 15px;
+      outline: none;
+      background: white;
+      line-height: 1.6;
+      overflow-wrap: anywhere;
+    }
+
+    .editor:empty::before {
+      content: attr(data-placeholder);
+      color: #93a4bd;
+      pointer-events: none;
+    }
+
+    .attachment {
+      border: 1px dashed #a9c1df;
+      border-radius: 10px;
+      padding: 17px;
+      background: #f7faff;
+    }
+
+    .attachment input {
+      max-width: 100%;
+    }
+
+    .note {
+      font-size: 12px;
+      color: #61758f;
+      margin-top: 9px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .actions button {
+      flex: 1;
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .secondary {
+      background: #e5ecf5;
+      color: #173d74;
+    }
+
+    .primary {
+      background: #173f80;
+      color: white;
+    }
+
+    .preview {
+      background: #f7faff;
+      border: 1px solid #c8d5e6;
+      border-radius: 10px;
+      padding: 15px;
+      line-height: 1.6;
+      overflow-wrap: anywhere;
+    }
+
+    .preview img {
+      max-width: 100%;
+    }
+
+    @media (max-width: 480px) {
+      main { padding: 12px; }
+      .panel { padding: 15px; }
+      .zones { grid-template-columns: 1fr; }
+      .actions { flex-wrap: wrap; }
+      .actions button { min-width: 45%; }
+    }
+  </style>
+
+  <link rel="stylesheet" href="../css/admin-mesej.css">
+</head>
+
+<body>
+
+<div class="app">
+
+  <header>
+    <a href="urus.html" aria-label="Kembali">←</a>
+    <h1>Jana Mesej</h1>
+    <span>✉️</span>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Karang Mesej</h2>
+      <p class="subtitle">
+        Sediakan mesej untuk ahli PASPA GO.
+      </p>
+
+     
+<!-- =====================================================
+     PEMILIHAN PENERIMA MESEJ
+===================================================== -->
+
+<label class="field">Pemilihan Penerima</label>
+
+<div class="recipient-selection">
+
+  <label class="field" for="messageZoneFilter">
+    Tapis Ahli Mengikut Zon
+  </label>
+
+  <select id="messageZoneFilter">
+    <option value="SEMUA">Semua Zon</option>
+    <option value="ZON UTARA">Zon Utara</option>
+    <option value="ZON TENGAH">Zon Tengah</option>
+    <option value="ZON SELATAN">Zon Selatan</option>
+    <option value="ZON TIMUR">Zon Timur</option>
+    <option value="ZON SABAH DAN LABUAN">
+      Zon Sabah dan Labuan
+    </option>
+    <option value="ZON SARAWAK">Zon Sarawak</option>
+  </select>
+
+  <label class="recipient">
+    <input
+      type="checkbox"
+      id="selectAllMessageMembers"
+    >
+    Pilih semua ahli dalam senarai yang dipaparkan
+  </label>
+
+ <label class="field" for="messageMemberSearch">
+  Pilih Penerima Mengikut ID PASPA atau Nama
+</label>
+
+  <input
+    type="search"
+    id="messageMemberSearch"
+    placeholder="Taip ID PASPA atau ejaan nama anggota..."
+  >
+
+  <div class="message-member-heading">
+    <strong>Senarai Ahli</strong>
+    <span id="messageMemberCount">0 dipilih</span>
+  </div>
+
+  <div id="messageMemberList" class="message-member-list">
+    Memuatkan senarai ahli...
+  </div>
+
+  <div class="selected-members-box">
+    <strong>Senarai Penerima Dipilih</strong>
+
+    <div id="selectedMessageMemberList">
+      Tiada penerima dipilih.
+    </div>
+  </div>
+
+</div>
+
+
+      <label class="field" for="messageSubject">
+        Perkara
+      </label>
+      <input id="messageSubject" type="text"
+             maxlength="200"
+             placeholder="Masukkan tajuk mesej">
+
+      <label class="field">Keutamaan</label>
+      <select id="messagePriority">
+        <option value="BIASA">Biasa</option>
+        <option value="PENTING">Penting</option>
+        <option value="SEGERA">Segera</option>
+      </select>
+
+      <label class="field">Kandungan Mesej</label>
+
+
+<div class="toolbar">
+
+  <select id="editorFont" title="Jenis Font">
+    <option value="Arial">Arial</option>
+    <option value="Georgia">Georgia</option>
+    <option value="Times New Roman">Times New Roman</option>
+    <option value="Verdana">Verdana</option>
+    <option value="Tahoma">Tahoma</option>
+  </select>
+
+  <button type="button" data-command="bold" title="Bold"><b>B</b></button>
+  <button type="button" data-command="italic" title="Italic"><i>I</i></button>
+  <button type="button" data-command="underline" title="Underline"><u>U</u></button>
+
+  <button type="button" data-command="removeFormat" title="Buang Format">Tx</button>
+
+  <input type="color" id="editorColor" value="#183153" title="Warna Teks">
+
+  <button type="button" data-command="justifyLeft" title="Kiri">☰</button>
+  <button type="button" data-command="justifyCenter" title="Tengah">≡</button>
+  <button type="button" data-command="justifyRight" title="Kanan">☷</button>
+
+  <button type="button" data-command="insertUnorderedList" title="Bullet">☷</button>
+  <button type="button" data-command="insertOrderedList" title="Nombor">1.</button>
+
+  <button type="button" id="insertTable" title="Jadual">▦</button>
+  <button type="button" id="insertLink" title="Pautan">🔗</button>
+  <button type="button" id="insertImage" title="Gambar">🖼️</button>
+
+</div>
+
+
+      <div id="messageEditor"
+           class="editor"
+           contenteditable="true"
+           role="textbox"
+           aria-label="Kandungan mesej"
+           aria-multiline="true"
+           data-placeholder="Tulis maklumat yang ingin dikongsikan..."></div>
+
+      <label class="field" for="messageAttachment">
+        Lampiran Dokumen
+      </label>
+
+      <div class="attachment">
+        <input id="messageAttachment"
+               type="file"
+               multiple
+               accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png">
+        <p class="note">
+          PDF, Word, Excel dan gambar.
+          Maksimum 3 MB setiap fail.
+        </p>
+      </div>
+
+      <label class="recipient">
+        <input id="pushNotify" type="checkbox" checked>
+        Hantar push notification
+      </label>
+
+      <label class="recipient">
+        <input id="popupNotify" type="checkbox" checked>
+        Paparkan pop-up kepada ahli
+      </label>
+
+      <div class="actions">
+        <button id="previewButton"
+                class="secondary"
+                type="button">Pratonton</button>
+
+        <button id="sendButton"
+                class="primary"
+                type="button">Hantar</button>
+      </div>
+
+
+
+
+
+    </section>
+
+    <section id="previewPanel"
+             class="panel hidden">
+      <h2>Pratonton Mesej</h2>
+      <p id="previewSubject"></p>
+      <div id="previewBody" class="preview"></div>
+    </section>
+  </main>
+</div>
+
+<script>
+"use strict";
+
+const recipientRadios =
+  document.querySelectorAll('input[name="recipient"]');
+
+const sections = {
+  state: document.getElementById("stateFields"),
+  zone: document.getElementById("zoneFields"),
+  specific: document.getElementById("specificFields")
+};
+
+recipientRadios.forEach(function (radio) {
+  radio.addEventListener("change", function () {
+    Object.values(sections).forEach(function (section) {
+      section.classList.add("hidden");
+    });
+
+    if (sections[radio.value]) {
+      sections[radio.value].classList.remove("hidden");
+    }
+  });
+});
+
+document.querySelectorAll("[data-command]")
+  .forEach(function (button) {
+    button.addEventListener("click", function () {
+      document.getElementById("messageEditor").focus();
+      document.execCommand(
+        button.dataset.command,
+        false,
+        null
+      );
+    });
+  });
+
+
+/* MASUKKAN GAMBAR */
+document.getElementById("insertImage")
+  .addEventListener("click", function () {
+
+    const editor = document.getElementById("messageEditor");
+    const selection = window.getSelection();
+
+    const savedRange =
+      selection.rangeCount &&
+      editor.contains(selection.anchorNode)
+        ? selection.getRangeAt(0).cloneRange()
+        : null;
+
+    const url = prompt(
+      "Masukkan URL gambar HTTPS:"
+    );
+
+    if (!url) return;
+
+    if (!/^https:\/\/\S+$/i.test(url.trim())) {
+      alert("Sila masukkan URL gambar HTTPS yang sah.");
+      return;
+    }
+
+    const image = document.createElement("img");
+    image.src = url.trim();
+    image.alt = "Gambar mesej PASPA GO";
+    image.style.maxWidth = "100%";
+    image.style.height = "auto";
+
+    editor.focus();
+
+    const range = savedRange || document.createRange();
+
+    if (!savedRange) {
+      range.selectNodeContents(editor);
+      range.collapse(false);
+    }
+
+    range.deleteContents();
+    range.insertNode(image);
+
+    range.setStartAfter(image);
+    range.collapse(true);
+
+    selection.removeAllRanges();
+    selection.addRange(range);
+
+  });
+
+
+
+
+/* MASUKKAN JADUAL */
+document.getElementById("insertTable")
+  .addEventListener("click", function () {
+
+    const editor = document.getElementById("messageEditor");
+
+    const selection = window.getSelection();
+    const savedRange = selection.rangeCount &&
+      editor.contains(selection.anchorNode)
+      ? selection.getRangeAt(0).cloneRange()
+      : null;
+
+    const rows = Number(prompt("Bilangan baris jadual (1-20):", "3"));
+    if (!Number.isInteger(rows) || rows < 1 || rows > 20) return;
+
+    const cols = Number(prompt("Bilangan lajur jadual (1-10):", "3"));
+    if (!Number.isInteger(cols) || cols < 1 || cols > 10) return;
+
+    const table = document.createElement("table");
+    table.style.borderCollapse = "collapse";
+    table.style.width = "100%";
+
+    for (let r = 0; r < rows; r++) {
+      const tr = document.createElement("tr");
+
+      for (let c = 0; c < cols; c++) {
+        const td = document.createElement("td");
+        td.style.border = "1px solid #999";
+        td.style.padding = "8px";
+        td.appendChild(document.createElement("br"));
+        tr.appendChild(td);
+      }
+
+      table.appendChild(tr);
+    }
+
+    editor.focus();
+
+    const range = savedRange || document.createRange();
+
+    if (!savedRange) {
+      range.selectNodeContents(editor);
+      range.collapse(false);
+    }
+
+    range.deleteContents();
+    range.insertNode(table);
+
+    const afterTable = document.createRange();
+    afterTable.setStartAfter(table);
+    afterTable.collapse(true);
+
+    selection.removeAllRanges();
+    selection.addRange(afterTable);
+
+  });
+
+
+
+/* MASUKKAN PAUTAN */
+document.getElementById("insertLink")
+  .addEventListener("click", function () {
+
+    const selection = window.getSelection();
+    const range = selection.rangeCount
+      ? selection.getRangeAt(0).cloneRange()
+      : null;
+
+    const url = prompt("Masukkan URL pautan (https://):");
+
+    if (!url) return;
+
+    if (!/^https?:\/\/\S+$/i.test(url.trim())) {
+      alert("Sila masukkan URL http:// atau https:// yang sah.");
+      return;
+    }
+
+    document.getElementById("messageEditor").focus();
+
+    if (range) {
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+
+    document.execCommand(
+      "createLink",
+      false,
+      url.trim()
+    );
+
+  });
+
+
+/* JENIS FONT */
+document.getElementById("editorFont")
+  .addEventListener("change", function () {
+    document.getElementById("messageEditor").focus();
+
+    document.execCommand(
+      "fontName",
+      false,
+      this.value
+    );
+  });
+
+/* WARNA TEKS */
+document.getElementById("editorColor")
+  .addEventListener("input", function () {
+    document.getElementById("messageEditor").focus();
+
+    document.execCommand(
+      "foreColor",
+      false,
+      this.value
+    );
+  });
+
+
+
+
+document.getElementById("messageAttachment")
+  .addEventListener("change", function (event) {
+    const files = Array.from(event.target.files);
+
+    const tooLarge = files.find(function (file) {
+      return file.size > 3 * 1024 * 1024;
+    });
+
+    if (tooLarge) {
+      alert("Setiap lampiran mestilah tidak melebihi 3 MB.");
+      event.target.value = "";
+    }
+  });
+
+document.getElementById("previewButton")
+  .addEventListener("click", function () {
+    const subject =
+      document.getElementById("messageSubject").value.trim();
+
+    const editor =
+      document.getElementById("messageEditor");
+
+    const panel =
+      document.getElementById("previewPanel");
+
+    document.getElementById("previewSubject").textContent =
+      subject || "(Tiada perkara)";
+
+    const previewBody =
+      document.getElementById("previewBody");
+
+    previewBody.replaceChildren();
+
+    // Pratonton teks sahaja buat masa ini.
+    // Format HTML akan dikendalikan secara selamat
+    // semasa integrasi backend.
+    previewBody.textContent =
+      editor.innerText.trim() || "(Tiada kandungan)";
+
+    panel.classList.remove("hidden");
+    panel.scrollIntoView({ behavior: "smooth" });
+  });
+
+let adminMessageSending = false;
+
+document.getElementById("sendButton")
+  .addEventListener("click", async function () {
+
+    if (adminMessageSending) return;
+
+   
+let data;
+
+try {
+  data = getAdminMessageData();
+} catch (error) {
+  console.error("MESSAGE VALIDATION ERROR:", error);
+
+  alert(
+    error.message ||
+    "Kandungan mesej tidak dapat diproses."
+  );
+
+  return;
+}
+
+
+  
+const messageEditor =
+  document.getElementById("messageEditor");
+
+const messageText =
+  messageEditor.innerText.trim();
+
+const hasImage =
+  messageEditor.querySelector("img") !== null;
+
+if (!data.tajuk || (!messageText && !hasImage)) {
+  alert("Sila lengkapkan perkara dan kandungan mesej.");
+  return;
+}
+
+
+    if (!data.recipients || data.recipients.length === 0) {
+      alert("Sila pilih sekurang-kurangnya seorang penerima.");
+      return;
+    }
+
+    // Ambil token daripada sesi login PASPA GO
+    const session = JSON.parse(
+      localStorage.getItem("paspaGoSession") || "{}"
+    );
+
+    if (!session.sessionToken) {
+      alert("Sesi keselamatan tidak ditemui. Sila login semula.");
+      return;
+    }
+
+    const confirmed = confirm(
+      "SAHKAN PENGHANTARAN MESEJ\n\n" +
+      "Perkara: " + data.tajuk + "\n" +
+      "Penerima: " + data.recipients.length + " ahli\n" +
+      "Keutamaan: " + data.keutamaan + "\n" +
+      "Push Notification: " + (data.pushNotify ? "YA" : "TIDAK") + "\n" +
+      "Popup Notification: " + (data.popupNotify ? "YA" : "TIDAK") +
+      "\n\nAdakah anda pasti mahu menghantar mesej?"
+    );
+
+    if (!confirmed) return;
+
+    const sendButton =
+      document.getElementById("sendButton");
+
+    adminMessageSending = true;
+    sendButton.disabled = true;
+    sendButton.textContent = "SEDANG MENGHANTAR...";
+
+    try {
+
+      const sent = await apiPost({
+        action: "admin_send_message",
+        credential: session.sessionToken,
+        data: data
+      });
+
+      if (!sent || sent.success !== true) {
+        throw new Error(
+          sent?.message || "Penghantaran mesej gagal."
+        );
+      }
+
+      alert(
+        "MESEJ BERJAYA DIHANTAR!\n\n" +
+        "ID Mesej: " + (sent.messageId || "-") + "\n" +
+        "Push berjaya: " + (sent.pushSent ?? 0) + "\n" +
+        "Push gagal: " + (sent.pushFailed ?? 0)
+      );
+
+    } catch (error) {
+
+      console.error("SEND ADMIN MESSAGE ERROR:", error);
+
+      alert(
+        "Penghantaran tidak dapat disahkan.\n" +
+        error.message +
+        "\n\nSemak 14_MESSAGES sebelum mencuba lagi."
+      );
+
+    } finally {
+
+      adminMessageSending = false;
+      sendButton.disabled = false;
+      sendButton.textContent = "HANTAR MESEJ";
+
+    }
+
+  });
+</script>
+
+<!-- GOOGLE IDENTITY SERVICES -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+
+<script src="../js/config.js"></script>
+<script src="../js/api.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
+
+<script src="../js/admin-mesej.js"></script>
+
+
+</body>
+</html>
