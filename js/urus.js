@@ -3641,6 +3641,29 @@ if (adminInventoryButton) {
 
 }
 
+
+/* =====================================================
+   JANA MESEJ ADMIN
+===================================================== */
+
+const adminMessageButton =
+  document.getElementById("adminMessageMenu");
+
+if (adminMessageButton) {
+
+  adminMessageButton.addEventListener(
+    "click",
+    function () {
+
+      window.location.href =
+        "admin-mesej.html";
+
+    }
+  );
+
+}
+
+
 /* =====================================================
    LAPORAN
 ===================================================== */

@@ -231,11 +231,12 @@ function checkExistingSession() {
     const session =
       JSON.parse(raw);
 
-    if (
-      !session ||
-      session.isLoggedIn !== true ||
-      !session.idPaspa
-    ) {
+ if (
+  !session ||
+  session.isLoggedIn !== true ||
+  !session.idPaspa ||
+  !session.sessionToken
+) {
 
       localStorage.removeItem(
         "paspaGoSession"
@@ -283,6 +284,9 @@ function saveUserSession(result) {
 
       isLoggedIn:
         true,
+
+        sessionToken:
+  result.sessionToken || "",
 
       userId:
         user.userId || "",
@@ -406,18 +410,14 @@ if (loginForm) {
           await loginUser(email);
 
 
-        if (
-          result.success === true &&
-          result.loggedIn === true
-        ) {
-
-          proceedToDashboard(
-            result
-          );
-
-          return;
-
-        }
+      if (
+  result.success === true &&
+  result.loggedIn === true &&
+  result.sessionToken
+) {
+  proceedToDashboard(result);
+  return;
+}
 
 
         if (

@@ -68,6 +68,44 @@ function escapeHtml(value) {
 
 
 /* =====================================================
+   PAPAR KANDUNGAN MESEJ BERFORMAT DENGAN SELAMAT
+===================================================== */
+
+
+function renderAdminMessageHtml(value) {
+
+  const content = String(value || "");
+
+  if (typeof DOMPurify === "undefined") {
+    console.error("DOMPurify gagal dimuatkan.");
+    return escapeHtml(content);
+  }
+
+  return DOMPurify.sanitize(content, {
+    ALLOWED_TAGS: [
+      "p", "div", "br", "span",
+      "b", "strong", "i", "em", "u",
+      "font",
+      "ul", "ol", "li",
+      "table", "thead", "tbody", "tr",
+      "th", "td",
+      "a", "img"
+    ],
+    ALLOWED_ATTR: [
+      "color",
+      "href", "src", "alt",
+      "title", "target", "rel",
+      "colspan", "rowspan"
+    ],
+    ALLOW_DATA_ATTR: false
+  });
+
+}
+
+
+
+
+/* =====================================================
    STATUS MESSAGE
 ===================================================== */
 
@@ -508,8 +546,11 @@ function createMessageCard(message) {
   ========================= */
 
   const jenisMesej =
-    "Jemputan Program";
-
+  String(message.jenisJemputan || "")
+    .trim()
+    .toUpperCase() === "MESEJ"
+      ? "MESEJ"
+      : "JEMPUTAN PROGRAM";
 
   /* =========================
      IKON MENGIKUT KATEGORI
@@ -696,6 +737,12 @@ function openMessageDetail(
   inboxRow
 ) {
 
+  const isAdminMessage =
+  String(message.jenisJemputan || "")
+    .trim()
+    .toUpperCase() === "MESEJ";
+
+
   const statusRespon =
     getResponseDisplay(
       message.statusRespon
@@ -768,9 +815,15 @@ function openMessageDetail(
 
       <div class="message-detail-header">
 
-        <div class="message-detail-type">
-          JEMPUTAN PROGRAM
-        </div>
+     <div class="message-detail-type">
+  ${
+    String(message.jenisJemputan || "")
+      .trim()
+      .toUpperCase() === "MESEJ"
+        ? "MESEJ"
+        : "JEMPUTAN PROGRAM"
+  }
+</div>
 
         <h2 class="message-detail-title">
 
@@ -874,14 +927,20 @@ function openMessageDetail(
       </div>
 
 
-      <div class="message-detail-body">
+    
+<div class="message-detail-body">
 
-        ${escapeHtml(
-          details.keterangan ||
-          "-"
-        )}
+  ${isAdminMessage
+    ? renderAdminMessageHtml(
+        message.butiranMesej || "-"
+      )
+    : escapeHtml(
+        details.keterangan || "-"
+      )
+  }
 
-      </div>
+</div>
+
 
 
       <div class="message-detail-actions">
@@ -911,7 +970,7 @@ function openMessageDetail(
 
       </div>
 
-
+      ${!isAdminMessage ? `
       <div class="response-status">
 
         Status Respon:
@@ -920,6 +979,7 @@ function openMessageDetail(
         )}
 
       </div>
+      ` : ""}
 
 
       <div class="response-buttons">
@@ -1220,6 +1280,31 @@ messageList.innerHTML = "";
     );
 
 
+// Paparkan popup untuk mesej baharu yang layak
+const popupMessage = messages.find(function(message) {
+
+  return (
+    message.popupNotify === true &&
+    String(message.jenisJemputan || "")
+      .trim()
+      .toUpperCase() === "MESEJ" &&
+    String(message.statusBaca || "")
+      .trim()
+      .toLowerCase() === "belum dibaca" &&
+    Boolean(message.messageId) &&
+sessionStorage.getItem(
+  "paspaPopupShown_" +
+  String(message.messageId).trim()
+) !== "1"
+  );
+
+});
+
+if (popupMessage) {
+  showAdminMessagePopup(popupMessage);
+}
+
+
   } catch (error) {
 
     console.error(
@@ -1513,6 +1598,59 @@ homeButton.addEventListener(
   }
 );
 
+
+/* =====================================================
+   POPUP NOTIFICATION - JANA MESEJ
+===================================================== */
+
+function showAdminMessagePopup(message) {
+
+  if (!message || message.popupNotify !== true) {
+  return;
+}
+
+const isAdminMessage =
+  String(message.jenisJemputan || "")
+    .trim()
+    .toUpperCase() === "MESEJ";
+
+const isUnread =
+  String(message.statusBaca || "")
+    .trim()
+    .toLowerCase() === "belum dibaca";
+
+if (!isAdminMessage || !isUnread) {
+  return;
+}
+
+const popupKey =
+  "paspaPopupShown_" +
+  String(message.messageId || "").trim();
+
+if (!message.messageId) {
+  return;
+}
+
+if (sessionStorage.getItem(popupKey) === "1") {
+  return;
+}
+
+sessionStorage.setItem(popupKey, "1");
+
+  const tajuk =
+    String(message.tajuk || "MESEJ BAHARU");
+
+  const butiran =
+    String(message.butiranMesej || "");
+
+  window.alert(
+    "📩 MESEJ BAHARU PASPA GO\n\n" +
+    tajuk +
+    "\n\n" +
+    butiran
+  );
+
+}
 
 /* =====================================================
    START
