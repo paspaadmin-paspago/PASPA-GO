@@ -215,37 +215,184 @@ async function submitQrAttendance(qrData) {
    HASIL IMBASAN
 ========================================== */
 
-async function handleQrResult(value) {
-  if (qrProcessing) return;
+/* ==========================================
+   HASIL IMBASAN QR KEHADIRAN
+========================================== */
 
-  qrProcessing = true;
+let qrAttendanceProcessing = false;
+
+async function handleQrResult(value) {
+
+  if (qrAttendanceProcessing) {
+    return;
+  }
+
+  qrAttendanceProcessing = true;
+
   stopQrScanner();
 
   qrResultCard.hidden = false;
-  qrResultText.textContent = value;
+
+  qrResultText.textContent =
+    "Sedang memproses kehadiran...";
+
   qrResultType.textContent =
     "Kod QR berjaya dibaca.";
 
+  qrScanAgainButton.disabled = true;
+
   setQrStatus(
-    "Sedang mengesahkan kehadiran..."
+    "Sedang merekod kehadiran..."
   );
 
   try {
-    const qrData =
-      parsePaspaAttendanceQr(value);
 
-    const response =
-      await submitQrAttendance(qrData);
+    /* SEMAK QR RASMI */
+
+    const url = new URL(value);
+
+    const expectedOrigin =
+      "https://paspaadmin-paspago.github.io";
+
+    const expectedPath =
+      "/PASPA-GO/pages/kehadiran-scan.html";
+
+    if (
+      url.origin !== expectedOrigin ||
+      url.pathname !== expectedPath
+    ) {
+      throw new Error(
+        "QR ini bukan QR kehadiran rasmi PASPA GO."
+      );
+    }
+
+    /* DAPATKAN JENIS PROGRAM */
+
+    const type = String(
+      url.searchParams.get("type") || ""
+    ).trim().toUpperCase();
+
+    if (type !== "PROGRAM") {
+      throw new Error(
+        "QR kehadiran Operasi belum disokong."
+      );
+    }
+
+    /* DAPATKAN ID DARIPADA QR */
+
+    const recordId = String(
+      url.searchParams.get("recordId") || ""
+    ).trim();
+
+    const courseId = String(
+      url.searchParams.get("courseId") || ""
+    ).trim();
+
+    const qrId = courseId || recordId;
+
+    if (
+      !/^MSG-[A-Za-z0-9-]+$/.test(qrId) &&
+      !/^CRS-[A-Za-z0-9-]+$/.test(qrId)
+    ) {
+      throw new Error(
+        "ID program dalam QR tidak sah."
+      );
+    }
+
+    /* SEMAK SESI LOGIN */
+
+    const session = JSON.parse(
+      localStorage.getItem(
+        "paspaGoSession"
+      ) || "null"
+    );
+
+    if (!session || !session.isLoggedIn) {
+      throw new Error(
+        "Sila log masuk ke PASPA GO."
+      );
+    }
+
+    const sessionToken = String(
+      session.sessionToken ||
+      session.token ||
+      ""
+    ).trim();
+
+    if (!sessionToken) {
+      throw new Error(
+        "Token sesi tidak ditemui. " +
+        "Sila log masuk semula."
+      );
+    }
+
+    /* SEMAK API */
+
+    if (typeof apiPost !== "function") {
+      throw new Error(
+        "Sambungan API tidak tersedia."
+      );
+    }
+
+    /* HANTAR KE GOOGLE APPS SCRIPT */
+
+    const response = await apiPost({
+
+      action: "qr_attendance_scan",
+
+      sessionToken: sessionToken,
+
+      type: "PROGRAM",
+
+      courseId: qrId
+
+    });
+
+    if (
+      !response ||
+      response.success !== true
+    ) {
+      throw new Error(
+        response && response.message
+          ? response.message
+          : "Gagal merekodkan kehadiran."
+      );
+    }
+
+    /* SEMAK STATUS SEBENAR */
+
+    const status = String(
+      response.statusKehadiran || ""
+    ).trim().toUpperCase();
+
+    if (status !== "HADIR") {
+
+      qrResultType.textContent =
+        response.message ||
+        "Status kehadiran dikekalkan oleh admin.";
+
+      qrResultText.textContent =
+        "Program: " + qrId +
+        "\nStatus: " +
+        (status || "Tidak diketahui");
+
+      setQrStatus(
+        "Kehadiran tidak diubah.",
+        "error"
+      );
+
+      return;
+    }
+
+    /* BERJAYA */
 
     qrResultType.textContent =
+      response.message ||
       "Kehadiran berjaya direkodkan.";
 
     qrResultText.textContent =
-      "PROGRAM: " + qrData.courseId +
-      "\nSTATUS KEHADIRAN: HADIR" +
-      (response.message
-        ? "\n" + response.message
-        : "");
+      "Program: " + qrId +
+      "\nStatus Kehadiran: HADIR";
 
     setQrStatus(
       "Kehadiran: HADIR",
@@ -253,6 +400,7 @@ async function handleQrResult(value) {
     );
 
   } catch (error) {
+
     console.error(
       "QR ATTENDANCE ERROR:",
       error
@@ -263,7 +411,7 @@ async function handleQrResult(value) {
 
     qrResultText.textContent =
       error.message ||
-      "Ralat semasa memproses kehadiran.";
+      "Ralat semasa merekod kehadiran.";
 
     setQrStatus(
       "Imbasan gagal direkodkan.",
@@ -271,9 +419,15 @@ async function handleQrResult(value) {
     );
 
   } finally {
-    qrProcessing = false;
+
+    qrAttendanceProcessing = false;
+
+    qrScanAgainButton.disabled = false;
+
   }
+
 }
+
 
 /* ==========================================
    BACA VIDEO
