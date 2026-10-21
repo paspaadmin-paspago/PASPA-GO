@@ -384,20 +384,68 @@ async function handleQrResult(value) {
       return;
     }
 
-    /* BERJAYA */
+    
+/* ==========================================
+   BERJAYA - PAPAR MAKLUMAT PROGRAM
+========================================== */
 
-    qrResultType.textContent =
-      response.message ||
-      "Kehadiran berjaya direkodkan.";
+const info = response.programInfo || {};
 
-    qrResultText.textContent =
-      "Program: " + qrId +
-      "\nStatus Kehadiran: HADIR";
+function formatQrDate(value) {
 
-    setQrStatus(
-      "Kehadiran: HADIR",
-      "success"
-    );
+  if (!value) return "-";
+
+  const text = String(value).trim();
+
+  const iso = text.match(
+    /^(\d{4})-(\d{2})-(\d{2})/
+  );
+
+  if (iso) {
+    return iso[3] + "/" + iso[2] + "/" + iso[1];
+  }
+
+  const date = new Date(text);
+
+  if (isNaN(date.getTime())) {
+    return text;
+  }
+
+  return date.toLocaleDateString("ms-MY", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    timeZone: "Asia/Kuala_Lumpur"
+  });
+}
+
+const mula = formatQrDate(info.tarikhMula);
+const tamat = formatQrDate(info.tarikhTamat);
+
+const tarikh =
+  mula === tamat || tamat === "-"
+    ? mula
+    : mula + " hingga " + tamat;
+
+qrResultType.textContent =
+  response.message ||
+  "Kehadiran berjaya direkodkan.";
+
+qrResultText.textContent =
+  "Nama Program: " +
+  (info.namaProgram || "-") +
+  "\n\nTarikh: " + tarikh +
+  "\n\nTempat: " +
+  (info.tempat || "-") +
+  "\n\nStatus Hadir: HADIR";
+
+qrResultText.style.whiteSpace = "pre-line";
+
+setQrStatus(
+  "Kehadiran: HADIR",
+  "success"
+);
+
 
   } catch (error) {
 
