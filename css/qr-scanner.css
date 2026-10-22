@@ -774,3 +774,57 @@ button:focus-visible {
   }
 
 }
+
+
+/* ==========================================
+   PASPA GO - CENTER CAMERA CLOSE BUTTON
+========================================== */
+
+/* Susun butang di tengah */
+.qr-card .qr-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 18px;
+}
+
+/* Butang ikon tutup kamera */
+#qrStopButton.qr-camera-close-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 58px;
+  min-width: 58px;
+  height: 52px;
+  min-height: 52px;
+
+  padding: 0;
+  margin: 0 auto;
+
+  border: 1px solid #d9e3f0;
+  border-radius: 15px;
+
+  background: #edf2f8;
+  color: #16417f;
+
+  box-shadow: 0 4px 12px rgba(0, 20, 50, 0.08);
+}
+
+#qrStopButton.qr-camera-close-button svg {
+  display: block;
+  width: 25px;
+  height: 25px;
+}
+
+#qrStopButton.qr-camera-close-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+#qrStopButton.qr-camera-close-button:not(:disabled):hover {
+  background: #dce7f5;
+  color: #0d2e5b;
+}
+
