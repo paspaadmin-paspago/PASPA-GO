@@ -73,7 +73,7 @@
       <h2>Imbas Kod QR</h2>
 
       <p class="qr-description">
-        Halakan kamera telefon ke kod QR
+        
       </p>
 
       <!-- KAMERA -->
@@ -88,17 +88,10 @@
         ></video>
 
         <div
-          id="qrCameraPlaceholder"
-          class="qr-camera-placeholder"
-        >
-          <span class="qr-placeholder-icon">
-            ▣
-          </span>
-
-          <p>
-            Kamera belum diaktifkan
-          </p>
-        </div>
+  id="qrCameraPlaceholder"
+  class="qr-camera-placeholder"
+  hidden
+></div>
 
         <div
           id="qrScanFrame"
@@ -117,38 +110,57 @@
 
       <!-- STATUS -->
 
-      <p
-        id="qrStatus"
-        class="qr-status"
-        role="status"
-        aria-live="polite"
-      >
-        Tekan butang di bawah untuk
-        mengaktifkan kamera.
-      </p>
+     <p
+  id="qrStatus"
+  class="qr-status"
+  role="status"
+  aria-live="polite"
+  hidden
+></p>
 
       <!-- BUTANG KAMERA -->
 
-      <div class="qr-actions">
+     <div class="qr-actions">
 
-        <button
-          type="button"
-          id="qrStartButton"
-          class="qr-primary-button"
-        >
-          Buka Kamera
-        </button>
+  <button
+    type="button"
+    id="qrStartButton"
+    class="qr-primary-button"
+    hidden
+  >
+    Buka Kamera
+  </button>
 
-        <button
-          type="button"
-          id="qrStopButton"
-          class="qr-secondary-button"
-          disabled
-        >
-          Tutup Kamera
-        </button>
+  
+<button
+  type="button"
+  id="qrStopButton"
+  class="qr-secondary-button qr-camera-close-button"
+  aria-label="Tutup Kamera"
+  title="Tutup Kamera"
+  disabled
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="25"
+    height="25"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <path d="m2 2 20 20"/>
+    <path d="M10.66 5H14l2 3h4a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-2"/>
+    <path d="M6.5 6.5 4 8H3a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h11"/>
+    <path d="M9.5 9.5a4 4 0 0 1 5 5"/>
+  </svg>
+</button>
 
-      </div>
+
+</div>
 
     </section>
 
