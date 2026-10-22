@@ -74,7 +74,7 @@
 
       <p class="qr-description">
         Halakan kamera telefon ke kod QR
-        program atau pengenalan PASPA.
+        kehadiran program PASPA.
       </p>
 
       <!-- KAMERA -->
@@ -128,7 +128,7 @@
         mengaktifkan kamera.
       </p>
 
-      <!-- BUTANG -->
+      <!-- BUTANG KAMERA -->
 
       <div class="qr-actions">
 
@@ -161,7 +161,7 @@
       hidden
     >
 
-      <h2>Hasil Imbasan</h2>
+      <h2>Maklumat Program</h2>
 
       <p id="qrResultType">
         Kod QR berjaya dibaca.
@@ -169,23 +169,74 @@
 
       <div class="qr-result-value">
 
-        <span>Maklumat QR</span>
+        <span>Butiran Program</span>
 
-        <strong id="qrResultText">
+        <strong
+          id="qrResultText"
+          style="white-space:pre-line"
+        >
           -
         </strong>
 
       </div>
 
-      <p class="qr-result-note">
-        Imbasan ini belum merekodkan
-        kehadiran secara automatik.
+      <!-- MAKLUMAN PENGESAHAN -->
+
+      <p
+        id="qrResultNote"
+        class="qr-result-note"
+        hidden
+      >
+        Kehadiran hanya akan direkodkan
+        selepas anda menekan PASTI.
       </p>
+
+      <!-- PANEL PENGESAHAN -->
+
+      <div
+        id="qrConfirmPanel"
+        hidden
+        style="margin-top:16px"
+      >
+
+        <p
+          id="qrConfirmQuestion"
+          style="
+            font-weight:700;
+            margin-bottom:14px;
+            line-height:1.6;
+          "
+        ></p>
+
+        <div class="qr-actions">
+
+          <button
+            type="button"
+            id="qrConfirmButton"
+            class="qr-primary-button"
+          >
+            PASTI
+          </button>
+
+          <button
+            type="button"
+            id="qrDeclineButton"
+            class="qr-secondary-button"
+          >
+            TIDAK
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- IMBAS SEMULA -->
 
       <button
         type="button"
         id="qrScanAgainButton"
         class="qr-primary-button"
+        style="margin-top:16px"
       >
         Imbas Semula
       </button>
