@@ -479,11 +479,20 @@ applyResumeDisplayOptions();
     profile.jantina
   );
 
-  setResumeText(
-    "rEmail",
-    profile.googleEmail ||
-    safeSession.googleEmail
-  );
+  /* =================================================
+   EMAIL RASMI AHLI PASPA
+   SUMBER: 02_PASPA_MEMBERS - EMAIL_RASMI
+================================================= */
+
+setResumeText(
+  "rEmail",
+  profile.emailRasmi ||
+  profile.EMAIL_RASMI ||
+  profile.email ||
+  profile.googleEmail ||
+  safeSession.googleEmail ||
+  ""
+);
 
   setResumeText(
     "rBodyNumber",
