@@ -2,64 +2,140 @@
 "use strict";
 
 /* ==========================================
-   PASPA GO - QR SCANNER + ATTENDANCE
+   PASPA GO - QR SCANNER
+
+   1. IMBAS QR
+   2. SEMAK PROGRAM
+   3. SEMAK JEMPUTAN
+   4. TUNGGU PENGESAHAN
+   5. REKOD HADIR JIKA TEKAN PASTI
 ========================================== */
 
-const qrVideo = document.getElementById("qrVideo");
-const qrStartButton = document.getElementById("qrStartButton");
-const qrStopButton = document.getElementById("qrStopButton");
-const qrScanAgainButton = document.getElementById("qrScanAgainButton");
-const qrBackButton = document.getElementById("qrBackButton");
-const qrHomeButton = document.getElementById("qrHomeButton");
-const qrStatus = document.getElementById("qrStatus");
-const qrResultCard = document.getElementById("qrResultCard");
-const qrResultText = document.getElementById("qrResultText");
-const qrResultType = document.getElementById("qrResultType");
-const qrCameraPlaceholder = document.getElementById("qrCameraPlaceholder");
-const qrScanFrame = document.getElementById("qrScanFrame");
+/* ==========================================
+   ELEMENT HTML
+========================================== */
+
+const qrVideo =
+  document.getElementById("qrVideo");
+
+const qrStartButton =
+  document.getElementById("qrStartButton");
+
+const qrStopButton =
+  document.getElementById("qrStopButton");
+
+const qrScanAgainButton =
+  document.getElementById("qrScanAgainButton");
+
+const qrBackButton =
+  document.getElementById("qrBackButton");
+
+const qrHomeButton =
+  document.getElementById("qrHomeButton");
+
+const qrStatus =
+  document.getElementById("qrStatus");
+
+const qrResultCard =
+  document.getElementById("qrResultCard");
+
+const qrResultText =
+  document.getElementById("qrResultText");
+
+const qrResultType =
+  document.getElementById("qrResultType");
+
+const qrCameraPlaceholder =
+  document.getElementById("qrCameraPlaceholder");
+
+const qrScanFrame =
+  document.getElementById("qrScanFrame");
+
+const qrConfirmPanel =
+  document.getElementById("qrConfirmPanel");
+
+const qrConfirmQuestion =
+  document.getElementById("qrConfirmQuestion");
+
+const qrConfirmButton =
+  document.getElementById("qrConfirmButton");
+
+const qrDeclineButton =
+  document.getElementById("qrDeclineButton");
+
+const qrResultNote =
+  document.getElementById("qrResultNote");
+
+
+/* ==========================================
+   VARIABLES
+========================================== */
 
 let qrStream = null;
 let qrAnimationId = null;
+
 let qrIsScanning = false;
 let qrStarting = false;
 let qrProcessing = false;
+
 let qrScanSession = 0;
 
-const qrCanvas = document.createElement("canvas");
-const qrContext = qrCanvas.getContext(
-  "2d",
-  { willReadFrequently: true }
-);
+let qrPendingData = null;
+
+const qrCanvas =
+  document.createElement("canvas");
+
+const qrContext =
+  qrCanvas.getContext(
+    "2d",
+    { willReadFrequently: true }
+  );
+
 
 /* ==========================================
    STATUS
 ========================================== */
 
 function setQrStatus(message, type = "") {
+
   qrStatus.textContent = message;
+
   qrStatus.className =
-    "qr-status" + (type ? " " + type : "");
+    "qr-status" +
+    (type ? " " + type : "");
+
 }
+
 
 /* ==========================================
    HENTIKAN KAMERA
 ========================================== */
 
 function stopQrScanner() {
+
   qrScanSession++;
+
   qrIsScanning = false;
   qrStarting = false;
 
   if (qrAnimationId !== null) {
+
     cancelAnimationFrame(qrAnimationId);
+
     qrAnimationId = null;
+
   }
 
   if (qrStream) {
-    qrStream.getTracks().forEach(function (track) {
-      track.stop();
-    });
+
+    qrStream.getTracks().forEach(
+      function(track) {
+        track.stop();
+      }
+    );
+
     qrStream = null;
+
   }
 
   if (qrVideo.srcObject) {
@@ -67,26 +143,36 @@ function stopQrScanner() {
   }
 
   qrVideo.style.display = "none";
-  qrCameraPlaceholder.style.display = "flex";
+
+  qrCameraPlaceholder.style.display =
+    "flex";
+
   qrScanFrame.hidden = true;
 
   qrStartButton.disabled = false;
   qrStopButton.disabled = true;
+
 }
 
+
 /* ==========================================
-   BACA QR PROGRAM PASPA
+   SEMAK URL QR RASMI PASPA GO
 ========================================== */
 
-function parsePaspaAttendanceQr(value) {
+function parseQrProgram(value) {
+
   let url;
 
   try {
+
     url = new URL(value);
+
   } catch (error) {
+
     throw new Error(
       "Kod QR tidak mengandungi URL yang sah."
     );
+
   }
 
   const allowedOrigin =
@@ -99,9 +185,11 @@ function parsePaspaAttendanceQr(value) {
     url.origin !== allowedOrigin ||
     url.pathname !== allowedPath
   ) {
+
     throw new Error(
-      "Kod QR ini bukan QR kehadiran rasmi PASPA GO."
+      "QR ini bukan QR kehadiran rasmi PASPA GO."
     );
+
   }
 
   const type = String(
@@ -109,287 +197,99 @@ function parsePaspaAttendanceQr(value) {
   ).trim().toUpperCase();
 
   if (type !== "PROGRAM") {
+
     throw new Error(
       "Pengimbasan ini hanya menyokong QR Program."
     );
+
   }
 
   const courseId = String(
     url.searchParams.get("courseId") || ""
   ).trim();
 
-  if (!/^CRS-[A-Za-z0-9-]+$/.test(courseId)) {
+  const recordId = String(
+    url.searchParams.get("recordId") || ""
+  ).trim();
+
+  const qrId = courseId || recordId;
+
+  if (
+    !/^MSG-[A-Za-z0-9-]+$/.test(qrId) &&
+    !/^CRS-[A-Za-z0-9-]+$/.test(qrId)
+  ) {
+
     throw new Error(
-      "QR belum mengandungi COURSE_ID yang sah. " +
-      "Sila jana semula QR program dalam senarai.html."
+      "ID program dalam QR tidak sah."
     );
+
   }
 
   return {
-    type: type,
-    courseId: courseId
+    type: "PROGRAM",
+    qrId: qrId
   };
+
 }
 
+
 /* ==========================================
-   DAPATKAN SESI LOGIN
+   DAPATKAN TOKEN SESI
 ========================================== */
 
-function getQrLoginSession() {
+function getQrSessionToken() {
+
   let session;
 
   try {
+
     session = JSON.parse(
-      localStorage.getItem("paspaGoSession") || "null"
-    );
-  } catch (error) {
-    throw new Error(
-      "Maklumat sesi login tidak sah. Sila login semula."
-    );
-  }
-
-  if (!session || !session.isLoggedIn) {
-    throw new Error(
-      "Sila login ke PASPA GO sebelum mengimbas QR."
-    );
-  }
-
-  const sessionToken = String(
-    session.sessionToken || ""
-  ).trim();
-
-  if (!sessionToken) {
-    throw new Error(
-      "Token sesi tidak ditemui. Sila login semula. " +
-      "Backend perlu menyokong pengesahan sesi."
-    );
-  }
-
-  return { sessionToken };
-}
-
-/* ==========================================
-   HANTAR KEHADIRAN KE BACKEND
-========================================== */
-
-async function submitQrAttendance(qrData) {
-  const session = getQrLoginSession();
-
-  if (typeof apiPost !== "function") {
-    throw new Error(
-      "Fungsi apiPost tidak tersedia. " +
-      "Semak config.js dan api.js."
-    );
-  }
-
-  const response = await apiPost({
-    action: "qr_attendance_scan",
-    sessionToken: session.sessionToken,
-    type: qrData.type,
-    courseId: qrData.courseId
-  });
-
-  if (!response || response.success !== true) {
-    throw new Error(
-      response && response.message
-        ? response.message
-        : "Kehadiran gagal direkodkan."
-    );
-  }
-
-  if (
-    String(response.statusKehadiran || "")
-      .trim()
-      .toUpperCase() !== "HADIR"
-  ) {
-    throw new Error(
-      "Backend belum mengesahkan status HADIR. " +
-      "Sila semak rekod kehadiran."
-    );
-  }
-
-  return response;
-}
-
-/* ==========================================
-   HASIL IMBASAN
-========================================== */
-
-/* ==========================================
-   HASIL IMBASAN QR KEHADIRAN
-========================================== */
-
-let qrAttendanceProcessing = false;
-
-async function handleQrResult(value) {
-
-  if (qrAttendanceProcessing) {
-    return;
-  }
-
-  qrAttendanceProcessing = true;
-
-  stopQrScanner();
-
-  qrResultCard.hidden = false;
-
-  qrResultText.textContent =
-    "Sedang memproses kehadiran...";
-
-  qrResultType.textContent =
-    "Kod QR berjaya dibaca.";
-
-  qrScanAgainButton.disabled = true;
-
-  setQrStatus(
-    "Sedang merekod kehadiran..."
-  );
-
-  try {
-
-    /* SEMAK QR RASMI */
-
-    const url = new URL(value);
-
-    const expectedOrigin =
-      "https://paspaadmin-paspago.github.io";
-
-    const expectedPath =
-      "/PASPA-GO/pages/kehadiran-scan.html";
-
-    if (
-      url.origin !== expectedOrigin ||
-      url.pathname !== expectedPath
-    ) {
-      throw new Error(
-        "QR ini bukan QR kehadiran rasmi PASPA GO."
-      );
-    }
-
-    /* DAPATKAN JENIS PROGRAM */
-
-    const type = String(
-      url.searchParams.get("type") || ""
-    ).trim().toUpperCase();
-
-    if (type !== "PROGRAM") {
-      throw new Error(
-        "QR kehadiran Operasi belum disokong."
-      );
-    }
-
-    /* DAPATKAN ID DARIPADA QR */
-
-    const recordId = String(
-      url.searchParams.get("recordId") || ""
-    ).trim();
-
-    const courseId = String(
-      url.searchParams.get("courseId") || ""
-    ).trim();
-
-    const qrId = courseId || recordId;
-
-    if (
-      !/^MSG-[A-Za-z0-9-]+$/.test(qrId) &&
-      !/^CRS-[A-Za-z0-9-]+$/.test(qrId)
-    ) {
-      throw new Error(
-        "ID program dalam QR tidak sah."
-      );
-    }
-
-    /* SEMAK SESI LOGIN */
-
-    const session = JSON.parse(
       localStorage.getItem(
         "paspaGoSession"
       ) || "null"
     );
 
-    if (!session || !session.isLoggedIn) {
-      throw new Error(
-        "Sila log masuk ke PASPA GO."
-      );
-    }
+  } catch (error) {
 
-    const sessionToken = String(
-      session.sessionToken ||
-      session.token ||
-      ""
-    ).trim();
+    throw new Error(
+      "Sesi login tidak sah. Sila login semula."
+    );
 
-    if (!sessionToken) {
-      throw new Error(
-        "Token sesi tidak ditemui. " +
-        "Sila log masuk semula."
-      );
-    }
+  }
 
-    /* SEMAK API */
+  if (
+    !session ||
+    !session.isLoggedIn
+  ) {
 
-    if (typeof apiPost !== "function") {
-      throw new Error(
-        "Sambungan API tidak tersedia."
-      );
-    }
+    throw new Error(
+      "Sila log masuk ke PASPA GO."
+    );
 
-    /* HANTAR KE GOOGLE APPS SCRIPT */
+  }
 
-    const response = await apiPost({
+  const sessionToken = String(
+    session.sessionToken ||
+    session.token ||
+    ""
+  ).trim();
 
-      action: "qr_attendance_scan",
+  if (!sessionToken) {
 
-      sessionToken: sessionToken,
+    throw new Error(
+      "Token sesi tidak ditemui. Sila login semula."
+    );
 
-      type: "PROGRAM",
+  }
 
-      courseId: qrId
+  return sessionToken;
 
-    });
+}
 
-    if (
-      !response ||
-      response.success !== true
-    ) {
-      throw new Error(
-        response && response.message
-          ? response.message
-          : "Gagal merekodkan kehadiran."
-      );
-    }
 
-    /* SEMAK STATUS SEBENAR */
-
-    const status = String(
-      response.statusKehadiran || ""
-    ).trim().toUpperCase();
-
-    if (status !== "HADIR") {
-
-      qrResultType.textContent =
-        response.message ||
-        "Status kehadiran dikekalkan oleh admin.";
-
-      qrResultText.textContent =
-        "Program: " + qrId +
-        "\nStatus: " +
-        (status || "Tidak diketahui");
-
-      setQrStatus(
-        "Kehadiran tidak diubah.",
-        "error"
-      );
-
-      return;
-    }
-
-    
 /* ==========================================
-   BERJAYA - PAPAR MAKLUMAT PROGRAM
+   FORMAT TARIKH
 ========================================== */
-
-const info = response.programInfo || {};
 
 function formatQrDate(value) {
 
@@ -402,7 +302,13 @@ function formatQrDate(value) {
   );
 
   if (iso) {
-    return iso[3] + "/" + iso[2] + "/" + iso[1];
+
+    return (
+      iso[3] + "/" +
+      iso[2] + "/" +
+      iso[1]
+    );
+
   }
 
   const date = new Date(text);
@@ -411,64 +317,300 @@ function formatQrDate(value) {
     return text;
   }
 
-  return date.toLocaleDateString("ms-MY", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-    timeZone: "Asia/Kuala_Lumpur"
-  });
+  return date.toLocaleDateString(
+    "ms-MY",
+    {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      timeZone: "Asia/Kuala_Lumpur"
+    }
+  );
+
 }
 
-const mula = formatQrDate(info.tarikhMula);
-const tamat = formatQrDate(info.tarikhTamat);
 
-const tarikh =
-  mula === tamat || tamat === "-"
-    ? mula
-    : mula + " hingga " + tamat;
+/* ==========================================
+   BINA PAPARAN MAKLUMAT PROGRAM
+========================================== */
 
-qrResultType.textContent =
-  response.message ||
-  "Kehadiran berjaya direkodkan.";
+function buildQrProgramText(
+  info,
+  status = ""
+) {
 
-qrResultText.textContent =
-  "Nama Program: " +
-  (info.namaProgram || "-") +
-  "\n\nTarikh: " + tarikh +
-  "\n\nTempat: " +
-  (info.tempat || "-") +
-  "\n\nStatus Hadir: HADIR";
+  const mula =
+    formatQrDate(info.tarikhMula);
 
-qrResultText.style.whiteSpace = "pre-line";
+  const tamat =
+    formatQrDate(info.tarikhTamat);
 
-setQrStatus(
-  "Kehadiran: HADIR",
-  "success"
-);
+  let tarikh = "-";
 
+  if (
+    mula === "-" &&
+    tamat === "-"
+  ) {
+
+    tarikh =
+      info.tarikhAcara || "-";
+
+  } else if (
+    tamat === "-" ||
+    mula === tamat
+  ) {
+
+    tarikh = mula;
+
+  } else {
+
+    tarikh =
+      mula + " hingga " + tamat;
+
+  }
+
+  let text =
+    "Nama Program: " +
+    (info.namaProgram || "-") +
+
+    "\n\nTarikh: " +
+    tarikh +
+
+    "\n\nTempat: " +
+    (info.tempat || "-");
+
+  if (status) {
+
+    text +=
+      "\n\nStatus Kehadiran: " +
+      status;
+
+  }
+
+  return text;
+
+}
+
+
+/* ==========================================
+   RESET PANEL PENGESAHAN
+========================================== */
+
+function resetQrConfirmation() {
+
+  qrPendingData = null;
+
+  qrConfirmPanel.hidden = true;
+  qrResultNote.hidden = true;
+
+  qrConfirmButton.disabled = false;
+  qrDeclineButton.disabled = false;
+
+}
+
+
+/* ==========================================
+   IMBAS QR - SEMAK SAHAJA
+
+   BELUM SIMPAN KEHADIRAN
+========================================== */
+
+async function handleQrResult(value) {
+
+  if (
+    qrProcessing ||
+    qrPendingData
+  ) {
+    return;
+  }
+
+  qrProcessing = true;
+
+  stopQrScanner();
+
+  resetQrConfirmation();
+
+  qrResultCard.hidden = false;
+
+  qrResultType.textContent =
+    "Kod QR berjaya dibaca.";
+
+  qrResultText.textContent =
+    "Sedang menyemak maklumat program...";
+
+  qrScanAgainButton.disabled = true;
+
+  setQrStatus(
+    "Sedang menyemak jemputan..."
+  );
+
+  try {
+
+    /* SEMAK QR */
+
+    const qrData =
+      parseQrProgram(value);
+
+    /* SEMAK SESI */
+
+    const sessionToken =
+      getQrSessionToken();
+
+    if (
+      typeof apiPost !== "function"
+    ) {
+
+      throw new Error(
+        "Sambungan API tidak tersedia."
+      );
+
+    }
+
+    /* PANGGIL API PREVIEW */
+
+    const response = await apiPost({
+
+      action: "qr_attendance_preview",
+
+      sessionToken: sessionToken,
+
+      type: qrData.type,
+
+      courseId: qrData.qrId
+
+    });
+
+    if (
+      !response ||
+      response.success !== true
+    ) {
+
+      throw new Error(
+        response && response.message
+          ? response.message
+          : "Gagal menyemak QR."
+      );
+
+    }
+
+    /* PAPAR MAKLUMAT PROGRAM */
+
+    const info =
+      response.programInfo || {};
+
+    qrResultText.textContent =
+      buildQrProgramText(info);
+
+    qrResultText.style.whiteSpace =
+      "pre-line";
+
+    /* KEHADIRAN DIMUKTAMADKAN ADMIN */
+
+    if (response.adminLocked) {
+
+      qrResultType.textContent =
+        "Kehadiran telah dimuktamadkan oleh admin.";
+
+      qrResultText.textContent =
+        buildQrProgramText(
+          info,
+          response.existingStatus ||
+          "Dimuktamadkan"
+        );
+
+      setQrStatus(
+        "Status kehadiran tidak boleh diubah."
+      );
+
+      return;
+
+    }
+
+    /* SUDAH HADIR SEBELUM INI */
+
+    if (response.alreadyRecorded) {
+
+      qrResultType.textContent =
+        "Kehadiran anda telah direkodkan sebelum ini.";
+
+      qrResultText.textContent =
+        buildQrProgramText(
+          info,
+          "HADIR"
+        );
+
+      setQrStatus(
+        "Kehadiran: HADIR",
+        "success"
+      );
+
+      return;
+
+    }
+
+    /* SIMPAN DATA SEMENTARA
+       BUKAN DALAM DATABASE */
+
+    qrPendingData = {
+
+      qrId: qrData.qrId,
+
+      sessionToken: sessionToken,
+
+      programInfo: info
+
+    };
+
+    /* SOALAN MENGIKUT JEMPUTAN */
+
+    if (response.invited === true) {
+
+      qrConfirmQuestion.textContent =
+        "Adakah anda pasti hadir program ini?";
+
+    } else {
+
+      qrConfirmQuestion.textContent =
+        "Maaf. Nama anda tiada dalam " +
+        "senarai jemputan program ini. " +
+        "Adakah anda ingin menyertainya?";
+
+    }
+
+    qrResultType.textContent =
+      "Sila sahkan kehadiran anda.";
+
+    qrConfirmPanel.hidden = false;
+    qrResultNote.hidden = false;
+
+    setQrStatus(
+      "Menunggu pengesahan anda."
+    );
 
   } catch (error) {
 
     console.error(
-      "QR ATTENDANCE ERROR:",
+      "QR PREVIEW ERROR:",
       error
     );
 
+    resetQrConfirmation();
+
     qrResultType.textContent =
-      "Kehadiran belum direkodkan.";
+      "Semakan QR gagal.";
 
     qrResultText.textContent =
       error.message ||
-      "Ralat semasa merekod kehadiran.";
+      "Sila cuba lagi.";
 
     setQrStatus(
-      "Imbasan gagal direkodkan.",
+      "Semakan gagal.",
       "error"
     );
 
   } finally {
 
-    qrAttendanceProcessing = false;
+    qrProcessing = false;
 
     qrScanAgainButton.disabled = false;
 
@@ -478,11 +620,175 @@ setQrStatus(
 
 
 /* ==========================================
-   BACA VIDEO
+   BUTANG PASTI
+
+   HANYA DI SINI KEHADIRAN DISIMPAN
+========================================== */
+
+qrConfirmButton.addEventListener(
+  "click",
+  async function() {
+
+    if (
+      !qrPendingData ||
+      qrProcessing
+    ) {
+      return;
+    }
+
+    qrProcessing = true;
+
+    qrConfirmButton.disabled = true;
+    qrDeclineButton.disabled = true;
+    qrScanAgainButton.disabled = true;
+
+    setQrStatus(
+      "Sedang merekodkan kehadiran..."
+    );
+
+    const pending = qrPendingData;
+
+    try {
+
+      /* PANGGIL API SIMPAN KEHADIRAN */
+
+      const response = await apiPost({
+
+        action: "qr_attendance_scan",
+
+        sessionToken: pending.sessionToken,
+
+        type: "PROGRAM",
+
+        courseId: pending.qrId
+
+      });
+
+      if (
+        !response ||
+        response.success !== true
+      ) {
+
+        throw new Error(
+          response && response.message
+            ? response.message
+            : "Gagal merekodkan kehadiran."
+        );
+
+      }
+
+      const status = String(
+        response.statusKehadiran || ""
+      ).trim().toUpperCase();
+
+      const info =
+        response.programInfo ||
+        pending.programInfo;
+
+      qrResultText.textContent =
+        buildQrProgramText(
+          info,
+          status || "Tidak diketahui"
+        );
+
+      qrResultType.textContent =
+        response.message ||
+        "Semakan kehadiran selesai.";
+
+      /* TUTUP PANEL SELEPAS BERJAYA */
+
+      resetQrConfirmation();
+
+      if (status === "HADIR") {
+
+        setQrStatus(
+          "Kehadiran: HADIR",
+          "success"
+        );
+
+      } else {
+
+        setQrStatus(
+          "Status kehadiran dikekalkan oleh admin.",
+          "error"
+        );
+
+      }
+
+    } catch (error) {
+
+      console.error(
+        "QR CONFIRM ERROR:",
+        error
+      );
+
+      qrResultType.textContent =
+        "Kehadiran belum dapat disahkan.";
+
+      setQrStatus(
+        error.message ||
+        "Sila cuba lagi.",
+        "error"
+      );
+
+      /* KEKALKAN PANEL UNTUK CUBA LAGI */
+
+    } finally {
+
+      qrProcessing = false;
+
+      qrConfirmButton.disabled = false;
+      qrDeclineButton.disabled = false;
+      qrScanAgainButton.disabled = false;
+
+    }
+
+  }
+);
+
+
+/* ==========================================
+   BUTANG TIDAK
+
+   TIDAK MENGUBAH DATABASE
+========================================== */
+
+qrDeclineButton.addEventListener(
+  "click",
+  function() {
+
+    if (qrProcessing) {
+      return;
+    }
+
+    resetQrConfirmation();
+
+    qrResultType.textContent =
+      "Pengesahan dibatalkan.";
+
+    qrResultText.textContent =
+      "Tiada kehadiran baharu direkodkan.";
+
+    setQrStatus(
+      "Anda memilih TIDAK."
+    );
+
+  }
+);
+
+
+/* ==========================================
+   BACA VIDEO KAMERA
 ========================================== */
 
 function scanQrFrame() {
-  if (!qrIsScanning || qrProcessing) return;
+
+  if (
+    !qrIsScanning ||
+    qrProcessing
+  ) {
+    return;
+  }
 
   if (
     qrVideo.readyState >=
@@ -490,118 +796,194 @@ function scanQrFrame() {
     qrVideo.videoWidth > 0 &&
     qrVideo.videoHeight > 0
   ) {
-    const width = qrVideo.videoWidth;
-    const height = qrVideo.videoHeight;
+
+    const width =
+      qrVideo.videoWidth;
+
+    const height =
+      qrVideo.videoHeight;
 
     qrCanvas.width = width;
     qrCanvas.height = height;
 
     qrContext.drawImage(
-      qrVideo, 0, 0, width, height
+      qrVideo,
+      0,
+      0,
+      width,
+      height
     );
 
     const imageData =
       qrContext.getImageData(
-        0, 0, width, height
+        0,
+        0,
+        width,
+        height
       );
 
     const result = jsQR(
       imageData.data,
       width,
       height,
-      { inversionAttempts: "dontInvert" }
+      {
+        inversionAttempts: "dontInvert"
+      }
     );
 
-    if (result && result.data) {
-      handleQrResult(result.data);
+    if (
+      result &&
+      result.data
+    ) {
+
+      handleQrResult(
+        result.data
+      );
+
       return;
+
     }
+
   }
 
   qrAnimationId =
-    requestAnimationFrame(scanQrFrame);
+    requestAnimationFrame(
+      scanQrFrame
+    );
+
 }
+
 
 /* ==========================================
    BUKA KAMERA
 ========================================== */
 
 async function startQrScanner() {
-  if (qrStarting || qrIsScanning || qrProcessing) {
+
+  if (
+    qrStarting ||
+    qrIsScanning ||
+    qrProcessing
+  ) {
     return;
   }
 
   qrStarting = true;
-  const session = ++qrScanSession;
+
+  const session =
+    ++qrScanSession;
+
+  resetQrConfirmation();
 
   qrResultCard.hidden = true;
+
   qrStartButton.disabled = true;
   qrStopButton.disabled = false;
 
-  setQrStatus("Sedang membuka kamera...");
+  setQrStatus(
+    "Sedang membuka kamera..."
+  );
 
   if (
     !navigator.mediaDevices ||
     !navigator.mediaDevices.getUserMedia
   ) {
+
     stopQrScanner();
+
     setQrStatus(
       "Kamera tidak tersedia. Gunakan HTTPS.",
       "error"
     );
+
     return;
+
   }
 
   if (
     typeof jsQR !== "function" ||
     !qrContext
   ) {
+
     stopQrScanner();
+
     setQrStatus(
       "Pustaka QR tidak dapat dimuatkan.",
       "error"
     );
+
     return;
+
   }
 
   let stream = null;
 
   try {
+
+    /* CUBA KAMERA BELAKANG */
+
     try {
+
       stream =
         await navigator.mediaDevices.getUserMedia({
+
           audio: false,
+
           video: {
-            facingMode: { ideal: "environment" }
+            facingMode: {
+              ideal: "environment"
+            }
           }
+
         });
+
     } catch (firstError) {
+
+      /* FALLBACK KAMERA */
+
       stream =
         await navigator.mediaDevices.getUserMedia({
+
           audio: false,
           video: true
+
         });
+
     }
 
-    if (session !== qrScanSession) {
+    if (
+      session !== qrScanSession
+    ) {
+
       stream.getTracks().forEach(
         track => track.stop()
       );
+
       return;
+
     }
 
     qrStream = stream;
+
     qrVideo.srcObject = stream;
 
     await qrVideo.play();
 
-    if (session !== qrScanSession) {
+    if (
+      session !== qrScanSession
+    ) {
+
       stopQrScanner();
       return;
+
     }
 
-    qrCameraPlaceholder.style.display = "none";
-    qrVideo.style.display = "block";
+    qrCameraPlaceholder.style.display =
+      "none";
+
+    qrVideo.style.display =
+      "block";
+
     qrScanFrame.hidden = false;
 
     qrIsScanning = true;
@@ -614,15 +996,18 @@ async function startQrScanner() {
     scanQrFrame();
 
   } catch (error) {
+
     console.error(
       "QR CAMERA ERROR:",
       error
     );
 
     if (stream) {
+
       stream.getTracks().forEach(
         track => track.stop()
       );
+
     }
 
     stopQrScanner();
@@ -630,23 +1015,41 @@ async function startQrScanner() {
     let message =
       "Kamera tidak dapat dibuka. Semak kebenaran kamera.";
 
-    if (error.name === "NotAllowedError") {
+    if (
+      error.name === "NotAllowedError"
+    ) {
+
       message =
         "Akses kamera tidak dibenarkan.";
-    } else if (error.name === "NotFoundError") {
+
+    } else if (
+      error.name === "NotFoundError"
+    ) {
+
       message =
         "Tiada kamera dikesan.";
-    } else if (error.name === "NotReadableError") {
+
+    } else if (
+      error.name === "NotReadableError"
+    ) {
+
       message =
         "Kamera sedang digunakan oleh aplikasi lain.";
+
     }
 
-    setQrStatus(message, "error");
+    setQrStatus(
+      message,
+      "error"
+    );
+
   }
+
 }
 
+
 /* ==========================================
-   BUTANG
+   BUTANG NAVIGASI
 ========================================== */
 
 qrStartButton.addEventListener(
@@ -656,9 +1059,14 @@ qrStartButton.addEventListener(
 
 qrStopButton.addEventListener(
   "click",
-  function () {
+  function() {
+
     stopQrScanner();
-    setQrStatus("Kamera telah ditutup.");
+
+    setQrStatus(
+      "Kamera telah ditutup."
+    );
+
   }
 );
 
@@ -669,19 +1077,28 @@ qrScanAgainButton.addEventListener(
 
 qrBackButton.addEventListener(
   "click",
-  function () {
+  function() {
+
     stopQrScanner();
-    window.location.href = "dashboard.html";
+
+    window.location.href =
+      "dashboard.html";
+
   }
 );
 
 qrHomeButton.addEventListener(
   "click",
-  function () {
+  function() {
+
     stopQrScanner();
-    window.location.href = "dashboard.html";
+
+    window.location.href =
+      "dashboard.html";
+
   }
 );
+
 
 /* ==========================================
    TUTUP KAMERA APABILA KELUAR HALAMAN
@@ -694,9 +1111,15 @@ window.addEventListener(
 
 document.addEventListener(
   "visibilitychange",
-  function () {
-    if (document.visibilityState === "hidden") {
+  function() {
+
+    if (
+      document.visibilityState === "hidden"
+    ) {
+
       stopQrScanner();
+
     }
+
   }
 );
