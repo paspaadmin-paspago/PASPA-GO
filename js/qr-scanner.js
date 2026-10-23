@@ -104,7 +104,11 @@ function setQrStatus(message, type = "") {
     "qr-status" +
     (type ? " " + type : "");
 
+  // Papar status hanya jika berlaku ralat.
+  qrStatus.hidden = (type !== "error");
+
 }
+
 
 
 /* ==========================================
@@ -149,8 +153,9 @@ function stopQrScanner() {
 
   qrScanFrame.hidden = true;
 
-  qrStartButton.disabled = false;
-  qrStopButton.disabled = true;
+qrStartButton.disabled = false;
+
+updateQrCameraButton();
 
 }
 
@@ -877,8 +882,9 @@ async function startQrScanner() {
 
   qrResultCard.hidden = true;
 
-  qrStartButton.disabled = true;
-  qrStopButton.disabled = false;
+qrStartButton.disabled = true;
+
+updateQrCameraButton();
 
   setQrStatus(
     "Sedang membuka kamera..."
@@ -989,6 +995,8 @@ async function startQrScanner() {
     qrIsScanning = true;
     qrStarting = false;
 
+    updateQrCameraButton();
+
     setQrStatus(
       "Halakan kamera ke kod QR."
     );
@@ -1048,6 +1056,45 @@ async function startQrScanner() {
 }
 
 
+
+/* ==========================================
+   PASPA GO - CAMERA ON/OFF ICON
+========================================== */
+
+function updateQrCameraButton() {
+
+  const offIcon =
+    document.getElementById("qrCameraOffIcon");
+
+  const onIcon =
+    document.getElementById("qrCameraOnIcon");
+
+  const cameraActive =
+    qrIsScanning || qrStarting;
+
+  if (offIcon) {
+    offIcon.hidden = !cameraActive;
+  }
+
+  if (onIcon) {
+    onIcon.hidden = cameraActive;
+  }
+
+  qrStopButton.disabled = qrProcessing;
+
+  qrStopButton.title = cameraActive
+    ? "Matikan Kamera"
+    : "Hidupkan Kamera";
+
+  qrStopButton.setAttribute(
+    "aria-label",
+    qrStopButton.title
+  );
+
+}
+
+
+
 /* ==========================================
    BUTANG NAVIGASI
 ========================================== */
@@ -1057,18 +1104,38 @@ qrStartButton.addEventListener(
   startQrScanner
 );
 
+
+/* ==========================================
+   TOGGLE CAMERA ON / OFF
+========================================== */
+
 qrStopButton.addEventListener(
   "click",
-  function() {
+  async function() {
 
-    stopQrScanner();
+    if (qrProcessing || qrPendingData) {
+      return;
+    }
 
-    setQrStatus(
-      "Kamera telah ditutup."
-    );
+    if (qrIsScanning || qrStarting) {
+
+      // Kamera aktif: matikan
+      stopQrScanner();
+
+      updateQrCameraButton();
+
+    } else {
+
+      // Kamera tidak aktif: hidupkan
+      await startQrScanner();
+
+      updateQrCameraButton();
+
+    }
 
   }
 );
+
 
 qrScanAgainButton.addEventListener(
   "click",
@@ -1123,3 +1190,40 @@ document.addEventListener(
 
   }
 );
+
+
+
+/* ==========================================
+   AUTO START QR CAMERA - PASPA GO
+========================================== */
+
+function autoStartQrScanner() {
+
+  if (
+    qrIsScanning ||
+    qrStarting ||
+    qrProcessing
+  ) {
+    return;
+  }
+
+  startQrScanner();
+
+}
+
+if (document.readyState === "loading") {
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    autoStartQrScanner,
+    { once: true }
+  );
+
+} else {
+
+  autoStartQrScanner();
+
+}
+/* Tetapkan ikon kamera pada permulaan */
+
+updateQrCameraButton();
