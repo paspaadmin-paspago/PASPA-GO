@@ -110,12 +110,11 @@
 
       <!-- STATUS -->
 
-     <p
+<p
   id="qrStatus"
   class="qr-status"
   role="status"
   aria-live="polite"
-  hidden
 ></p>
 
       <!-- BUTANG KAMERA -->
@@ -132,15 +131,16 @@
   </button>
 
   
+
 <button
   type="button"
   id="qrStopButton"
   class="qr-secondary-button qr-camera-close-button"
-  aria-label="Tutup Kamera"
-  title="Tutup Kamera"
-  disabled
+  aria-label="Hidupkan atau matikan kamera"
+  title="Matikan Kamera"
 >
   <svg
+    id="qrCameraOffIcon"
     xmlns="http://www.w3.org/2000/svg"
     width="25"
     height="25"
@@ -155,9 +155,27 @@
     <path d="m2 2 20 20"/>
     <path d="M10.66 5H14l2 3h4a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-2"/>
     <path d="M6.5 6.5 4 8H3a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h11"/>
-    <path d="M9.5 9.5a4 4 0 0 1 5 5"/>
+  </svg>
+
+  <svg
+    id="qrCameraOnIcon"
+    xmlns="http://www.w3.org/2000/svg"
+    width="25"
+    height="25"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    hidden
+  >
+    <path d="M14 4H10L8 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-4l-2-3z"/>
+    <circle cx="12" cy="13" r="3"/>
   </svg>
 </button>
+
 
 
 </div>
