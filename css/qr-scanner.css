@@ -828,3 +828,41 @@ button:focus-visible {
   color: #0d2e5b;
 }
 
+
+/* ==========================================
+   CAMERA TOGGLE BUTTON
+========================================== */
+
+#qrStopButton.qr-camera-close-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 58px;
+  height: 54px;
+
+  margin: 0 auto;
+
+  border-radius: 15px;
+
+  background: #edf3fa;
+  border: 1px solid #d5e2f1;
+
+  color: #16417f;
+
+  cursor: pointer;
+}
+
+#qrStopButton.qr-camera-close-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+#qrStopButton svg[hidden] {
+  display: none !important;
+}
+
+#qrStopButton.qr-camera-close-button:not(:disabled):active {
+  transform: scale(0.95);
+}
+
